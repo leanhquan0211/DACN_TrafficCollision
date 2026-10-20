@@ -1,0 +1,59 @@
+{
+  "updated_date": "2026-10-19",
+  "baseline": "B0: YOLO fine-tuned for accident-region bounding boxes, unchanged from README/workbook",
+  "can_train": false,
+  "stage_1_complete": false,
+  "split_created": false,
+  "cadp_author_collision_sequences_with_verified_clean_mapping": [
+    "001407"
+  ],
+  "user_confirmed_negative_full_sequences": [
+    "MVI_20011",
+    "MVI_20012",
+    "MVI_20032"
+  ],
+  "cadp_user_review": "correct vehicles and Colliding source frames 96-130 inclusive confirmed; no repeat confirmation needed",
+  "source_fps_verified": false,
+  "onset_end_seconds_verified": false,
+  "tools_prepared": {
+    "vatic_normalization": true,
+    "frame_coverage_and_ignore_regions": true,
+    "derived_region_proposals": true,
+    "reviewed_negative_frame_index": true,
+    "scoped_review_update_with_backup": true
+  },
+  "available_data": {
+    "confirmed_collision_events": 1,
+    "reviewed_negative_full_sequences": 3,
+    "cadp_clean_frames": 221,
+    "cadp_original_annotation_rows": 4641,
+    "derived_region_proposals_not_approved_gt": 35,
+    "unknown_cadp_non_candidate_frames": 186,
+    "reviewed_negative_frame_references": 2037,
+    "approved_accident_region_gt": 0
+  },
+  "blockers_for_image_B0": [
+    "Accident-region rule remains a concrete proposal; region ground truth not approved",
+    "One collision event plus three negative sequences is insufficient for the planned pilot/grouped evaluation",
+    "Additional author VATIC exports and sequence mapping not found in checked official sources",
+    "Cross-camera/source/event grouping, near-duplicate checks and target-domain/hard-negative coverage incomplete"
+  ],
+  "blockers_for_temporal_evaluation": [
+    "Source timing for 001407 unverified; display/render FPS is not capture FPS",
+    "No timestamp-backed motion/event-delay evaluation"
+  ],
+  "timing_note": "Unknown source FPS does not prevent image bbox normalization or frame-based B0 labeling; it prevents claims in original seconds/speed",
+  "region_proposal": {
+    "rule": "configs/b0_region_proposal.json",
+    "guide": "docs/b0_label_protocol.md",
+    "candidate_table": "data/processed/b0_proposals/001407/region_proposals.csv",
+    "training_export_allowed": false
+  },
+  "prohibited_conversion": "Do not present individual or unioned Colliding vehicle boxes as author annotations or approved accident-region ground truth",
+  "annotation_csv": "data/processed/b0_proposals/001407/objects_normalized.csv",
+  "user_review_record": "data/reviews/2026-10-19-cadp-001407-frame-confirmation.json",
+  "pilot_inventory": "data/pilot_inventory.csv",
+  "source_discovery": "docs/cadp_pilot_sources.md",
+  "technical_evidence": "outputs/audits/b0_label_preparation/validation.json",
+  "daily_progress": "progress/2026-10-19.md"
+}

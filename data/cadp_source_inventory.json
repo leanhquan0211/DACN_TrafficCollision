@@ -1,0 +1,12 @@
+{
+  "checked_date": "2026-10-19",
+  "report": "outputs/audits/cadp_source_discovery/report.json",
+  "verified_local_pairs": [
+    "001407"
+  ],
+  "verified_additional_remote_pairs": [],
+  "full_vatic_package_found": false,
+  "frames_folder_url": "https://drive.google.com/drive/folders/1BRIv9h4c_zbqJ6Ye4rVyFSo3K20BQt_v",
+  "needs_author_vatic_export": true,
+  "download_whole_frames": false
+}

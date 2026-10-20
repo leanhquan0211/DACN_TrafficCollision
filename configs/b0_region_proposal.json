@@ -1,0 +1,19 @@
+{
+  "rule_id": "participant_envelope_v1_proposal",
+  "status": "proposal_not_approved_ground_truth",
+  "baseline": "B0 image accident-region detector; one accident region per event per frame",
+  "class_id": 0,
+  "class_name_if_approved": "accident",
+  "representation": "axis-aligned envelope of visible original GT boxes of all reviewed event participants in the current frame",
+  "padding_px": 0,
+  "temporal_extent": "only the reviewed Colliding interval, inclusive source frame indices",
+  "participant_selection": "explicit reviewed event GT IDs; never inferred solely from spatial overlap or global Colliding IDs",
+  "outside_participant_policy": "skip candidate; record unknown, never export empty negative label",
+  "missing_annotation_policy": "preserve missing status; no implied negative or interpolated box",
+  "occluded_participant_policy": "keep original box/flag in proposal, require region review; never infer hidden extent",
+  "ignore_regions": ["FarRegion", "CrowdRegion"],
+  "separator_policy": "exclude from objects and candidates; retain in audit for shot-boundary review",
+  "negative_policy": "no empty labels unless whole scene/frame is explicitly certified negative for the task",
+  "coordinate_convention": "original VATIC xyxy; normalized width=(xmax-xmin)/image_width, no invented +1 correction",
+  "training_export_allowed": false
+}

@@ -1,0 +1,36 @@
+{
+  "review_date": "2026-10-19",
+  "reviewer": "user",
+  "evidence": "User message in this project session; not a second independent annotation review.",
+  "statements": [
+    {
+      "video_id": "UA_DETRAC_MVI_20011",
+      "sha256": "0d522aef1f3778b91a8bd4545d7d13bf542fb5d378726a788c4a78f200c98c46",
+      "scope": "full_sequence",
+      "collision_label": "negative",
+      "statement_vi": "Đã xem toàn bộ MVI_20011, không có va chạm."
+    },
+    {
+      "video_id": "UA_DETRAC_MVI_20012",
+      "sha256": "86873c1134ef0fd5e148818ff94e2c6e5ae321d95a27736b42a7f2b08cc2f862",
+      "scope": "full_sequence",
+      "collision_label": "negative",
+      "statement_vi": "Đã xem toàn bộ MVI_20012, không có va chạm."
+    },
+    {
+      "video_id": "UA_DETRAC_MVI_20032",
+      "sha256": "ddaff005c1a60de7190065bcf7ec464ef31812c4350d42cd0474ff287300242b",
+      "scope": "full_sequence",
+      "collision_label": "negative",
+      "statement_vi": "Đã xem toàn bộ MVI_20032, không có va chạm."
+    },
+    {
+      "video_id": "CADP_1407_author_preview",
+      "sha256": "e1f971a8c215086838e4c910f8c88e45a2396710682c41fcfe6b7c40ca29e6b1",
+      "annotation_sha256": "e134b3973de98f227cad71916273f31f6aa07943bf87387efa29a7d7a8c1f5ba",
+      "scope": "red_boxes_vehicle_identity_only",
+      "onset_end_review": "pending",
+      "statement_vi": "Hộp đỏ trong preview CADP 1407 đúng xe; chưa xác nhận độ chính xác onset/end."
+    }
+  ]
+}

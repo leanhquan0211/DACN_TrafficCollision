@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-10-20",
+  "timezone": "Asia/Bangkok",
+  "guide": "docs/GETTING_STARTED.md",
+  "downloads_are_manual": true,
+  "assets": [
+    {
+      "id": "yolov8n",
+      "path": "yolov8n.pt",
+      "kind": "download_file",
+      "source_url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8n.pt",
+      "required_for": [
+        "inference"
+      ],
+      "optional": false,
+      "note": "Official asset URL verified by release API; pretrained vehicle detector, not accident model",
+      "observed_size_bytes": 6549796,
+      "expected_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36"
+    },
+    {
+      "id": "cadp_vatic_1407",
+      "path": "data_raw/cadp/pilot_1407/1407.txt",
+      "kind": "download_file",
+      "source_url": "https://raw.githubusercontent.com/ankitshah009/CarCrash_forecasting_and_detection/master/data/1407.txt",
+      "required_for": [
+        "cadp"
+      ],
+      "optional": false,
+      "note": "Raw author VATIC; remote SHA verified on 2026-10-20",
+      "observed_size_bytes": 165663,
+      "expected_sha256": "e134b3973de98f227cad71916273f31f6aa07943bf87387efa29a7d7a8c1f5ba"
+    },
+    {
+      "id": "cadp_rendered_demo",
+      "path": "data_raw/cadp/pilot_1407/1407.mp4",
+      "kind": "download_file",
+      "source_url": "https://raw.githubusercontent.com/ankitshah009/CarCrash_forecasting_and_detection/master/data/1407.mp4",
+      "required_for": [
+        "cadp"
+      ],
+      "optional": false,
+      "note": "Already drawn author demo; verification reference, not clean model input",
+      "observed_size_bytes": 2147102,
+      "expected_sha256": "461d1fbe88b289ad6f05aedac6009f0b9e3dd1d61ea36346aa64b040556b0d91"
+    },
+    {
+      "id": "cadp_reference_zip",
+      "path": "data_raw/cadp/reference_code/CarCrash_forecasting_and_detection-master.zip",
+      "kind": "download_file",
+      "source_url": "https://github.com/ankitshah009/CarCrash_forecasting_and_detection/archive/refs/heads/master.zip",
+      "required_for": [
+        "cadp"
+      ],
+      "optional": false,
+      "note": "Source code ZIP. Branch archive hash may change; verify embedded 1407 MP4/TXT against configs/cadp_1407_preview.json",
+      "observed_size_bytes": 29686947
+    },
+    {
+      "id": "cadp_clean_001407",
+      "path": "data_raw/cadp/frames/001407",
+      "kind": "download_directory",
+      "source_url": "https://drive.google.com/drive/folders/1BRIv9h4c_zbqJ6Ye4rVyFSo3K20BQt_v",
+      "required_for": [
+        "cadp"
+      ],
+      "optional": false,
+      "source_folder_hint": "Dataset/manual/extracted_frames/001407",
+      "expected_image_count": 221,
+      "image_inventory": "data/registries/cadp_001407_images.csv",
+      "note": "Download only folder 001407; source names 0.jpg through 220.jpg; keep ZIP if Drive packages it"
+    },
+    {
+      "id": "detrac_images_zip",
+      "path": "data_raw/ua_detrac/DETRAC-Images.zip",
+      "kind": "download_file",
+      "source_url": "https://drive.google.com/file/d/1fQC6CEWOeL9pnJ4ZdD7U2gromcnWDRgm/view",
+      "required_for": [
+        "detrac_archive_audit"
+      ],
+      "optional": false,
+      "note": "About 9.85 GB; not needed if the 3 already-extracted image sequences are supplied for preview generation; do not extract all"
+    },
+    {
+      "id": "detrac_MVI_20011",
+      "path": "data_raw/ua_detrac/DETRAC-Images/MVI_20011",
+      "kind": "download_directory",
+      "source_url": "https://sites.google.com/view/daweidu/projects/ua-detrac",
+      "required_for": [
+        "detrac"
+      ],
+      "optional": false,
+      "expected_image_count": 664,
+      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward"
+    },
+    {
+      "id": "detrac_MVI_20012",
+      "path": "data_raw/ua_detrac/DETRAC-Images/MVI_20012",
+      "kind": "download_directory",
+      "source_url": "https://sites.google.com/view/daweidu/projects/ua-detrac",
+      "required_for": [
+        "detrac"
+      ],
+      "optional": false,
+      "expected_image_count": 936,
+      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward"
+    },
+    {
+      "id": "detrac_MVI_20032",
+      "path": "data_raw/ua_detrac/DETRAC-Images/MVI_20032",
+      "kind": "download_directory",
+      "source_url": "https://sites.google.com/view/daweidu/projects/ua-detrac",
+      "required_for": [
+        "detrac"
+      ],
+      "optional": false,
+      "expected_image_count": 437,
+      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward"
+    },
+    {
+      "id": "detrac_train_xml",
+      "path": "data_raw/ua_detrac/annotations/DETRAC-Train-Annotations-XML.zip",
+      "kind": "download_file",
+      "source_url": "https://drive.google.com/file/d/1f22g3puG164gemY_njcPG8beuCcuMjqb/view",
+      "required_for": [],
+      "optional": true,
+      "note": "Vehicle labels, not accident labels; folder/file metadata verified on 2026-10-20",
+      "observed_size_bytes": 12797880,
+      "expected_sha256": "d6ce5dcf409680096fea289f4731e56d014cc7667a013f35a5eb6a8261cf8f0f"
+    },
+    {
+      "id": "detrac_test_xml",
+      "path": "data_raw/ua_detrac/annotations/DETRAC-Test-Annotations-XML.zip",
+      "kind": "download_file",
+      "source_url": "https://drive.google.com/file/d/1zc8KZWUa3Cw0DbcFqTCMBmUZzbfuhGKr/view",
+      "required_for": [],
+      "optional": true,
+      "note": "Vehicle labels; do not turn source Train/Test archive names into project splits",
+      "observed_size_bytes": 12239887,
+      "expected_sha256": "c274a7a96b33445e13693f2d0082d58acac34c94275ee89b8378c4348a6b3209"
+    },
+    {
+      "id": "cadp_release_readme",
+      "path": "data_raw/cadp/documentation/CADP_Dataset_Release_ReadMe.pdf",
+      "kind": "download_file",
+      "source_url": "https://docs.google.com/document/d/12F7l4yxNzzUAISZufEd9WFhQKSefVVo_QsPdTsWxZh8/edit",
+      "required_for": [],
+      "optional": true,
+      "note": "Export PDF from author document; exported PDF bytes can vary",
+      "observed_size_bytes": 227139
+    },
+    {
+      "id": "cadp_paper",
+      "path": "data_raw/cadp/documentation/CADP_IEEE_Camera_Ready_Final.pdf",
+      "kind": "download_file",
+      "source_url": "https://arxiv.org/abs/1809.05782",
+      "required_for": [],
+      "optional": true,
+      "note": "Optional source document; downloaded version can differ from local PDF",
+      "observed_size_bytes": 294173
+    }
+  ],
+  "original_metadata_snapshot": "data/manifest.csv",
+  "unknown_old_samples": [
+    "YSGhwU9XxuY",
+    "ZCQcKnFSJvg",
+    "zVzXEht1aME"
+  ],
+  "new_vatic_package_status": "No additional matching VATIC/clean-frame pairs verified beyond 001407; see docs/cadp_pilot_sources.md"
+}

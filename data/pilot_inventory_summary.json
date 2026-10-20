@@ -1,0 +1,11 @@
+{
+  "manifest_assets": 12,
+  "known_source_sequence_groups": 4,
+  "confirmed_collision_sequences": 1,
+  "confirmed_collision_events": 1,
+  "confirmed_negative_full_sequences": 3,
+  "unknown_old_assets": 3,
+  "derived_assets_are_not_independent_samples": true,
+  "cross_camera_independence_verified": false,
+  "grouping_table": "data/pilot_inventory.csv"
+}

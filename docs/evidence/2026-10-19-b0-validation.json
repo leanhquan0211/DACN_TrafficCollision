@@ -1,0 +1,52 @@
+{
+  "syntax_python_files": 17,
+  "imports": [
+    "scripts.prepare_b0_candidates",
+    "scripts.prepare_b0_negative_index",
+    "scripts.apply_cadp_frame_review"
+  ],
+  "help": {
+    "prepare_b0_candidates": "passed",
+    "prepare_b0_negative_index": "passed",
+    "apply_cadp_frame_review": "passed"
+  },
+  "unit_tests": {
+    "passed": 5,
+    "log": "outputs/audits/b0_label_preparation/unittest.txt"
+  },
+  "manifest": {
+    "columns": 36,
+    "assets": 12,
+    "review_updated_cadp_assets": 5,
+    "other_rows_unchanged": true,
+    "all_fps_and_hashes_and_author_intervals_unchanged": true,
+    "seconds_not_inferred": true,
+    "all_splits_unassigned": true
+  },
+  "negative_index": {
+    "frames": 2037,
+    "source_counts": {
+      "MVI_20011": 664,
+      "MVI_20012": 936,
+      "MVI_20032": 437
+    },
+    "no_image_copies": true,
+    "no_empty_label_files": true
+  },
+  "proposals": {
+    "boxes": 35,
+    "unknown_frames": 186,
+    "original_rows": 4641,
+    "ignore_rows": 221,
+    "not_approved_gt": true
+  },
+  "illustrations_decoded": 4,
+  "source_checks_report": "outputs/audits/cadp_source_discovery/report.json",
+  "source_check_conclusion": "Only 001407 clean+VATIC pair verified; no additional VATIC package found in checked official locations",
+  "source_hashes": {
+    "scripts\\apply_cadp_frame_review.py": "596a00109cff19135982b13aab9e62bb1f94a56bf868f4d9bb9aab07235fc8cb",
+    "scripts\\prepare_b0_candidates.py": "d0d26b59007e14d38fc9dcecd39049e6b2022b3ab10b1d8f2715e32d7f6d30fc",
+    "scripts\\prepare_b0_negative_index.py": "1ecf90e1072fd94fe0a2ff7ad40fdca33ac44b91cd47ecadc0e16619ef0737d9",
+    "tests\\test_b0_preparation.py": "3f2430e828933b843127cd68212c015f1540698c922f68c630983b30046e7ca6"
+  }
+}

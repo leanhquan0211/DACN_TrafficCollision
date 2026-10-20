@@ -1,0 +1,89 @@
+{
+  "syntax_all_python_files": 13,
+  "imports": "passed",
+  "help": {
+    "prepare_cadp_frames": "passed",
+    "update_manifest_reviews": "passed",
+    "register_prepared_manifest": "passed",
+    "run_detection": "passed",
+    "run_tracking": "passed"
+  },
+  "videos": {
+    "data_samples/cadp/cadp_001407_clean_display20fps.mp4": {
+      "width_px": 1280,
+      "height_px": 720,
+      "fps": 20.0,
+      "frame_count": 221,
+      "decoded_frames": 221,
+      "duration_s": 11.05,
+      "size_bytes": 1288893,
+      "sha256": "f538a825596dc7601ddcf6fe27e61b855523cc4b34ad24d17fd8f6889ad224f4"
+    },
+    "outputs/annotation_preview/cadp_001407_clean_author_display20fps.mp4": {
+      "width_px": 1280,
+      "height_px": 720,
+      "fps": 20.0,
+      "frame_count": 221,
+      "decoded_frames": 221,
+      "duration_s": 11.05,
+      "size_bytes": 1746567,
+      "sha256": "99f0b4a43cb6b9d146a5b23e6302c6b570dbda2f90a5d159b8f6fb06cb774efd"
+    },
+    "outputs/detection/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_detection.mp4": {
+      "width_px": 1280,
+      "height_px": 720,
+      "fps": 20.0,
+      "frame_count": 221,
+      "decoded_frames": 221,
+      "duration_s": 11.05,
+      "size_bytes": 1529524,
+      "sha256": "ee25d749d62181ad9ed3c973c92186be4838d37f21bc927eb27f0e9a732283cc"
+    },
+    "outputs/tracking/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_tracking.mp4": {
+      "width_px": 1280,
+      "height_px": 720,
+      "fps": 20.0,
+      "frame_count": 221,
+      "decoded_frames": 221,
+      "duration_s": 11.05,
+      "size_bytes": 1628174,
+      "sha256": "1a98492caada795869aef78e31471525d39dfb09f9a65b9b1a380a4405ccf6f9"
+    }
+  },
+  "manifest": {
+    "schema_columns": 36,
+    "rows": 12,
+    "old_three_unchanged": true,
+    "all_splits_unassigned": true,
+    "idempotent_registration": true,
+    "negative_full_sequences": 3,
+    "negative_inherited_clip": 1
+  },
+  "annotation_export": {
+    "rows": 4641,
+    "ids": 21,
+    "colliding_rows": 70,
+    "intervals_frame_only": true,
+    "mapping_samples": 9,
+    "source_fps_verified": false
+  },
+  "originals": {
+    "zip_unchanged": true,
+    "all_221_reused_on_second_run": true,
+    "no_nested_or_duplicate_frames": true
+  },
+  "refusal_checks": {
+    "different_existing_file_preserved": true,
+    "zip_path_traversal_rejected": true,
+    "unverified_mapping_rejected": true
+  },
+  "model_pipeline": {
+    "model": "yolov8n.pt",
+    "tracker": "bytetrack.yaml",
+    "device": "auto",
+    "imgsz": 640,
+    "input": "data_samples/cadp/cadp_001407_clean_display20fps.mp4",
+    "source_frame_mapping": "video frame i = source i.jpg; presentation timing only",
+    "accident_prediction": false
+  }
+}

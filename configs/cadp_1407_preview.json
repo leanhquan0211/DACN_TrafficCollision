@@ -1,0 +1,16 @@
+{
+  "video_sha256": "461d1fbe88b289ad6f05aedac6009f0b9e3dd1d61ea36346aa64b040556b0d91",
+  "annotation_sha256": "e134b3973de98f227cad71916273f31f6aa07943bf87387efa29a7d7a8c1f5ba",
+  "video_canvas": [2400, 1200],
+  "annotation_canvas": [1280, 720],
+  "frame_count": 221,
+  "frame_index_base": 0,
+  "bbox_transform": [1.2833333333333334, 1.2833333333333334, 409.30833333333334, 144.64166666666668],
+  "reference_members": {
+    "video": "CarCrash_forecasting_and_detection-master/data/1407.mp4",
+    "annotations": "CarCrash_forecasting_and_detection-master/data/1407.txt"
+  },
+  "alignment_evidence": "Exact bytes match author reference archive. draw_1407.py renders draw_images(figsize=(8,4)), dpi=300; image axes embed a 1280x720 canvas in 2400x1200. Mapping checked against burned-in boxes for IDs 0/2 at frames 0, 96, 130, 220.",
+  "source_is_rendered_annotation_demo": true,
+  "original_capture_timing_verified": false
+}

@@ -1,0 +1,8 @@
+# Cài PyTorch theo CPU/CUDA trước, xem docs/GETTING_STARTED.md.
+# Pin phiên bản trực tiếp đã dùng; snapshot toàn môi trường: logs/requirements-installed.txt.
+torch==2.11.0
+torchvision==0.26.0
+ultralytics==8.4.178
+lap==0.5.13
+opencv-python==5.0.0.93
+numpy==2.5.2

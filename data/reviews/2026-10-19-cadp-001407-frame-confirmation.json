@@ -1,0 +1,26 @@
+{
+  "review_date": "2026-10-19",
+  "timezone": "Asia/Bangkok",
+  "reviewer": "user",
+  "evidence": "Latest user message: correct vehicles and clear, appropriate Colliding boundaries at frames 96-130; no repeat confirmation required.",
+  "sequence": "001407",
+  "annotation_path": "data_raw/cadp/pilot_1407/1407.txt",
+  "annotation_sha256": "e134b3973de98f227cad71916273f31f6aa07943bf87387efa29a7d7a8c1f5ba",
+  "annotation_origin": "author_vatic",
+  "review_status": "vehicles_and_colliding_frames_confirmed",
+  "frame_index_base": 0,
+  "events": [
+    {
+      "event_id": "CADP_001407_event_1",
+      "participant_gt_ids": [0, 2],
+      "start_frame": 96,
+      "end_frame_inclusive": 130,
+      "review_scope": "vehicle_identity_and_colliding_frame_interval"
+    }
+  ],
+  "source_fps_verified": false,
+  "onset_s": null,
+  "end_s": null,
+  "accident_region_rule_approved": false,
+  "other_sequences_reviewed_by_this_record": []
+}
