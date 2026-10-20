@@ -77,7 +77,7 @@ Các phương án dùng cùng split, định nghĩa sự kiện, quy tắc ghép
 
 ## Trạng thái hiện tại (20/10/2026)
 
-Ngày 20/10 bổ sung hướng dẫn dựng lại, catalog/fingerprint, kiểm file sau clone và chuẩn bị repo GitHub; giữ nguyên dữ liệu/mô hình/định nghĩa nhãn. Các kết quả nghiên cứu dưới đây được thực hiện đến 19/10, không phải run huấn luyện mới. Nhật ký hiện tại: [2026-10-20](progress/2026-10-20.md).
+Ngày 20/10 bổ sung hướng dẫn dựng lại, catalog/fingerprint, kiểm file sau clone và xuất bản source lên [GitHub/main](https://github.com/leanhquan0211/DACN_TrafficCollision). Bản công khai giữ metadata nhỏ và loại log máy cá nhân; dữ liệu/mô hình/định nghĩa nhãn không đổi. Các kết quả nghiên cứu dưới đây được thực hiện đến 19/10, không phải run huấn luyện mới. Nhật ký hiện tại: [2026-10-20](progress/2026-10-20.md).
 
 **Đã có:** môi trường `.venv` Python 3.12, PyTorch CUDA và Ultralytics; pipeline YOLOv8n/ByteTrack, ba video mẫu cũ và [manifest](data/manifest.csv). Đã xác minh cặp **1407.mp4/1407.txt** trùng mẫu tác giả; lấy chọn lọc 3 chuỗi DETRAC (2.037 ảnh), ghép MP4 và thử detection/tracking trên clip 10 giây. Lượt tiếp theo cùng ngày đã kiểm ZIP **001407**, lấy 221 ảnh sạch 1280×720, đối chiếu mapping với TXT/demo ở 9 mốc, xuất annotation gốc/chuẩn hóa, video sạch, preview tác giả và chạy YOLO/ByteTrack trên đầu vào sạch. Cả bốn MP4 CADP mới đọc đủ 221 frame. Manifest có **12 asset**, gồm một chuỗi ảnh và các video liên quan; giữ schema và backup trước sửa.
 

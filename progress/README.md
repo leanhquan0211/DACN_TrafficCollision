@@ -15,6 +15,8 @@ Quy ước này thay quy ước cũ một file/buổi. Đã hợp nhất ba bả
 
 **Cập nhật bàn giao/GitHub:** đã bổ sung [hướng dẫn người/AI mới](../docs/GETTING_STARTED.md), catalog tải có vị trí/hash, công cụ kiểm asset và skeleton thư mục trên Git. Dữ liệu/nhãn/model không đổi; giai đoạn nghiên cứu vẫn như kết quả 19/10 bên dưới. Trạng thái xuất bản và kiểm clone được ghi trong [nhật ký 20/10](2026-10-20.md).
 
+**Đã xuất bản source lên [GitHub/main](https://github.com/leanhquan0211/DACN_TrafficCollision)**, xác minh SHA remote khớp commit nguồn. Bản công khai bỏ log máy cá nhân/đường dẫn riêng; media/dataset/checkpoint vẫn local. Test có dữ liệu: 5 đạt; bản source không có dataset: 3 đạt, 2 integration skip đúng lý do. Không coi kiểm bản source bằng interpreter hiện có là đã cài lại một `.venv` mới.
+
 **Giai đoạn 1 đang làm.** CADP 001407 có 221 ảnh sạch khớp VATIC; người dùng đã xác nhận đúng xe và Colliding **96–130 theo frame**. Ba DETRAC đầy đủ đã xác nhận âm. Manifest 12 asset nhưng chỉ 4 nhóm chuỗi đã rà, gồm 1 sự kiện va chạm; không đếm preview/clip/output thành mẫu độc lập. Ba MP4 cũ vẫn chưa rõ nguồn/nhãn.
 
 | Giai đoạn | Trạng thái | Bằng chứng và phần còn thiếu |
