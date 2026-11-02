@@ -1,0 +1,68 @@
+{
+  "scope": "warm_start_s960_with_training_only_mined_author_normal_pilot",
+  "dataset": "data/processed/b0_s960_hardneg_v1/dataset/dataset.yaml",
+  "release_key": "hard_negative_pilot_release",
+  "label_policy": "configs/b0_hard_negative_label_policy.json",
+  "initial_weights": "outputs/training/b0_s960_v1/weights/best.pt",
+  "initial_weights_sha256": "c1fdd6dcbb09d8d2c3dae4c2c90dfcf4189fac88980c045c3eff095dba019302",
+  "initial_weights_source": "Local completed b0_s960_v1 best checkpoint; provenance in experiment.json, not a new download",
+  "initial_weights_checksum_source": "outputs/training/b0_s960_v1/experiment.json",
+  "output": "outputs/training/b0_s960_hardneg_v1",
+  "preflight_report": "outputs/audits/b0_hard_negative_sources_v1/train_preflight.json",
+  "ultralytics_version": "8.4.178",
+  "seed": 20261026,
+  "epochs": 40,
+  "patience": 10,
+  "imgsz": 960,
+  "batch": 2,
+  "workers": 0,
+  "device": "0",
+  "amp": false,
+  "optimizer": "SGD",
+  "lr0": 0.0003,
+  "lrf": 0.01,
+  "momentum": 0.937,
+  "weight_decay": 0.0005,
+  "warmup_epochs": 3.0,
+  "nbs": 64,
+  "mosaic": 0.5,
+  "close_mosaic": 10,
+  "scale": 0.3,
+  "mixup": 0.0,
+  "cos_lr": false,
+  "prediction_confidence": 0.25,
+  "matching_iou": 0.5,
+  "evaluation_splits": [
+    "val"
+  ],
+  "method_sources": [
+    "https://arxiv.org/html/1512.02325v5",
+    "https://arxiv.org/pdf/2209.12386",
+    "https://github.com/UnicomAI/UnicomBenchmark/tree/main/TADBench",
+    "https://docs.ultralytics.com/guides/finetuning-guide/",
+    "https://docs.ultralytics.com/modes/train/"
+  ],
+  "paper_recipe_vs_adaptation": "SSD mines negative default boxes by classification loss with at most3:1 negatives:positives. Here standard YOLO loss is unchanged; offline train-frame selection by old accident score retains20uniform+10ranked temporal-bin frames. TAD author normal labels provide negatives, not inferred pseudo-labels. Ultralytics motivates lower LR for fine-tuning; SGD0.0003/40max/patience10 are bounded project choices, not a paper-optimal recipe.",
+  "experiment_purpose": "Test warm-start s960 on unchanged impact positives and original splits plus new grouped author normal scenes. Fixed old-model reference on the enlarged val before user trains; not a single-factor ablation.",
+  "hardware_decision": "RTX3050Ti 4GB: batch2, FP32 and workers0 reduce activation/RAM pressure; nbs64 retains nominal gradient accumulation. Forward-only preflight cannot guarantee backward memory. Do not silently change batch/imgsz/AMP on OOM: preserve failure and create a new config.",
+  "target": {
+    "primary_metric": "validation mAP50(B)",
+    "aspirational_lower_bound": 0.7,
+    "guaranteed": false,
+    "checkpoint_selection": "Ultralytics8.4.178 best fitness:mAP50-95",
+    "secondary_checks": [
+      "Fixed confidence.25/IoU.5 precision,recall,F1 and negative-image FP rate on same enlarged val",
+      "Prior217-image validation subset retained via source provenance for diagnosing recall drift"
+    ],
+    "independent_test_claim_allowed": false
+  },
+  "limitations": "No train in preparation. More correlated normal frames do not create new collision events or guarantee70%. Old test/holdout consumed and remain excluded, fresh reserve not inferred; camera independence unproven. Compare old and new checkpoints on same enlarged val; do not directly compare mAP on different validation compositions.",
+  "reference_validation_output": "outputs/audits/b0_hard_negative_sources_v1/reference_val",
+  "reference_experiments": [
+    {
+      "path": "outputs/training/b0_s960_v1/experiment.json",
+      "sha256": "f7ba207847c00fddbc4fa0740ac3310da6f0dff603da5613af7f703f6cd6b259"
+    }
+  ],
+  "training_mode": "New fine-tuning run from completed best.pt; optimizer/scheduler reset, not resume. User launches training manually."
+}

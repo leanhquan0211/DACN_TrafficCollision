@@ -1,0 +1,23 @@
+{
+  "policy_version": "b0_s960_hard_negative_pilot_v1",
+  "pilot_training_release_allowed": true,
+  "benchmark_training_release_allowed": false,
+  "positive_source": "ACCIDENT v9 author impact bounding boxes for vehicle-vehicle collisions; decoded frame/PTS and image hashes verified; prior geometry exclusions retained",
+  "negative_sources": [
+    "30 individually reviewed preimpact ACCIDENT frames, only within their recorded scope",
+    "User-reviewed full UA-DETRAC sequences MVI_20011, MVI_20012, MVI_20032, sampled uniformly and kept in the same train group",
+    "Author-normal TAD clip labels, sampled uniformly and kept in train",
+    "Prior 18-clip expansion retained with original splits; prior 120-frame holdout is consumed and stays excluded.",
+    "New 24 author train/normal clips fully decoded; 14 clips train,3 val,4 fresh reserve,3 excluded. Train selection20uniform+10ranked/clip; val/reserve30uniform."
+  ],
+  "unreviewed_preimpact_candidates_allowed": false,
+  "unlabeled_frames": "unknown; never create empty detection labels solely because annotations are absent",
+  "test_split": "Legacy consumed test112 unchanged. Prior consumed negative holdout120 and possible related new scenes excluded. Fresh reserve120 from4clips/2conservativegroups is outside train/val; no model predictions.",
+  "limitations": "Old positive validation reused; no new positive events; camera independence unproven. Frame mining adapts SSD idea offline, not SSD loss or paper reproduction. More negatives may reduce false alarms or recall; no guarantee.",
+  "source_papers": [
+    "https://arxiv.org/html/2604.09819v1",
+    "https://github.com/UnicomAI/UnicomBenchmark/tree/main/TADBench",
+    "https://arxiv.org/html/1512.02325v5"
+  ],
+  "expansion_review": "data/reviews/2026-10-29-b0-hard-negative-review.json"
+}

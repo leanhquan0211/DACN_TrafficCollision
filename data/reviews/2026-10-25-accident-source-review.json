@@ -1,0 +1,80 @@
+{
+  "review_id": "2026-10-25-accident-public",
+  "reviewer": "assistant",
+  "user_review": false,
+  "source_dataset": "picekl/accident",
+  "source_version": 9,
+  "report_path": "outputs/audits/accident_public/report.json",
+  "source_report_sha256": "92d76e467dff2dcceef91bafac0714161149373d93800dff635e9ae276d8ece6",
+  "verification_path": "outputs/audits/accident_public/verification.json",
+  "verification_sha256": "19abf71bfa82d8b667db1929b4424208b633f3950d3d3e80e785d641b6f37331",
+  "review_scope": "Native impact images plus before/after context; not a new first-contact or temporal-end annotation",
+  "geometry_rule": "Keep original source box only when it represents visible interacting parties at verified impact; do not expand or fix author geometry",
+  "source_timing": "PTS aligns with CSV impact time in the released file; original capture FPS and CADP timing unchanged",
+  "decoded_frame_count_note": "All six decoded counts are source no_frames + 1; no_frames is kept verbatim, not treated as exact decoded count. PTS independently validates mapping.",
+  "grouping_note": "Strip final segment suffix for provisional original-source group; distinct IDs do not prove independent cameras/events. Author paper reports overlap with CADP/TAD; cross-source audit required.",
+  "training_allowed": false,
+  "split_created": false,
+  "clips": [
+    {
+      "source_sequence": "0NixrF6Mt00_0_00",
+      "source_frame": 27,
+      "video_sha256": "2d48421b8546f45634469e0acb66e3d3a9b2d70d5e8625254debf3f12fe7b61d",
+      "image_sha256": "71c6ea005362b70fde0de1d976c52bbe8842437c0fee1ec99e86a6f8f4661d0d",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "reason": "Source box covers the interacting vehicles in native image/context; retain author geometry without edits",
+      "annotation_origin": "author_accident_impact_region",
+      "source_group": "ACCIDENT:0NixrF6Mt00_0"
+    },
+    {
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": 17,
+      "video_sha256": "70342c25dfb2767b81efbcd14e280ea479077bb80848fa642bf933aa7a59e8e5",
+      "image_sha256": "5f8732b25a8ee14a1bf1f5838960901cdc73841fc5be515433646929180d3d4f",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "reason": "Source box covers the interacting vehicles in native image/context; retain author geometry without edits",
+      "annotation_origin": "author_accident_impact_region",
+      "source_group": "ACCIDENT:04O2SOGSG_U"
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_00",
+      "source_frame": 11,
+      "video_sha256": "6cefe54e56b737166a6aca924e656c852785e2c4523472fd0862777182236122",
+      "image_sha256": "2655b5a6139a5047bea5efb680670af8d019c39d204c75ed48627392a6d23a37",
+      "b0_region_status": "excluded_geometry_uncertain",
+      "reason": "Distant small interaction; author region/participant coverage insufficiently clear in native impact/context. Exclude rather than invent a larger box.",
+      "annotation_origin": "author_accident_impact_region",
+      "source_group": "ACCIDENT:2QZf8MiIRK0"
+    },
+    {
+      "source_sequence": "1_F0r7KVJ1k_00",
+      "source_frame": 160,
+      "video_sha256": "bbf1b0e3498665a9cd37ca1cfae80d3ae9881c44f6694921b35eb45eb0a6b1d8",
+      "image_sha256": "08f1871cee572acdf992bafcc734cc779eedae105eefab958d6833d043e1ec22",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "reason": "Source box covers the interacting vehicles in native image/context; retain author geometry without edits",
+      "annotation_origin": "author_accident_impact_region",
+      "source_group": "ACCIDENT:1_F0r7KVJ1k"
+    },
+    {
+      "source_sequence": "-FQxK6HdxNU_00",
+      "source_frame": 48,
+      "video_sha256": "46b7d8aab0e30a4fb0a219eb26685a4cade71638fe113fef739b0c8a1a8d81e6",
+      "image_sha256": "08d3086bf930a48c5e224ffdc09c334bc1cfc0293e36300630de4f2cff97e7e8",
+      "b0_region_status": "excluded_geometry_uncertain",
+      "reason": "Author box covers principally the right vehicle; left involved vehicle extends outside region. Does not consistently cover both parties under current B0 policy.",
+      "annotation_origin": "author_accident_impact_region",
+      "source_group": "ACCIDENT:-FQxK6HdxNU"
+    },
+    {
+      "source_sequence": "0PrAtifCwjg_00",
+      "source_frame": 137,
+      "video_sha256": "c6fbb2517b780b24858e8b5fb002f53a8bab2706f967379557b8a548e1d0f856",
+      "image_sha256": "33612997a02fc6ca045bf6e99134b178bb595ed740367e1c447956e6e256d562",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "reason": "Source box covers the interacting vehicles in native image/context; retain author geometry without edits",
+      "annotation_origin": "author_accident_impact_region",
+      "source_group": "ACCIDENT:0PrAtifCwjg"
+    }
+  ]
+}

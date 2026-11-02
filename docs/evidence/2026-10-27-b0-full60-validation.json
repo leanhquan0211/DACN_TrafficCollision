@@ -1,0 +1,111 @@
+{
+  "scope": "same 97-image validation only; old test and external normal probe excluded",
+  "runs": {
+    "b0_verified_pilot_v1": {
+      "epochs_completed": 60,
+      "best_csv_epoch": 45,
+      "best_csv_mAP50_95": 0.46559,
+      "best_checkpoint_val": {
+        "metrics/precision(B)": 0.8183034881572434,
+        "metrics/recall(B)": 0.49491730057616445,
+        "metrics/mAP50(B)": 0.6062669292812166,
+        "metrics/mAP50-95(B)": 0.46033417247995567,
+        "fitness": 0.46033417247995567
+      },
+      "best_checkpoint_fixed_val": {
+        "tp": 52,
+        "fp": 49,
+        "fn": 39,
+        "precision": 0.5148514851485149,
+        "recall": 0.5714285714285714,
+        "f1": 0.5416666666666666,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 6,
+        "negative_frames_with_predictions": 3,
+        "negative_frame_false_positive_rate": 0.5,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      },
+      "dataset_yaml_sha256": "a7208b197cd63d3c2d36fbff49decf60685e4c15ad94abe3e5636bcb29c0878a",
+      "provenance_sha256": "d2d8af03088633fd033434249e6e1f82a086fa80eb4086d31c53c8e6bc7d638a",
+      "checkpoint_sha256": "59d58a20700d3e689a33afa20845a670c7a40c7399d80f44db626be4f38a7fbc",
+      "config_sha256": "0f2f9f94c882de0df8423d0714fd9611fb33408a533e50c52b5799350bb11986"
+    },
+    "b0_verified_lr001_val_v1": {
+      "epochs_completed": 48,
+      "best_csv_epoch": 30,
+      "best_csv_mAP50_95": 0.49865,
+      "best_checkpoint_val": {
+        "metrics/precision(B)": 0.7679843376770755,
+        "metrics/recall(B)": 0.5714285714285714,
+        "metrics/mAP50(B)": 0.6686135654278283,
+        "metrics/mAP50-95(B)": 0.5064301459002153,
+        "fitness": 0.5064301459002153
+      },
+      "best_checkpoint_fixed_val": {
+        "tp": 60,
+        "fp": 49,
+        "fn": 31,
+        "precision": 0.5504587155963303,
+        "recall": 0.6593406593406593,
+        "f1": 0.6,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 6,
+        "negative_frames_with_predictions": 3,
+        "negative_frame_false_positive_rate": 0.5,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      },
+      "dataset_yaml_sha256": "a7208b197cd63d3c2d36fbff49decf60685e4c15ad94abe3e5636bcb29c0878a",
+      "provenance_sha256": "d2d8af03088633fd033434249e6e1f82a086fa80eb4086d31c53c8e6bc7d638a",
+      "checkpoint_sha256": "f23ae0727508d271042c5e62a265aec064016a0c2729295180439b887182bf36",
+      "config_sha256": "5b98fec74aad9b83d02c5e6329037ac97020bbbad174c98427bef6644c563459"
+    },
+    "b0_verified_lr001_full60_v1": {
+      "epochs_completed": 60,
+      "best_csv_epoch": 47,
+      "best_csv_mAP50_95": 0.49563,
+      "best_checkpoint_val": {
+        "metrics/precision(B)": 0.6864446389693104,
+        "metrics/recall(B)": 0.5934065934065934,
+        "metrics/mAP50(B)": 0.6493778066836325,
+        "metrics/mAP50-95(B)": 0.49411996606706604,
+        "fitness": 0.49411996606706604
+      },
+      "best_checkpoint_fixed_val": {
+        "tp": 56,
+        "fp": 65,
+        "fn": 35,
+        "precision": 0.4628099173553719,
+        "recall": 0.6153846153846154,
+        "f1": 0.5283018867924528,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 6,
+        "negative_frames_with_predictions": 4,
+        "negative_frame_false_positive_rate": 0.6666666666666666,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      },
+      "dataset_yaml_sha256": "a7208b197cd63d3c2d36fbff49decf60685e4c15ad94abe3e5636bcb29c0878a",
+      "provenance_sha256": "d2d8af03088633fd033434249e6e1f82a086fa80eb4086d31c53c8e6bc7d638a",
+      "checkpoint_sha256": "7a4f84cf94d4bb71615abc07363c75b4df7f12d65942c29e7c523573477f654f",
+      "config_sha256": "863c0413a4d1f08442df18fd18685e4b674373fa7f6560bc0726f0498fad59ae",
+      "epoch_50": {
+        "train/box_loss": 0.848,
+        "train/cls_loss": 0.7412,
+        "train/dfl_loss": 0.94827,
+        "metrics/mAP50-95(B)": 0.48653
+      },
+      "epoch_60": {
+        "train/box_loss": 0.76241,
+        "train/cls_loss": 0.58679,
+        "train/dfl_loss": 0.91608,
+        "metrics/mAP50-95(B)": 0.48419
+      },
+      "best_epoch_50_to_60": {
+        "epoch": 52,
+        "mAP50_95": 0.49229
+      }
+    }
+  }
+}

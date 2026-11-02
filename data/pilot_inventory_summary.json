@@ -1,11 +1,25 @@
 {
-  "manifest_assets": 12,
-  "known_source_sequence_groups": 4,
+  "manifest_assets": 44,
+  "known_source_sequence_groups": 36,
   "confirmed_collision_sequences": 1,
   "confirmed_collision_events": 1,
   "confirmed_negative_full_sequences": 3,
   "unknown_old_assets": 3,
   "derived_assets_are_not_independent_samples": true,
   "cross_camera_independence_verified": false,
-  "grouping_table": "data/pilot_inventory.csv"
+  "grouping_table": "data/pilot_inventory.csv",
+  "author_labeled_additional_sequences": 32,
+  "author_labeled_additional_nominal_events": 30,
+  "user_confirmed_source_sequence_groups": 4,
+  "updated_date": "2026-10-26",
+  "note": "Counts refer to author source events, not verified independent CCTV vehicle-vehicle events. New batch 13 kept, 5 geometry uncertain, 2 scope excluded; old reviews unchanged. Pool v3 48 positive/2375 negative; no split/train.",
+  "author_sttad_positive_sequences": 4,
+  "author_tad_negative_clips": 2,
+  "conservative_known_leakage_groups": 32,
+  "conservative_b0_pool_leakage_groups": 24,
+  "author_accident_selected_sequences": 26,
+  "author_accident_accepted_impact_frames": 17,
+  "author_accident_excluded_geometry_frames": 7,
+  "author_accident_excluded_scope_frames": 2,
+  "assistant_reviewed_preimpact_negative_frames": 30
 }

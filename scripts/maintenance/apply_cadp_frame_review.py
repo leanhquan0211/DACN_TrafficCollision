@@ -13,9 +13,9 @@ import sys
 from copy import deepcopy
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from scripts.prepare_cadp_pilot import read_vatic
-from scripts.update_manifest_reviews import read_manifest, append_note, verify_file
+from scripts.maintenance.update_manifest_reviews import read_manifest, append_note, verify_file
 from src.data_preparation import new_audit_dir, save_csv, save_json, unique_path
 
 

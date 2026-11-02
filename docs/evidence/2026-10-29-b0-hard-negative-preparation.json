@@ -1,0 +1,223 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "status": "prepared_not_trained",
+  "training_started": false,
+  "active_training_processes": [],
+  "new_training_output_exists": false,
+  "initial_checkpoint_unchanged": true,
+  "original_2170_images_labels_splits_groups_unchanged": true,
+  "original_manifest_rows_preserved": 62,
+  "manifest_rows_now": 86,
+  "old_readiness_releases_unchanged": true,
+  "old_catalog_assets_preserved": true,
+  "dataset": {
+    "samples": 2680,
+    "splits": {
+      "test": 112,
+      "train": 2261,
+      "val": 307
+    },
+    "positive_images": 1320,
+    "raw_new_clips": 24,
+    "raw_new_decoded_frames": 8992,
+    "new_normal_exported_images": 510,
+    "new_collision_events_added": 0,
+    "new_reserved_frames": 120,
+    "new_reserved_clips": 4,
+    "new_reserved_conservative_groups": 2,
+    "new_reserve_predictions_seen": false,
+    "old_holdout_consumed": true,
+    "camera_independence_verified": false
+  },
+  "preflight": {
+    "status": "prepared_not_trained",
+    "config": "configs/b0_s960_hardneg_v1.json",
+    "config_sha256": "23003db8fd2e7e61cc438c35e7c02ae7b8b2cc4fa942de920b466878de5a7ed2",
+    "initial_weights_sha256": "c1fdd6dcbb09d8d2c3dae4c2c90dfcf4189fac88980c045c3eff095dba019302",
+    "dataset_yaml_sha256": "2f34dbcea85175e24317c5e14706ca297ccede44f21fd679dbc166f54f9be65e",
+    "provenance_sha256": "07306a617a971ee2a2a4398cd39eb3798f3873d04013014fad3c12de82aabb14",
+    "decoded_images": {
+      "train": 2261,
+      "val": 307
+    },
+    "bbox_counts": {
+      "train": 1122,
+      "val": 91
+    },
+    "input_shape": [
+      2,
+      3,
+      960,
+      960
+    ],
+    "parameters": 11135987,
+    "peak_forward_allocated_bytes": 281309184,
+    "peak_forward_reserved_bytes": 346030080,
+    "device": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "torch": "2.11.0+cu128",
+    "ultralytics": "8.4.178",
+    "optimizer_created": false,
+    "backward_called": false,
+    "training_started": false,
+    "checkpoint_written": false,
+    "test_inference": false,
+    "negative_holdout_inference": false,
+    "limitation": "Forward-only memory is not a training VRAM guarantee; no accuracy claim before training."
+  },
+  "reference_validation": {
+    "status": "complete",
+    "config": "configs/b0_s960_hardneg_v1.json",
+    "config_sha256": "23003db8fd2e7e61cc438c35e7c02ae7b8b2cc4fa942de920b466878de5a7ed2",
+    "results": [
+      {
+        "reference_experiment": "outputs/training/b0_s960_v1/experiment.json",
+        "checkpoint": "outputs/training/b0_s960_v1/weights/best.pt",
+        "checkpoint_sha256": "c1fdd6dcbb09d8d2c3dae4c2c90dfcf4189fac88980c045c3eff095dba019302",
+        "split": "val",
+        "images": 307,
+        "official_bbox_metrics": {
+          "metrics/precision(B)": 0.8466284501812372,
+          "metrics/recall(B)": 0.5934065934065934,
+          "metrics/mAP50(B)": 0.6837855345440463,
+          "metrics/mAP50-95(B)": 0.5382303529146212,
+          "fitness": 0.5382303529146212
+        },
+        "fixed_threshold_metrics": {
+          "tp": 64,
+          "fp": 43,
+          "fn": 27,
+          "precision": 0.5981308411214953,
+          "recall": 0.7032967032967034,
+          "f1": 0.6464646464646465,
+          "confidence": 0.25,
+          "matching_iou": 0.5,
+          "negative_frames": 216,
+          "negative_frames_with_predictions": 7,
+          "negative_frame_false_positive_rate": 0.032407407407407406,
+          "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+        },
+        "provenance_sha256": "07306a617a971ee2a2a4398cd39eb3798f3873d04013014fad3c12de82aabb14"
+      }
+    ],
+    "test_inference": false,
+    "reserved_negative_holdout_inference": false,
+    "new_model_trained": false,
+    "scope": "baseline measurements on enlarged validation only; not a new independent test result"
+  },
+  "split_similarity": {
+    "dataset": "data/processed/b0_s960_hardneg_v1/dataset",
+    "images": 2800,
+    "candidates": [],
+    "thresholds": {
+      "phash_hamming_max": 5,
+      "dhash_hamming_max": 8
+    },
+    "scope": "Candidate resemblance, not proof of identical event or independent cameras"
+  },
+  "temporal_diagnostic": {
+    "sequences": 12,
+    "frames": 4845,
+    "negative_aggregate_by_role": {
+      "consumed_holdout_posthoc_diagnostic": {
+        "B0": {
+          "frames": 1291,
+          "active_frames": 300,
+          "raw_on_bouts": 40
+        },
+        "B1_kofn": {
+          "frames": 1291,
+          "active_frames": 293,
+          "raw_on_bouts": 17
+        },
+        "B1_EMA": {
+          "frames": 1291,
+          "active_frames": 302,
+          "raw_on_bouts": 16
+        }
+      },
+      "training_source_operational_diagnostic": {
+        "B0": {
+          "frames": 2037,
+          "active_frames": 0,
+          "raw_on_bouts": 0
+        },
+        "B1_kofn": {
+          "frames": 2037,
+          "active_frames": 0,
+          "raw_on_bouts": 0
+        },
+        "B1_EMA": {
+          "frames": 2037,
+          "active_frames": 0,
+          "raw_on_bouts": 0
+        }
+      },
+      "validation_normal_diagnostic": {
+        "B0": {
+          "frames": 1296,
+          "active_frames": 99,
+          "raw_on_bouts": 31
+        },
+        "B1_kofn": {
+          "frames": 1296,
+          "active_frames": 92,
+          "raw_on_bouts": 11
+        },
+        "B1_EMA": {
+          "frames": 1296,
+          "active_frames": 90,
+          "raw_on_bouts": 13
+        }
+      }
+    },
+    "full_B1_complete": false,
+    "output": "outputs/training/b0_s960_v1/temporal_diagnostics_v1/index.html",
+    "cadp": "All3policies active35/35 in96-130 and already active before96; unknown outside; no onset delay or seconds"
+  },
+  "tests": {
+    "unittest_tests_passed": 66,
+    "syntax_and_import_files": 6,
+    "cli_help_passed": 5,
+    "b1_output_videos_fully_reread": 12,
+    "validation_first_attempt": "WinError5 Windows pipe in sandbox; no metrics/train. Same validation succeeded outside sandbox."
+  },
+  "recipe": {
+    "new_run": true,
+    "optimizer_reset_when_user_trains": true,
+    "model": "same YOLOv8s",
+    "imgsz": 960,
+    "batch": 2,
+    "workers": 0,
+    "amp": false,
+    "optimizer": "SGD",
+    "lr0": 0.0003,
+    "epochs_max": 40,
+    "early_stopping_patience": 10,
+    "reproducibility": "Project adaptation of public ideas; not reproduction of SSD or guaranteed70%"
+  },
+  "fingerprints": {
+    "scripts/analyze_b0.py": "8e330c01253021946085d3ef8126fe5c8ceaa91214e6f31a604eee798881d28b",
+    "scripts/prepare_b0_scaled_release.py": "d6543af51f3577d7d7c854e09ea5d1e70ca057660052a4d068fb2c5623c7af07",
+    "scripts/prepare_b0_pilot_index.py": "db5fefac5307b54f8f7ca098b77b4df5340e39db2fc52cd3aef52cde29e155ff",
+    "scripts/train_b0.py": "846c6bc859e924c554ff34f42f82b13a6875268b582f6aaf16b50a2b3ab48066",
+    "scripts/inspect_public_zip.py": "7eca64f4e8f56f333ddc67fc6deb94f1bd794564abdcc1d2bc542d3c3b876b21",
+    "src/b0_diagnostics.py": "ce353cf2504f969706f3975955b3eeea1b178db3826b3d69e3dd196a089846f8",
+    "configs/b0_s960_hardneg_v1.json": "23003db8fd2e7e61cc438c35e7c02ae7b8b2cc4fa942de920b466878de5a7ed2",
+    "configs/b1_causal_diagnostics_v1.json": "3422f7b77cc8a9238018eeae7aee8f76735f6c57ffb69bafaccf7dfd5a39d0bb",
+    "configs/b0_hard_negative_sources_v1.json": "02107cbcd7feb482cc17ee66ab5eec371257aa751966ebf2225f9bb6134d0e65",
+    "configs/b0_hard_negative_label_policy.json": "209e77098cca66f8c430ab304742c86f9d537a86c6a7ddc7713131354fdbbbc4",
+    "data/reviews/2026-10-29-b0-hard-negative-review.json": "d29b039fa7e3a12fc0f640a74fd6a62b5e1840ed04fbda53716abd0e78037e67",
+    "outputs/audits/b0_hard_negative_sources_v1/normal_manifest.json": "6fcfc8e5be4eb13617d5a4b6074c004232e636797441d2651a23ae5ec954895f",
+    "outputs/audits/b0_hard_negative_sources_v1/groups_before_mining.json": "e8d58e45f75ead9e5940bd7c77c2c0b1ca985892f483410b99c100b7e8616504",
+    "outputs/audits/b0_hard_negative_sources_v1/selected_normal_manifest.json": "30357abd23dd4dbd68c43efcf76de5b9997b48d788fc8dfa42bb9ee30f06b992",
+    "outputs/audits/b0_hard_negative_sources_v1/mining_summary.json": "34a13d810f44b1e5293654ee5c98f98fea212c0ef0898be70498d57a953e2167",
+    "outputs/audits/b0_hard_negative_sources_v1/train_preflight.json": "4409b09394df47a5cda3ea01e023ec24cb871184ee35af6d1941c298ff6069d2",
+    "outputs/audits/b0_hard_negative_sources_v1/final_split_screen.json": "4b16e70ae1d35eb0dee6eefb1895d21ba54c297dd0004a083dc7c666039df226",
+    "outputs/audits/b0_hard_negative_sources_v1/reference_val/report.json": "41e7b1a1536cb41807a6a3bbff960edfc106d805f64954bffbde8027df10a59a",
+    "outputs/training/b0_s960_v1/temporal_diagnostics_v1/report.json": "623470ca959c60c6794d24ac435d21516b3db87d963f5cb216b253dfe080222f",
+    "data/processed/b0_s960_hardneg_v1/dataset/dataset.yaml": "2f34dbcea85175e24317c5e14706ca297ccede44f21fd679dbc166f54f9be65e",
+    "data/processed/b0_s960_hardneg_v1/dataset/provenance.csv": "07306a617a971ee2a2a4398cd39eb3798f3873d04013014fad3c12de82aabb14",
+    "data/registries/b0_s960_hardneg_v1_holdout.json": "02e5ba42d0d6ce9c6e5b70ed6f4598b407b25c565de61f66c2016e37cfafbd26"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "frame_references": 2376,
+  "label_counts": {
+    "positive": 31,
+    "negative": 2345
+  },
+  "source_counts": {
+    "STTAD": 31,
+    "UA-DETRAC": 2037,
+    "TAD": 308
+  },
+  "nominal_source_groups": 9,
+  "conservative_leakage_groups": 7,
+  "unknown_sttad_frames_excluded": 145,
+  "corrupt_sttad_files_excluded": 2,
+  "cadp_derived_boxes_included": 0,
+  "images_copied": 0,
+  "empty_labels_created": 0,
+  "split_created": false,
+  "can_train": false,
+  "blockers": [
+    "Few positive source groups and sparse public region coverage",
+    "Dataset identity remains correlated with labels; TAD negatives add domain variety, not proof of matched cameras",
+    "No verified source/camera-independent split or sufficient hard-negative evaluation"
+  ],
+  "frame_index_note": "STTAD/DETRAC use source filename numbers; TAD video references use 0-based decode indices, not source seconds",
+  "sttad_report": "outputs/audits/sttad_public_6/report.json",
+  "negative_index": "data/processed/b0_reviewed_negatives/frames.csv",
+  "source_review": "data/reviews/2026-10-24-pilot-source-review.json"
+}

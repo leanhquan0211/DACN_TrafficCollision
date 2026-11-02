@@ -1,0 +1,257 @@
+{
+  "review_date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "reviewer": "assistant_visual_scene_review",
+  "candidate_manifest": "outputs/audits/b0_hard_negative_sources_v1/normal_manifest.json",
+  "candidate_manifest_sha256": "6fcfc8e5be4eb13617d5a4b6074c004232e636797441d2651a23ae5ec954895f",
+  "group_screen": "outputs/audits/b0_hard_negative_sources_v1/group_screen.json",
+  "group_screen_sha256": "26e8226646bb652d49cbd056bf9f602692a8aff06a578c3db89b1d27047b5937",
+  "mining_checkpoint": "outputs/training/b0_s960_v1/weights/best.pt",
+  "mining_checkpoint_sha256": "c1fdd6dcbb09d8d2c3dae4c2c90dfcf4189fac88980c045c3eff095dba019302",
+  "ultralytics_version": "8.4.178",
+  "model_predictions_seen_before_assignment": false,
+  "camera_independence_verified": false,
+  "visual_evidence": [
+    "outputs/audits/b0_hard_negative_sources_v1/scene_page_1.jpg",
+    "outputs/audits/b0_hard_negative_sources_v1/scene_page_2.jpg",
+    "outputs/audits/b0_hard_negative_sources_v1/scene_page_3.jpg",
+    "outputs/audits/b0_hard_negative_sources_v1/scene_page_4.jpg",
+    "outputs/audits/b0_hard_negative_sources_v1/nearest_base_page_1.jpg",
+    "outputs/audits/b0_hard_negative_sources_v1/nearest_base_page_2.jpg",
+    "outputs/audits/b0_hard_negative_sources_v1/nearest_base_page_3.jpg",
+    "outputs/audits/b0_hard_negative_sources_v1/nearest_base_page_4.jpg"
+  ],
+  "comparison_evidence": [
+    "outputs/audits/b0_normal_expansion_v1/scene_page_1.jpg",
+    "outputs/audits/b0_normal_expansion_v1/scene_page_2.jpg",
+    "outputs/audits/b0_normal_expansion_v1/scene_page_3.jpg"
+  ],
+  "review_scope": "Source/camera screening only; author normal labels retained; not user review. No model predictions on new clips before assignment.",
+  "groups": [
+    {
+      "group_id": "TAD:hardneg_v1:20220518_acci-bg12",
+      "sequences": [
+        "20220518_acci-bg12"
+      ],
+      "assignment": "train",
+      "scene_observation": "Đường chia đôi ban đêm, đèn pha chói; khác góc IR bg28 đã consumed.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220518_acci-bg16",
+      "sequences": [
+        "20220518_acci-bg16"
+      ],
+      "assignment": "train",
+      "scene_observation": "Cao tốc thẳng, biển xanh bên phải, rừng và nhà vàng bên trái.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220518_acci-bg18",
+      "sequences": [
+        "20220518_acci-bg18"
+      ],
+      "assignment": "train",
+      "scene_observation": "Camera PTZ đổi góc/zoom trong clip, cao tốc và khu nhà; giữ toàn clip một nhóm.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220518_acci-bg20",
+      "sequences": [
+        "20220518_acci-bg20"
+      ],
+      "assignment": "train",
+      "scene_observation": "Lối rẽ cao tốc, đảo sơn và cột chống va; quan sát khác probe F4.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220518_acci-bg24",
+      "sequences": [
+        "20220518_acci-bg24"
+      ],
+      "assignment": "train",
+      "scene_observation": "Mưa/sương trên cao tốc, giọt nước trên kính; có PTZ đổi góc.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220518_acci-bg36",
+      "sequences": [
+        "20220518_acci-bg36"
+      ],
+      "assignment": "train",
+      "scene_observation": "Đường dọc sườn đồi gần nước, mưa mờ.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220518_acci-bg52",
+      "sequences": [
+        "20220518_acci-bg52"
+      ],
+      "assignment": "train",
+      "scene_observation": "Cao tốc có xe công vụ và cọc tiêu chiếm làn, không lấy xe công vụ làm nhãn tai nạn.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220518_acci-bg6",
+      "sequences": [
+        "20220518_acci-bg6"
+      ],
+      "assignment": "train",
+      "scene_observation": "Đường chia đôi uốn nhẹ, khu nhà bên phải và rừng trái.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220620_acci-bg20",
+      "sequences": [
+        "20220620_acci-bg20"
+      ],
+      "assignment": "train",
+      "scene_observation": "Góc zoom sát xe tải ở lề, cọc tiêu và cây tiền cảnh; nhãn normal tác giả.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220620_acci-bg22",
+      "sequences": [
+        "20220620_acci-bg22"
+      ],
+      "assignment": "train",
+      "scene_observation": "Cao tốc cong nhiều xe tải, mặt đường ướt, cầu vượt ở xa.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220620_acci-bg5",
+      "sequences": [
+        "20220620_acci-bg5"
+      ],
+      "assignment": "train",
+      "scene_observation": "Đèn xe công vụ và đèn nháy dưới cầu vượt lúc chạng vạng; normal tác giả.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20220620_acci-bg7",
+      "sequences": [
+        "20220620_acci-bg7"
+      ],
+      "assignment": "train",
+      "scene_observation": "PTZ từ toàn cảnh vào xe/biển chỉ đường; giữ một nhóm.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20230818_acci-bg_67",
+      "sequences": [
+        "20230818_acci-bg_67"
+      ],
+      "assignment": "train",
+      "scene_observation": "Đêm, đèn đỏ sáng mạnh, cột dây sát camera và nhà ven đường.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20230818_acci-bg_71",
+      "sequences": [
+        "20230818_acci-bg_71"
+      ],
+      "assignment": "train",
+      "scene_observation": "Đường cong ven núi, dải phân cách xanh, biển cấm sát mép trái.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220620_acci-bg13",
+      "sequences": [
+        "20230818_acci-bg_7"
+      ],
+      "assignment": "val",
+      "scene_observation": "Có thể cùng cảnh/góc với bg13 val cũ: biển sáng phía trên trái và đường chéo xuống phải. Gộp bảo thủ, chưa xác nhận camera.",
+      "group_status": "conservative_possible_same_scene_keep_existing_val",
+      "linked_existing_group": "TAD:normal_exp_v1:20220620_acci-bg13"
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_139",
+      "sequences": [
+        "20230818_acci-bg_47"
+      ],
+      "assignment": "val",
+      "scene_observation": "Có thể liên quan hành lang/góc đối diện bg_139 val cũ; giữ cùng val bảo thủ, không tuyên bố camera giống hệt.",
+      "group_status": "conservative_possible_same_scene_keep_existing_val",
+      "linked_existing_group": "TAD:normal_exp_v1:20230818_acci-bg_139"
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20230818_acci-bg_115",
+      "sequences": [
+        "20230818_acci-bg_115"
+      ],
+      "assignment": "val",
+      "scene_observation": "Cao tốc nhìn từ biển chỉ dẫn lớn tiền cảnh, khác các trang cảnh cũ đã rà.",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20230818_acci-bg_1",
+      "sequences": [
+        "20230818_acci-bg_1",
+        "20230818_acci-bg_119"
+      ],
+      "assignment": "reserve_negative_holdout",
+      "scene_observation": "Cùng cảnh trạm thu phí/nhà trắng và sườn núi, hai thời điểm; pHash gần2. Không tách hai clip qua các tập.",
+      "group_status": "same_scene_visually_grouped",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20230818_acci-bg_99",
+      "sequences": [
+        "20230818_acci-bg_99",
+        "20230818_acci-bg_103"
+      ],
+      "assignment": "reserve_negative_holdout",
+      "scene_observation": "Hai góc đường núi vùng thung lũng; gộp một nhóm bảo thủ vì chưa biết camera/corridor.",
+      "group_status": "conservative_mountain_corridor_group",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20230818_acci-bg_107",
+      "sequences": [
+        "20230818_acci-bg_107",
+        "20230818_acci-bg_15"
+      ],
+      "assignment": "exclude",
+      "scene_observation": "Cảnh đêm có biển sáng và dải cây có thể liên quan bg_129 holdout đã xem; chưa đủ bằng chứng phân biệt camera. Không đưa vào train/val.",
+      "group_status": "excluded_possible_consumed_camera",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:hardneg_v1:20230818_acci-bg_59",
+      "sequences": [
+        "20230818_acci-bg_59"
+      ],
+      "assignment": "exclude",
+      "scene_observation": "Góc cao tốc có gantry/cầu vượt có thể liên quan videox_test_F4 đã consumed; PTZ/mưa làm so ảnh khó. Giữ raw, không dùng train/val.",
+      "group_status": "excluded_possible_consumed_camera",
+      "linked_existing_group": null
+    }
+  ],
+  "normal_manifest": "outputs/audits/b0_hard_negative_sources_v1/selected_normal_manifest.json",
+  "normal_manifest_sha256": "30357abd23dd4dbd68c43efcf76de5b9997b48d788fc8dfa42bb9ee30f06b992",
+  "base_index_sha256": "46b614e3b642135331c787f9f21091c3a4038b8dfc140554bb22223fcbb88084",
+  "base_split_sha256": "8389ccd90f8e257e548245733ea3989c23d0c490a769dad4056c221aacb46a57",
+  "group_assignment_before_mining": "outputs/audits/b0_hard_negative_sources_v1/groups_before_mining.json",
+  "group_assignment_before_mining_sha256": "e8d58e45f75ead9e5940bd7c77c2c0b1ca985892f483410b99c100b7e8616504",
+  "base_training_config": "configs/b0_s960_v1.json",
+  "release_key": "hard_negative_pilot_release",
+  "label_policy": "configs/b0_hard_negative_label_policy.json",
+  "training_config": "configs/b0_s960_hardneg_v1.json",
+  "frame_selection_review": "Train only:20 uniform +10 ranked; val/reserve30 uniform, never scored before assignment or selection.",
+  "user_review": "not_user_reviewed; inherited prior confirmations unchanged"
+}

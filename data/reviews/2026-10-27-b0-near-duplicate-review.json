@@ -1,0 +1,34 @@
+{
+  "review_id": "2026-10-27-b0-near-duplicate-review",
+  "reviewer": "assistant_visual_comparison",
+  "user_review": false,
+  "decision_time": "before first test evaluation of expanded v2 training",
+  "scope": "Exclude all held-out frames in these source groups from the clean test evaluation; preserve original dataset and train/val assignments",
+  "input_provenance": "data/processed/b0_accident_scaled_v1/dataset/provenance.csv",
+  "input_provenance_sha256": "14fcb00f7768b877dbc311af58d2632ceacb45e2a59c3e76d47e512ef73affa4",
+  "candidate_report": "outputs/audits/accident_scale/near_duplicate_candidates.json",
+  "candidate_report_sha256": "805146c68ad8c33bd5ee0a46afc1e9aa91515203442386510949f23661c4b9b3",
+  "visual_evidence": "outputs/audits/accident_scale/near_duplicate_candidates.jpg",
+  "visual_evidence_sha256": "8b56143117c2d1f2e7e81059ccbed3bd98b45abac51983fafb777eaa217b72b1",
+  "method": "Compare perceptual hashes of exported frames across train/val/test and visually inspect candidate pairs; heuristic search is not exhaustive",
+  "excluded_test_groups": [
+    {
+      "group": "ACCIDENT:VSNqivMhWnM",
+      "test_sequence": "VSNqivMhWnM_00",
+      "test_frame": 189,
+      "matching_train_sequence": "JeIJWYefuBQ_00",
+      "matching_train_frame": 136,
+      "decision": "same impact event, differently encoded/cut source; test group excluded"
+    },
+    {
+      "group": "ACCIDENT:kaggle-fahaddalwai-cctvfootagevideo_4",
+      "test_sequence": "kaggle-fahaddalwai-cctvfootagevideo_4_00",
+      "test_frame": 111,
+      "matching_train_sequence": "russia4_00",
+      "matching_train_frame": 144,
+      "decision": "same impact event, differently encoded/cut source; test group excluded"
+    }
+  ],
+  "expected_clean_test": {"images": 112, "positive": 107, "negative": 5},
+  "limitations": "Exact and heuristic near-duplicate screening are not proof of independent cameras or a complete search. Original 114-image test is contaminated and must not be reported as the valid held-out result."
+}

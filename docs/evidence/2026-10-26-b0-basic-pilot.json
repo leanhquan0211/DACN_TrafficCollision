@@ -1,0 +1,660 @@
+{
+  "date": "2026-10-26",
+  "timezone": "Asia/Bangkok",
+  "status": "basic_image_pilot_completed_with_poor_test_performance",
+  "user_decision": "Basic B0 image pilot now; hard negatives/long-video/event benchmark deferred",
+  "experiment": {
+    "scope": "basic_image_pilot",
+    "config": {
+      "scope": "basic_image_pilot",
+      "dataset": "data/processed/b0_basic_pilot_v1/dataset/dataset.yaml",
+      "initial_weights": "yolov8n.pt",
+      "output": "outputs/training/b0_basic_pilot_v1",
+      "ultralytics_version": "8.4.178",
+      "seed": 20261026,
+      "epochs": 40,
+      "patience": 15,
+      "imgsz": 640,
+      "batch": 4,
+      "workers": 0,
+      "device": "0",
+      "amp": false,
+      "optimizer": "auto",
+      "prediction_confidence": 0.25,
+      "matching_iou": 0.5,
+      "limitations": "47 images from 17 provisional source groups; hard negatives and temporal alerts deferred; not an author-benchmark reproduction or deployment evaluation"
+    },
+    "config_sha256": "ecf9ddb07495f332b4f1f716aa337a009af8af3b74f85acf087db9ddc594e882",
+    "dataset_yaml_sha256": "f2703f698e8a095bfce9569972fae1d9489d7e25116d2fc9190d0b918fcc97e1",
+    "provenance_sha256": "e8b3e0ada18f6e0edb6fbbe6be3ac8911394ec4758144b1cdda8ae0af955793a",
+    "initial_weights_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+    "checkpoint": "outputs/training/b0_basic_pilot_v1/weights/best.pt",
+    "checkpoint_sha256": "9ce694d6874a916fcb1cee7e84bcd6ea0de8b4cc572d26fb173096a02bd7cafb",
+    "epochs_completed": 16,
+    "torch": "2.11.0+cu128",
+    "ultralytics": "8.4.178",
+    "device": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "wall_seconds_including_evaluation": 107.16533119999804,
+    "official_bbox_metrics": {
+      "val": {
+        "metrics/precision(B)": 0.023993589538821525,
+        "metrics/recall(B)": 0.3333333333333333,
+        "metrics/mAP50(B)": 0.030930232558139537,
+        "metrics/mAP50-95(B)": 0.01780232558139535,
+        "fitness": 0.01780232558139535
+      },
+      "test": {
+        "metrics/precision(B)": 0.0020012402916455437,
+        "metrics/recall(B)": 0.3333333333333333,
+        "metrics/mAP50(B)": 0.0016105769230769231,
+        "metrics/mAP50-95(B)": 0.0004664619890825474,
+        "fitness": 0.0004664619890825474
+      }
+    },
+    "fixed_threshold_metrics": {
+      "val": {
+        "tp": 2,
+        "fp": 60,
+        "fn": 1,
+        "precision": 0.03225806451612903,
+        "recall": 0.6666666666666666,
+        "f1": 0.06153846153846154,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 6,
+        "negative_frames_with_predictions": 6,
+        "negative_frame_false_positive_rate": 1.0,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      },
+      "test": {
+        "tp": 0,
+        "fp": 45,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 5,
+        "negative_frames_with_predictions": 5,
+        "negative_frame_false_positive_rate": 1.0,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      }
+    },
+    "limitations": "47 images from 17 provisional source groups; hard negatives and temporal alerts deferred; not an author-benchmark reproduction or deployment evaluation",
+    "full_B0_complete": false,
+    "temporal_event_evaluation": false
+  },
+  "split": {
+    "seed": 20261026,
+    "scope": "basic accident-region image pilot; hard negatives deferred",
+    "source_pool": "data/processed/b0_public_pilot_v3/index.csv",
+    "source_pool_sha256": "8c50f33a7927823a633d2ac8a149f86d87adcf4cf371aee0968eb23d552f64b2",
+    "samples": 47,
+    "labels": {
+      "negative": 30,
+      "positive": 17
+    },
+    "split_samples": {
+      "test": 8,
+      "train": 30,
+      "val": 9
+    },
+    "split_positive": {
+      "test": 3,
+      "train": 11,
+      "val": 3
+    },
+    "group_assignments": {
+      "ACCIDENT:07Eu77WorsY": "train",
+      "ACCIDENT:1O-y5PmPWdU": "train",
+      "ACCIDENT:0PrAtifCwjg": "train",
+      "ACCIDENT:04O2SOGSG_U": "val",
+      "ACCIDENT:-RE3XseZINA": "test",
+      "ACCIDENT:-i9bRJWMtTo": "train",
+      "ACCIDENT:2BBwMYE-FC4": "val",
+      "ACCIDENT:0jk4tWwDKqc": "test",
+      "ACCIDENT:1ZQAChv0TEI": "val",
+      "ACCIDENT:2QZf8MiIRK0": "test",
+      "ACCIDENT:0NixrF6Mt00_0": "train",
+      "ACCIDENT:1_F0r7KVJ1k": "train",
+      "ACCIDENT:-wlnF8vCVMo": "train",
+      "ACCIDENT:-NgnSm_oEB4": "train",
+      "ACCIDENT:-SNFUobKjoM": "train",
+      "ACCIDENT:-qmYW4S3Xxo": "train",
+      "ACCIDENT:1jCpA4y5NHY": "train"
+    },
+    "group_counts": {
+      "train": 11,
+      "val": 3,
+      "test": 3
+    },
+    "camera_independence_verified": false,
+    "source_group_disjoint": true,
+    "sampling": "All verified ACCIDENT impact boxes and exact reviewed preimpact negatives; no model-based selection",
+    "type_stratification": {
+      "t-bone": [
+        "ACCIDENT:0NixrF6Mt00_0",
+        "ACCIDENT:-wlnF8vCVMo",
+        "ACCIDENT:2QZf8MiIRK0",
+        "ACCIDENT:07Eu77WorsY",
+        "ACCIDENT:2BBwMYE-FC4",
+        "ACCIDENT:0jk4tWwDKqc",
+        "ACCIDENT:1O-y5PmPWdU",
+        "ACCIDENT:-SNFUobKjoM",
+        "ACCIDENT:-qmYW4S3Xxo",
+        "ACCIDENT:1ZQAChv0TEI"
+      ],
+      "rear-end": [
+        "ACCIDENT:04O2SOGSG_U",
+        "ACCIDENT:1_F0r7KVJ1k",
+        "ACCIDENT:-RE3XseZINA",
+        "ACCIDENT:-NgnSm_oEB4",
+        "ACCIDENT:1jCpA4y5NHY"
+      ],
+      "head-on": [
+        "ACCIDENT:0PrAtifCwjg"
+      ],
+      "sideswipe": [
+        "ACCIDENT:-i9bRJWMtTo"
+      ]
+    },
+    "conservative_seattle_groups": [
+      "ACCIDENT:07Eu77WorsY",
+      "ACCIDENT:1O-y5PmPWdU"
+    ],
+    "note": "Rare types retained in train; 3 source groups each for val/test. Not author benchmark split or temporal event evaluation."
+  },
+  "split_rows": [
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "0NixrF6Mt00_0_00",
+      "source_frame": "27",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": "17",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1_F0r7KVJ1k_00",
+      "source_frame": "160",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "0PrAtifCwjg_00",
+      "source_frame": "137",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-wlnF8vCVMo_00",
+      "source_frame": "51",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": "297",
+      "split": "test"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": "121",
+      "split": "test"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "07Eu77WorsY_00",
+      "source_frame": "83",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": "155",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-i9bRJWMtTo_00",
+      "source_frame": "24",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-NgnSm_oEB4_00",
+      "source_frame": "50",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "0jk4tWwDKqc_00",
+      "source_frame": "156",
+      "split": "test"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1O-y5PmPWdU_00",
+      "source_frame": "110",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-SNFUobKjoM_00",
+      "source_frame": "403",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-qmYW4S3Xxo_00",
+      "source_frame": "64",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1jCpA4y5NHY_00",
+      "source_frame": "55",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": "60",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-wlnF8vCVMo_00",
+      "source_frame": "25",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": "0",
+      "split": "test"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": "148",
+      "split": "test"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": "0",
+      "split": "test"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": "60",
+      "split": "test"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "07Eu77WorsY_00",
+      "source_frame": "41",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": "0",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": "77",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-i9bRJWMtTo_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-i9bRJWMtTo_00",
+      "source_frame": "11",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-NgnSm_oEB4_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-NgnSm_oEB4_00",
+      "source_frame": "24",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "0jk4tWwDKqc_00",
+      "source_frame": "77",
+      "split": "test"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1O-y5PmPWdU_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1O-y5PmPWdU_00",
+      "source_frame": "54",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-SNFUobKjoM_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-SNFUobKjoM_00",
+      "source_frame": "201",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-qmYW4S3Xxo_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "-qmYW4S3Xxo_00",
+      "source_frame": "31",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1jCpA4y5NHY_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1jCpA4y5NHY_00",
+      "source_frame": "27",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": "0",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": "29",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "0NixrF6Mt00_0_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": "0",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": "8",
+      "split": "val"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1_F0r7KVJ1k_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "1_F0r7KVJ1k_00",
+      "source_frame": "79",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "0PrAtifCwjg_00",
+      "source_frame": "0",
+      "split": "train"
+    },
+    {
+      "source_dataset": "ACCIDENT",
+      "source_sequence": "0PrAtifCwjg_00",
+      "source_frame": "68",
+      "split": "train"
+    }
+  ],
+  "validation_cases": [
+    {
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": "0",
+      "leakage_group": "ACCIDENT:04O2SOGSG_U",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "3",
+      "fn": "0",
+      "prediction_count": "3",
+      "example": "04O2SOGSG_U_00_f000000.jpg"
+    },
+    {
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": "8",
+      "leakage_group": "ACCIDENT:04O2SOGSG_U",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "5",
+      "fn": "0",
+      "prediction_count": "5",
+      "example": "04O2SOGSG_U_00_f000008.jpg"
+    },
+    {
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": "17",
+      "leakage_group": "ACCIDENT:04O2SOGSG_U",
+      "collision_label": "positive",
+      "tp": "1",
+      "fp": "5",
+      "fn": "0",
+      "prediction_count": "6",
+      "example": "04O2SOGSG_U_00_f000017.jpg"
+    },
+    {
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": "0",
+      "leakage_group": "ACCIDENT:1ZQAChv0TEI",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "9",
+      "fn": "0",
+      "prediction_count": "9",
+      "example": "1ZQAChv0TEI_00_f000000.jpg"
+    },
+    {
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": "29",
+      "leakage_group": "ACCIDENT:1ZQAChv0TEI",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "4",
+      "fn": "0",
+      "prediction_count": "4",
+      "example": "1ZQAChv0TEI_00_f000029.jpg"
+    },
+    {
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": "60",
+      "leakage_group": "ACCIDENT:1ZQAChv0TEI",
+      "collision_label": "positive",
+      "tp": "0",
+      "fp": "10",
+      "fn": "1",
+      "prediction_count": "10",
+      "example": "1ZQAChv0TEI_00_f000060.jpg"
+    },
+    {
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": "0",
+      "leakage_group": "ACCIDENT:2BBwMYE-FC4",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "6",
+      "fn": "0",
+      "prediction_count": "6",
+      "example": "2BBwMYE-FC4_00_f000000.jpg"
+    },
+    {
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": "77",
+      "leakage_group": "ACCIDENT:2BBwMYE-FC4",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "2",
+      "fn": "0",
+      "prediction_count": "2",
+      "example": "2BBwMYE-FC4_00_f000077.jpg"
+    },
+    {
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": "155",
+      "leakage_group": "ACCIDENT:2BBwMYE-FC4",
+      "collision_label": "positive",
+      "tp": "1",
+      "fp": "16",
+      "fn": "0",
+      "prediction_count": "17",
+      "example": "2BBwMYE-FC4_00_f000155.jpg"
+    }
+  ],
+  "test_cases": [
+    {
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": "0",
+      "leakage_group": "ACCIDENT:-RE3XseZINA",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "3",
+      "fn": "0",
+      "prediction_count": "3",
+      "example": "-RE3XseZINA_00_f000000.jpg"
+    },
+    {
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": "148",
+      "leakage_group": "ACCIDENT:-RE3XseZINA",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "6",
+      "fn": "0",
+      "prediction_count": "6",
+      "example": "-RE3XseZINA_00_f000148.jpg"
+    },
+    {
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": "297",
+      "leakage_group": "ACCIDENT:-RE3XseZINA",
+      "collision_label": "positive",
+      "tp": "0",
+      "fp": "7",
+      "fn": "1",
+      "prediction_count": "7",
+      "example": "-RE3XseZINA_00_f000297.jpg"
+    },
+    {
+      "source_sequence": "0jk4tWwDKqc_00",
+      "source_frame": "77",
+      "leakage_group": "ACCIDENT:0jk4tWwDKqc",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "2",
+      "fn": "0",
+      "prediction_count": "2",
+      "example": "0jk4tWwDKqc_00_f000077.jpg"
+    },
+    {
+      "source_sequence": "0jk4tWwDKqc_00",
+      "source_frame": "156",
+      "leakage_group": "ACCIDENT:0jk4tWwDKqc",
+      "collision_label": "positive",
+      "tp": "0",
+      "fp": "2",
+      "fn": "1",
+      "prediction_count": "2",
+      "example": "0jk4tWwDKqc_00_f000156.jpg"
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": "0",
+      "leakage_group": "ACCIDENT:2QZf8MiIRK0",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "8",
+      "fn": "0",
+      "prediction_count": "8",
+      "example": "2QZf8MiIRK0_01_f000000.jpg"
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": "60",
+      "leakage_group": "ACCIDENT:2QZf8MiIRK0",
+      "collision_label": "negative",
+      "tp": "0",
+      "fp": "8",
+      "fn": "0",
+      "prediction_count": "8",
+      "example": "2QZf8MiIRK0_01_f000060.jpg"
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": "121",
+      "leakage_group": "ACCIDENT:2QZf8MiIRK0",
+      "collision_label": "positive",
+      "tp": "0",
+      "fp": "9",
+      "fn": "1",
+      "prediction_count": "9",
+      "example": "2QZf8MiIRK0_01_f000121.jpg"
+    }
+  ],
+  "release": {
+    "pool_sha256": "b5e4d3c3f08000a97fce2b242d59aa4f00ca6a08aaeb0684e7536ace599c88f0",
+    "split_sha256": "1dbfbc3181aab2b8f23f6a6029abae93d0b921525f2a5c9ba5a96358b594d37b",
+    "policy_sha256": "11b101a2bc7640655af064977760fd29a0c26a0fee7ae9f3737938faac754a07"
+  },
+  "checks": {
+    "unit_tests": 36,
+    "unit_tests_passed": true,
+    "export_check_samples": 47,
+    "training_completed": true,
+    "validation_images_decoded": 9,
+    "test_images_decoded": 8,
+    "sandbox_failure": "WinError 5 creating multiprocessing ThreadPool pipe before first epoch; retried outside sandbox",
+    "raw_annotation_and_user_reviews_unchanged": true
+  },
+  "interpretation": "Model predicts many overly broad boxes and misses all three held-out impact boxes at conf .25/IoU .5. Tiny pilot does not identify a unique cause. No event or deployment claim.",
+  "next_step": "Keep source test groups fixed; expand public author-region training examples and inspect validation errors before new experiment; do not tune on this test"
+}

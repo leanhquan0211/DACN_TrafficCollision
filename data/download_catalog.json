@@ -1,9 +1,104 @@
 {
   "schema_version": 1,
-  "checked_date": "2026-10-20",
+  "checked_date": "2026-10-29",
   "timezone": "Asia/Bangkok",
   "guide": "docs/GETTING_STARTED.md",
   "downloads_are_manual": true,
+  "collections": [
+    {
+      "id": "accident_v9_real_vehicle_collision_subset",
+      "source_url": "https://www.kaggle.com/datasets/picekl/accident/versions/9",
+      "download_script": "scripts/download_accident_real.py",
+      "raw_directory": "data_raw/accident/public_selected/real_videos",
+      "metadata": "data_raw/accident/public_selected/metadata-real.csv",
+      "receipts": "data_raw/accident/public_selected/download_receipts.json",
+      "listed_members": 1346,
+      "listed_bytes": 3268249521,
+      "filter": "t-bone/rear-end/sideswipe/head-on with valid normalized bbox and impact frame in v9 metadata",
+      "note": "Explicit invocation downloads/resumes members with per-file SHA/size; asset checker does not download. Member inventory remains local to avoid duplicating thousands of catalog rows. Author labels require technical mapping audit before train."
+    },
+    {
+      "id": "tad_author_test_normal_probe_v1",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "download_script": "scripts/inspect_public_zip.py",
+      "raw_directory": "data_raw/tad/public_selected/TAD-benchmark/test/normal",
+      "manifest": "data/registries/b0_tad_normal_test_v1.json",
+      "members": [
+        "videox_test_F11.mp4",
+        "videox_test_F10.mp4",
+        "videox_test_F9.mp4",
+        "videox_test_F4.mp4",
+        "videox_test_F3.mp4"
+      ],
+      "note": "Five selected public author-normal test clips, fetched through bounded ZIP ranges; registry records per-video SHA/CRC and 20 fixed sampled frames per clip. No user review or claim of independent cameras."
+    },
+    {
+      "id": "tad_author_train_normal_expansion_v1",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "download_script": "scripts/inspect_public_zip.py",
+      "download_plan": "configs/b0_normal_expansion_v1.json",
+      "raw_directory": "data_raw/tad/public_selected/TAD-benchmark/train/normal",
+      "review": "data/reviews/2026-10-28-b0-normal-expansion-review.json",
+      "prepared_manifest": "outputs/audits/b0_normal_expansion_v1/normal_manifest.json",
+      "holdout_registry": "data/registries/b0_normal_expanded_v1_holdout.json",
+      "members": [
+        "TAD-benchmark/train/normal/20220518_acci-bg14.mp4",
+        "TAD-benchmark/train/normal/20220518_acci-bg28.mp4",
+        "TAD-benchmark/train/normal/20220518_acci-bg56.mp4",
+        "TAD-benchmark/train/normal/20220518_acci-bg22.mp4",
+        "TAD-benchmark/train/normal/20220518_acci-bg8.mp4",
+        "TAD-benchmark/train/normal/20220620_acci-bg16.mp4",
+        "TAD-benchmark/train/normal/20220620_acci-bg13.mp4",
+        "TAD-benchmark/train/normal/20220620_acci-bg37.mp4",
+        "TAD-benchmark/train/normal/20220620_acci-bg3.mp4",
+        "TAD-benchmark/train/normal/20220620_acci-bg41.mp4",
+        "TAD-benchmark/train/normal/20230818_acci-bg_129.mp4",
+        "TAD-benchmark/train/normal/20230818_acci-bg_79.mp4",
+        "TAD-benchmark/train/normal/20230818_acci-bg_25.mp4",
+        "TAD-benchmark/train/normal/20230818_acci-bg_139.mp4",
+        "TAD-benchmark/train/normal/20230818_acci-bg_9.mp4",
+        "TAD-benchmark/train/normal/20230818_acci-bg_43.mp4",
+        "TAD-benchmark/train/normal/20230818_acci-bg_57.mp4",
+        "TAD-benchmark/train/normal/20230818_acci-bg_73.mp4"
+      ],
+      "note": "18 selected author train/normal videos, 122.75 MiB raw; project groups assigned 10 train,4 val,4 sealed negative reserve before prediction. Not the author benchmark split or camera-independence proof."
+    },
+    {
+      "id": "tad_author_normal_hard_negative_v1",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "download_script": "scripts/inspect_public_zip.py",
+      "fetch_plan": "configs/b0_hard_negative_sources_v1.json",
+      "raw_directory": "data_raw/tad/public_selected/TAD-benchmark/train/normal",
+      "manifest": "outputs/audits/b0_hard_negative_sources_v1/normal_manifest.json",
+      "members": [
+        "20220518_acci-bg24.mp4",
+        "20220518_acci-bg20.mp4",
+        "20220518_acci-bg52.mp4",
+        "20220518_acci-bg18.mp4",
+        "20220518_acci-bg36.mp4",
+        "20220518_acci-bg12.mp4",
+        "20220518_acci-bg16.mp4",
+        "20220518_acci-bg6.mp4",
+        "20220620_acci-bg22.mp4",
+        "20220620_acci-bg5.mp4",
+        "20220620_acci-bg20.mp4",
+        "20220620_acci-bg7.mp4",
+        "20230818_acci-bg_99.mp4",
+        "20230818_acci-bg_115.mp4",
+        "20230818_acci-bg_119.mp4",
+        "20230818_acci-bg_103.mp4",
+        "20230818_acci-bg_47.mp4",
+        "20230818_acci-bg_7.mp4",
+        "20230818_acci-bg_59.mp4",
+        "20230818_acci-bg_15.mp4",
+        "20230818_acci-bg_107.mp4",
+        "20230818_acci-bg_71.mp4",
+        "20230818_acci-bg_67.mp4",
+        "20230818_acci-bg_1.mp4"
+      ],
+      "note": "24small public train/normal members,259.67MiB raw. New14train,3val,4reserve,3excluded; source grouping before predictions. No whole ZIP downloaded."
+    }
+  ],
   "assets": [
     {
       "id": "yolov8n",
@@ -158,6 +253,1062 @@
       "optional": true,
       "note": "Optional source document; downloaded version can differ from local PDF",
       "observed_size_bytes": 294173
+    },
+    {
+      "id": "sttad_V-V_crash_0",
+      "path": "data_raw/sttad/public_examples/rgb-images/V-V_crash/V-V_crash_0",
+      "kind": "download_directory",
+      "source_url": "https://github.com/ZTR02/STTAD/tree/21f3f5fea50b071f1db61186b481c2a7ccf525c9",
+      "required_for": [
+        "sttad"
+      ],
+      "optional": false,
+      "expected_image_count": 51,
+      "image_inventory": "data/registries/sttad_V-V_crash_0_images.csv",
+      "note": "Restore images AND labels using scripts/audit_sttad_public.py --fetch-selected --max-mib 96. Fingerprints prove identity, not decoding/label completeness; run audit --offline for exclusions. Public examples only, no source timing or project split."
+    },
+    {
+      "id": "sttad_V-V_crash_1",
+      "path": "data_raw/sttad/public_examples/rgb-images/V-V_crash/V-V_crash_1",
+      "kind": "download_directory",
+      "source_url": "https://github.com/ZTR02/STTAD/tree/21f3f5fea50b071f1db61186b481c2a7ccf525c9",
+      "required_for": [
+        "sttad"
+      ],
+      "optional": false,
+      "expected_image_count": 51,
+      "image_inventory": "data/registries/sttad_V-V_crash_1_images.csv",
+      "note": "Restore images AND labels using scripts/audit_sttad_public.py --fetch-selected --max-mib 96. Fingerprints prove identity, not decoding/label completeness; run audit --offline for exclusions. Public examples only, no source timing or project split."
+    },
+    {
+      "id": "sttad_T-T_crash_1",
+      "path": "data_raw/sttad/public_examples/rgb-images/T-T_crash/T-T_crash_1",
+      "kind": "download_directory",
+      "source_url": "https://github.com/ZTR02/STTAD/tree/21f3f5fea50b071f1db61186b481c2a7ccf525c9",
+      "required_for": [
+        "sttad"
+      ],
+      "optional": false,
+      "expected_image_count": 26,
+      "image_inventory": "data/registries/sttad_T-T_crash_1_images.csv",
+      "note": "Restore images AND labels using scripts/audit_sttad_public.py --fetch-selected --max-mib 96. Fingerprints prove identity, not decoding/label completeness; run audit --offline for exclusions. Public examples only, no source timing or project split."
+    },
+    {
+      "id": "sttad_T-T_crash_2",
+      "path": "data_raw/sttad/public_examples/rgb-images/T-T_crash/T-T_crash_2",
+      "kind": "download_directory",
+      "source_url": "https://github.com/ZTR02/STTAD/tree/21f3f5fea50b071f1db61186b481c2a7ccf525c9",
+      "required_for": [
+        "sttad"
+      ],
+      "optional": false,
+      "expected_image_count": 50,
+      "image_inventory": "data/registries/sttad_T-T_crash_2_images.csv",
+      "note": "Use audit_sttad_public.py --fetch-selected --max-mib 96 to restore FOUR selected sequences and labels. 50 decoded, 10 author-region frames, 40 unknown; no source timing or split."
+    },
+    {
+      "id": "tad_20220518_acci-bg34",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg34.mp4",
+      "kind": "archive_member",
+      "source_url": "https://drive.google.com/file/d/14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26/view",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg34.mp4",
+      "required_for": [
+        "tad"
+      ],
+      "optional": false,
+      "observed_size_bytes": 2317506,
+      "expected_sha256": "bda9b0e17865a85b915a4122a1c7ee4da9d8e4d7e6c5cf1a8315168dcfa5211a",
+      "expected_crc32": "faff8171",
+      "note": "Use inspect_public_zip.py --fetch-members with this EXACT member; do NOT download full 4.54 GB ZIP. Author normal-clip label, not user review."
+    },
+    {
+      "id": "tad_20230818_acci-bg_83",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_83.mp4",
+      "kind": "archive_member",
+      "source_url": "https://drive.google.com/file/d/14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26/view",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_83.mp4",
+      "required_for": [
+        "tad"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1502081,
+      "expected_sha256": "626a7b4b54ed3825c38cdf8275b83ffa5bd726fd2f9751119e6d807c6ff5d152",
+      "expected_crc32": "89656d29",
+      "note": "Use inspect_public_zip.py --fetch-members with this EXACT member; do NOT download full 4.54 GB ZIP. Author normal-clip label, not user review."
+    },
+    {
+      "id": "accident_metadata-real",
+      "path": "data_raw/accident/public_selected/metadata-real.csv",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/metadata-real.csv?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 486740,
+      "expected_sha256": "a3d06073353a7fedff140b652d025135f017860a240cad693990f5288c6c0ec9",
+      "note": "Public single-file download at dataset version 9. Restore using audit_accident_public.py --fetch-selected --max-mib 16. Do not download the 20 GB archive. Impact-only box, other frames unknown; see source review."
+    },
+    {
+      "id": "accident_0NixrF6Mt00_0_00",
+      "path": "data_raw/accident/public_selected/real_videos/0NixrF6Mt00_0_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F0NixrF6Mt00_0_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 499401,
+      "expected_sha256": "2d48421b8546f45634469e0acb66e3d3a9b2d70d5e8625254debf3f12fe7b61d",
+      "note": "Public single-file download at dataset version 9. Restore using audit_accident_public.py --fetch-selected --max-mib 16. Do not download the 20 GB archive. Impact-only box, other frames unknown; see source review."
+    },
+    {
+      "id": "accident_04O2SOGSG_U_00",
+      "path": "data_raw/accident/public_selected/real_videos/04O2SOGSG_U_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F04O2SOGSG_U_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 539466,
+      "expected_sha256": "70342c25dfb2767b81efbcd14e280ea479077bb80848fa642bf933aa7a59e8e5",
+      "note": "Public single-file download at dataset version 9. Restore using audit_accident_public.py --fetch-selected --max-mib 16. Do not download the 20 GB archive. Impact-only box, other frames unknown; see source review."
+    },
+    {
+      "id": "accident_2QZf8MiIRK0_00",
+      "path": "data_raw/accident/public_selected/real_videos/2QZf8MiIRK0_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F2QZf8MiIRK0_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 694730,
+      "expected_sha256": "6cefe54e56b737166a6aca924e656c852785e2c4523472fd0862777182236122",
+      "note": "Public single-file download at dataset version 9. Restore using audit_accident_public.py --fetch-selected --max-mib 16. Do not download the 20 GB archive. Impact-only box, other frames unknown; see source review."
+    },
+    {
+      "id": "accident_1_F0r7KVJ1k_00",
+      "path": "data_raw/accident/public_selected/real_videos/1_F0r7KVJ1k_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F1_F0r7KVJ1k_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 873837,
+      "expected_sha256": "bbf1b0e3498665a9cd37ca1cfae80d3ae9881c44f6694921b35eb45eb0a6b1d8",
+      "note": "Public single-file download at dataset version 9. Restore using audit_accident_public.py --fetch-selected --max-mib 16. Do not download the 20 GB archive. Impact-only box, other frames unknown; see source review."
+    },
+    {
+      "id": "accident_-FQxK6HdxNU_00",
+      "path": "data_raw/accident/public_selected/real_videos/-FQxK6HdxNU_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-FQxK6HdxNU_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1047213,
+      "expected_sha256": "46b7d8aab0e30a4fb0a219eb26685a4cade71638fe113fef739b0c8a1a8d81e6",
+      "note": "Public single-file download at dataset version 9. Restore using audit_accident_public.py --fetch-selected --max-mib 16. Do not download the 20 GB archive. Impact-only box, other frames unknown; see source review."
+    },
+    {
+      "id": "accident_0PrAtifCwjg_00",
+      "path": "data_raw/accident/public_selected/real_videos/0PrAtifCwjg_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F0PrAtifCwjg_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1713226,
+      "expected_sha256": "c6fbb2517b780b24858e8b5fb002f53a8bab2706f967379557b8a548e1d0f856",
+      "note": "Public single-file download at dataset version 9. Restore using audit_accident_public.py --fetch-selected --max-mib 16. Do not download the 20 GB archive. Impact-only box, other frames unknown; see source review."
+    },
+    {
+      "id": "accident_-wlnF8vCVMo_00",
+      "path": "data_raw/accident/public_selected/real_videos/-wlnF8vCVMo_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-wlnF8vCVMo_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1136421,
+      "expected_sha256": "0b000383770149f242eba66e7a7e25a7cbb01620e1d475c0a0433098d9af3741",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_-RE3XseZINA_00",
+      "path": "data_raw/accident/public_selected/real_videos/-RE3XseZINA_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-RE3XseZINA_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1253388,
+      "expected_sha256": "442dae2bf94210e2eb9e27e51e5c2c09dc8c2bec17408302a6dbdf2b2e89391e",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_-dmYsQc-odI_00",
+      "path": "data_raw/accident/public_selected/real_videos/-dmYsQc-odI_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-dmYsQc-odI_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1579292,
+      "expected_sha256": "87b233f98ae0c7956c6dacef2c8cb19f214a3ab0d522e43cd1b4630e55a48831",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_2QZf8MiIRK0_01",
+      "path": "data_raw/accident/public_selected/real_videos/2QZf8MiIRK0_01.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F2QZf8MiIRK0_01.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1584785,
+      "expected_sha256": "31a7145278e26d7094536e73bbbaac9b22de9a3418bb77e1f871d85724c78ff9",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_07Eu77WorsY_00",
+      "path": "data_raw/accident/public_selected/real_videos/07Eu77WorsY_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F07Eu77WorsY_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1702459,
+      "expected_sha256": "5bd1c7046a541d670da0d52a2939be216376b207fca437560aa2720fbce452e8",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_2BBwMYE-FC4_00",
+      "path": "data_raw/accident/public_selected/real_videos/2BBwMYE-FC4_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F2BBwMYE-FC4_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 1740128,
+      "expected_sha256": "bd788fa6457610b6078532a643b414e581dc0f0552f5ccfb9f1393e26d451417",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_0ThWw_efieo_00",
+      "path": "data_raw/accident/public_selected/real_videos/0ThWw_efieo_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F0ThWw_efieo_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 2069477,
+      "expected_sha256": "c90c44e6b9cd0565c4de6b902a72e44be1d53b735d02ff3bd35d4fc91c334f09",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_-i9bRJWMtTo_00",
+      "path": "data_raw/accident/public_selected/real_videos/-i9bRJWMtTo_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-i9bRJWMtTo_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 2254587,
+      "expected_sha256": "49d12514f4338de01f712f8a1e30bbeb914eaa6df5b19e6804d13f10a038e940",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_2IY6PpDm85k_00",
+      "path": "data_raw/accident/public_selected/real_videos/2IY6PpDm85k_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F2IY6PpDm85k_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 2433051,
+      "expected_sha256": "573eb2f513f837ea2c89c402f2df803c2ec86b7d4496f77113ee4e5d7c28d89d",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_-NgnSm_oEB4_00",
+      "path": "data_raw/accident/public_selected/real_videos/-NgnSm_oEB4_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-NgnSm_oEB4_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 2462124,
+      "expected_sha256": "68310cb5793f2b9b4a308716e95bb49a3353149d951162c9654888a2af56d55c",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_0DB7w7rLGrk_00",
+      "path": "data_raw/accident/public_selected/real_videos/0DB7w7rLGrk_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F0DB7w7rLGrk_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 2923602,
+      "expected_sha256": "b29e151656efdbb4cae5225458cf5ef6c4aea3f5b32d5e2e7a5b2800df52d2fc",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_0jk4tWwDKqc_00",
+      "path": "data_raw/accident/public_selected/real_videos/0jk4tWwDKqc_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F0jk4tWwDKqc_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 3082493,
+      "expected_sha256": "aadb891bea2bf2b9acaf83c245e740857d966fbe45ae608ade75ba8fb1cc1a4a",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_1O-y5PmPWdU_00",
+      "path": "data_raw/accident/public_selected/real_videos/1O-y5PmPWdU_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F1O-y5PmPWdU_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 3086891,
+      "expected_sha256": "002332137eced5fd99c76029de39d48dca7418f63dcf1fd2fbe63dd29543042d",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_-SNFUobKjoM_00",
+      "path": "data_raw/accident/public_selected/real_videos/-SNFUobKjoM_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-SNFUobKjoM_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 3518795,
+      "expected_sha256": "d45f68ebe17f9505711b367a4e754487d69a7ff35e635dddf5d3f9988085bcb1",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_-qmYW4S3Xxo_00",
+      "path": "data_raw/accident/public_selected/real_videos/-qmYW4S3Xxo_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-qmYW4S3Xxo_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 4323547,
+      "expected_sha256": "1edc1feee4a11fd120a0a9bc4b84e20cfa41a751bbdced72f26658b4d0076d95",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_0ThWw_efieo_01",
+      "path": "data_raw/accident/public_selected/real_videos/0ThWw_efieo_01.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F0ThWw_efieo_01.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 4800821,
+      "expected_sha256": "b85c76c7715a8176e9a67ecb36d73c2182b8f5c28c32563440d8ef85ab69b0d8",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_1jCpA4y5NHY_00",
+      "path": "data_raw/accident/public_selected/real_videos/1jCpA4y5NHY_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F1jCpA4y5NHY_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 5509140,
+      "expected_sha256": "2122711ecc8b77c37bc21b0cc9c4335eb5b482a367e84dddad5fc9d3c2fe8546",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_1ZQAChv0TEI_00",
+      "path": "data_raw/accident/public_selected/real_videos/1ZQAChv0TEI_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F1ZQAChv0TEI_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 6455137,
+      "expected_sha256": "8d57ff46275b11cc7e863d708c2d88268306a06c24b63b85875cf1b30e82bf87",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_-_J5xdxCZZU_00",
+      "path": "data_raw/accident/public_selected/real_videos/-_J5xdxCZZU_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F-_J5xdxCZZU_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 316098,
+      "expected_sha256": "cfa17a50d906b0f776a378f0a6892d53259c90c7a95d9498960fec82d797fa6a",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "accident_1-xArHJFlAQ_00",
+      "path": "data_raw/accident/public_selected/real_videos/1-xArHJFlAQ_00.mp4",
+      "kind": "download_file",
+      "source_url": "https://www.kaggle.com/api/v1/datasets/download/picekl/accident/real_videos%2F1-xArHJFlAQ_00.mp4?datasetVersionNumber=9",
+      "required_for": [
+        "accident"
+      ],
+      "optional": false,
+      "observed_size_bytes": 558184,
+      "expected_sha256": "8b9eb4f42871ca19511d3ce0c60a6e7c0f05cc13cd602b70b4a2b1c2ea4b8f81",
+      "note": "Selected expansion member v9. Restore exact member via --members; 20-member batch <=64 MiB. See docs/b0_pilot_audit.md. Raw includes rejected cases; never use all raw frames as labels."
+    },
+    {
+      "id": "tad_normal_expansion_20220518_acci-bg14",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg14.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg14.mp4",
+      "expected_sha256": "e3b91906ff91a2e90b0761591032b0f5d6c0c40d42e44e39e84f82189466a7c4",
+      "expected_size_bytes": 3764841,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220518_acci-bg28",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg28.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg28.mp4",
+      "expected_sha256": "83d5fc2809f4c2278677446b488fa6a039ddfe440036e3a41affb92aaf2988a4",
+      "expected_size_bytes": 4122059,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220518_acci-bg56",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg56.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg56.mp4",
+      "expected_sha256": "f2ec6ba93805f10fb299032e644f2214a2335461a349d2d5a49e83f93a5bc633",
+      "expected_size_bytes": 5759821,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220518_acci-bg22",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg22.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg22.mp4",
+      "expected_sha256": "c3c5ada9845298ebd530e3cbbe1a64aad319cd946a916d27a1484893a69242a2",
+      "expected_size_bytes": 7032954,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220518_acci-bg8",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg8.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg8.mp4",
+      "expected_sha256": "dd3f91e443b4465056d9083330e5a6b45e87d78bb649a5ac7c71258467da01ee",
+      "expected_size_bytes": 7168306,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220620_acci-bg16",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg16.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg16.mp4",
+      "expected_sha256": "238c7df324e8d7fbf358a1a2235f5ea674d44181494dd3a1a1380f7dbc2e257c",
+      "expected_size_bytes": 6317326,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220620_acci-bg13",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg13.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg13.mp4",
+      "expected_sha256": "efb4fa8ec7370877ef93f26bef7d59a2638c6a51d28b7d3841409c35c77102b4",
+      "expected_size_bytes": 13706494,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220620_acci-bg37",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg37.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg37.mp4",
+      "expected_sha256": "13a4162e3bfcf9c21e26fa90b638aed7b95d52c39784a86f614c64593e3d36b3",
+      "expected_size_bytes": 13834745,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220620_acci-bg3",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg3.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg3.mp4",
+      "expected_sha256": "0d74c6e5d433565861bbf85783a1321a84dfcb03caae14507edc0c4933c7104a",
+      "expected_size_bytes": 18244267,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20220620_acci-bg41",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg41.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg41.mp4",
+      "expected_sha256": "a2462798977688721d4dc1194ef629d35f6f31df08bc8a6a384f8045f7c242e2",
+      "expected_size_bytes": 20418671,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20230818_acci-bg_129",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_129.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_129.mp4",
+      "expected_sha256": "c6079dac6e185a1fea70572c0cd0ec2dac70b1973a927fccba89cda8b82d98b6",
+      "expected_size_bytes": 2444300,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20230818_acci-bg_79",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_79.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_79.mp4",
+      "expected_sha256": "0ac8e2ec52ec75bfca307c2c2f936eff1c4aa055ca2be955592d598ed2ebbfc5",
+      "expected_size_bytes": 2455582,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20230818_acci-bg_25",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_25.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_25.mp4",
+      "expected_sha256": "edf5a93fde8d0498aa18ca3d368f10b291d269aeb4f6cc87a240c06e7d99dffa",
+      "expected_size_bytes": 2804734,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20230818_acci-bg_139",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_139.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_139.mp4",
+      "expected_sha256": "3a609dd35dafbbef7fc38a9a26199bccf49ab802fd0230c5aae3317934aba863",
+      "expected_size_bytes": 3597778,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20230818_acci-bg_9",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_9.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_9.mp4",
+      "expected_sha256": "fff6fc83150fa1e11a3c415693aa707dce1991d57966af713d6c1bce51e458dc",
+      "expected_size_bytes": 3629871,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20230818_acci-bg_43",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_43.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_43.mp4",
+      "expected_sha256": "c579362316921a6dd0be74c6115e0d1ac5d879fc001210b3767b08377fdc074f",
+      "expected_size_bytes": 3790388,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20230818_acci-bg_57",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_57.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_57.mp4",
+      "expected_sha256": "ddadbe00b76cda50175a14df2ddd55003db5a6717103f36a4a1b8ad1661a0e3b",
+      "expected_size_bytes": 4779613,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "tad_normal_expansion_20230818_acci-bg_73",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_73.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_73.mp4",
+      "expected_sha256": "3d43957ea1dbcada4558cb0ee3cd202493372945e75dd9bc65ea23988620dd5f",
+      "expected_size_bytes": 4837554,
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Restore via the bounded normal expansion plan, retaining source member path and author normal label."
+    },
+    {
+      "id": "yolov8s",
+      "path": "yolov8s.pt",
+      "kind": "download_file",
+      "source_url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8s.pt",
+      "required_for": [],
+      "optional": true,
+      "note": "COCO pretrained only, not a trained accident checkpoint. Required by b0_s960_v1 config; SHA verified against official GitHub release digest.",
+      "observed_size_bytes": 22588772,
+      "expected_sha256": "1f47a78bf100391c2a140b7ac73a1caae18c32779be7d310658112f7ac9aa78a"
+    },
+    {
+      "id": "tad_hard_negative_20220518_acci-bg24",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg24.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg24.mp4",
+      "expected_sha256": "031cd2e924dbb6559aca49e91bfe2834bbc4ff3727cb1406485d94ade96e06c8",
+      "observed_size_bytes": 10659319,
+      "zip_crc32": "32b2592f",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220518_acci-bg20",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg20.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg20.mp4",
+      "expected_sha256": "859afad9ed86730c5cad5789dcbbe80414a4b06c1318f154b4230def64faa98b",
+      "observed_size_bytes": 11259438,
+      "zip_crc32": "79fa2b7a",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220518_acci-bg52",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg52.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg52.mp4",
+      "expected_sha256": "2c90cd5ee1c80ae625301ca026e0bd38edb6409940cc47253d0ec1679b8b7219",
+      "observed_size_bytes": 11794101,
+      "zip_crc32": "b2492cc4",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220518_acci-bg18",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg18.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg18.mp4",
+      "expected_sha256": "8405309b84b64a08668303a73c368827412f31e1f1ab0d9460d205781c286b2d",
+      "observed_size_bytes": 12424629,
+      "zip_crc32": "e266b68e",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220518_acci-bg36",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg36.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg36.mp4",
+      "expected_sha256": "cfd2b7d3d20d5b078a2757b008f22f32d91b6b0726f56661ce9f7e358dd3cc91",
+      "observed_size_bytes": 12901022,
+      "zip_crc32": "a7029f3f",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220518_acci-bg12",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg12.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg12.mp4",
+      "expected_sha256": "d3985b6adf91e7431eaf9b4147d74c35e680280db45d865560e1384b6c7472ee",
+      "observed_size_bytes": 13396426,
+      "zip_crc32": "ec155b52",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220518_acci-bg16",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg16.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg16.mp4",
+      "expected_sha256": "90d41d188f31d020fe486ea08af2b2e06bf9bda10c6abedf383408ab6a21c759",
+      "observed_size_bytes": 13589622,
+      "zip_crc32": "5617f67b",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220518_acci-bg6",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg6.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg6.mp4",
+      "expected_sha256": "b59bfe20318f72adf8d3b36f5b59978be57b565b6e7242e87ef7799fb78d892d",
+      "observed_size_bytes": 14405943,
+      "zip_crc32": "569601f7",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220620_acci-bg22",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg22.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg22.mp4",
+      "expected_sha256": "7fad46634f50dd42b4a5975bfe26b8804dcc7db69417ea26af26770f8861b134",
+      "observed_size_bytes": 21734616,
+      "zip_crc32": "ff391c75",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220620_acci-bg5",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg5.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg5.mp4",
+      "expected_sha256": "7058ba08508a6059a194e992236ac84ad008c2a7001188ca1efec68893e23d5f",
+      "observed_size_bytes": 23984246,
+      "zip_crc32": "03c22c65",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220620_acci-bg20",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg20.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg20.mp4",
+      "expected_sha256": "af68fb17964fde4dc02d90421544a150b00fbdd4dce9ca9f28ad78c33392d24f",
+      "observed_size_bytes": 26097845,
+      "zip_crc32": "e3e1bef0",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20220620_acci-bg7",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg7.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20220620_acci-bg7.mp4",
+      "expected_sha256": "d49d2d7a73a12c5364a6b156ae17f6f753f2cf7a8a0cab27973eed8236a0f0f8",
+      "observed_size_bytes": 26787916,
+      "zip_crc32": "48e52643",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_99",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_99.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_99.mp4",
+      "expected_sha256": "345a4838fb4bad136ffc14e5f07b56da2de1828663ba6497751740fcfdd6eac0",
+      "observed_size_bytes": 5164628,
+      "zip_crc32": "9cbfd113",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=reserve_negative_holdout. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_115",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_115.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_115.mp4",
+      "expected_sha256": "9ca64ba8dcc8221ad08bab4a34784f1fce9389e7d9d686b4613a8d96aace0109",
+      "observed_size_bytes": 5405793,
+      "zip_crc32": "7bee4de6",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=val. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_119",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_119.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_119.mp4",
+      "expected_sha256": "14506895353cef762ffa9b5d7810035e120a04251dadb60bca79aff6d504e3a9",
+      "observed_size_bytes": 5503092,
+      "zip_crc32": "def61a72",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=reserve_negative_holdout. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_103",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_103.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_103.mp4",
+      "expected_sha256": "b025540d7bb01dd505bd5920c3f88d1cef2d00d2e76af40d82e5c12a07d370de",
+      "observed_size_bytes": 5552328,
+      "zip_crc32": "5e599b7d",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=reserve_negative_holdout. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_47",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_47.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_47.mp4",
+      "expected_sha256": "8c0ec43d3291250e9eb1968bf3eeac6cf690ab992cb036195ac0153567164445",
+      "observed_size_bytes": 5554763,
+      "zip_crc32": "8df7ccdb",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=val. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_7",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_7.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_7.mp4",
+      "expected_sha256": "36788ed641fe62b9a481bddaf1b1dd0a1445c217e9051f657db4dfc157d1b8de",
+      "observed_size_bytes": 5634318,
+      "zip_crc32": "7b216dda",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=val. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_59",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_59.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_59.mp4",
+      "expected_sha256": "2a2d9921bf8e942d5d8929c53d840d714e11b5d47edede7e9c3e1486ed41dd50",
+      "observed_size_bytes": 6067238,
+      "zip_crc32": "417e2483",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=exclude. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_15",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_15.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_15.mp4",
+      "expected_sha256": "58ceb6a6a02a8841399870530e4e773f59315f79b3bd954a219de12357b48556",
+      "observed_size_bytes": 6219086,
+      "zip_crc32": "7fc3ed1b",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=exclude. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_107",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_107.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_107.mp4",
+      "expected_sha256": "f2323b3d009d202e7a1925ceddab528fc0d88b8e8937fac824125e62a066073b",
+      "observed_size_bytes": 6615506,
+      "zip_crc32": "34e59bc6",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=exclude. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_71",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_71.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_71.mp4",
+      "expected_sha256": "7c280264e9ffc3cf37e3adf78348f005d7f6f5d1a3c767db2c73caf121c36145",
+      "observed_size_bytes": 6680602,
+      "zip_crc32": "6e94040b",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_67",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_67.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_67.mp4",
+      "expected_sha256": "022ba8c1681aeadf04df8623c576c97a28843a5133cf81ffe229955d2dae3c8f",
+      "observed_size_bytes": 7347456,
+      "zip_crc32": "4197ffbb",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=train. No new user review."
+    },
+    {
+      "id": "tad_hard_negative_20230818_acci-bg_1",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_1.mp4",
+      "kind": "download_file",
+      "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_1.mp4",
+      "expected_sha256": "be8e9b77d98cc0558e8f027b5cda1bb8650159c46ea93c93659fea1415428928",
+      "observed_size_bytes": 7504907,
+      "zip_crc32": "91f0d265",
+      "required_for": [
+        "tad"
+      ],
+      "optional": true,
+      "note": "Author normal label; project assignment=reserve_negative_holdout. No new user review."
     }
   ],
   "original_metadata_snapshot": "data/manifest.csv",

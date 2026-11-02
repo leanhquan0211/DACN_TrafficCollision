@@ -1,23 +1,46 @@
 # ĐACN: phát hiện và cảnh báo va chạm giao thông từ video
 
+> **Báo cáo tổng hợp đối chiếu ngày 31/10/2026:** [bản đọc Markdown](docs/BAO_CAO_TIEN_DO_DACN.md), [PDF trình bày](docs/BAO_CAO_TIEN_DO_DACN.pdf). Báo cáo giải thích căn cứ chọn dữ liệu/model/công cụ/Kaggle, lịch sử B0 và mức triển khai thật của B1; không thay bảng baseline hoặc nhật ký ngày. Mọi lựa chọn tiếp theo cần ghi nhu cầu, nguồn/bằng chứng, phương án thay thế và giới hạn; phân biệt căn cứ lịch sử với đối chiếu sau. Hiện tạm dừng triển khai và mở thí nghiệm theo yêu cầu để rà soát/báo cáo.
+
 > **Mới clone hoặc bắt đầu với AI mới? Đọc [GETTING_STARTED — cài môi trường, tải gì/ở đâu/lưu đâu và tiếp tục thế nào](docs/GETTING_STARTED.md).** Repo giữ code/config/metadata/nhật ký; dataset, trọng số, `.venv`, video và audit đầy đủ nằm cục bộ, không có sau clone. [Catalog tải](data/download_catalog.json), [kiểm file hiện có](scripts/check_project_assets.py), [snapshot bằng chứng nhỏ](docs/evidence/README.md).
 
 > **Tài liệu định hướng của project.** README này tóm tắt kế hoạch trong [YOLO_Lo_trinh_DACN.xlsx](YOLO_Lo_trinh_DACN.xlsx) và ghi trạng thái triển khai thực tế. File XLSX là bản phác thảo ban đầu, không phải kết quả thực nghiệm hoặc yêu cầu đã được giảng viên duyệt. Các thông số, mô hình và mốc thời gian ghi là **dự kiến** cho đến khi được kiểm chứng. Khi cần chi tiết về dữ liệu, pipeline, đánh giá hoặc nguồn tham khảo, đọc các sheet `01_Huong_DACN`, `05_Cac_buoc`, `07_Pipeline`, `08_Du_lieu`, `09_Danh_gia`, `13_Ke_hoach` và `15_Nguon`.
 
+
+## Bắt đầu ở đâu?
+
+| Bạn cần gì? | File chính |
+| --- | --- |
+| Cài máy, tải dữ liệu đúng nơi, chạy lại | [GETTING_STARTED](docs/GETTING_STARTED.md) |
+| Đăng nhập, gửi train PRIVATE lên Kaggle và nhận kết quả | [Kaggle training](docs/kaggle_training.md) |
+| Paper, tóm tắt và hướng áp dụng | [Literature review](reference/LITERATURE_REVIEW.md) |
+| Tra thuật ngữ và ví dụ ngắn | [GLOSSARY — Ctrl+F](reference/GLOSSARY.md) |
+| Tiến độ từng baseline, phần còn thiếu và lịch sử | [Bảng baseline chung](progress/README.md) |
+| Biết chạy script nào | [scripts/README](scripts/README.md) |
+| Đọc kết quả train, loss, mAP và các ảnh | [Hướng dẫn outputs/training](outputs/training/README.md) |
+| Dữ liệu/pool B0 đang có | [Báo cáo hiện hành](docs/b0_pilot_audit.md) |
+| Tìm hướng dẫn chi tiết/lịch sử | [docs/README](docs/README.md) |
+
 ## Quy tắc định hướng cho mọi công việc tiếp theo
 
+**Train mới từ 30/10:** chỉ áp dụng early stopping sau hơn 20 epoch; khóa mốc bắt đầu và patience trong config từng run. Lệnh theo dõi thông thường dùng `logs --follow --epochs-only --version <N>` để xem tóm tắt epoch. Run AdamW Kaggle mới và căn cứ ở [hướng dẫn](docs/kaggle_training.md) và [bảng tiến độ](progress/README.md); không thay mô hình B0 đang khóa chỉ theo điểm train.
+
+**Kaggle chỉ dùng tài nguyên miễn phí:** không bật dịch vụ trả phí hoặc gắn tài khoản thanh toán. Nếu hết quota thì dừng/chờ; không tự chuyển sang tài nguyên tính phí. Mục chọn GPU nằm trong trình chỉnh sửa notebook (Edit → Settings/Session options → Accelerator), không phải trang quota của tài khoản. [Hướng dẫn Kaggle](docs/kaggle_training.md).
+
 1. Trước khi chọn việc làm, công cụ, mô hình, dữ liệu hoặc cách đánh giá, đọc README này và phần liên quan trong XLSX. Bám vào **mục tiêu phát hiện sự kiện va chạm từ CCTV cố định**, câu hỏi nghiên cứu, thứ tự baseline → phân tích lỗi → xác minh chuyển động → cảnh báo → đánh giá, cùng giới hạn máy hiện có.
+   Trước khi triển khai, đọc paper/mã tác giả/tài liệu chính thức liên quan và [literature review](reference/LITERATURE_REVIEW.md). Ghi rõ recipe gốc, nhãn/metric thật, phần nào áp dụng và phần nào phải điều chỉnh cho B0 hoặc máy hiện có trong config và báo cáo; kiểm bằng validation, không tự chọn theo cảm tính hay gọi bản điều chỉnh là tái lập paper.
 2. Không thêm mô hình hay công nghệ chỉ vì mới hơn hoặc có sẵn. Nêu vấn đề quan sát được, phương án đơn giản đang dùng, điều kiện chuyển hướng và phép đo cần có. Ưu tiên hoàn thành, đo và hiểu baseline trước khi mở rộng.
 3. Phân biệt rõ **đã chạy/đã đo**, **đang làm** và **dự kiến** trong code, tài liệu, demo và báo cáo. Không biến gợi ý, số liệu paper hoặc giá trị mẫu trong XLSX thành kết quả của project. Không tuyên bố `real-time`, cải thiện độ chính xác hay tính mới khi chưa có benchmark phù hợp.
 4. Khi thay đổi phạm vi, dataset, nhãn, stack hoặc protocol đánh giá, ghi lý do và bằng chứng trong README/config hoặc nhật ký thí nghiệm, rồi cập nhật phần kế hoạch liên quan. Nếu README và XLSX chưa khớp, đối chiếu bản gốc và quyết định đã ghi; chỉ dẫn mới của người thực hiện và yêu cầu của giảng viên được ưu tiên, sau đó cập nhật tài liệu để lần sau dùng cùng một định hướng.
 5. Mỗi bước mới phải có đầu ra có thể kiểm tra và điều kiện chuyển bước. Giữ split, nhãn, config, checkpoint, phiên bản thư viện và log đo để tái lập; không dùng test set để chọn ngưỡng hay tinh chỉnh mô hình.
-6. Trước khi kết thúc công việc, cập nhật [nhật ký tiến độ](progress/README.md) và bảng trạng thái: **một file `progress/YYYY-MM-DD.md` cho mỗi ngày theo Asia/Bangkok**. Mọi task/lần chạy/lượt trao đổi cùng ngày thêm thành mục trong file đó, không tạo file hậu tố theo chủ đề. Ghi mục tiêu, việc đã làm, bằng chứng, quyết định và bước tiếp theo; giữ trạng thái lịch sử tách kết quả mới. Không đánh dấu giai đoạn hoàn thành nếu chưa đạt điều kiện chuyển bước.
+6. Trước khi kết thúc công việc, cập nhật **[bảng tiến độ chung của mọi baseline](progress/README.md)** (phần cần làm, trạng thái, bằng chứng, đầu ra/điều kiện hoàn thành và việc tiếp theo) cùng nhật ký ngày. Không tạo file tiến độ riêng cho từng baseline; README này giữ định hướng, bảng trên giữ trạng thái. Quy tắc nhật ký: **một file `progress/YYYY-MM-DD.md` cho mỗi ngày theo Asia/Bangkok**. Mọi task/lần chạy/lượt trao đổi cùng ngày thêm thành mục trong file đó, không tạo file hậu tố theo chủ đề. Ghi mục tiêu, việc đã làm, bằng chứng, quyết định và bước tiếp theo; giữ trạng thái lịch sử tách kết quả mới. Không đánh dấu giai đoạn hoàn thành nếu chưa đạt điều kiện chuyển bước.
+7. **Quyết định người dùng 24/10/2026:** AI chủ động đọc, tìm, so sánh và chọn phương án từ paper/mã/dữ liệu/nhãn **công khai**. Nguồn cần xin riêng hoặc chưa truy cập được thì bỏ khỏi đường triển khai và tìm thay thế; không giao người dùng xin tác giả hoặc chờ giảng viên duyệt quyết định kỹ thuật. Kiểm sheet `11_Cong_trinh`/`15_Nguon` trước; lưu nguồn và căn cứ dùng/bỏ ở [reference/](reference/README.md), giải thích cho người mới bằng công cụ/tiêu chí thực tế. Không bịa nhãn khi thiếu.
 
 ## Mục tiêu và phạm vi
 
 **Đầu vào:** video có timestamp từ **một camera CCTV cố định**. **Đầu ra dự kiến:** một sự kiện va chạm xe–xe gồm `event_id`, thời điểm, camera, độ tin cậy, các ID track liên quan và ảnh/clip bằng chứng trên dashboard. Track ID chỉ là mã tạm trong video, không phải danh tính xe ngoài đời. Ban đầu có thể giới hạn ô tô; chỉ thêm xe máy nếu nhãn và detector hỗ trợ đủ tốt.
 
-Đây là **collision detection**: nhận biết va chạm đang hoặc vừa xảy ra. Dự báo trước va chạm (*anticipation*), đa camera, graph, VLM và mô hình video lớn là các hướng mở rộng riêng, không phải yêu cầu cốt lõi của ĐACN. Phạm vi mức 3 trong sheet `04_Bon_muc` là đề xuất cần giảng viên duyệt.
+Đây là **collision detection**: nhận biết va chạm đang hoặc vừa xảy ra. Dự báo trước va chạm (*anticipation*), đa camera, graph, VLM và mô hình video lớn là các hướng mở rộng riêng, không phải yêu cầu cốt lõi của ĐACN. Triển khai theo phạm vi hiện có và bằng chứng; không đặt việc xin duyệt quyết định kỹ thuật thành điều kiện bắt đầu.
 
 Hai câu hỏi cần trả lời bằng thực nghiệm:
 
@@ -44,13 +67,15 @@ Video CCTV + timestamp
 
 ## Dữ liệu và nhãn cần chuẩn bị
 
-Ưu tiên **kiểm tra CADP** cho bối cảnh CCTV: video gốc có đọc được không, FPS/timestamp và khoảng trước/sau va chạm có đủ không, nhãn bbox/onset/cặp xe có thực sự tồn tại cho subset dùng hay không, điều kiện sử dụng/trích dẫn là gì. Không mặc định toàn bộ CADP có nhãn cặp xe hoặc nhãn thời gian đầy đủ. Bổ sung video âm tính dài, cùng miền camera, để đo cảnh báo sai trên giờ video; thêm các nhóm xe đỗ sát, kẹt xe, phanh gấp, near miss, giao quỹ đạo, che khuất và đổi ID. Cảnh mơ hồ cần cờ `uncertain` và rà bằng video gốc.
+**Nguồn vùng B0:** nhãn STTAD public và bbox impact tác giả ACCIDENT; lần mở rộng dùng ACCIDENT real xe–xe theo [policy âm có căn cứ](configs/b0_verified_label_policy.json), [đối chiếu paper/dữ liệu](reference/2026-10-24-public-data-review.md) và [báo cáo B0](docs/b0_pilot_audit.md). Bbox impact chỉ dùng ở đúng frame đã kiểm; frame sớm chưa rà không tự thành nhãn âm. Âm train lấy từ frame đã rà, chuỗi DETRAC người dùng xác nhận và clip TAD được tác giả gắn normal. Giữ CADP 001407 đã khớp để debug/đối chiếu motion. TAD có link video public nhưng ZIP đã đọc danh mục không có bbox, nên không tự thay cho nhãn vùng. Kiểm ảnh/frame, timing, khoảng trước/sau và phạm vi annotation thật của từng nguồn. Video âm dài và hard negatives là phần đánh giá mở rộng. Trạng thái và số liệu mới nhất xem [bảng baseline duy nhất](progress/README.md).
 
 Manifest tối thiểu: `video_id`, `camera_id`, `source_event_id`, nguồn, split, thời lượng, `onset_s`, `end_s`, loại sự kiện, xe liên quan và độ chắc chắn nhãn. Với dữ liệu âm tính, thời điểm va chạm để trống. Nhãn cửa sổ cho bài toán detection phải dựa vào thời điểm cuối cửa sổ; đoạn **trước onset** là âm tính, không gán cả clip tai nạn là dương tính. Nếu chưa có nhãn xe liên quan, chỉ làm mức scene và ghi rõ giới hạn đó.
 
 Loại clip trùng/gần trùng; chia train/validation/test theo **camera, nguồn hoặc sự kiện** để các bản cắt của cùng tai nạn ở cùng một split. Fit chuẩn hóa và chọn đặc trưng trên train; chọn ngưỡng trên validation; chỉ đánh giá test với cấu hình đã khóa. Pilot nhỏ chỉ để kiểm tra pipeline, không tự là benchmark đáng tin cậy.
 
 ## Thứ tự thực hiện và điều kiện chuyển bước
+
+**Điều chỉnh phạm vi theo người dùng 26/10/2026:** triển khai **B0 pilot ảnh phát hiện va chạm cơ bản** trước. Âm khó, video âm dài, kiểm camera-held-out và đánh giá sự kiện đầy đủ thuộc bước mở rộng; chúng không chặn train pilot trên nhãn public đã kiểm. Pilot giữ bbox accident, dữ liệu sạch và split theo nhóm nguồn; có cấu hình/checkpoint/metric riêng và công bố giới hạn tập nhỏ. `can_train` của benchmark đầy đủ và `pilot_release.can_train` được ghi riêng trong readiness. Không xem kết quả pilot là chứng minh RQ1/RQ2 hoặc đã hoàn thành toàn B0.
 
 | Giai đoạn | Việc làm và đầu ra cần có | Điều kiện chuyển tiếp |
 | --- | --- | --- |
@@ -75,78 +100,49 @@ Sheet `13_Ke_hoach` chia các bước thành **10 tuần dự kiến**, không p
 
 Các phương án dùng cùng split, định nghĩa sự kiện, quy tắc ghép alert với GT và chính sách chống trùng khi so hệ thống. Một alert ghép tối đa một event; alert thừa là FP, event không được ghép là FN. Báo **event precision/recall/F1**, đường precision–recall, **false alerts/hour** trên video âm tính dài, tỷ lệ clip âm có cảnh báo sai theo từng hard-negative group, **event delay** từ onset đến alert, FPS end-to-end, p50/p95 thời gian xử lý, peak VRAM, số frame bỏ và queue lag. So số cảnh báo sai ở **recall tương đương**; chọn ngưỡng trên validation và báo recall thực tế trên test. FPS chỉ của YOLO không đại diện pipeline. `10 Hz` trong XLSX chỉ là ví dụ mục tiêu, cần đo khả năng xử lý ổn định trên máy thật. Không so F1 detection trực tiếp với AP/mTTA của bài toán anticipation.
 
-## Trạng thái hiện tại (20/10/2026)
+## Trạng thái hiện tại
 
-Ngày 20/10 bổ sung hướng dẫn dựng lại, catalog/fingerprint, kiểm file sau clone và xuất bản source lên [GitHub/main](https://github.com/leanhquan0211/DACN_TrafficCollision). Bản công khai giữ metadata nhỏ và loại log máy cá nhân; dữ liệu/mô hình/định nghĩa nhãn không đổi. Các kết quả nghiên cứu dưới đây được thực hiện đến 19/10, không phải run huấn luyện mới. Nhật ký hiện tại: [2026-10-20](progress/2026-10-20.md).
+**Hạ tầng train29/10 — chuyển Kaggle:** đã chuẩn bị gói **2.988ảnh(train2.681/val307)**, notebookPRIVATE và luồng gửi/nhận tự động, thêm420normal train có nhãn tác giả từ các nhóm cũ theo yêu cầu dùng dữ liệu đầy đủ hơn. Giữ recipe/checkpoint khởi tạo, không lấy test/reserve hoặc đổi nhãn/split cũ. **Chưa upload/khởi chạy vì thiếu đăng nhập Kaggle**, không train laptop và không theo dõi train liên tục. [Hai lệnh người dùng cần chạy](docs/kaggle_training.md#bạn-cần-làm-ngay), [bước triển khai](KE_HOACH_TRIEN_KHAI.md); trạng thái API thật ở`outputs/kaggle/b0_s960_full_kaggle_v1/deployment.json`.
 
-**Đã có:** môi trường `.venv` Python 3.12, PyTorch CUDA và Ultralytics; pipeline YOLOv8n/ByteTrack, ba video mẫu cũ và [manifest](data/manifest.csv). Đã xác minh cặp **1407.mp4/1407.txt** trùng mẫu tác giả; lấy chọn lọc 3 chuỗi DETRAC (2.037 ảnh), ghép MP4 và thử detection/tracking trên clip 10 giây. Lượt tiếp theo cùng ngày đã kiểm ZIP **001407**, lấy 221 ảnh sạch 1280×720, đối chiếu mapping với TXT/demo ở 9 mốc, xuất annotation gốc/chuẩn hóa, video sạch, preview tác giả và chạy YOLO/ByteTrack trên đầu vào sạch. Cả bốn MP4 CADP mới đọc đủ 221 frame. Manifest có **12 asset**, gồm một chuỗi ảnh và các video liên quan; giữ schema và backup trước sửa.
+**Mới nhất29/10 — hardneg đã train xong:** người dùng hoàn tất `b0_s960_hardneg_v1` ở15epoch, bestCSV5, patience10. Trên **cùng307val**: mAP50 **68,48%**, mAP50–95 **55,43%**; tại confidence0,25/IoU0,5:63TP/49FP/28FN, F1 **62,07%**,5/216ảnh âm có hộp. So mốc cũ cùng tập, mAP50–95 tăng nhưng F1 giảm; chưa xác nhận cải thiện tổng thể hoặc đạt mAP50>70% ở checkpoint được chọn. [Báo cáo](docs/b0_pilot_audit.md#kết-quả-s960-hardneg-hoàn-tất--29102026), [snapshot](docs/evidence/2026-10-29-b0-hardneg-validation.json). Không train thêm, không mở reserve mới hoặc thay điểm vận hành cũ.
 
-**Xác nhận mới của người dùng:** CADP 001407 **đúng xe và Colliding frame 96–130 rõ ràng/phù hợp** → positive mức chuỗi/sự kiện, GT ID 0 và 2; [phiếu rà theo frame](data/reviews/2026-10-19-cadp-001407-frame-confirmation.json) tách khỏi annotation tác giả. Không cần yêu cầu xác nhận lại mẫu này. FPS nguồn vẫn chưa xác minh, `onset_s/end_s` trống. Ba DETRAC đầy đủ MVI_20011/MVI_20012/MVI_20032 vẫn `negative`; clip con kế thừa từ parent, không đổi ba mẫu cũ. [Phiếu đầu](data/reviews/2026-10-19-user-confirmations.json) giữ làm lịch sử.
+**Mốc chuẩn bị trước đó29/10:** đã đo B0/B1 causal trên12chuỗi/4.845frame; xuất release2.680ảnh với510normal mới trong train/val và120normal mới giữ riêng. Recipe warm-start s960/SGD0,0003/trần40/patience10 nằm trong [config](configs/b0_s960_hardneg_v1.json); bằng chứng lúc chưa train giữ tại [hồ sơ chuẩn bị](docs/b0_pilot_audit.md#chuẩn-bị-s960-hardneg-v1--29102026). Giữ bbox impact gốc, mining chỉ trong train sau khóa nhóm, không chuyển test/holdout đã xem vào train. [Phép đo B1](docs/b0_pilot_audit.md#đo-b0b1-trên-video-sạch--29102026) là chẩn đoán, chưa benchmark event/RQ1/RQ2.
 
-**Chuẩn bị nhãn B0 đã làm:** [công cụ và quy tắc vùng đề xuất](docs/b0_label_protocol.md) đã chạy trên 001407: giữ 4.641 dòng object/flags/ignore, tạo **35 bbox ứng viên** trong `data/processed/b0_proposals/001407/`, đánh dấu dẫn xuất/chưa duyệt GT. 186 frame ngoài ứng viên không tự thành negative. Có [chỉ mục 2.037 ảnh âm](data/processed/b0_reviewed_negatives/frames.csv) dựa xác nhận toàn DETRAC, không sao chép ảnh. Đây chưa là tập train. [Inventory](data/pilot_inventory.csv) đếm **1 sự kiện CADP + 3 chuỗi âm**, không đếm 12 asset hoặc video output thành mẫu độc lập.
+**Bước trước cùng ngày:** đã khóa s960/confidence0,27 bằng val rồi đo một lần holdout âm34/120ảnh có hộp; tập này hiện consumed. [Hồ sơ](docs/b0_pilot_audit.md#chọn-ngưỡng-và-đánh-giá-holdout-âm--29102026). Các metric68,60%mAP50/53,94%mAP50–95 vẫn là run s960 cũ trên217val, không phải kết quả release mới307val.
 
-**Chưa hoàn tất giai đoạn 1/B0:** cần chốt quy tắc vùng accident và rà vùng, mở rộng pilot có nhãn sẵn, kiểm nhóm camera/nguồn/sự kiện. Hộp bao participant hiện chỉ là **đề xuất**, không coi hợp bbox xe thành GT accident đã duyệt. [Readiness](data/b0_readiness.json) giữ `can_train=false`, mọi split `unassigned`. FPS nguồn CADP chưa biết; 25 FPS demo/20 FPS trình chiếu không là nguồn timing. Thiếu này cản giây/chuyển động, không ngăn chuẩn hóa nhãn ảnh B0 theo frame. Chưa fine-tune, chưa verifier/alert/dashboard hoặc benchmark va chạm.
+**Kết quả mới 28/10:** [B0 s960](configs/b0_s960_v1.json) đã hoàn tất ở epoch 45 với early stopping patience15; best theo CSV ở epoch30. Validation sau train: mAP50 **68,60%**, mAP50–95 **53,94%**, chưa đạt mục tiêu mAP50 >70%. [Báo cáo và bằng chứng](docs/b0_pilot_audit.md#kết-quả-b0-s960-hoàn-tất--28102026).
 
-### Mở dữ liệu mới ở đâu?
+**Đã hoàn thành vòng pilot ảnh B0 và chẩn đoán trên video sạch; B0 sự kiện đầy đủ chưa hoàn thành.** Checkpoint mốc đã train trên release 1.750 ảnh và đo test; release mới **2.170 ảnh đã train đủ 60 epoch và đánh giá trên 217 ảnh validation**, có 120 frame normal giữ riêng ngoài dataset. Các model cũ đã được đo trên cùng validation mở rộng để làm mốc so sánh. [Dữ liệu mới và lệnh train](docs/b0_pilot_audit.md#b0-normal-mở-rộng--28102026). Công cụ `scripts/analyze_b0.py` còn có chẩn đoán 9 chuỗi sạch tại `outputs/training/b0_verified_pilot_v1/diagnostics/`. B1, luật B2, T0 và B3/T1 chưa hoàn thành; bảng trạng thái duy nhất nằm trong progress/README.
 
-**Mới nhất:** [nhãn B0 và minh họa đề xuất](docs/b0_label_protocol.md), [kết quả kiểm nguồn VATIC bổ sung](docs/cadp_pilot_sources.md), [nhật ký trong ngày](progress/2026-10-19.md). Các video sạch/GT/model đã có từ lượt trước tại [hướng dẫn ảnh sạch](docs/cadp_001407_clean.md); không tạo thêm MP4 tương tự trong lượt chuẩn hóa nhãn này. Format VATIC/căn chỉnh demo/FPS DETRAC/schema: [Chuẩn bị CADP/DETRAC](docs/dataset_preparation.md).
+Quyết định nhãn 26/10: [policy v4](configs/b0_public_label_policy.json) giữ **đúng các frame trước impact đã kiểm PTS/pixel và rà toàn ảnh**, dựa vào mốc first-visible-contact tác giả ACCIDENT. Đây là nhãn âm dẫn xuất có phiếu rà của AI, không phải nhãn âm tác giả hoặc xác nhận mới của người dùng. Không áp dụng cho cả interval/clip; giữ phần còn lại unknown, bbox impact và các xác nhận CADP/DETRAC không đổi. Policy mở release **pilot ảnh** riêng; gate benchmark đầy đủ vẫn đóng. [Bằng chứng, kết quả và lệnh tái tạo](docs/b0_pilot_audit.md#pilot-b0-ảnh-26102026).
 
-- Ảnh sạch gốc: `data_raw/cadp/frames/001407/0.jpg … 220.jpg`; ZIP bên cạnh được giữ nguyên.
-- Video sạch dùng cho model: `data_samples/cadp/cadp_001407_clean_display20fps.mp4`.
-- Preview tác giả trên ảnh sạch: `outputs/annotation_preview/cadp_001407_clean_author_display20fps.mp4`.
-- YOLO/ByteTrack trên CADP sạch: `outputs/detection/cadp_001407_clean_display20fps/` và `outputs/tracking/cadp_001407_clean_display20fps/`.
-- Bảng annotation và ảnh đối chiếu trước/trong/sau Colliding: `outputs/audits/cadp_001407_clean_2/`.
+Xem **[một bảng tiến độ cho tất cả baseline](progress/README.md)** để biết từng phần đã làm, còn thiếu, đầu ra cần đạt và quá trình theo ngày. Số liệu/giới hạn dữ liệu hiện hành ở [báo cáo B0](docs/b0_pilot_audit.md), gate kỹ thuật ở [readiness](data/b0_readiness.json). README không sao thêm các bảng số liệu/trạng thái lịch sử; các mốc đó được dẫn từ bảng baseline và nhật ký.
 
-- Annotation tác giả CADP (đỏ = `Colliding`, không phải dự đoán model): `outputs/annotation_preview/cadp_1407_author_annotations.mp4`.
-- Video DETRAC đầy đủ: `data_samples/ua_detrac/MVI_20011.mp4`, `MVI_20012.mp4`, `MVI_20032.mp4`.
-- Clip nguồn 10 giây: `data_samples/ua_detrac/MVI_20011_first_10s.mp4`.
-- Detection: `outputs/detection/MVI_20011_first_10s/MVI_20011_first_10s_detection.mp4`.
-- Tracking: `outputs/tracking/MVI_20011_first_10s/MVI_20011_first_10s_tracking.mp4`.
+## Cấu trúc và cách dùng lâu dài
 
-DETRAC được ghép ở 25 FPS theo [bài báo gốc](https://arxiv.org/html/1511.04136#S2); XML ba chuỗi ghi camera `unstable`. YOLO/ByteTrack chỉ phát hiện/theo dõi phương tiện; xác nhận âm đến từ người dùng. Bước tiếp theo: chốt quy tắc vùng B0 trên đề xuất và lấy VATIC tương ứng từ tác giả để chọn thêm chuỗi sạch. Đã kiểm kho Drive/README/GitHub trực tuyến nhưng **chưa xác minh cặp VATIC bổ sung** ngoài 001407; chưa yêu cầu tải toàn bộ ảnh hoặc gán lại nhãn tay. Không yêu cầu rà lại 001407.
+```text
+DACN_TrafficCollision/
+├── README.md, AGENTS.md, YOLO_Lo_trinh_DACN.xlsx
+├── src/                         # vòng xử lý và helper dùng chung
+├── scripts/                     # lệnh chạy video/chuẩn bị dữ liệu
+│   └── maintenance/             # bảo trì manifest/review, ít dùng
+├── tests/, configs/             # kiểm tra và policy/cấu hình
+├── reference/                   # literature review + glossary + nguồn
+├── docs/                        # hướng dẫn; evidence/ giữ snapshot nhỏ
+├── data/                        # manifest/review/fingerprint
+│   └── processed/               # pool/nhãn sinh ra, không Git
+├── data_raw/, data_samples/     # raw và video ghép/thử, không Git
+├── outputs/                     # prediction/audit, không Git
+│   └── audits/archive/          # audit thử cũ không còn tham chiếu
+├── progress/                    # lịch sử theo ngày, không phải bước chạy
+└── logs/                        # snapshot môi trường
+```
 
-## Vị trí và cấu trúc
-
-Dự án: thư mục `DACN_TrafficCollision` bạn vừa clone; các đường dẫn hướng dẫn tính từ thư mục này.
-
-Dữ liệu CADP gốc đặt trong `data_raw/cadp/`, ảnh sạch đã chuẩn bị ở `data_raw/cadp/frames/001407/`; video ghép để xem/chạy thử đặt ở `data_samples/cadp/`. Giữ nguyên tên tệp nguồn để đối chiếu nhãn. Các mẫu cũ tại gốc `data_samples/` được giữ nguyên. **Không có dataset hoặc video được tải tự động.**
-
-| Thư mục/tệp | Vai trò |
-| --- | --- |
-| `YOLO_Lo_trinh_DACN.xlsx` | Bản định hướng gốc và kế hoạch thực nghiệm chi tiết; các đề xuất cần kiểm chứng |
-| `AGENTS.md` | Chỉ dẫn ngắn để các phiên coding agent sau đọc README và XLSX trước khi làm việc |
-| `progress/` | Trạng thái và một file YYYY-MM-DD.md/ngày Asia/Bangkok; mọi task trong ngày cập nhật cùng file |
-| `data/manifest.csv` | Hồ sơ 12 asset đã kiểm trên máy phát triển; không có nghĩa file đã tồn tại trên máy vừa clone |
-| `docs/GETTING_STARTED.md`, `data/download_catalog.json` | Onboarding cho người/AI mới; nguồn tải chính xác, vị trí lưu, khôi phục đầu ra và lộ trình |
-| `data/registries/`, `docs/evidence/` | Fingerprint ảnh và snapshot JSON nhỏ, không chứa dataset/media/annotation gốc |
-| `data/reviews/`, `data/b0_readiness.json` | Xác nhận có phạm vi/hash của người dùng và các điều kiện còn thiếu trước B0 |
-| `docs/` | Quy tắc nhãn bản nháp, kiểm kê ban đầu và hướng dẫn chuẩn bị CADP/DETRAC |
-| `data_raw/` | Gói CADP/UA-DETRAC bạn tải và chuỗi ảnh giữ nguyên cấu trúc gốc |
-| `data_samples/` | Một vài video để chạy thử |
-| `src/video_pipeline.py` | Vòng xử lý từng frame, lọc class phương tiện, xuất MP4 |
-| `scripts/check_environment.py` | Phiên bản Python, thư viện, CUDA và phép tính tensor |
-| `scripts/check_project_assets.py` | Kiểm file thực tế/hash theo catalog, tạo khung thư mục khi được chỉ định; không tải/sửa nhãn |
-| `scripts/inspect_video.py` | Mở video, đọc frame đầu và metadata |
-| `scripts/run_all.py` | Một lệnh kiểm tra video, chạy detection rồi tracking |
-| `scripts/run_detection.py` | Phát hiện phương tiện, vẽ bounding box |
-| `scripts/run_tracking.py` | Phát hiện và theo dõi bằng ByteTrack, vẽ ID |
-| `scripts/prepare_cadp_pilot.py` | Đọc VATIC, xuất bảng ID/Colliding và preview khi có căn cứ căn chỉnh |
-| `scripts/prepare_cadp_frames.py` | Lấy riêng 001407 an toàn, kiểm toàn ảnh, so với demo và tạo MP4 sạch/GT riêng |
-| `scripts/prepare_detrac.py` | Kiểm kê ZIP, lấy chọn lọc chuỗi, kiểm ảnh, ghép MP4 và clip ngắn |
-| `scripts/register_prepared_manifest.py` | Đưa báo cáo chuẩn bị vào manifest, giữ backup và từ chối ID trùng |
-| `scripts/update_manifest_reviews.py` | Áp xác nhận người dùng đúng phạm vi/hash và đăng ký CADP sạch, giữ schema/backup |
-| `scripts/apply_cadp_frame_review.py` | Áp xác nhận frame/xe mới vào đúng chuỗi, giữ timing nguồn và nhãn các chuỗi khác |
-| `scripts/prepare_b0_candidates.py` | Chuẩn hóa VATIC/ignore/frame coverage và xuất bbox vùng đề xuất, chưa duyệt GT |
-| `scripts/prepare_b0_negative_index.py` | Lập chỉ mục ảnh âm từ full-sequence review, kiểm CRC/giải mã/hash, không copy dataset |
-| `data/processed/`, `data/pilot_inventory.csv` | Nhãn ứng viên/chỉ mục sinh ra và bảng nhóm chuỗi, không phải split huấn luyện |
-| `src/data_preparation.py` | Ghi H.264, kiểm tra video, hash và tiện ích chuẩn bị dữ liệu |
-| `configs/` | Config căn chỉnh riêng demo CADP 1407; chưa có cấu hình huấn luyện |
-| `outputs/` | Kết quả cũ theo tên video; lượt mới dùng annotation_preview/detection/tracking/audits, giữ nguyên kết quả cũ |
-| `logs/` | Danh sách phiên bản package; log máy cá nhân giữ local và bị ignore. Bản công khai: docs/environment_reference.md |
+Dữ liệu giữ tên/path nguồn; code không cần chạy tất cả script. Chọn lệnh theo [scripts/README](scripts/README.md), đọc metadata tại [data/README](data/README.md), xem vai trò config ở [configs/README](configs/README.md). Dataset/model/output và `.venv` không có sau clone. Các thư mục tạm/môi trường/cache được ẩn trong VS Code Explorer; vẫn tồn tại và dùng bình thường. Bố cục được rà 25/10; kết quả dữ liệu và công cụ mới nhất xem bảng baseline chung và nhật ký ngày, không coi chúng là thí nghiệm huấn luyện model.
 
 ## Đọc code theo thứ tự nào?
 
-Luồng **đã triển khai** hiện nay chỉ vẽ phương tiện và ID theo dõi, chưa quyết định có tai nạn:
+Luồng **vehicle detection/tracking ban đầu** chỉ vẽ phương tiện và ID theo dõi:
 
 ```text
 Video nguồn
@@ -159,6 +155,10 @@ Video nguồn
 ```
 
 `run_all.py` **không chuyển bbox hoặc frame từ detection sang tracking**: mỗi nhánh mở lại video gốc và nạp model trong tiến trình riêng. Cả hai dùng `video_pipeline.arguments()` để nhận tham số và `video_pipeline.run()` để xử lý. Trong `run()`, `cv2.VideoCapture.read()` đưa ra từng frame là mảng ảnh BGR kích thước `(cao, rộng, 3)`; YOLO trả `Results` chứa bbox, class và confidence. Khi tracking, kết quả có thể có thêm ID. `results[0].plot()` tự lấy các thông tin đó để tạo ảnh đã vẽ; code hiện **không tách bbox/ID ra biến riêng**. Ảnh được đổi thành byte BGR, đưa qua pipe cho FFmpeg mã hóa thành MP4.
+
+Nhánh B0 riêng hiện có: `scripts/train_b0.py` tạo checkpoint class `accident`; `scripts/analyze_b0.py` nhận checkpoint đó và video/ảnh sạch, tách bbox/confidence mỗi frame, ghi CSV/JSONL và MP4. `src/b0_diagnostics.py` phân tích lỗi hình học và gom các frame có bbox liên tiếp thành log thô. Log này chuẩn bị đầu vào B1, chưa phải cảnh báo đã xác nhận. Nên đọc nhánh B0 sau khi hiểu vòng đọc frame của pipeline vehicle.
+
+Nhánh B1 đã có `CausalScoreFilter` trong cùng `src/b0_diagnostics.py`; `analyze_b0.py --temporal-diagnostics` so các trạng thái B0/EMA/k-of-N. Trạng thái bật hoặc đoạn bật liên tiếp chưa là sự kiện tai nạn đã xác minh; không đồng nhất bbox class`accident` với track ID của nhánh phát hiện xe.
 
 Mở file trong VS Code theo thứ tự sau:
 
@@ -175,55 +175,21 @@ Mở file trong VS Code theo thứ tự sau:
 
 ### Sau này huấn luyện bằng gì?
 
-- **YOLO qua Ultralytics:** khi có ảnh/frame với nhãn bbox tai nạn được định nghĩa nhất quán, có thể fine-tune một detector accident để làm baseline B0. Code hiện mới **suy luận** bằng `yolov8n.pt` pretrained cho xe; chưa có nhãn hoặc script fine-tune accident.
+- **YOLO qua Ultralytics:** đã fine-tune một B0 pilot vùng `accident` bằng ảnh/nhãn public đã rà; script `train_b0.py`, split, config và checkpoint ở [báo cáo B0](docs/b0_pilot_audit.md#pilot-b0-ảnh-26102026). Kết quả test đầu kém, cần mở rộng/kiểm dữ liệu và đo lại. Pipeline vehicle detection/tracking cũ vẫn dùng `yolov8n.pt` pretrained cho xe.
 - **MLP/GRU qua PyTorch:** khi có quỹ đạo, đặc trưng chuỗi và nhãn thời gian/cặp xe phù hợp, có thể huấn luyện bộ xác minh va chạm. Code hiện chưa tạo các đặc trưng đó và chưa có MLP/GRU.
-- Các bước huấn luyện dự kiến có thể chạy bằng Python trên laptop nếu tài nguyên đủ, hoặc chuyển sang Colab khi cần thêm tài nguyên. Nơi chạy được chọn sau khi kiểm tra dữ liệu và nhu cầu thực tế; chưa có run huấn luyện hoặc benchmark tương ứng.
+- B0 pilot đã train trên laptop RTX 3050 Ti. Các vòng sau có thể chạy laptop hoặc Colab khi dữ liệu/tài nguyên yêu cầu; mỗi run phải lưu cấu hình, nguồn nhãn và metric thực tế.
 
 ## Chạy trong PowerShell
 
-Mở PowerShell tại thư mục dự án. Các lệnh dưới đây gọi trực tiếp Python trong `.venv`, nên không phụ thuộc chính sách kích hoạt PowerShell. Nếu muốn kích hoạt thủ công và máy cho phép: `.\.venv\Scripts\Activate.ps1`.
-
-**Thông thường chỉ cần một lệnh** sau khi chép video vào `data_samples`:
+Mở terminal ở gốc project, sau khi cài môi trường/tải đúng dữ liệu theo [GETTING_STARTED](docs/GETTING_STARTED.md):
 
 ```powershell
-$env:PYTHONUTF8 = '1'
-.\.venv\Scripts\python.exe scripts\run_all.py "data_samples\TEN_VIDEO_GOC.mp4" --device auto --imgsz 640 --output-dir outputs
+.\.venv\Scripts\python.exe scripts/run_all.py "data_samples/TEN_VIDEO_GOC.mp4" --device auto --imgsz 640 --output-dir outputs
 ```
 
-Lệnh này chạy `inspect_video.py`, rồi `run_detection.py`, rồi `run_tracking.py` **lần lượt**. Nếu một bước lỗi, chương trình dừng và báo bước đó. Detection và tracking có thể chạy riêng khi bạn chỉ cần một loại kết quả:
+Đổi tên video thật. Lệnh đọc video gốc, chạy detection và tracking riêng, xuất MP4 dưới `outputs/<tên-video>/`; file nguồn không bị sửa. Dùng ảnh/video sạch, không đưa GT preview đã vẽ vào model. Các lệnh kiểm môi trường, asset, chuẩn bị B0 và bảo trì được liệt kê trong [scripts/README](scripts/README.md); không cần chạy lại toàn bộ mỗi buổi.
 
-```powershell
-.\.venv\Scripts\python.exe scripts\check_environment.py
-.\.venv\Scripts\python.exe scripts\inspect_video.py "data_samples\TEN_VIDEO_GOC.mp4"
-.\.venv\Scripts\python.exe scripts\run_detection.py "data_samples\TEN_VIDEO_GOC.mp4" --device auto --imgsz 640 --output-dir outputs
-.\.venv\Scripts\python.exe scripts\run_tracking.py "data_samples\TEN_VIDEO_GOC.mp4" --device auto --imgsz 640 --output-dir outputs
-```
-
-Đổi `TEN_VIDEO_GOC.mp4` thành tên thật. Có thể dùng đường dẫn tuyệt đối trong dấu ngoặc kép. `--device cpu` ép CPU, `--device 0` chọn GPU NVIDIA đầu tiên. `--model` nhận đường dẫn trọng số khác, nhưng mặc định luôn là `yolov8n.pt`. Nếu tệp mặc định chưa có, Ultralytics sẽ thử tải trọng số YOLOv8n chính thức. Không dùng model khác thay thế khi tải thất bại. Script in ra tên và số thứ tự class phương tiện lấy trực tiếp từ model.
-
-Mở cả hai MP4 trong `outputs/<tên-video-không-gồm-đuôi>/`, ví dụ `outputs/YSGhwU9XxuY/YSGhwU9XxuY_detection.mp4` và `..._tracking.mp4`. `--output-dir` chọn thư mục gốc, các script tự tạo thư mục con theo tên video. Kết quả mới nhận hậu tố `_2`, `_3`... nếu tên cũ đã có. Video nguồn không bị sửa. Vòng lặp chỉ giữ frame hiện tại trong RAM; video quá lớn vẫn cần đủ dung lượng trống cho file xuất.
-
-## Tái lập môi trường
-
-Máy mới làm theo [hướng dẫn đầy đủ](docs/GETTING_STARTED.md#2-clone-và-tạo-môi-trường): chọn CPU/CUDA trước rồi cài `requirements.txt`. Test tích hợp phụ thuộc dataset sẽ skip nếu input chưa phục hồi, không mặc định năm test đã chạy trên một clone rỗng dữ liệu.
-
-`logs/requirements-installed.txt` lưu toàn bộ phiên bản đã cài. Nếu cần tạo lại `.venv` trên máy có GPU/driver tương thích, cài PyTorch CUDA trước, rồi Ultralytics và phụ thuộc ByteTrack:
-
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --index-url https://download.pytorch.org/whl/cu128 'torch==2.11.0+cu128' 'torchvision==0.26.0+cu128'
-.\.venv\Scripts\python.exe -m pip install 'ultralytics==8.4.178' 'lap==0.5.13'
-```
-
-Các phiên bản trong tệp freeze là bản ghi thực tế; hai lệnh cài trên dùng đúng nguồn tải cho PyTorch CUDA. Trên máy khác cần chọn bản CUDA phù hợp với GPU và driver theo hướng dẫn PyTorch.
-
-## Kết quả hiện tại
-
-Xem [báo cáo môi trường](docs/environment_reference.md) để biết cấu hình và kiểm tra ban đầu. Ba MP4 ở gốc `data_samples/` là mẫu cũ; các MP4 CADP/DETRAC mới nằm trong thư mục con. Lần thử `run_all.py` với `YSGhwU9XxuY.mp4` (450×360, 25 FPS, 279 frame) đã đọc lại hai MP4 đủ frame. Các lượt dữ liệu/nhãn tiếp theo ở [nhật ký 19/10](progress/2026-10-19.md). Chưa đánh giá accuracy bbox/ID hoặc va chạm.
-
-Python chạy chương trình. PyTorch thực hiện tính toán tensor trên CPU hoặc GPU. CUDA là nền tảng tính toán GPU NVIDIA; driver, CUDA runtime đóng trong bản PyTorch, và CUDA Toolkit cài riêng là ba thứ khác nhau. YOLOv8n tìm đối tượng trong từng frame; ByteTrack liên kết các khung qua thời gian để gán ID. Việc nhìn thấy xe và giữ ID **không tự xác nhận va chạm**.
-
-Tài liệu phát hành/paper CADP đã có trong `data_raw/cadp/documentation/`; nguồn và căn cứ kiểm dữ liệu tại [hướng dẫn](docs/dataset_preparation.md). Giữ tài liệu gốc để tra điều kiện sử dụng/trích dẫn. Ảnh sạch 001407 đã khớp annotation, event đã xác nhận theo frame; FPS nguồn chưa xác minh. Quy tắc vùng accident và dữ liệu pilot đủ đa dạng vẫn là điều kiện trước B0.
+Môi trường pin/CPU/CUDA xem [GETTING_STARTED](docs/GETTING_STARTED.md#2-clone-và-tạo-môi-trường), kết quả đã kiểm xem [environment_reference](docs/environment_reference.md). Các số đo lịch sử không chứng minh máy mới đã chạy được; test tích hợp sẽ skip nếu thiếu input.
 
 ## Lỗi thường gặp
 
@@ -234,7 +200,7 @@ Tài liệu phát hành/paper CADP đã có trong `data_raw/cadp/documentation/`
 - Tải `yolov8n.pt` thất bại: kiểm tra mạng; tự đặt đúng trọng số chính thức vào thư mục dự án rồi chạy lại.
 - Lỗi kích hoạt `.venv` trong PowerShell: dùng đường dẫn `.\.venv\Scripts\python.exe` như các lệnh trên, không cần đổi chính sách bảo mật.
 
-Với video tiếp theo, chạy `run_all.py` một lần rồi đối chiếu hai video kết quả với video gốc và nhãn CADP trước khi thiết kế bước huấn luyện hay suy luận va chạm.
+Bước nghiên cứu tiếp theo vẫn theo [readiness B0](data/b0_readiness.json); việc sắp xếp tài liệu không đánh dấu B0 hoàn thành hoặc thay mô hình.
 
 ## Nguồn kỹ thuật
 

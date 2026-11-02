@@ -1,0 +1,50 @@
+{
+  "repo": "ZTR02/STTAD",
+  "commit": "21f3f5fea50b071f1db61186b481c2a7ccf525c9",
+  "files_in_public_tree": 1693,
+  "public_tree_bytes": 483155196,
+  "selected_sequences": [
+    "V-V_crash/V-V_crash_0",
+    "V-V_crash/V-V_crash_1",
+    "T-T_crash/T-T_crash_1"
+  ],
+  "selected_bytes": 75388808,
+  "raw_root": "data_raw/sttad/public_examples",
+  "full_dataset_downloaded": false,
+  "source_images": 128,
+  "decoded_images": 126,
+  "decode_failures": [
+    "rgb-images/V-V_crash/V-V_crash_0/00051.jpg",
+    "rgb-images/V-V_crash/V-V_crash_1/00051.jpg"
+  ],
+  "author_boxes": 21,
+  "frames_with_author_region": 21,
+  "unknown_frames": 105,
+  "dimensions": {
+    "1920x1080": 100,
+    "450x358": 26
+  },
+  "source_classes": {
+    "11": 9,
+    "6": 12
+  },
+  "converted_label_files": 21,
+  "coordinate_interpretation_status": "pixel xyxy checked by bounds and paired image overlays; not documented as normalized YOLO",
+  "invalid_boxes": 0,
+  "source_format": "class xyxy pixels; validated, not source YOLO normalized",
+  "source_timing_verified": false,
+  "negative_labels_created": 0,
+  "can_train": false,
+  "example_image": "outputs/audits/sttad_public_4/author_region_examples.jpg",
+  "original_lists": {
+    "trainlist.txt": {
+      "entries": 35,
+      "entries_missing_from_public_tree": 23
+    },
+    "testlist.txt": {
+      "entries": 23,
+      "entries_missing_from_public_tree": 23
+    }
+  },
+  "evidence_scope": "Historical development-machine audit; run scripts on current local files after clone"
+}

@@ -1,0 +1,30 @@
+{
+  "scope": "verified_negative_image_pilot",
+  "dataset": "data/processed/b0_verified_pilot_v1/dataset/dataset.yaml",
+  "release_key": "verified_pilot_release",
+  "label_policy": "configs/b0_verified_label_policy.json",
+  "initial_weights": "yolov8n.pt",
+  "output": "outputs/training/b0_verified_pilot_v1",
+  "ultralytics_version": "8.4.178",
+  "seed": 20261026,
+  "epochs": 60,
+  "patience": 18,
+  "imgsz": 640,
+  "batch": 8,
+  "workers": 2,
+  "device": "0",
+  "amp": false,
+  "optimizer": "SGD",
+  "lr0": 0.01,
+  "momentum": 0.937,
+  "prediction_confidence": 0.25,
+  "matching_iou": 0.5,
+  "method_sources": [
+    "https://arxiv.org/html/2604.09819v1",
+    "https://zhangtianze.com/mypublications/Thesis/TPYOLOv8.pdf",
+    "https://docs.ultralytics.com/guides/finetuning-guide"
+  ],
+  "paper_recipe_vs_adaptation": "TP-YOLOv8: SGD lr0=.01 momentum=.937, batch16, 640px, from scratch up to 300 epochs on A40. Project: pretrained yolov8n, SGD/lr/momentum, batch8, 640px, up to 60 epochs with patience18 on 4GB GPU; ACCIDENT author impact, reviewed DETRAC and author-normal TAD. Not a paper reproduction.",
+  "limitations": "Author impact frames plus reviewed or author-normal negative frames; no weak unreviewed negatives; negatives concentrated in three scene groups, test five negative frames; no event, long-video, camera-held-out or official ACCIDENT benchmark",
+  "hardware_decision": "Batch16 previous run failed while serializing checkpoint; root cause unconfirmed. Batch8 saved checkpoints through epoch14. Restart from pretrained after withdrawing unreviewed negative labels."
+}

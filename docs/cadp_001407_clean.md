@@ -1,5 +1,7 @@
 # CADP 001407: ảnh sạch và đối chiếu nhãn — 19/10/2026
 
+> **Tài liệu chi tiết/lịch sử:** ưu tiên [mục lục hiện hành](README.md), [policy nhãn B0](b0_label_protocol.md) và [trạng thái dữ liệu mới nhất](b0_pilot_audit.md). Các số liệu/chỉ dẫn cũ bên dưới giữ bối cảnh lúc tạo, không thay hướng public đã chọn.
+
 > **Cập nhật mới:** người dùng đã xác nhận đúng xe **và Colliding 96–130 theo frame**. Không cần rà lại mẫu này. [Phiếu mới](../data/reviews/2026-10-19-cadp-001407-frame-confirmation.json), [chuẩn hóa nhãn B0 đã làm](b0_label_protocol.md), [kiểm nguồn mở rộng](cadp_pilot_sources.md). Các report audit cũ bên dưới giữ trạng thái tại lúc tạo; FPS nguồn vẫn chưa biết.
 
 ## Kết quả thực tế
@@ -76,7 +78,7 @@ Backup nguyên byte trước sửa: `outputs/audits/cadp_clean_manifest_update/m
 .\.venv\Scripts\python.exe -B scripts/prepare_cadp_frames.py --archive data_raw/cadp/frames/001407-20261019T121452Z-1-001.zip --presentation-fps 20 --visual-check-confirmed
 .\.venv\Scripts\python.exe -B scripts/run_detection.py data_samples/cadp/cadp_001407_clean_display20fps.mp4 --device auto --imgsz 640 --output-dir outputs/detection
 .\.venv\Scripts\python.exe -B scripts/run_tracking.py data_samples/cadp/cadp_001407_clean_display20fps.mp4 --device auto --imgsz 640 --output-dir outputs/tracking
-.\.venv\Scripts\python.exe -B scripts/update_manifest_reviews.py --cadp-report outputs/audits/cadp_001407_clean_2/report.json --review data/reviews/2026-10-19-user-confirmations.json
+.\.venv\Scripts\python.exe -B scripts/maintenance/update_manifest_reviews.py --cadp-report outputs/audits/cadp_001407_clean_2/report.json --review data/reviews/2026-10-19-user-confirmations.json
 ```
 
 Không cần chạy lại để xem kết quả. Script chuẩn bị thêm hậu tố cho output đã có; khi chạy lại phải dùng đường dẫn report/video thực tế. Script cập nhật manifest chỉ tái dùng đăng ký giống hệt, từ chối cùng ID nhưng khác asset; không tự ghi đè review. Không sửa pipeline suy luận: vẫn `yolov8n.pt`, `bytetrack.yaml`, device auto, imgsz 640. Tracker giữ trạng thái trong video và khởi tạo mới ở lần chạy video khác; 20 FPS trình chiếu không chứng minh motion theo thời gian thực.

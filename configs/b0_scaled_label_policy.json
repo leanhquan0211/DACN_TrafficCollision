@@ -1,0 +1,15 @@
+{
+  "policy_version": "b0_scaled_pilot_v1",
+  "pilot_training_release_allowed": true,
+  "benchmark_training_release_allowed": false,
+  "positive_source": "ACCIDENT v9 author bbox at first visible impact, vehicle-vehicle types only; exact frame/PTS/dimensions verified",
+  "positive_exclusions": "Preserve nine geometry/scope exclusions from 2026-10-26 source review; remaining author boxes are not all manually reviewed",
+  "negative_train_source": "One early preimpact frame per training clip, at least 1 s file PTS before impact and before half impact frame; derived weak label, never author-negative GT",
+  "negative_validation_test_source": "Previously reviewed 30 ACCIDENT preimpact frames from b0_basic_pilot_v1, same source groups",
+  "weak_negative_allowed_splits": ["train"],
+  "split": "Custom deterministic source-group split, old pilot group assignments frozen; newly added author-IID train groups remain train where possible; not author IID or geo-aware benchmark",
+  "split_caveat": "One previously frozen pilot test group is author-IID train; individual CADP/TAD overlap IDs are not published in the checked metadata, so this custom split cannot claim the paper overlap protocol",
+  "label_scope": "single-image accident-region bbox only; no dense per-frame boxes, no event or long-video GT",
+  "paper": "https://arxiv.org/html/2604.09819v1",
+  "implementation_note": "Paper uses impact localization and point metric; YOLO bbox fine-tuning is this project's adapted B0 experiment, not reproduction"
+}

@@ -1,0 +1,156 @@
+{
+  "source_url": "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t",
+  "listing": "outputs/audits/tad_public_zip_4/members.csv",
+  "listing_sha256": "5ea8a43296a6f8c3db2926781df631585c5699c13908507b1db79e096a29f155",
+  "selection": "Smallest not-yet-downloaded author train/normal clips by filename family quota 8/4/12 to control transfer size, 24 total. Group review and fixed split before any prediction; training-only hard mining later.",
+  "members": [
+    {
+      "path": "TAD-benchmark/train/normal/20220518_acci-bg24.mp4",
+      "size_bytes": "10659319",
+      "compressed_bytes": "10346568",
+      "crc32": "32b2592f"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220518_acci-bg20.mp4",
+      "size_bytes": "11259438",
+      "compressed_bytes": "11157944",
+      "crc32": "79fa2b7a"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220518_acci-bg52.mp4",
+      "size_bytes": "11794101",
+      "compressed_bytes": "11715149",
+      "crc32": "b2492cc4"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220518_acci-bg18.mp4",
+      "size_bytes": "12424629",
+      "compressed_bytes": "12158724",
+      "crc32": "e266b68e"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220518_acci-bg36.mp4",
+      "size_bytes": "12901022",
+      "compressed_bytes": "12356855",
+      "crc32": "a7029f3f"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220518_acci-bg12.mp4",
+      "size_bytes": "13396426",
+      "compressed_bytes": "13284844",
+      "crc32": "ec155b52"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220518_acci-bg16.mp4",
+      "size_bytes": "13589622",
+      "compressed_bytes": "13424651",
+      "crc32": "5617f67b"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220518_acci-bg6.mp4",
+      "size_bytes": "14405943",
+      "compressed_bytes": "14242821",
+      "crc32": "569601f7"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220620_acci-bg22.mp4",
+      "size_bytes": "21734616",
+      "compressed_bytes": "21563680",
+      "crc32": "ff391c75"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220620_acci-bg5.mp4",
+      "size_bytes": "23984246",
+      "compressed_bytes": "22715525",
+      "crc32": "03c22c65"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220620_acci-bg20.mp4",
+      "size_bytes": "26097845",
+      "compressed_bytes": "25985189",
+      "crc32": "e3e1bef0"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20220620_acci-bg7.mp4",
+      "size_bytes": "26787916",
+      "compressed_bytes": "26280814",
+      "crc32": "48e52643"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_99.mp4",
+      "size_bytes": "5164628",
+      "compressed_bytes": "5066209",
+      "crc32": "9cbfd113"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_115.mp4",
+      "size_bytes": "5405793",
+      "compressed_bytes": "5355976",
+      "crc32": "7bee4de6"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_119.mp4",
+      "size_bytes": "5503092",
+      "compressed_bytes": "5336501",
+      "crc32": "def61a72"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_103.mp4",
+      "size_bytes": "5552328",
+      "compressed_bytes": "5398758",
+      "crc32": "5e599b7d"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_47.mp4",
+      "size_bytes": "5554763",
+      "compressed_bytes": "5502460",
+      "crc32": "8df7ccdb"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_7.mp4",
+      "size_bytes": "5634318",
+      "compressed_bytes": "5311166",
+      "crc32": "7b216dda"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_59.mp4",
+      "size_bytes": "6067238",
+      "compressed_bytes": "6055765",
+      "crc32": "417e2483"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_15.mp4",
+      "size_bytes": "6219086",
+      "compressed_bytes": "6176395",
+      "crc32": "7fc3ed1b"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_107.mp4",
+      "size_bytes": "6615506",
+      "compressed_bytes": "6529781",
+      "crc32": "34e59bc6"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_71.mp4",
+      "size_bytes": "6680602",
+      "compressed_bytes": "6646990",
+      "crc32": "6e94040b"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_67.mp4",
+      "size_bytes": "7347456",
+      "compressed_bytes": "7310244",
+      "crc32": "4197ffbb"
+    },
+    {
+      "path": "TAD-benchmark/train/normal/20230818_acci-bg_1.mp4",
+      "size_bytes": "7504907",
+      "compressed_bytes": "7244214",
+      "crc32": "91f0d265"
+    }
+  ],
+  "samples_per_clip": 60,
+  "raw_root": "data_raw/tad/public_selected",
+  "audit_output": "outputs/audits/b0_hard_negative_sources_v1",
+  "download_budget_mib": 384
+}

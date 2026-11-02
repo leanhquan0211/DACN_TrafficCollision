@@ -1,0 +1,19 @@
+{
+  "scope": "basic_image_pilot",
+  "dataset": "data/processed/b0_basic_pilot_v1/dataset/dataset.yaml",
+  "initial_weights": "yolov8n.pt",
+  "output": "outputs/training/b0_basic_pilot_v1",
+  "ultralytics_version": "8.4.178",
+  "seed": 20261026,
+  "epochs": 40,
+  "patience": 15,
+  "imgsz": 640,
+  "batch": 4,
+  "workers": 0,
+  "device": "0",
+  "amp": false,
+  "optimizer": "auto",
+  "prediction_confidence": 0.25,
+  "matching_iou": 0.5,
+  "limitations": "47 images from 17 provisional source groups; hard negatives and temporal alerts deferred; not an author-benchmark reproduction or deployment evaluation"
+}

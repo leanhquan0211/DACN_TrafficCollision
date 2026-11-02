@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-24",
+  "reviewer": "assistant",
+  "review_type": "public_source_and_scene_audit_not_user_confirmation",
+  "evidence_report": "outputs/audits/pilot_groups/report.json",
+  "sttad_report": "outputs/audits/sttad_public_6/report.json",
+  "tad_download_report": "outputs/audits/tad_public_zip_2/report.json",
+  "leakage_groups": [
+    {
+      "id": "UA_DETRAC_bus_stop_road_scene",
+      "members": [
+        "UA-DETRAC:MVI_20011",
+        "UA-DETRAC:MVI_20012",
+        "UA-DETRAC:MVI_20032"
+      ],
+      "basis": "MVI_20011 last and MVI_20012 first visually adjacent; full phash Hamming 0, crop 2, normalized gray RMSE 0.01192. MVI_20032 shares road, bus stop, pedestrian rail and median with changed framing; conservative same-road grouping.",
+      "status": "conservative_must_stay_together_in_future_split;not_verified_physical_camera_id"
+    }
+  ],
+  "normal_clips": [
+    {
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg34.mp4",
+      "sequence": "20220518_acci-bg34",
+      "source_member": "TAD-benchmark/train/normal/20220518_acci-bg34.mp4",
+      "sha256": "bda9b0e17865a85b915a4122a1c7ee4da9d8e4d7e6c5cf1a8315168dcfa5211a",
+      "crc32": "faff8171",
+      "decoded_frames": 99,
+      "collision_label": "negative",
+      "annotation_origin": "author_normal_folder_clip_label",
+      "user_review_status": "not_user_reviewed",
+      "assistant_review_scope": "sampled first/middle/last scene and full decode; not exhaustive semantic relabeling",
+      "container_fps": 25.0,
+      "source_fps_verified": false
+    },
+    {
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_83.mp4",
+      "sequence": "20230818_acci-bg_83",
+      "source_member": "TAD-benchmark/train/normal/20230818_acci-bg_83.mp4",
+      "sha256": "626a7b4b54ed3825c38cdf8275b83ffa5bd726fd2f9751119e6d807c6ff5d152",
+      "crc32": "89656d29",
+      "decoded_frames": 209,
+      "collision_label": "negative",
+      "annotation_origin": "author_normal_folder_clip_label",
+      "user_review_status": "not_user_reviewed",
+      "assistant_review_scope": "sampled first/middle/last scene and full decode; not exhaustive semantic relabeling",
+      "container_fps": 25.0,
+      "source_fps_verified": false
+    }
+  ],
+  "independence_claim": "Other source groups remain provisional; absence of close hash is not proof of independence",
+  "domain_decision": "TAD selected clips provide fixed CCTV highway/day and night; no claim of matched cameras or eliminated dataset-origin bias",
+  "split_created": false,
+  "training_allowed": false
+}

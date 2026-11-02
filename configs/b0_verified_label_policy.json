@@ -1,0 +1,16 @@
+{
+  "policy_version": "b0_verified_negative_pilot_v1",
+  "pilot_training_release_allowed": true,
+  "benchmark_training_release_allowed": false,
+  "positive_source": "ACCIDENT v9 author impact bounding boxes for vehicle-vehicle collisions; decoded frame/PTS and image hashes verified; prior geometry exclusions retained",
+  "negative_sources": [
+    "30 individually reviewed preimpact ACCIDENT frames, only within their recorded scope",
+    "User-reviewed full UA-DETRAC sequences MVI_20011, MVI_20012, MVI_20032, sampled uniformly and kept in the same train group",
+    "Author-normal TAD clip labels, sampled uniformly and kept in train"
+  ],
+  "unreviewed_preimpact_candidates_allowed": false,
+  "unlabeled_frames": "unknown; never create empty detection labels solely because annotations are absent",
+  "test_split": "Retains previous held-out source groups after excluding two groups with confirmed near-duplicate train events; fixed before observing test outputs",
+  "limitations": "Normal negatives add only a few source clips and largely different camera domains; five reviewed same-domain negative frames in test; no comprehensive camera independence or temporal event benchmark",
+  "source_papers": ["https://arxiv.org/html/2604.09819v1", "https://github.com/UnicomAI/UnicomBenchmark/tree/main/TADBench"]
+}

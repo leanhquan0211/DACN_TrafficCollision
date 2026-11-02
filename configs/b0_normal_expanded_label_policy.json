@@ -1,0 +1,21 @@
+{
+  "policy_version": "b0_verified_normal_expanded_pilot_v1",
+  "pilot_training_release_allowed": true,
+  "benchmark_training_release_allowed": false,
+  "positive_source": "ACCIDENT v9 author impact bounding boxes for vehicle-vehicle collisions; decoded frame/PTS and image hashes verified; prior geometry exclusions retained",
+  "negative_sources": [
+    "30 individually reviewed preimpact ACCIDENT frames, only within their recorded scope",
+    "User-reviewed full UA-DETRAC sequences MVI_20011, MVI_20012, MVI_20032, sampled uniformly and kept in the same train group",
+    "Author-normal TAD clip labels, sampled uniformly and kept in train",
+    "18 public author train/normal TAD clips reviewed for source grouping: 10 train, 4 validation, 4 sealed negative-only holdout; 30 uniform source frames each"
+  ],
+  "unreviewed_preimpact_candidates_allowed": false,
+  "unlabeled_frames": "unknown; never create empty detection labels solely because annotations are absent",
+  "test_split": "Original consumed test remains unchanged and is not run for model selection. Additional 4-clip 120-frame negative-only reserve is excluded from training and validation; camera independence is not fully proven.",
+  "limitations": "Validation still uses old positive groups already inspected. Source/camera bias remains; expanded normal scenes do not guarantee coverage of tunnel interiors or all hard negatives. No new independent positive test or temporal event benchmark.",
+  "source_papers": [
+    "https://arxiv.org/html/2604.09819v1",
+    "https://github.com/UnicomAI/UnicomBenchmark/tree/main/TADBench"
+  ],
+  "expansion_review": "data/reviews/2026-10-28-b0-normal-expansion-review.json"
+}

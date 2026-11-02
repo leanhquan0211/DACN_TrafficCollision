@@ -15,7 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.prepare_detrac import numbered_images, read_image, file_crc32
-from scripts.update_manifest_reviews import read_manifest, verify_file
+from scripts.maintenance.update_manifest_reviews import read_manifest, verify_file
 from src.data_preparation import save_csv, save_json, sha256_file
 
 

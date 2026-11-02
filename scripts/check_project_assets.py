@@ -20,7 +20,7 @@ DIRECTORIES = (
     "data_raw/cadp/documentation", "data_raw/cadp/annotations/vatic",
     "data_raw/ua_detrac/annotations", "data_samples/cadp", "data_samples/ua_detrac",
     "data/processed", "outputs/annotation_preview", "outputs/detection",
-    "outputs/tracking", "outputs/audits",
+    "outputs/tracking", "outputs/audits", "data_raw/sttad/public_examples", "data_raw/tad/public_selected",
 )
 
 
@@ -74,7 +74,7 @@ def main() -> int:
     parser.add_argument("--catalog", type=Path, default=ROOT / "data/download_catalog.json")
     parser.add_argument("--create-dirs", action="store_true", help="Create missing project folders only")
     parser.add_argument("--check-hashes", action="store_true", help="Compare catalog hashes and CADP image fingerprints")
-    parser.add_argument("--profile", choices=("inference", "cadp", "detrac", "detrac_archive_audit"))
+    parser.add_argument("--profile", choices=("inference", "cadp", "detrac", "detrac_archive_audit", "sttad", "tad", "accident"))
     parser.add_argument("--strict", action="store_true", help="Exit 1 if a required asset in the selected profile is missing/mismatched")
     parser.add_argument("--json", action="store_true", help="Print structured inventory")
     args = parser.parse_args()

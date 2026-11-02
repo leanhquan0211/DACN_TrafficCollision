@@ -1,0 +1,373 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Bangkok",
+  "scope": "Dataset preparation, not model evaluation",
+  "accident_verification": {
+    "source_report": "outputs/audits/accident_public/report.json",
+    "clips": [
+      {
+        "source_sequence": "0NixrF6Mt00_0_00",
+        "decoded_frames": 94,
+        "width": 1280,
+        "height": 720,
+        "container_fps": 24.078485616947155,
+        "source_fps_verified": false,
+        "metadata_no_frames": 93,
+        "metadata_frame_count_matches": false,
+        "frame_count_delta": 1,
+        "source_frame": 27,
+        "source_frame_index_basis": "0-based decode; source metadata retained",
+        "xyxy_norm": [
+          0.16791709100461533,
+          0.397287786690257,
+          0.34703070582281775,
+          0.5565810957092279
+        ],
+        "impact_pts_seconds": 1.1011,
+        "source_reported_accident_time": 1.1010999999999997,
+        "impact_pts_residual_seconds": 2.220446049250313e-16,
+        "nearest_pts_frame": 27,
+        "timestamps_strictly_increasing": true,
+        "pts_mapping_verified": true,
+        "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+        "clean_png_pixel_exact": true,
+        "yolo_matches_source": true,
+        "ffprobe_check": {
+          "impact_pts_seconds": 1.1011,
+          "source_reported_accident_time": 1.1010999999999997,
+          "impact_pts_residual_seconds": 2.220446049250313e-16,
+          "nearest_pts_frame": 27,
+          "timestamps_strictly_increasing": true,
+          "pts_mapping_verified": true,
+          "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+          "decoded_frames": 94
+        },
+        "technical_checks_passed": true
+      },
+      {
+        "source_sequence": "04O2SOGSG_U_00",
+        "decoded_frames": 50,
+        "width": 1280,
+        "height": 720,
+        "container_fps": 8.0,
+        "source_fps_verified": false,
+        "metadata_no_frames": 49,
+        "metadata_frame_count_matches": false,
+        "frame_count_delta": 1,
+        "source_frame": 17,
+        "source_frame_index_basis": "0-based decode; source metadata retained",
+        "xyxy_norm": [
+          0.36642289764130803,
+          0.5014390046689448,
+          0.6044526359700337,
+          0.7940113427287214
+        ],
+        "impact_pts_seconds": 2.1666666666666665,
+        "source_reported_accident_time": 2.167,
+        "impact_pts_residual_seconds": -0.0003333333333332966,
+        "nearest_pts_frame": 17,
+        "timestamps_strictly_increasing": true,
+        "pts_mapping_verified": true,
+        "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+        "clean_png_pixel_exact": true,
+        "yolo_matches_source": true,
+        "ffprobe_check": {
+          "impact_pts_seconds": 2.166667,
+          "source_reported_accident_time": 2.167,
+          "impact_pts_residual_seconds": -0.0003329999999999167,
+          "nearest_pts_frame": 17,
+          "timestamps_strictly_increasing": true,
+          "pts_mapping_verified": true,
+          "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+          "decoded_frames": 50
+        },
+        "technical_checks_passed": true
+      },
+      {
+        "source_sequence": "2QZf8MiIRK0_00",
+        "decoded_frames": 205,
+        "width": 1280,
+        "height": 720,
+        "container_fps": 18.39477887382079,
+        "source_fps_verified": false,
+        "metadata_no_frames": 204,
+        "metadata_frame_count_matches": false,
+        "frame_count_delta": 1,
+        "source_frame": 11,
+        "source_frame_index_basis": "0-based decode; source metadata retained",
+        "xyxy_norm": [
+          0.7926369802965582,
+          0.2580862591177316,
+          0.8758865281467442,
+          0.3365618448150119
+        ],
+        "impact_pts_seconds": 1.1344666666666667,
+        "source_reported_accident_time": 1.134467,
+        "impact_pts_residual_seconds": -3.333333331578814e-07,
+        "nearest_pts_frame": 11,
+        "timestamps_strictly_increasing": true,
+        "pts_mapping_verified": true,
+        "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+        "clean_png_pixel_exact": true,
+        "yolo_matches_source": true,
+        "ffprobe_check": {
+          "impact_pts_seconds": 1.134467,
+          "source_reported_accident_time": 1.134467,
+          "impact_pts_residual_seconds": 0.0,
+          "nearest_pts_frame": 11,
+          "timestamps_strictly_increasing": true,
+          "pts_mapping_verified": true,
+          "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+          "decoded_frames": 205
+        },
+        "technical_checks_passed": true
+      },
+      {
+        "source_sequence": "1_F0r7KVJ1k_00",
+        "decoded_frames": 286,
+        "width": 1280,
+        "height": 720,
+        "container_fps": 24.740484429065745,
+        "source_fps_verified": false,
+        "metadata_no_frames": 285,
+        "metadata_frame_count_matches": false,
+        "frame_count_delta": 1,
+        "source_frame": 160,
+        "source_frame_index_basis": "0-based decode; source metadata retained",
+        "xyxy_norm": [
+          0.25170318848647877,
+          0.37159429472624617,
+          0.4343957015095786,
+          0.5711589964690718
+        ],
+        "impact_pts_seconds": 6.4,
+        "source_reported_accident_time": 6.4,
+        "impact_pts_residual_seconds": 0.0,
+        "nearest_pts_frame": 160,
+        "timestamps_strictly_increasing": true,
+        "pts_mapping_verified": true,
+        "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+        "clean_png_pixel_exact": true,
+        "yolo_matches_source": true,
+        "ffprobe_check": {
+          "impact_pts_seconds": 6.4,
+          "source_reported_accident_time": 6.4,
+          "impact_pts_residual_seconds": 0.0,
+          "nearest_pts_frame": 160,
+          "timestamps_strictly_increasing": true,
+          "pts_mapping_verified": true,
+          "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+          "decoded_frames": 286
+        },
+        "technical_checks_passed": true
+      },
+      {
+        "source_sequence": "-FQxK6HdxNU_00",
+        "decoded_frames": 78,
+        "width": 1920,
+        "height": 1080,
+        "container_fps": 14.904458598726114,
+        "source_fps_verified": false,
+        "metadata_no_frames": 77,
+        "metadata_frame_count_matches": false,
+        "frame_count_delta": 1,
+        "source_frame": 48,
+        "source_frame_index_basis": "0-based decode; source metadata retained",
+        "xyxy_norm": [
+          0.5271671812739309,
+          0.6292489198870679,
+          0.5891996811378009,
+          0.6861316303446209
+        ],
+        "impact_pts_seconds": 3.2333333333333334,
+        "source_reported_accident_time": 3.233,
+        "impact_pts_residual_seconds": 0.0003333333333332966,
+        "nearest_pts_frame": 48,
+        "timestamps_strictly_increasing": true,
+        "pts_mapping_verified": true,
+        "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+        "clean_png_pixel_exact": true,
+        "yolo_matches_source": true,
+        "ffprobe_check": {
+          "impact_pts_seconds": 3.233333,
+          "source_reported_accident_time": 3.233,
+          "impact_pts_residual_seconds": 0.0003329999999999167,
+          "nearest_pts_frame": 48,
+          "timestamps_strictly_increasing": true,
+          "pts_mapping_verified": true,
+          "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+          "decoded_frames": 78
+        },
+        "technical_checks_passed": true
+      },
+      {
+        "source_sequence": "0PrAtifCwjg_00",
+        "decoded_frames": 732,
+        "width": 880,
+        "height": 720,
+        "container_fps": 24.37291897891232,
+        "source_fps_verified": false,
+        "metadata_no_frames": 731,
+        "metadata_frame_count_matches": false,
+        "frame_count_delta": 1,
+        "source_frame": 137,
+        "source_frame_index_basis": "0-based decode; source metadata retained",
+        "xyxy_norm": [
+          0.33650474837713845,
+          0.584096345550043,
+          0.483884705856038,
+          0.8084689070117098
+        ],
+        "impact_pts_seconds": 4.6,
+        "source_reported_accident_time": 4.6,
+        "impact_pts_residual_seconds": 0.0,
+        "nearest_pts_frame": 137,
+        "timestamps_strictly_increasing": true,
+        "pts_mapping_verified": true,
+        "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+        "clean_png_pixel_exact": true,
+        "yolo_matches_source": true,
+        "ffprobe_check": {
+          "impact_pts_seconds": 4.6,
+          "source_reported_accident_time": 4.6,
+          "impact_pts_residual_seconds": 0.0,
+          "nearest_pts_frame": 137,
+          "timestamps_strictly_increasing": true,
+          "pts_mapping_verified": true,
+          "timing_scope": "presentation timestamps of released file; original capture FPS unverified",
+          "decoded_frames": 732
+        },
+        "technical_checks_passed": true
+      }
+    ],
+    "all_technical_checks_passed": true,
+    "independent_decoder_available": true,
+    "split_created": false,
+    "can_train": false
+  },
+  "group_audit": {
+    "group_count": 16,
+    "decoded_frames": 4187,
+    "source_label_groups": {
+      "CADP:positive": 1,
+      "UA-DETRAC:negative": 3,
+      "STTAD:positive": 4,
+      "TAD:negative": 2,
+      "ACCIDENT:positive": 6
+    },
+    "cross_group_exact_pixel_hashes": 0,
+    "near_pair_candidates": 1,
+    "compared_group_pairs": 120,
+    "candidate_threshold_phash_hamming": 8,
+    "camera_independence_verified": false,
+    "source_fps_verified": false,
+    "split_created": false,
+    "warning": "No close hash does not prove distinct cameras/events; candidates need scene checks",
+    "sttad_report": "outputs/audits/sttad_public_6/report.json"
+  },
+  "prepared_pool": {
+    "frame_references": 2380,
+    "label_counts": {
+      "positive": 35,
+      "negative": 2345
+    },
+    "source_counts": {
+      "STTAD": 31,
+      "UA-DETRAC": 2037,
+      "TAD": 308,
+      "ACCIDENT": 4
+    },
+    "nominal_source_groups": 13,
+    "conservative_leakage_groups": 11,
+    "unknown_sttad_frames_excluded": 145,
+    "corrupt_sttad_files_excluded": 2,
+    "cadp_derived_boxes_included": 0,
+    "images_copied": 0,
+    "empty_labels_created": 0,
+    "split_created": false,
+    "can_train": false,
+    "blockers": [
+      "Few positive source groups and sparse public region coverage",
+      "Dataset identity remains correlated with labels; TAD negatives add domain variety, not proof of matched cameras",
+      "No verified source/camera-independent split or sufficient hard-negative evaluation"
+    ],
+    "frame_index_note": "STTAD/DETRAC: filename numbers; TAD/ACCIDENT: 0-based decode. ACCIDENT impact joined by verified presentation timestamp; original capture timing remains unverified",
+    "sttad_report": "outputs/audits/sttad_public_6/report.json",
+    "negative_index": "data/processed/b0_reviewed_negatives/frames.csv",
+    "source_review": "data/reviews/2026-10-24-pilot-source-review.json",
+    "accident_report": "outputs/audits/accident_public/report.json",
+    "accident_review": "data/reviews/2026-10-25-accident-source-review.json",
+    "accident_impact_frames_added": 4,
+    "accident_other_frames_included": 0
+  },
+  "public_source_checks": {
+    "date": "2026-10-25",
+    "workbook_checked": [
+      "05_Cac_buoc",
+      "08_Du_lieu",
+      "09_Danh_gia",
+      "11_Cong_trinh",
+      "15_Nguon"
+    ],
+    "sources": [
+      {
+        "name": "SO-TAD",
+        "paper": "https://doi.org/10.1016/j.neucom.2024.129061",
+        "repo": "https://github.com/cccxy-299/so-tad",
+        "data": "https://huggingface.co/datasets/cccccxy/so-tad",
+        "access": "public API and HTTP 206 byte ranges succeeded",
+        "checks": {
+          "revision": "6b11c79731309da5cb39f4c18a8a86697b3f7ad5",
+          "volumes": 51,
+          "total_archive_bytes": 27349353323,
+          "members": 2188,
+          "video_members": 2185,
+          "appendix_rows": 281,
+          "appendix_column_counts": {
+            "2": 281
+          },
+          "appendix_crc32": "41b69f65",
+          "directory_bytes": 208562,
+          "directory_offset_last_volume": 505599063,
+          "full_archive_downloaded": false
+        },
+        "decision": "No bbox in inspected release; not an additional B0-region source. Retain temporal candidate only; do not download 27GB multipart archive."
+      },
+      {
+        "name": "TU-DAT",
+        "paper": "https://doi.org/10.3390/s25113259",
+        "repo": "https://github.com/pavana27/TU-DAT",
+        "revision": "9495d9506faf0d9efa1d7c1d83917dbd0e409c9b",
+        "access": "public pinned 2.2MB annotation ZIP downloaded and CRC checked",
+        "checks": {
+          "archive_bytes": 2216074,
+          "archive_members": 270,
+          "per_video_jsons": 128,
+          "sampled_object_boxes": 73120,
+          "box_classes": {
+            "moving_object": 73120
+          },
+          "all_member_crc_ok": true
+        },
+        "decision": "Inspected JSON boxes are moving_object/motion outputs, not verified human accident regions. Do not convert these to B0 accident GT; no raw videos downloaded."
+      },
+      {
+        "name": "ACCIDENT",
+        "paper": "https://arxiv.org/abs/2604.09819",
+        "repo": "https://github.com/accidentbench/ACCIDENT",
+        "data": "https://www.kaggle.com/datasets/picekl/accident/versions/9",
+        "access": "public API CSV and six single-video downloads succeeded without authentication",
+        "checks": "outputs/audits/accident_public/verification.json",
+        "decision": "Add four reviewed source impact boxes to unsplit reference pool; exclude two geometry cases; no dense label propagation or training."
+      }
+    ]
+  },
+  "tests_passed": 22,
+  "manifest_assets": 24,
+  "old_manifest_rows_preserved": 18,
+  "model_changed": false,
+  "training_run": false,
+  "split_created": false,
+  "source_capture_fps_verified": false,
+  "daily_progress": "progress/2026-10-25.md"
+}

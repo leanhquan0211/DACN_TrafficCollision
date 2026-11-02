@@ -1,0 +1,15 @@
+{
+  "source": "data/processed/b0_proposals/001407",
+  "frame_count": 221,
+  "status_counts": {
+    "exclude": 186,
+    "passes_explicit_source_flags": 35
+  },
+  "occluded_proposals": 0,
+  "ignore_overlapping_proposals": 0,
+  "source_generated_proposals": 35,
+  "policy": "Conservative derived CADP filter; retain generated flag as provenance, no interpolation or approval",
+  "negative_labels_created": 0,
+  "approved_gt_created": 0,
+  "can_train": false
+}

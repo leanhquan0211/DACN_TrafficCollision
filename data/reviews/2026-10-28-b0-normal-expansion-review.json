@@ -1,0 +1,212 @@
+{
+  "review_date": "2026-10-28",
+  "timezone": "Asia/Bangkok",
+  "reviewer": "assistant_visual_scene_review",
+  "review_scope": "source grouping and split assignment before model prediction; author normal clip labels retained; not user review",
+  "normal_manifest": "outputs/audits/b0_normal_expansion_v1/normal_manifest.json",
+  "normal_manifest_sha256": "4768c7dc4b0641e5363ce6b6bcc63f4ba771506ef44e80d2057c689e815c76ff",
+  "group_screen": "outputs/audits/b0_normal_expansion_v1/group_screen.json",
+  "group_screen_sha256": "c93e35b876b40eaddb3205c8ac609935e9046c872bbbddc9e40dc9da6413d820",
+  "base_index_sha256": "2c00c05234347f948fa109c0cff0a54fd5b87f98fcafd574102d1f9c137b6c01",
+  "base_split_sha256": "6afa84951e2aa0f7827cd7a475ef5769fbd5e3d2c9170585da81eb1f55ce5ae5",
+  "model_predictions_seen_before_assignment": false,
+  "camera_independence_verified": false,
+  "visual_evidence": [
+    "outputs/audits/b0_normal_expansion_v1/scene_page_1.jpg",
+    "outputs/audits/b0_normal_expansion_v1/scene_page_2.jpg",
+    "outputs/audits/b0_normal_expansion_v1/scene_page_3.jpg",
+    "outputs/audits/b0_normal_expansion_v1/nearest_base_page_1.jpg",
+    "outputs/audits/b0_normal_expansion_v1/nearest_base_page_2.jpg",
+    "outputs/audits/b0_normal_expansion_v1/nearest_base_page_3.jpg"
+  ],
+  "groups": [
+    {
+      "group_id": "TAD:normal_exp_v1:20220518_acci-bg14",
+      "sequences": [
+        "20220518_acci-bg14"
+      ],
+      "assignment": "train",
+      "scene_observation": "Night haze and headlight glare on divided road",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220518_acci-bg28",
+      "sequences": [
+        "20220518_acci-bg28"
+      ],
+      "assignment": "reserve_negative_holdout",
+      "scene_observation": "Monochrome night freeway and merge lane",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220518_acci-bg56",
+      "sequences": [
+        "20220518_acci-bg56"
+      ],
+      "assignment": "reserve_negative_holdout",
+      "scene_observation": "Day elevated curving highway near buildings",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220518_acci-bg22",
+      "sequences": [
+        "20220518_acci-bg22"
+      ],
+      "assignment": "val",
+      "scene_observation": "Hazy elevated curved divided highway",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220518_acci-bg8",
+      "sequences": [
+        "20220518_acci-bg8"
+      ],
+      "assignment": "train",
+      "scene_observation": "Night roadworks or controlled lane with flashing lights",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220620_acci-bg16",
+      "sequences": [
+        "20220620_acci-bg16"
+      ],
+      "assignment": "train",
+      "scene_observation": "Night monochrome road with strong headlight bloom",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220620_acci-bg13",
+      "sequences": [
+        "20220620_acci-bg13"
+      ],
+      "assignment": "val",
+      "scene_observation": "Night dense headlights on road near foreground railing",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220620_acci-bg37",
+      "sequences": [
+        "20220620_acci-bg37"
+      ],
+      "assignment": "reserve_negative_holdout",
+      "scene_observation": "Hazy interchange and diverging highway",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220620_acci-bg3",
+      "sequences": [
+        "20220620_acci-bg3"
+      ],
+      "assignment": "train",
+      "scene_observation": "Day divided highway with flowered median",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20220620_acci-bg41",
+      "sequences": [
+        "20220620_acci-bg41"
+      ],
+      "assignment": "train",
+      "scene_observation": "Day truck traffic on straight divided highway",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_129",
+      "sequences": [
+        "20230818_acci-bg_129"
+      ],
+      "assignment": "reserve_negative_holdout",
+      "scene_observation": "Night road near median barrier and vehicle glare",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_79",
+      "sequences": [
+        "20230818_acci-bg_79"
+      ],
+      "assignment": "val",
+      "scene_observation": "Monochrome night elevated road with few vehicles",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_25",
+      "sequences": [
+        "20230818_acci-bg_25"
+      ],
+      "assignment": "train",
+      "scene_observation": "Day divided highway near vegetation and power poles",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_139",
+      "sequences": [
+        "20230818_acci-bg_139"
+      ],
+      "assignment": "val",
+      "scene_observation": "Day buses and trucks on curved hill-side road",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_9",
+      "sequences": [
+        "20230818_acci-bg_9"
+      ],
+      "assignment": "train",
+      "scene_observation": "Day freight truck traffic near overhead gantry",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_43",
+      "sequences": [
+        "20230818_acci-bg_43"
+      ],
+      "assignment": "train",
+      "scene_observation": "Night portal or bridge over road with coloured lighting",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_57",
+      "sequences": [
+        "20230818_acci-bg_57"
+      ],
+      "assignment": "train",
+      "scene_observation": "Dense queue with trucks; author-normal label, no frame relabeling",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    },
+    {
+      "group_id": "TAD:normal_exp_v1:20230818_acci-bg_73",
+      "sequences": [
+        "20230818_acci-bg_73"
+      ],
+      "assignment": "train",
+      "scene_observation": "Closer truck view beside hillside and barrier",
+      "group_status": "provisional_distinct_scene_after_visual_check",
+      "linked_existing_group": null
+    }
+  ],
+  "limitations": "Scene appearances were inspected first/middle/last and nearest base-image pairs. No candidate passed the hash thresholds and no exact pixels repeated, but camera independence is not proven. Negative-only reserve is new; the old positive/negative test remains consumed.",
+  "small_positive_review": {
+    "all_original_boxes_valid": 1320,
+    "source_positive_labels_changed": 0,
+    "train_boxes_min_side_640_lt8": 15,
+    "visual_crop": "outputs/audits/b0_normal_expansion_v1/small_train_positive_crops.jpg",
+    "decision": "Keep public author impact labels. Small/blurred pixels are a difficulty flag, not sufficient evidence to reject a label or to invent corrected boxes. No crops or generated positives are used as new independent training samples."
+  }
+}

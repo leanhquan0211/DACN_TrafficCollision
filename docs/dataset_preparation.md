@@ -1,5 +1,7 @@
 # Chuẩn bị mẫu CADP 1407 và UA-DETRAC — 19/10/2026
 
+> **Tài liệu chi tiết/lịch sử:** ưu tiên [mục lục hiện hành](README.md), [policy nhãn B0](b0_label_protocol.md) và [trạng thái dữ liệu mới nhất](b0_pilot_audit.md). Các số liệu/chỉ dẫn cũ bên dưới giữ bối cảnh lúc tạo, không thay hướng public đã chọn.
+
 > **Cập nhật mới nhất trong ngày:** người dùng xác nhận CADP đúng xe và **Colliding 96–130 theo frame**, ba DETRAC đầy đủ âm tính. [Nhãn ứng viên B0 và chỉ mục âm đã chuẩn bị](b0_label_protocol.md), [kết quả tìm VATIC bổ sung](cadp_pilot_sources.md), [nhật ký ngày](../progress/2026-10-19.md). Không yêu cầu rà lại 001407. [Hướng dẫn ảnh/video sạch đã có](cadp_001407_clean.md). Các audit trước xác nhận giữ nguyên như snapshot lịch sử.
 
 ## Dữ liệu thực sự có trong project
@@ -110,7 +112,7 @@ Chạy PowerShell tại thư mục gốc, dùng Python `.venv`:
 Lệnh đã dùng đăng ký lần này:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/register_prepared_manifest.py --cadp-report outputs/audits/cadp_1407/report.json --detrac-report outputs/audits/detrac_preparation/report.json
+.\.venv\Scripts\python.exe scripts/maintenance/register_prepared_manifest.py --cadp-report outputs/audits/cadp_1407/report.json --detrac-report outputs/audits/detrac_preparation/report.json
 ```
 
 **Không cần chạy lại các lệnh để xem kết quả.** Script chuẩn bị tự thêm hậu tố `_2` nếu output đã tồn tại; ảnh gốc không bị ghi đè. Script đăng ký từ chối ID đã có để không đè nhãn/ghi chú được rà sau đó. Khi chạy lại, dùng report/tên output mới thực tế, không đoán hậu tố.
@@ -131,3 +133,38 @@ Thao tác tiếp theo cho người thực hiện:
 2. Ba DETRAC đã được người dùng xem toàn bộ; chưa cần yêu cầu xem lại để xác nhận âm. Khi mở rộng chuỗi khác vẫn phải rà riêng, kiểm tra rung camera và miền CCTV mục tiêu; không tự lan nhãn sang chuỗi chưa xem.
 3. Frames sạch 001407 và mapping đã có; còn thiếu timing gốc và quy tắc/nhãn vùng accident cho B0. Không biến bbox xe Colliding thành bbox tai nạn. [Điều kiện B0](../data/b0_readiness.json).
 4. [Đã kiểm các nguồn VATIC tác giả](cadp_pilot_sources.md), chưa xác minh thêm cặp ngoài 001407. Lấy export/mapping trước, sau đó chọn thêm chuỗi có nhãn và rà pilot ít nhất 10 ví dụ đa sự kiện/âm/hard negatives. Không yêu cầu gán lại bbox xe bằng tay hoặc tải toàn CADP. Split là công việc riêng sau xác minh nhóm và chốt nhãn.
+
+<a id="kiem-ke-ba-video-ban-dau"></a>
+
+## Kiểm kê ba video ban đầu — 19/10/2026
+
+> Hợp nhất từ `docs/data_audit.md` ngày 25/10 để giảm file hướng dẫn. Nội dung dưới đây giữ kết quả và giới hạn lịch sử, không phải inventory hiện hành.
+
+> **Tài liệu chi tiết/lịch sử:** ưu tiên [mục lục hiện hành](README.md), [policy nhãn B0](b0_label_protocol.md) và [trạng thái dữ liệu mới nhất](b0_pilot_audit.md). Các số liệu/chỉ dẫn cũ bên dưới giữ bối cảnh lúc tạo, không thay hướng public đã chọn.
+
+Đây là mốc kiểm kê **trước khi thêm CADP 1407 và DETRAC**. Kết quả và giới hạn của dữ liệu mới ở [hướng dẫn chuẩn bị CADP/DETRAC](dataset_preparation.md); manifest hiện tại đã bổ sung các asset mới.
+
+**Lượt mới nhất cùng ngày:** đã có riêng 221 ảnh sạch CADP 001407, mapping TXT/demo được kiểm ở nhiều mốc, và ba DETRAC đầy đủ được người dùng xác nhận âm. [Bằng chứng, video và giới hạn timing/B0](cadp_001407_clean.md). Xác nhận mới không thay nhãn hoặc nguồn của ba video cũ trong bảng dưới.
+
+### Phương pháp và kết quả đo được
+
+Chỉ đọc file trong `data_samples/`; không tải thêm dữ liệu. Dùng OpenCV đọc toàn bộ từng MP4 và lấy metadata, dùng SHA-256 trên byte của file để kiểm tra trùng chính xác. Xem frame ở khoảng 0%, 25%, 50%, 75%, 98% mỗi clip để nhận diện sơ bộ góc quay; việc này **không thay thế xem toàn clip để gán nhãn**.
+
+| Video | Kích thước | FPS OpenCV | Frame metadata/đọc được | Thời lượng xấp xỉ | Nhãn, nguồn, split |
+| --- | --- | ---: | ---: | ---: | --- |
+| `YSGhwU9XxuY.mp4` | 450×360 | 25 | 279/279 | 11,160 s | Chưa xác minh |
+| `ZCQcKnFSJvg.mp4` | 480×270 | 29,97003 | 717/717 | 23,924 s | Chưa xác minh |
+| `zVzXEht1aME.mp4` | 480×360 | 20 | 794/794 | 39,700 s | Chưa xác minh |
+
+Ba SHA-256 trong [manifest](../data/manifest.csv) khác nhau, nên **không trùng chính xác ở mức file**. Điều đó chưa loại trừ hai bản cắt/chuyển mã của cùng camera hoặc sự kiện. Các frame lấy mẫu cho thấy mỗi clip có góc nhìn có vẻ cố định; chưa xác nhận nguồn CADP, camera ID hay loại sự kiện. Tại thời điểm kiểm kê ban đầu, `data_raw/` chỉ có `.gitkeep`; các gói CADP/DETRAC được kiểm kê trong buổi sau, không thay đổi kết luận nhãn của ba video này.
+
+Trang [CADP của nhóm tác giả](https://ankitshah009.github.io/accident_forecasting_traffic_camera.html) mô tả 1.416 đoạn video, 205 đoạn có nhãn không gian–thời gian đầy đủ và dẫn tới README, annotation và guideline. Trang nêu điều kiện sử dụng phi thương mại cho nghiên cứu, cần xin phép tác giả cho mục đích khác. **Chưa đối chiếu ba MP4 địa phương với danh mục/annotation chính thức**, nên không ghi `source_dataset=CADP` chỉ dựa vào tên file hay bối cảnh hình ảnh. Chưa có bản README phát hành tại project để kiểm tra thêm điều kiện chi tiết.
+
+### Điều kiện còn thiếu để hoàn thành giai đoạn 1
+
+1. Nguồn và annotation gốc của video, quyền sử dụng/trích dẫn; xác định clip có đủ thời gian trước/sau va chạm và nhãn pair/onset thực tế hay không.
+2. Video **không tai nạn** được xem toàn đoạn, gồm hard negatives và đoạn âm dài để đánh giá false alarms/hour.
+3. Rà ít nhất 10 trường hợp pilot theo [quy tắc nhãn bản nháp](annotation_protocol.md), chốt phạm vi/ranh giới `end_s` và trường hợp không chắc chắn.
+4. Xác định camera/source event, loại trùng/gần trùng, sau đó mới tạo split manifest cố định. Với ba clip chưa biết nhóm và nhãn, một split ngẫu nhiên sẽ không có ý nghĩa đánh giá.
+
+**Kết luận tại mốc ban đầu:** kiểm kê kỹ thuật video hoàn tất cho ba file mẫu; giai đoạn định nghĩa và dữ liệu **chưa đạt điều kiện chuyển sang B0**. Xem bản chuẩn bị mới để biết tài liệu/nhãn tác giả hiện đã tìm thấy.

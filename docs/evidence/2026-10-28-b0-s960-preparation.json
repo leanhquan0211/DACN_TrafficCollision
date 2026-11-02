@@ -1,0 +1,466 @@
+{
+  "date": "2026-10-28",
+  "timezone": "Asia/Bangkok",
+  "status": "prepared_not_trained",
+  "config": "configs/b0_s960_v1.json",
+  "config_sha256": "da53da53b8a513da994eb7b2cd487763085ddefeb1026c4a3e9a91d3873b4046",
+  "weights": {
+    "path": "yolov8s.pt",
+    "size_bytes": 22588772,
+    "sha256": "1f47a78bf100391c2a140b7ac73a1caae18c32779be7d310658112f7ac9aa78a",
+    "source": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolov8s.pt",
+    "checksum_source": "https://api.github.com/repos/ultralytics/assets/releases/tags/v8.4.0",
+    "checksum_verified_against_github": true
+  },
+  "dataset": "data/processed/b0_normal_expanded_v1/dataset/dataset.yaml",
+  "dataset_yaml_sha256": "64b4061e76d74c11e91d866d8818bc128add393e87a304f60c611e024d3d72a3",
+  "provenance_sha256": "5c25f1b663d89549e81a61322ec67d836c05973b38c351eba658486dd15cd164",
+  "samples": {
+    "train": {
+      "images": 1841,
+      "positive": 1122,
+      "groups": 1098
+    },
+    "val": {
+      "images": 217,
+      "positive": 91,
+      "groups": 94
+    },
+    "test": {
+      "images": 112,
+      "positive": 107,
+      "groups": 107
+    }
+  },
+  "preflight": {
+    "status": "prepared_not_trained",
+    "config": "configs/b0_s960_v1.json",
+    "config_sha256": "da53da53b8a513da994eb7b2cd487763085ddefeb1026c4a3e9a91d3873b4046",
+    "initial_weights_sha256": "1f47a78bf100391c2a140b7ac73a1caae18c32779be7d310658112f7ac9aa78a",
+    "dataset_yaml_sha256": "64b4061e76d74c11e91d866d8818bc128add393e87a304f60c611e024d3d72a3",
+    "provenance_sha256": "5c25f1b663d89549e81a61322ec67d836c05973b38c351eba658486dd15cd164",
+    "decoded_images": {
+      "train": 1841,
+      "val": 217
+    },
+    "bbox_counts": {
+      "train": 1122,
+      "val": 91
+    },
+    "input_shape": [
+      2,
+      3,
+      960,
+      960
+    ],
+    "parameters": 11135987,
+    "peak_forward_allocated_bytes": 281309184,
+    "peak_forward_reserved_bytes": 346030080,
+    "device": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "torch": "2.11.0+cu128",
+    "ultralytics": "8.4.178",
+    "optimizer_created": false,
+    "backward_called": false,
+    "training_started": false,
+    "checkpoint_written": false,
+    "test_inference": false,
+    "negative_holdout_inference": false,
+    "limitation": "Forward-only memory is not a training VRAM guarantee; no accuracy claim before training."
+  },
+  "error_analysis": {
+    "groups": {
+      "validation": {
+        "frames": 217,
+        "tp": 54,
+        "fp": 35,
+        "fn": 37,
+        "geometry_categories": {
+          "true_positive": 54,
+          "false_positive_on_verified_negative": 6,
+          "false_positive_disjoint_from_annotated_region": 24,
+          "localization_overlap_below_matching_iou": 4,
+          "duplicate_or_conflicting_prediction": 1
+        }
+      }
+    },
+    "top_false_positive_cases": [
+      {
+        "scope": "validation",
+        "source_sequence": "Jr-RXkEv6Ds_00",
+        "source_frame": 61,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/Jr-RXkEv6Ds_00_f000061.jpg",
+        "max_confidence": 0.9728268384933472,
+        "min_gt_area_fraction": 0.07511246939316685
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "2BBwMYE-FC4_00",
+        "source_frame": 155,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/2BBwMYE-FC4_00_f000155.jpg",
+        "max_confidence": 0.9724041819572449,
+        "min_gt_area_fraction": 0.16644665558190774
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "FJcKTvBI75U_00",
+        "source_frame": 99,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/FJcKTvBI75U_00_f000099.jpg",
+        "max_confidence": 0.9595217108726501,
+        "min_gt_area_fraction": 0.08531357326214069
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "kI-AKIXGLiY_00",
+        "source_frame": 56,
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/kI-AKIXGLiY_00_f000056.jpg",
+        "max_confidence": 0.9147351384162903,
+        "min_gt_area_fraction": 0.021632507021644688
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "uJR-x2ahMjo_00",
+        "source_frame": 130,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/uJR-x2ahMjo_00_f000130.jpg",
+        "max_confidence": 0.9116188287734985,
+        "min_gt_area_fraction": 0.027574907934435587
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "Q90j5Irrj9g_00",
+        "source_frame": 475,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/Q90j5Irrj9g_00_f000475.jpg",
+        "max_confidence": 0.9077146053314209,
+        "min_gt_area_fraction": 0.0056881309695628
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "8o-2-9mO8C0_00",
+        "source_frame": 20,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/8o-2-9mO8C0_00_f000020.jpg",
+        "max_confidence": 0.9000242948532104,
+        "min_gt_area_fraction": 0.015552144900880261
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "VsJNApu-LP4_00",
+        "source_frame": 88,
+        "tp": 1,
+        "fp": 2,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/VsJNApu-LP4_00_f000088.jpg",
+        "max_confidence": 0.8703251481056213,
+        "min_gt_area_fraction": 0.028004308623217553
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "sckLwIfeCT4_00",
+        "source_frame": 108,
+        "tp": 0,
+        "fp": 2,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/sckLwIfeCT4_00_f000108.jpg",
+        "max_confidence": 0.8636759519577026,
+        "min_gt_area_fraction": 0.03398141347336587
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "TSHPa6dU_yo_00",
+        "source_frame": 94,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/TSHPa6dU_yo_00_f000094.jpg",
+        "max_confidence": 0.8473862409591675,
+        "min_gt_area_fraction": 0.0027207128933745017
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "5UK0XveIgBA_00",
+        "source_frame": 78,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/5UK0XveIgBA_00_f000078.jpg",
+        "max_confidence": 0.8440123200416565,
+        "min_gt_area_fraction": 0.00792399503240889
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "LP_C34tyPl4_00",
+        "source_frame": 106,
+        "tp": 1,
+        "fp": 1,
+        "fn": 0,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/LP_C34tyPl4_00_f000106.jpg",
+        "max_confidence": 0.8275546431541443,
+        "min_gt_area_fraction": 0.011386409523415245
+      }
+    ],
+    "top_false_negative_cases": [
+      {
+        "scope": "validation",
+        "source_sequence": "cdKTiLurgOI_00",
+        "source_frame": 308,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/cdKTiLurgOI_00_f000308.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.0004991789920046231
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "47M8fAuFNOs_00",
+        "source_frame": 145,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/47M8fAuFNOs_00_f000145.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.0006287711865161605
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "vVeLx1IopnM_00",
+        "source_frame": 55,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/vVeLx1IopnM_00_f000055.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.0007696620268383581
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "DU2mJPGb3ys_00",
+        "source_frame": 85,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/DU2mJPGb3ys_00_f000085.jpg",
+        "max_confidence": 0.28232651948928833,
+        "min_gt_area_fraction": 0.0008281676791339246
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "Ex8VtDfLq8M_00",
+        "source_frame": 36,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/Ex8VtDfLq8M_00_f000036.jpg",
+        "max_confidence": 0.4512580335140228,
+        "min_gt_area_fraction": 0.0008803557270537621
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "CzOWGXrwbp4_00",
+        "source_frame": 161,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/CzOWGXrwbp4_00_f000161.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.0008869553325116105
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "Mk3DdsuI71U_00",
+        "source_frame": 220,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/Mk3DdsuI71U_00_f000220.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.001170274890987576
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "Kw_Xo2iUEZQ_00",
+        "source_frame": 67,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/Kw_Xo2iUEZQ_00_f000067.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.001350933036149546
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "h5WtldZ9-68_00",
+        "source_frame": 34,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/h5WtldZ9-68_00_f000034.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.0014520980382474048
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "VObOhcls5kI_00",
+        "source_frame": 35,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/VObOhcls5kI_00_f000035.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.0017065245454006618
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "xP_sW92sGh8_00",
+        "source_frame": 145,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/xP_sW92sGh8_00_f000145.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.0017927650791889676
+      },
+      {
+        "scope": "validation",
+        "source_sequence": "VpSREWsYWgY_00",
+        "source_frame": 91,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "example": "outputs/training/b0_normal_expanded_v1/cases_val/VpSREWsYWgY_00_f000091.jpg",
+        "max_confidence": 0,
+        "min_gt_area_fraction": 0.0017971661446016692
+      }
+    ],
+    "gt_size_statistics": {
+      "validation": {
+        "matched": {
+          "count": 54,
+          "median_image_area_percent": 1.8601019313169702
+        },
+        "missed": {
+          "count": 37,
+          "median_image_area_percent": 0.3749001215375686
+        }
+      }
+    },
+    "gt_min_side_resized": {
+      "640": {
+        "below_16": {
+          "matched": 2,
+          "missed": 10
+        },
+        "16_to_32": {
+          "matched": 11,
+          "missed": 11
+        },
+        "32_to_64": {
+          "matched": 21,
+          "missed": 11
+        },
+        "at_least_64": {
+          "matched": 20,
+          "missed": 5
+        }
+      },
+      "960": {
+        "below_16": {
+          "matched": 1,
+          "missed": 3
+        },
+        "16_to_32": {
+          "matched": 4,
+          "missed": 12
+        },
+        "32_to_64": {
+          "matched": 16,
+          "missed": 9
+        },
+        "at_least_64": {
+          "matched": 33,
+          "missed": 13
+        }
+      }
+    },
+    "matching_iou": 0.5,
+    "confidence": 0.25,
+    "classification": "geometry only; content causes require visual inspection",
+    "size_projection_note": "GT sizes projected to each image size; TP/FN retain the original saved prediction matches, not inference at the projected size."
+  },
+  "source_experiment": "outputs/training/b0_normal_expanded_v1/experiment.json",
+  "source_experiment_sha256": "0f2d0b1b1d210c1f1ca1ab7dbc26c3819feab6ca5af14390898fc91b4baa8df6",
+  "source_checkpoint_sha256": "067c819ad6a4680a669fb7d50ec1f7a4b1b131630d4ea6855ebada52c6969753",
+  "source_status": {
+    "TP_YOLOv8": "author PDF full text and tables read; TAT release not retrieved",
+    "STTAD": "author PDF read; public README still describes examples and gradual release",
+    "YOLO11_AMF": "primary publisher indexed full content read; direct opening timed out; complete data/code not verified public",
+    "S12": "publisher abstract read; full HTML and PDF returned 403; no unverified numerical score used"
+  },
+  "source_urls": [
+    "https://zhangtianze.com/mypublications/Thesis/TPYOLOv8.pdf",
+    "https://www.sciencedirect.com/science/article/pii/S2352146525001942",
+    "https://dsg.tuwien.ac.at/team/snastic/publications/ITSC25_0424_FI.pdf",
+    "https://www.mdpi.com/2624-8921/7/3/81",
+    "https://docs.ultralytics.com/models/yolov8/",
+    "https://docs.ultralytics.com/guides/finetuning-guide/",
+    "https://arxiv.org/html/2604.09819v1"
+  ],
+  "train_kwargs": {
+    "epochs": 100,
+    "imgsz": 960,
+    "batch": 2,
+    "mosaic": 0.5,
+    "scale": 0.3,
+    "lr0": 0.001,
+    "optimizer": "SGD",
+    "workers": 0,
+    "amp": false
+  },
+  "target": {
+    "primary_metric": "validation mAP50(B)",
+    "aspirational_lower_bound": 0.7,
+    "guaranteed": false,
+    "checkpoint_selection": "Ultralytics 8.4.178 best fitness: mAP50-95",
+    "secondary_checks": {
+      "map50_95_reference": 0.4903136293809145,
+      "fixed_f1_reference": 0.6,
+      "fixed_recall_reference": 0.5934065934065934,
+      "negative_frames_with_predictions_reference": 6
+    },
+    "independent_test_claim_allowed": false
+  },
+  "tests": {
+    "unit_tests_passed": 55,
+    "cli_help_passed": true,
+    "forward_only": true
+  },
+  "train_started": false,
+  "optimizer_updates": 0,
+  "checkpoint_written": false,
+  "test_inference": false,
+  "negative_holdout_inference": false,
+  "negative_holdout_sha256": "bc423f5a3990dba0f646fafaeacae1998fb2327f6e52827e2fca9acf3cfb5cfd",
+  "camera_independence_verified": false,
+  "new_dataset_downloaded": false,
+  "weights_downloaded": true,
+  "full_B0_complete": false
+}

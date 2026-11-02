@@ -1,0 +1,95 @@
+{
+  "scope": "train/val only; existing validation predictions at conf=.25, IoU=.5",
+  "sample_groups": [
+    {
+      "split": "train",
+      "label": "negative",
+      "source": "ACCIDENT",
+      "images": 19,
+      "groups": 11
+    },
+    {
+      "split": "train",
+      "label": "negative",
+      "source": "TAD",
+      "images": 1240,
+      "groups": 26
+    },
+    {
+      "split": "train",
+      "label": "negative",
+      "source": "UA-DETRAC",
+      "images": 300,
+      "groups": 1
+    },
+    {
+      "split": "train",
+      "label": "positive",
+      "source": "ACCIDENT",
+      "images": 1122,
+      "groups": 1085
+    },
+    {
+      "split": "val",
+      "label": "negative",
+      "source": "ACCIDENT",
+      "images": 6,
+      "groups": 3
+    },
+    {
+      "split": "val",
+      "label": "negative",
+      "source": "TAD",
+      "images": 210,
+      "groups": 5
+    },
+    {
+      "split": "val",
+      "label": "positive",
+      "source": "ACCIDENT",
+      "images": 91,
+      "groups": 90
+    }
+  ],
+  "positive_bbox_area": [
+    {
+      "split": "train",
+      "fraction_of_image": "1-5%",
+      "boxes": 468
+    },
+    {
+      "split": "train",
+      "fraction_of_image": "<1%",
+      "boxes": 423
+    },
+    {
+      "split": "train",
+      "fraction_of_image": ">=5%",
+      "boxes": 231
+    },
+    {
+      "split": "val",
+      "fraction_of_image": "1-5%",
+      "boxes": 33
+    },
+    {
+      "split": "val",
+      "fraction_of_image": "<1%",
+      "boxes": 41
+    },
+    {
+      "split": "val",
+      "fraction_of_image": ">=5%",
+      "boxes": 17
+    }
+  ],
+  "validation_fn_by_bbox_area": {
+    ">=5%": 3,
+    "<1%": 18,
+    "1-5%": 13
+  },
+  "validation_cases_matched": 307,
+  "limitations": "Bbox areas are normalized; FN counts describe saved cases, not causes. Groups are not proven independent cameras.",
+  "test_inference": false,
+  "reserve_inference": false
+}

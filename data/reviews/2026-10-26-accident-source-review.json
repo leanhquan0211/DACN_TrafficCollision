@@ -1,0 +1,250 @@
+{
+  "review_id": "2026-10-26-accident-expansion",
+  "reviewer": "assistant",
+  "user_review": false,
+  "source_dataset": "picekl/accident",
+  "source_version": 9,
+  "report_path": "outputs\\audits\\accident_expansion\\report.json",
+  "source_report_sha256": "f53751d7cbf82f6c2079d955fbff6f160b958b20da8c08dafedcd445214a3b8b",
+  "verification_path": "outputs\\audits\\accident_expansion\\verification.json",
+  "verification_sha256": "476a27c879023d4d3ddf30b8f524aa9ad2596c68821605fa5759b5b69bb78d0f",
+  "training_allowed": false,
+  "split_created": false,
+  "review_scope": "Impact images plus source-frame -3/+3 context; full-scene check at impact, not a temporal interval annotation",
+  "selection_bias": "20 small first-page members; prefer source Good/Fine and bbox area>=0.008, under 6.5 MB/file. Not a representative benchmark.",
+  "source_url": "https://arxiv.org/html/2604.09819v1#S3.SS1",
+  "geometry_rule": "Retain original bbox around visible interacting parties; partial/uncertain or vehicle-infrastructure cases excluded; no edits",
+  "clips": [
+    {
+      "source_sequence": "-wlnF8vCVMo_00",
+      "source_frame": 51,
+      "video_sha256": "0b000383770149f242eba66e7a7e25a7cbb01620e1d475c0a0433098d9af3741",
+      "image_sha256": "b7c1aa3c7b9ec35fad44ea87a795493e17b51879cece7cb4a7318e4b1825e758",
+      "source_group": "ACCIDENT:-wlnF8vCVMo",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe ở giao lộ nằm trong hộp; context trước/sau phù hợp tương tác."
+    },
+    {
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": 297,
+      "video_sha256": "442dae2bf94210e2eb9e27e51e5c2c09dc8c2bec17408302a6dbdf2b2e89391e",
+      "image_sha256": "3e8a8ae6489f90d6984837558e8e700e9ebd0f09515f2b46e9a78d98704bfbf9",
+      "source_group": "ACCIDENT:-RE3XseZINA",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hộp bao phần nhìn thấy của hai xe tải va chạm; một xe bị cắt bởi biên ảnh nguồn, không tự kéo bbox ra ngoài ảnh."
+    },
+    {
+      "source_sequence": "-dmYsQc-odI_00",
+      "source_frame": 45,
+      "video_sha256": "87b233f98ae0c7956c6dacef2c8cb19f214a3ab0d522e43cd1b4630e55a48831",
+      "image_sha256": "2f5b58b7f6b1631fd7225b5edea66a49e2c69dc526a09f7f39af3c1067596750",
+      "source_group": "ACCIDENT:-dmYsQc-odI",
+      "b0_region_status": "excluded_geometry_uncertain",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Nhiều xe tải chen/che; phần nhìn thấy chưa đủ rõ để kết luận hộp bao đúng các bên theo policy."
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": 121,
+      "video_sha256": "31a7145278e26d7094536e73bbbaac9b22de9a3418bb77e1f871d85724c78ff9",
+      "image_sha256": "3e27761f51938c81b62a8a0693fbbe3ed30b8be4003a23ff145a8ac31b9e77ea",
+      "source_group": "ACCIDENT:2QZf8MiIRK0",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe con trong vùng tác giả; giữ cùng nhóm nguồn với segment _00 dù khác cảnh."
+    },
+    {
+      "source_sequence": "07Eu77WorsY_00",
+      "source_frame": 83,
+      "video_sha256": "5bd1c7046a541d670da0d52a2939be216376b207fca437560aa2720fbce452e8",
+      "image_sha256": "db4aa477aee1d78ec1ba27ea61db03dbd0fe490b897c6ee902bd97de3159fd66",
+      "source_group": "ACCIDENT:07Eu77WorsY",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe tại giao lộ đêm nằm trong vùng tác giả; không lan hộp sang frame khác."
+    },
+    {
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": 155,
+      "video_sha256": "bd788fa6457610b6078532a643b414e581dc0f0552f5ccfb9f1393e26d451417",
+      "image_sha256": "3797e791707080a4515066b9c03b2b94ada650f3356d2fbe9bf8f0d8d5fe155c",
+      "source_group": "ACCIDENT:2BBwMYE-FC4",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe ở giao lộ trong vùng; context cho thấy chuyển động trước/sau impact."
+    },
+    {
+      "source_sequence": "0ThWw_efieo_00",
+      "source_frame": 52,
+      "video_sha256": "c90c44e6b9cd0565c4de6b902a72e44be1d53b735d02ff3bd35d4fc91c334f09",
+      "image_sha256": "f0fae31ae58aba98af42f6db110850300c8fce94daf5713687fcd131eab7428a",
+      "source_group": "ACCIDENT:0ThWw_efieo",
+      "b0_region_status": "excluded_scope",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Context thể hiện xe tải va trần hầm, chưa thấy va chạm xe–xe; không dùng nhãn sideswipe nguồn để ép vào phạm vi project."
+    },
+    {
+      "source_sequence": "-i9bRJWMtTo_00",
+      "source_frame": 24,
+      "video_sha256": "49d12514f4338de01f712f8a1e30bbeb914eaa6df5b19e6804d13f10a038e940",
+      "image_sha256": "99c7c16e1b60190780904b7002dc9eecc9b08ac777c2f504aaa245b277275314",
+      "source_group": "ACCIDENT:-i9bRJWMtTo",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Vùng bao xe tải và xe con sát bên; giữ hình học tác giả, không coi xe đi trước là participant."
+    },
+    {
+      "source_sequence": "2IY6PpDm85k_00",
+      "source_frame": 24,
+      "video_sha256": "573eb2f513f837ea2c89c402f2df803c2ec86b7d4496f77113ee4e5d7c28d89d",
+      "image_sha256": "b16f2348f74bd4d01d7f873f51f35d0c74c3d0d846ee91af5c058a7a4098e7bf",
+      "source_group": "ACCIDENT:2IY6PpDm85k",
+      "b0_region_status": "excluded_geometry_uncertain",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Tương tác nằm sát/bị cắt ở mép dưới, không đủ phạm vi quan sát."
+    },
+    {
+      "source_sequence": "-NgnSm_oEB4_00",
+      "source_frame": 50,
+      "video_sha256": "68310cb5793f2b9b4a308716e95bb49a3353149d951162c9654888a2af56d55c",
+      "image_sha256": "063f322336cd8da86e4ab81ae95a503bc843df9e0a96bd9c7aec1dbc2162808d",
+      "source_group": "ACCIDENT:-NgnSm_oEB4",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Xe van phía sau và xe phía trước trong cùng vùng impact ở hầm đông xe."
+    },
+    {
+      "source_sequence": "0DB7w7rLGrk_00",
+      "source_frame": 24,
+      "video_sha256": "b29e151656efdbb4cae5225458cf5ef6c4aea3f5b32d5e2e7a5b2800df52d2fc",
+      "image_sha256": "55f3d852e95d5eba4815e730ee511caea957e649141fa678dc52483f15868be5",
+      "source_group": "ACCIDENT:0DB7w7rLGrk",
+      "b0_region_status": "excluded_geometry_uncertain",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Tương tác nhỏ/xe che nhau, chưa xác minh đủ phạm vi hai xe tại impact."
+    },
+    {
+      "source_sequence": "0jk4tWwDKqc_00",
+      "source_frame": 156,
+      "video_sha256": "aadb891bea2bf2b9acaf83c245e740857d966fbe45ae608ade75ba8fb1cc1a4a",
+      "image_sha256": "9cf1c9ef135f98cdbbd64b3047716b7dbd982035a6fd47d275abf71f05615e0d",
+      "source_group": "ACCIDENT:0jk4tWwDKqc",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe ở giao lộ nằm trong hộp nguồn, có context rõ."
+    },
+    {
+      "source_sequence": "1O-y5PmPWdU_00",
+      "source_frame": 110,
+      "video_sha256": "002332137eced5fd99c76029de39d48dca7418f63dcf1fd2fbe63dd29543042d",
+      "image_sha256": "2b285ec4036c808c19144706fef76fa43b3a21a0962910b751b64ef80e34e8d9",
+      "source_group": "ACCIDENT:1O-y5PmPWdU",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe trắng/vàng giao lộ nằm trong vùng; giữ watermark nguồn như raw."
+    },
+    {
+      "source_sequence": "-SNFUobKjoM_00",
+      "source_frame": 403,
+      "video_sha256": "d45f68ebe17f9505711b367a4e754487d69a7ff35e635dddf5d3f9988085bcb1",
+      "image_sha256": "2aa29fc8da27b9449ab9c161913fc978ab013399de993b0a3708a614842a3bca",
+      "source_group": "ACCIDENT:-SNFUobKjoM",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe giao lộ đêm nằm trong vùng tác giả."
+    },
+    {
+      "source_sequence": "-qmYW4S3Xxo_00",
+      "source_frame": 64,
+      "video_sha256": "1edc1feee4a11fd120a0a9bc4b84e20cfa41a751bbdced72f26658b4d0076d95",
+      "image_sha256": "44ea113d39b6ae2ab5ffe0d5673b2ed2b1be2ca060687449112c020f2c91b790",
+      "source_group": "ACCIDENT:-qmYW4S3Xxo",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe tại lối rẽ nằm trong vùng; cột tiền cảnh che một phần, không suy phần khuất."
+    },
+    {
+      "source_sequence": "0ThWw_efieo_01",
+      "source_frame": 21,
+      "video_sha256": "b85c76c7715a8176e9a67ecb36d73c2182b8f5c28c32563440d8ef85ab69b0d8",
+      "image_sha256": "775494bb1e4dbbf9a27a28b119c26adda0e722db99df9d6aac9e591fee0d22df",
+      "source_group": "ACCIDENT:0ThWw_efieo",
+      "b0_region_status": "excluded_scope",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Cùng video nguồn hầm, xe tải chạm kết cấu phía trên; không đủ căn cứ va chạm xe–xe."
+    },
+    {
+      "source_sequence": "1jCpA4y5NHY_00",
+      "source_frame": 55,
+      "video_sha256": "2122711ecc8b77c37bc21b0cc9c4335eb5b482a367e84dddad5fc9d3c2fe8546",
+      "image_sha256": "3eae5f3cb7e0943761e4deadf681ab251fde365b4adc1cf9e0297ab7a7132db9",
+      "source_group": "ACCIDENT:1jCpA4y5NHY",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Hai xe trên làn gần camera nằm trong bbox rear-end."
+    },
+    {
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": 60,
+      "video_sha256": "8d57ff46275b11cc7e863d708c2d88268306a06c24b63b85875cf1b30e82bf87",
+      "image_sha256": "03bc7cacf89f763cf68f7c22d4b15b7c775e66da7ce209413fbd8dc4b8049b95",
+      "source_group": "ACCIDENT:1ZQAChv0TEI",
+      "b0_region_status": "accepted_for_unsplit_pool",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Xe trắng và xe tối màu giao cắt nằm trong vùng; dây điện là che khuất nguồn."
+    },
+    {
+      "source_sequence": "-_J5xdxCZZU_00",
+      "source_frame": 60,
+      "video_sha256": "cfa17a50d906b0f776a378f0a6892d53259c90c7a95d9498960fec82d797fa6a",
+      "image_sha256": "75310eb54055a53e3fae28f3d61951a4b0d826aa1336513253e48f0b499cc781",
+      "source_group": "ACCIDENT:-_J5xdxCZZU",
+      "b0_region_status": "excluded_geometry_uncertain",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Ảnh nhòe và vùng xa; chưa phân biệt rõ các bên trong bbox."
+    },
+    {
+      "source_sequence": "1-xArHJFlAQ_00",
+      "source_frame": 85,
+      "video_sha256": "8b9eb4f42871ca19511d3ce0c60a6e7c0f05cc13cd602b70b4a2b1c2ea4b8f81",
+      "image_sha256": "38f8bd3135087116600fcf656068f8a5d5baf8ccf1870dde811da66805c2a5ff",
+      "source_group": "ACCIDENT:1-xArHJFlAQ",
+      "b0_region_status": "excluded_geometry_uncertain",
+      "annotation_origin": "author_accident_impact_region",
+      "reason": "Ảnh rất mờ, xe tải che vùng; chưa xác minh đủ phạm vi tác giả."
+    }
+  ],
+  "leakage_groups": [
+    {
+      "id": "UA_DETRAC_bus_stop_road_scene",
+      "members": [
+        "UA-DETRAC:MVI_20011",
+        "UA-DETRAC:MVI_20012",
+        "UA-DETRAC:MVI_20032"
+      ],
+      "basis": "MVI_20011 last and MVI_20012 first visually adjacent; full phash Hamming 0, crop 2, normalized gray RMSE 0.01192. MVI_20032 shares road, bus stop, pedestrian rail and median with changed framing; conservative same-road grouping.",
+      "status": "conservative_must_stay_together_in_future_split;not_verified_physical_camera_id"
+    },
+    {
+      "id": "ACCIDENT:2QZf8MiIRK0",
+      "members": [
+        "ACCIDENT:2QZf8MiIRK0_00",
+        "ACCIDENT:2QZf8MiIRK0_01"
+      ],
+      "reason": "Same original source identifier; different segments kept together even when different views"
+    },
+    {
+      "id": "ACCIDENT:0ThWw_efieo",
+      "members": [
+        "ACCIDENT:0ThWw_efieo_00",
+        "ACCIDENT:0ThWw_efieo_01"
+      ],
+      "reason": "Same source and tunnel; both excluded from vehicle-vehicle B0 supervision"
+    }
+  ],
+  "group_audit": "outputs/audits/pilot_groups_3/report.json",
+  "group_audit_sha256": "ecbfe143e5a8f85b43b368b432b64411c92d738c76e76792efa3a2386bef3fb5",
+  "scene_review": "Viewed first/middle/last montage for all 36 groups plus new impact/context. Preserve known DETRAC merge. No new exact cross-source pixels; no new close-hash candidates. Camera independence not proven; original-source segment groups retained."
+}

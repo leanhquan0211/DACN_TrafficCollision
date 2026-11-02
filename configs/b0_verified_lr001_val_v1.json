@@ -1,0 +1,34 @@
+{
+  "scope": "learning_rate_ablation_validation_only",
+  "dataset": "data/processed/b0_verified_pilot_v1/dataset/dataset.yaml",
+  "release_key": "verified_pilot_release",
+  "label_policy": "configs/b0_verified_label_policy.json",
+  "initial_weights": "yolov8n.pt",
+  "output": "outputs/training/b0_verified_lr001_val_v1",
+  "ultralytics_version": "8.4.178",
+  "seed": 20261026,
+  "epochs": 60,
+  "patience": 18,
+  "imgsz": 640,
+  "batch": 8,
+  "workers": 2,
+  "device": "0",
+  "amp": false,
+  "optimizer": "SGD",
+  "lr0": 0.001,
+  "momentum": 0.937,
+  "prediction_confidence": 0.25,
+  "matching_iou": 0.5,
+  "method_sources": [
+    "https://arxiv.org/html/2604.09819v1",
+    "https://zhangtianze.com/mypublications/Thesis/TPYOLOv8.pdf",
+    "https://docs.ultralytics.com/guides/finetuning-guide"
+  ],
+  "paper_recipe_vs_adaptation": "Controlled project ablation: TP-YOLOv8 reports SGD lr0=.01 from scratch; Ultralytics fine-tuning guidance discusses lower learning rates and warns auto optimizer overrides lr0. Keep optimizer SGD and all previous settings, reduce only lr0 to .001 as a hypothesis, not a paper reproduction.",
+  "limitations": "Validation was already used to select prior checkpoint and has only six negative images; its repeated use is exploratory and may overfit. Previously reported test and TAD normal probe are consumed, so this run does not evaluate them. No guarantee of reduced false alarms.",
+  "hardware_decision": "Batch16 previous run failed while serializing checkpoint; root cause unconfirmed. Batch8 saved checkpoints through epoch14. Restart from pretrained after withdrawing unreviewed negative labels.",
+  "evaluation_splits": [
+    "val"
+  ],
+  "experiment_purpose": "Compare SGD lr0 0.001 against completed lr0 0.01 on the same training data and validation only; start both from identical COCO pretrained weights, preserve consumed test and normal probe until a new independent holdout is available."
+}

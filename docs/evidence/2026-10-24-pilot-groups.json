@@ -1,0 +1,19 @@
+{
+  "group_count": 10,
+  "decoded_frames": 2742,
+  "source_label_groups": {
+    "CADP:positive": 1,
+    "UA-DETRAC:negative": 3,
+    "STTAD:positive": 4,
+    "TAD:negative": 2
+  },
+  "cross_group_exact_pixel_hashes": 0,
+  "near_pair_candidates": 1,
+  "compared_group_pairs": 45,
+  "candidate_threshold_phash_hamming": 8,
+  "camera_independence_verified": false,
+  "source_fps_verified": false,
+  "split_created": false,
+  "warning": "No close hash does not prove distinct cameras/events; candidates need scene checks",
+  "sttad_report": "outputs/audits/sttad_public_6/report.json"
+}

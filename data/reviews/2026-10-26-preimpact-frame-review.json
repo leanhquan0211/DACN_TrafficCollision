@@ -1,0 +1,463 @@
+{
+  "review_id": "2026-10-26-preimpact-frames",
+  "reviewer": "assistant",
+  "user_review": false,
+  "training_allowed": false,
+  "split_created": false,
+  "annotation_origin": "derived_author_preimpact_assistant_frame_review",
+  "candidate_reports": [
+    {
+      "path": "outputs/audits/accident_expansion/preimpact/report.json",
+      "sha256": "caa9f1833487631e92eb54c6336fc83337ed184d2e3c97fab5274832752b3a1b",
+      "verification_sha256": "04be699d9689dc66e5f505bf541f670ed4e087fc9a046ca0984c517272928a48"
+    },
+    {
+      "path": "outputs/audits/accident_expansion/preimpact_previous/report.json",
+      "sha256": "7e263e3257cfd69dc34480e36d04219b4f27ea1f48a94a056f92881195f5272a",
+      "verification_sha256": "5e1c86337330b7479a02a506236fcca8575aa065ef3fccc4f2bcdc47c93621df"
+    }
+  ],
+  "frames": [
+    {
+      "source_sequence": "-wlnF8vCVMo_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-wlnF8vCVMo_00",
+      "source_frame": 13,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-wlnF8vCVMo_00",
+      "source_frame": 25,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": 74,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-RE3XseZINA_00",
+      "source_frame": 148,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-dmYsQc-odI_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-dmYsQc-odI_00",
+      "source_frame": 11,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-dmYsQc-odI_00",
+      "source_frame": 22,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": 30,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_01",
+      "source_frame": 60,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "07Eu77WorsY_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "07Eu77WorsY_00",
+      "source_frame": 21,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "07Eu77WorsY_00",
+      "source_frame": 41,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": 39,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "2BBwMYE-FC4_00",
+      "source_frame": 77,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "0ThWw_efieo_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0ThWw_efieo_00",
+      "source_frame": 13,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0ThWw_efieo_00",
+      "source_frame": 25,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-i9bRJWMtTo_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-i9bRJWMtTo_00",
+      "source_frame": 6,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-i9bRJWMtTo_00",
+      "source_frame": 11,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "2IY6PpDm85k_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "2IY6PpDm85k_00",
+      "source_frame": 4,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "2IY6PpDm85k_00",
+      "source_frame": 8,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-NgnSm_oEB4_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-NgnSm_oEB4_00",
+      "source_frame": 12,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-NgnSm_oEB4_00",
+      "source_frame": 24,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "0DB7w7rLGrk_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0DB7w7rLGrk_00",
+      "source_frame": 5,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0DB7w7rLGrk_00",
+      "source_frame": 9,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0jk4tWwDKqc_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0jk4tWwDKqc_00",
+      "source_frame": 39,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0jk4tWwDKqc_00",
+      "source_frame": 77,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "1O-y5PmPWdU_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "1O-y5PmPWdU_00",
+      "source_frame": 27,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "1O-y5PmPWdU_00",
+      "source_frame": 54,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-SNFUobKjoM_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-SNFUobKjoM_00",
+      "source_frame": 101,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-SNFUobKjoM_00",
+      "source_frame": 201,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-qmYW4S3Xxo_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-qmYW4S3Xxo_00",
+      "source_frame": 16,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-qmYW4S3Xxo_00",
+      "source_frame": 31,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "1jCpA4y5NHY_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "1jCpA4y5NHY_00",
+      "source_frame": 14,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "1jCpA4y5NHY_00",
+      "source_frame": 27,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": 15,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "1ZQAChv0TEI_00",
+      "source_frame": 29,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-_J5xdxCZZU_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-_J5xdxCZZU_00",
+      "source_frame": 15,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-_J5xdxCZZU_00",
+      "source_frame": 29,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "1-xArHJFlAQ_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "1-xArHJFlAQ_00",
+      "source_frame": 21,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "1-xArHJFlAQ_00",
+      "source_frame": 42,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0NixrF6Mt00_0_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "0NixrF6Mt00_0_00",
+      "source_frame": 2,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0NixrF6Mt00_0_00",
+      "source_frame": 3,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": 4,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "04O2SOGSG_U_00",
+      "source_frame": 8,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "2QZf8MiIRK0_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "1_F0r7KVJ1k_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "1_F0r7KVJ1k_00",
+      "source_frame": 40,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "1_F0r7KVJ1k_00",
+      "source_frame": 79,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "-FQxK6HdxNU_00",
+      "source_frame": 0,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-FQxK6HdxNU_00",
+      "source_frame": 12,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "-FQxK6HdxNU_00",
+      "source_frame": 23,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0PrAtifCwjg_00",
+      "source_frame": 0,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    },
+    {
+      "source_sequence": "0PrAtifCwjg_00",
+      "source_frame": 34,
+      "status": "not_selected_unknown_for_pool",
+      "reason": "Không nhập pool: ngoài tập frame thưa đã chọn hoặc nguồn còn mơ hồ/ngoài phạm vi; không suy nhãn âm."
+    },
+    {
+      "source_sequence": "0PrAtifCwjg_00",
+      "source_frame": 68,
+      "status": "accepted_negative_frame",
+      "reason": "Đã xem toàn ảnh tại đúng chỉ số: không thấy va chạm; xe còn tách nhau/đang lưu thông hoặc cảnh trống. Kết hợp nhãn first-visible-contact tác giả và biên >=1 giây PTS; chỉ xác nhận frame này, không cả clip/interval."
+    }
+  ],
+  "scope": "Only listed exact frames; no interval labels, no new accident boxes, no author-negative or user-review claim",
+  "source_basis": "https://arxiv.org/html/2604.09819v1#S3.SS1",
+  "limitations": "Sparse same-scene negatives, not long negative videos or validated near-miss/hard-negative event benchmark; remaining frames unknown"
+}

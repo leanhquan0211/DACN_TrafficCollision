@@ -1,0 +1,261 @@
+{
+  "scope": "B0 vs fixed causal B1 development diagnostics, not independent event benchmark",
+  "training_config": "configs/b0_s960_v1.json",
+  "experiment": "outputs/training/b0_s960_v1/experiment.json",
+  "experiment_sha256": "f7ba207847c00fddbc4fa0740ac3310da6f0dff603da5613af7f703f6cd6b259",
+  "operating_point": "configs/b0_s960_v1_operating_point_v1.json",
+  "operating_point_sha256": "26fa5703bc8ba7f947ab6b1aadff33192559e6a24cf7a2971fdc1a60db02bc6a",
+  "output": "outputs/training/b0_s960_v1/temporal_diagnostics_v1",
+  "imgsz": 960,
+  "prediction_confidence": 0.27,
+  "matching_iou": 0.5,
+  "device": "0",
+  "ultralytics_version": "8.4.178",
+  "normal_manifest": "outputs/audits/b0_normal_expansion_v1/normal_manifest.json",
+  "cadp_review": "data/reviews/2026-10-19-cadp-001407-frame-confirmation.json",
+  "detrac_review": "data/reviews/2026-10-19-user-confirmations.json",
+  "evidence_files": [
+    {
+      "path": "outputs/audits/b0_normal_expansion_v1/normal_manifest.json",
+      "sha256": "4768c7dc4b0641e5363ce6b6bcc63f4ba771506ef44e80d2057c689e815c76ff"
+    },
+    {
+      "path": "data/reviews/2026-10-19-cadp-001407-frame-confirmation.json",
+      "sha256": "89e6b93fcc864236f22365d5da39ad2fab3ee5d70d467c1f7b362fbf9f85070e"
+    },
+    {
+      "path": "data/reviews/2026-10-19-user-confirmations.json",
+      "sha256": "53074b1f7b649aaf548eb54c330e2af6ebb730d272a750353622efd9453eccf8"
+    },
+    {
+      "path": "outputs/audits/cadp_001407_clean_2/images.csv",
+      "sha256": "e73fc65af3d674c544bb103875d2e3b05127be4f88bf3a511c73b8276a5b64db"
+    },
+    {
+      "path": "data_raw/cadp/pilot_1407/1407.txt",
+      "sha256": "e134b3973de98f227cad71916273f31f6aa07943bf87387efa29a7d7a8c1f5ba"
+    }
+  ],
+  "sequences": [
+    {
+      "sequence": "MVI_20011",
+      "kind": "video",
+      "path": "data_samples/ua_detrac/MVI_20011.mp4",
+      "sha256": "0d522aef1f3778b91a8bd4545d7d13bf542fb5d378726a788c4a78f200c98c46",
+      "frames": 664,
+      "width": 960,
+      "height": 540,
+      "display_fps": 25.0,
+      "source_fps_verified": true,
+      "fps_scope": "author_25fps_verified_for_DETRAC_sequence",
+      "label": "negative",
+      "label_origin": "user_full_sequence_review",
+      "role": "training_source_operational_diagnostic",
+      "original_frame_offset": 1
+    },
+    {
+      "sequence": "MVI_20012",
+      "kind": "video",
+      "path": "data_samples/ua_detrac/MVI_20012.mp4",
+      "sha256": "86873c1134ef0fd5e148818ff94e2c6e5ae321d95a27736b42a7f2b08cc2f862",
+      "frames": 936,
+      "width": 960,
+      "height": 540,
+      "display_fps": 25.0,
+      "source_fps_verified": true,
+      "fps_scope": "author_25fps_verified_for_DETRAC_sequence",
+      "label": "negative",
+      "label_origin": "user_full_sequence_review",
+      "role": "training_source_operational_diagnostic",
+      "original_frame_offset": 1
+    },
+    {
+      "sequence": "MVI_20032",
+      "kind": "video",
+      "path": "data_samples/ua_detrac/MVI_20032.mp4",
+      "sha256": "ddaff005c1a60de7190065bcf7ec464ef31812c4350d42cd0474ff287300242b",
+      "frames": 437,
+      "width": 960,
+      "height": 540,
+      "display_fps": 25.0,
+      "source_fps_verified": true,
+      "fps_scope": "author_25fps_verified_for_DETRAC_sequence",
+      "label": "negative",
+      "label_origin": "user_full_sequence_review",
+      "role": "training_source_operational_diagnostic",
+      "original_frame_offset": 1
+    },
+    {
+      "sequence": "CADP_001407",
+      "kind": "images",
+      "images_index": "outputs/audits/cadp_001407_clean_2/images.csv",
+      "index_sha256": "e73fc65af3d674c544bb103875d2e3b05127be4f88bf3a511c73b8276a5b64db",
+      "frames": 221,
+      "width": 1280,
+      "height": 720,
+      "display_fps": 20,
+      "source_fps_verified": false,
+      "fps_scope": "presentation_20fps_only_camera_timing_unverified",
+      "label": "reviewed_colliding_interval",
+      "label_origin": "author_vatic_user_frame_review",
+      "role": "external_debug_temporal_presence_only",
+      "intervals": [
+        {
+          "event_id": "CADP_001407_event_1",
+          "participant_gt_ids": [
+            0,
+            2
+          ],
+          "start_frame": 96,
+          "end_frame_inclusive": 130,
+          "review_scope": "vehicle_identity_and_colliding_frame_interval"
+        }
+      ],
+      "original_frame_offset": 0
+    },
+    {
+      "sequence": "20220518_acci-bg28",
+      "kind": "video",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg28.mp4",
+      "sha256": "83d5fc2809f4c2278677446b488fa6a039ddfe440036e3a41affb92aaf2988a4",
+      "frames": 249,
+      "width": 1920,
+      "height": 1080,
+      "display_fps": 25.0,
+      "source_fps_verified": false,
+      "fps_scope": "container_PTS_only_original_recording_timing_unverified",
+      "label": "negative",
+      "label_origin": "author_normal_folder_clip_label",
+      "role": "consumed_holdout_posthoc_diagnostic",
+      "original_frame_offset": 0
+    },
+    {
+      "sequence": "20220518_acci-bg56",
+      "kind": "video",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg56.mp4",
+      "sha256": "f2ec6ba93805f10fb299032e644f2214a2335461a349d2d5a49e83f93a5bc633",
+      "frames": 299,
+      "width": 1920,
+      "height": 1080,
+      "display_fps": 25.0,
+      "source_fps_verified": false,
+      "fps_scope": "container_PTS_only_original_recording_timing_unverified",
+      "label": "negative",
+      "label_origin": "author_normal_folder_clip_label",
+      "role": "consumed_holdout_posthoc_diagnostic",
+      "original_frame_offset": 0
+    },
+    {
+      "sequence": "20220518_acci-bg22",
+      "kind": "video",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220518_acci-bg22.mp4",
+      "sha256": "c3c5ada9845298ebd530e3cbbe1a64aad319cd946a916d27a1484893a69242a2",
+      "frames": 299,
+      "width": 1920,
+      "height": 1080,
+      "display_fps": 25.0,
+      "source_fps_verified": false,
+      "fps_scope": "container_PTS_only_original_recording_timing_unverified",
+      "label": "negative",
+      "label_origin": "author_normal_folder_clip_label",
+      "role": "validation_normal_diagnostic",
+      "original_frame_offset": 0
+    },
+    {
+      "sequence": "20220620_acci-bg13",
+      "kind": "video",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg13.mp4",
+      "sha256": "efb4fa8ec7370877ef93f26bef7d59a2638c6a51d28b7d3841409c35c77102b4",
+      "frames": 549,
+      "width": 1920,
+      "height": 1080,
+      "display_fps": 25.0,
+      "source_fps_verified": false,
+      "fps_scope": "container_PTS_only_original_recording_timing_unverified",
+      "label": "negative",
+      "label_origin": "author_normal_folder_clip_label",
+      "role": "validation_normal_diagnostic",
+      "original_frame_offset": 0
+    },
+    {
+      "sequence": "20220620_acci-bg37",
+      "kind": "video",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20220620_acci-bg37.mp4",
+      "sha256": "13a4162e3bfcf9c21e26fa90b638aed7b95d52c39784a86f614c64593e3d36b3",
+      "frames": 499,
+      "width": 1920,
+      "height": 1080,
+      "display_fps": 25.0,
+      "source_fps_verified": false,
+      "fps_scope": "container_PTS_only_original_recording_timing_unverified",
+      "label": "negative",
+      "label_origin": "author_normal_folder_clip_label",
+      "role": "consumed_holdout_posthoc_diagnostic",
+      "original_frame_offset": 0
+    },
+    {
+      "sequence": "20230818_acci-bg_129",
+      "kind": "video",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_129.mp4",
+      "sha256": "c6079dac6e185a1fea70572c0cd0ec2dac70b1973a927fccba89cda8b82d98b6",
+      "frames": 244,
+      "width": 704,
+      "height": 576,
+      "display_fps": 25.0,
+      "source_fps_verified": false,
+      "fps_scope": "container_PTS_only_original_recording_timing_unverified",
+      "label": "negative",
+      "label_origin": "author_normal_folder_clip_label",
+      "role": "consumed_holdout_posthoc_diagnostic",
+      "original_frame_offset": 0
+    },
+    {
+      "sequence": "20230818_acci-bg_79",
+      "kind": "video",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_79.mp4",
+      "sha256": "0ac8e2ec52ec75bfca307c2c2f936eff1c4aa055ca2be955592d598ed2ebbfc5",
+      "frames": 149,
+      "width": 1920,
+      "height": 1080,
+      "display_fps": 25.0,
+      "source_fps_verified": false,
+      "fps_scope": "container_PTS_only_original_recording_timing_unverified",
+      "label": "negative",
+      "label_origin": "author_normal_folder_clip_label",
+      "role": "validation_normal_diagnostic",
+      "original_frame_offset": 0
+    },
+    {
+      "sequence": "20230818_acci-bg_139",
+      "kind": "video",
+      "path": "data_raw/tad/public_selected/TAD-benchmark/train/normal/20230818_acci-bg_139.mp4",
+      "sha256": "3a609dd35dafbbef7fc38a9a26199bccf49ab802fd0230c5aae3317934aba863",
+      "frames": 299,
+      "width": 1280,
+      "height": 720,
+      "display_fps": 25.0,
+      "source_fps_verified": false,
+      "fps_scope": "container_PTS_only_original_recording_timing_unverified",
+      "label": "negative",
+      "label_origin": "author_normal_folder_clip_label",
+      "role": "validation_normal_diagnostic",
+      "original_frame_offset": 0
+    }
+  ],
+  "image_cases": [],
+  "temporal_policy": {
+    "k": 3,
+    "n": 5,
+    "ema_alpha": 0.3,
+    "ema_initial": 0,
+    "k_of_n_warmup": "require full 5-frame window",
+    "reset": "new video or missing frame",
+    "scene_score": "max accident confidence after NMS; scores below .01 unavailable and replaced by zero"
+  },
+  "method_sources": [
+    "https://www.itl.nist.gov/div898/handbook/pmc/section3/pmc314.htm",
+    "https://arxiv.org/pdf/2209.12386",
+    "https://docs.ultralytics.com/modes/predict/"
+  ],
+  "adaptation": "Causal EMA recurrence from NIST; k=3/N=5 and alpha=.3 are fixed project defaults, not paper-optimal. Frame units because original timing unknown for CADP/TAD. No tuning on consumed probes."
+}

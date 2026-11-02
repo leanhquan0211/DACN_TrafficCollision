@@ -11,9 +11,9 @@ from copy import deepcopy
 from pathlib import Path
 
 from scripts.prepare_b0_candidates import build_candidates, normalize
-from scripts.apply_cadp_frame_review import apply_review
+from scripts.maintenance.apply_cadp_frame_review import apply_review
 from scripts.prepare_cadp_pilot import read_vatic
-from scripts.update_manifest_reviews import read_manifest
+from scripts.maintenance.update_manifest_reviews import read_manifest
 
 
 RULE = json.loads(Path("configs/b0_region_proposal.json").read_text(encoding="utf-8"))

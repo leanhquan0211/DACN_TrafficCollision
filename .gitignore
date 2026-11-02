@@ -25,6 +25,9 @@ outputs/**
 !data_raw/README.md
 !data_samples/README.md
 !outputs/README.md
+!outputs/training/
+outputs/training/**
+!outputs/training/README.md
 *.7z
 *.rar
 *.tar
@@ -56,5 +59,8 @@ client_secrets*.json
 credentials*.json
 token*.json
 secrets.*
+/kaggle.json
+/access_token
+/.kaggle/
 logs/*.log
 /logs/environment_check.md

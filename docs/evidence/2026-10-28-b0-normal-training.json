@@ -1,0 +1,214 @@
+{
+  "date": "2026-10-28",
+  "timezone": "Asia/Bangkok",
+  "status": "complete",
+  "source_experiment": "outputs/training/b0_normal_expanded_v1/experiment.json",
+  "source_experiment_sha256": "0f2d0b1b1d210c1f1ca1ab7dbc26c3819feab6ca5af14390898fc91b4baa8df6",
+  "reference_validation_report": "outputs/audits/b0_normal_expansion_v1/reference_val/report.json",
+  "reference_validation_report_sha256": "78505eef72da91b82cd0ffaec5f95430c6d71459ba01c63e441fe180bd842711",
+  "config": {
+    "scope": "normal_data_expansion_validation_only",
+    "dataset": "data/processed/b0_normal_expanded_v1/dataset/dataset.yaml",
+    "release_key": "normal_expanded_pilot_release",
+    "label_policy": "configs/b0_normal_expanded_label_policy.json",
+    "initial_weights": "yolov8n.pt",
+    "output": "outputs/training/b0_normal_expanded_v1",
+    "ultralytics_version": "8.4.178",
+    "seed": 20261026,
+    "epochs": 60,
+    "patience": 0,
+    "imgsz": 640,
+    "batch": 8,
+    "workers": 0,
+    "device": "0",
+    "amp": false,
+    "optimizer": "SGD",
+    "lr0": 0.001,
+    "momentum": 0.937,
+    "prediction_confidence": 0.25,
+    "matching_iou": 0.5,
+    "method_sources": [
+      "https://arxiv.org/html/2604.09819v1",
+      "https://zhangtianze.com/mypublications/Thesis/TPYOLOv8.pdf",
+      "https://docs.ultralytics.com/guides/finetuning-guide",
+      "https://github.com/UnicomAI/UnicomBenchmark/tree/main/TADBench",
+      "https://arxiv.org/abs/2209.12386"
+    ],
+    "paper_recipe_vs_adaptation": "Same pretrained YOLOv8n baseline and prior full60 recipe, using author-normal TAD clip labels as empty bbox labels only for sampled reviewed sources. This is a dataset expansion experiment, not a reproduction of TAD paper metrics.",
+    "limitations": "Old positive validation has already been used. New negative validation has four provisional scene groups; held-out negative reserve is not a full new positive/negative benchmark. No guarantee of better generalization; camera independence remains unproven.",
+    "hardware_decision": "workers=0 to reduce RAM use after DataLoader worker OpenCV allocation failure; batch 8, image 640, SGD and LR unchanged. This changes loading process only, but stochastic reproducibility across worker counts is not guaranteed.",
+    "evaluation_splits": [
+      "val"
+    ],
+    "experiment_purpose": "Hold SGD lr0 .001, batch8, img640, workers0, seed and 60 epochs/patience0 as in prior full60 run; expand only source-reviewed negative data. Evaluate enlarged validation only; do not use old consumed test or sealed negative reserve for selection.",
+    "reference_experiments": [
+      {
+        "path": "outputs/training/b0_verified_pilot_v1/experiment.json",
+        "sha256": "476e1f10cb689739dd6737ecf11abc83a6f4352ed6f311f99f132697a775cad9"
+      },
+      {
+        "path": "outputs/training/b0_verified_lr001_val_v1/experiment.json",
+        "sha256": "0752b3aae69a4240652220933471178547c8650517ee536e9e3e9778ec176d58"
+      },
+      {
+        "path": "outputs/training/b0_verified_lr001_full60_v1/experiment.json",
+        "sha256": "17c32263fc3d01ab8d79ff801ec010f26cead0eac67a27f746e8f3d9b7f28d68"
+      }
+    ],
+    "reference_validation_output": "outputs/audits/b0_normal_expansion_v1/reference_val"
+  },
+  "config_sha256": "014794b1eaf2ee5ef60e4f12c0626e2d31547353b2c8e3dcd0382cc11b18d7e6",
+  "dataset_yaml_sha256": "64b4061e76d74c11e91d866d8818bc128add393e87a304f60c611e024d3d72a3",
+  "provenance_sha256": "5c25f1b663d89549e81a61322ec67d836c05973b38c351eba658486dd15cd164",
+  "checkpoint": "outputs/training/b0_normal_expanded_v1/weights/best.pt",
+  "checkpoint_sha256": "067c819ad6a4680a669fb7d50ec1f7a4b1b131630d4ea6855ebada52c6969753",
+  "last_checkpoint": "outputs/training/b0_normal_expanded_v1/weights/last.pt",
+  "last_checkpoint_sha256": "c1f34634f03ddc38b86d7e7bf0d165f8166ea5f8ff2f55880f5398d854695bef",
+  "epochs_completed": 60,
+  "validation_images": 217,
+  "validation_positives": 91,
+  "validation_negatives": 126,
+  "comparison_same_validation": [
+    {
+      "run": "b0_verified_pilot_v1",
+      "official_bbox_metrics": {
+        "metrics/precision(B)": 0.8254364832161377,
+        "metrics/recall(B)": 0.4835164835164835,
+        "metrics/mAP50(B)": 0.5672147405050344,
+        "metrics/mAP50-95(B)": 0.43479980490145576,
+        "fitness": 0.43479980490145576
+      },
+      "fixed_threshold_metrics": {
+        "tp": 52,
+        "fp": 83,
+        "fn": 39,
+        "precision": 0.3851851851851852,
+        "recall": 0.5714285714285714,
+        "f1": 0.46017699115044247,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 126,
+        "negative_frames_with_predictions": 36,
+        "negative_frame_false_positive_rate": 0.2857142857142857,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      }
+    },
+    {
+      "run": "b0_verified_lr001_val_v1",
+      "official_bbox_metrics": {
+        "metrics/precision(B)": 0.7256536733383395,
+        "metrics/recall(B)": 0.5604395604395604,
+        "metrics/mAP50(B)": 0.6175935598575653,
+        "metrics/mAP50-95(B)": 0.4700028389657991,
+        "fitness": 0.4700028389657991
+      },
+      "fixed_threshold_metrics": {
+        "tp": 60,
+        "fp": 88,
+        "fn": 31,
+        "precision": 0.40540540540540543,
+        "recall": 0.6593406593406593,
+        "f1": 0.502092050209205,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 126,
+        "negative_frames_with_predictions": 38,
+        "negative_frame_false_positive_rate": 0.30158730158730157,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      }
+    },
+    {
+      "run": "b0_verified_lr001_full60_v1",
+      "official_bbox_metrics": {
+        "metrics/precision(B)": 0.7815259187687592,
+        "metrics/recall(B)": 0.5110750231964561,
+        "metrics/mAP50(B)": 0.603672667044094,
+        "metrics/mAP50-95(B)": 0.46194112572629714,
+        "fitness": 0.46194112572629714
+      },
+      "fixed_threshold_metrics": {
+        "tp": 56,
+        "fp": 95,
+        "fn": 35,
+        "precision": 0.3708609271523179,
+        "recall": 0.6153846153846154,
+        "f1": 0.4628099173553719,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 126,
+        "negative_frames_with_predictions": 29,
+        "negative_frame_false_positive_rate": 0.23015873015873015,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      }
+    },
+    {
+      "run": "b0_normal_expanded_v1",
+      "official_bbox_metrics": {
+        "metrics/precision(B)": 0.6921772961397398,
+        "metrics/recall(B)": 0.5934065934065934,
+        "metrics/mAP50(B)": 0.6468472099362522,
+        "metrics/mAP50-95(B)": 0.4903136293809145,
+        "fitness": 0.4903136293809145
+      },
+      "fixed_threshold_metrics": {
+        "tp": 54,
+        "fp": 35,
+        "fn": 37,
+        "precision": 0.6067415730337079,
+        "recall": 0.5934065934065934,
+        "f1": 0.6,
+        "confidence": 0.25,
+        "matching_iou": 0.5,
+        "negative_frames": 126,
+        "negative_frames_with_predictions": 6,
+        "negative_frame_false_positive_rate": 0.047619047619047616,
+        "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+      }
+    }
+  ],
+  "curve": {
+    "csv_best_epoch_candidates": [
+      40
+    ],
+    "csv_best_map50_95": 0.50458,
+    "last_epoch": {
+      "epoch": "60",
+      "time": "5497.95",
+      "train/box_loss": "0.76877",
+      "train/cls_loss": "0.57565",
+      "train/dfl_loss": "0.91804",
+      "metrics/precision(B)": "0.78641",
+      "metrics/recall(B)": "0.60691",
+      "metrics/mAP50(B)": "0.65779",
+      "metrics/mAP50-95(B)": "0.48843",
+      "val/box_loss": "0.93938",
+      "val/cls_loss": "1.11688",
+      "val/dfl_loss": "0.92999",
+      "lr/pg0": "2.65e-05",
+      "lr/pg1": "2.65e-05",
+      "lr/pg2": "2.65e-05"
+    },
+    "best_map50_95_epochs_1_50": 0.50458,
+    "best_map50_95_epochs_51_60": 0.49215,
+    "mean_loss_epochs_41_50": {
+      "train/box_loss": 0.872761,
+      "train/cls_loss": 0.772875,
+      "train/dfl_loss": 0.966908
+    },
+    "mean_loss_epochs_51_60": {
+      "train/box_loss": 0.781169,
+      "train/cls_loss": 0.6327550000000001,
+      "train/dfl_loss": 0.9163749999999999
+    }
+  },
+  "actual_args": "outputs/training/b0_normal_expanded_v1/args.yaml",
+  "close_mosaic": 10,
+  "mosaic_closed_from_epoch_1based": 51,
+  "negative_holdout": "data/registries/b0_normal_expanded_v1_holdout.json",
+  "negative_holdout_sha256": "bc423f5a3990dba0f646fafaeacae1998fb2327f6e52827e2fca9acf3cfb5cfd",
+  "negative_holdout_inference": false,
+  "legacy_test_inference": false,
+  "conclusions_and_next_direction_recorded": false,
+  "full_B0_complete": false,
+  "temporal_event_evaluation": false
+}

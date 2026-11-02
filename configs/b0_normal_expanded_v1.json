@@ -1,0 +1,51 @@
+{
+  "scope": "normal_data_expansion_validation_only",
+  "dataset": "data/processed/b0_normal_expanded_v1/dataset/dataset.yaml",
+  "release_key": "normal_expanded_pilot_release",
+  "label_policy": "configs/b0_normal_expanded_label_policy.json",
+  "initial_weights": "yolov8n.pt",
+  "output": "outputs/training/b0_normal_expanded_v1",
+  "ultralytics_version": "8.4.178",
+  "seed": 20261026,
+  "epochs": 60,
+  "patience": 0,
+  "imgsz": 640,
+  "batch": 8,
+  "workers": 0,
+  "device": "0",
+  "amp": false,
+  "optimizer": "SGD",
+  "lr0": 0.001,
+  "momentum": 0.937,
+  "prediction_confidence": 0.25,
+  "matching_iou": 0.5,
+  "method_sources": [
+    "https://arxiv.org/html/2604.09819v1",
+    "https://zhangtianze.com/mypublications/Thesis/TPYOLOv8.pdf",
+    "https://docs.ultralytics.com/guides/finetuning-guide",
+    "https://github.com/UnicomAI/UnicomBenchmark/tree/main/TADBench",
+    "https://arxiv.org/abs/2209.12386"
+  ],
+  "paper_recipe_vs_adaptation": "Same pretrained YOLOv8n baseline and prior full60 recipe, using author-normal TAD clip labels as empty bbox labels only for sampled reviewed sources. This is a dataset expansion experiment, not a reproduction of TAD paper metrics.",
+  "limitations": "Old positive validation has already been used. New negative validation has four provisional scene groups; held-out negative reserve is not a full new positive/negative benchmark. No guarantee of better generalization; camera independence remains unproven.",
+  "hardware_decision": "workers=0 to reduce RAM use after DataLoader worker OpenCV allocation failure; batch 8, image 640, SGD and LR unchanged. This changes loading process only, but stochastic reproducibility across worker counts is not guaranteed.",
+  "evaluation_splits": [
+    "val"
+  ],
+  "experiment_purpose": "Hold SGD lr0 .001, batch8, img640, workers0, seed and 60 epochs/patience0 as in prior full60 run; expand only source-reviewed negative data. Evaluate enlarged validation only; do not use old consumed test or sealed negative reserve for selection.",
+  "reference_experiments": [
+    {
+      "path": "outputs/training/b0_verified_pilot_v1/experiment.json",
+      "sha256": "476e1f10cb689739dd6737ecf11abc83a6f4352ed6f311f99f132697a775cad9"
+    },
+    {
+      "path": "outputs/training/b0_verified_lr001_val_v1/experiment.json",
+      "sha256": "0752b3aae69a4240652220933471178547c8650517ee536e9e3e9778ec176d58"
+    },
+    {
+      "path": "outputs/training/b0_verified_lr001_full60_v1/experiment.json",
+      "sha256": "17c32263fc3d01ab8d79ff801ec010f26cead0eac67a27f746e8f3d9b7f28d68"
+    }
+  ],
+  "reference_validation_output": "outputs/audits/b0_normal_expansion_v1/reference_val"
+}

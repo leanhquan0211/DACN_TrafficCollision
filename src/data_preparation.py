@@ -24,6 +24,23 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def validate_b0_verified_origins(rows: list[dict]) -> None:
+    """Chặn frame chưa có căn cứ âm/dương khỏi release B0 đã rà.
+
+    Tên nguồn nhãn được khóa theo policy; việc file thiếu TXT hoặc ở trước
+    impact không tự đủ để nhận empty label. Hàm này không tự xác minh nội
+    dung review hoặc hash: các bước lập release và export phải kiểm riêng.
+    """
+    allowed={
+        "positive":{"author_accident_impact_region"},
+        "negative":{"derived_author_preimpact_assistant_frame_review",
+                    "author_normal_folder_clip_label","user_full_sequence_review"},
+    }
+    for row in rows:
+        if row.get("label_origin") not in allowed.get(row.get("collision_label"),set()):
+            raise ValueError("Unverified B0 label origin: "+str(row.get("label_origin")))
+
+
 def unique_path(path: Path) -> Path:
     """Thêm hậu tố nếu tên kết quả đã tồn tại; giữ nguyên mọi kết quả cũ."""
     candidate = path

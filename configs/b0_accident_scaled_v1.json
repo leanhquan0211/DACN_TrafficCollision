@@ -1,0 +1,30 @@
+{
+  "scope": "expanded_basic_image_pilot_custom_group_split",
+  "dataset": "data/processed/b0_accident_scaled_v1/dataset/dataset.yaml",
+  "release_key": "expanded_pilot_release",
+  "label_policy": "configs/b0_scaled_label_policy.json",
+  "initial_weights": "yolov8n.pt",
+  "output": "outputs/training/b0_accident_scaled_v1",
+  "ultralytics_version": "8.4.178",
+  "seed": 20261026,
+  "epochs": 60,
+  "patience": 18,
+  "imgsz": 640,
+  "batch": 16,
+  "workers": 2,
+  "device": "0",
+  "amp": false,
+  "optimizer": "SGD",
+  "lr0": 0.01,
+  "momentum": 0.937,
+  "prediction_confidence": 0.25,
+  "matching_iou": 0.5,
+  "method_sources": [
+    "https://arxiv.org/html/2604.09819v1",
+    "https://zhangtianze.com/mypublications/Thesis/TPYOLOv8.pdf",
+    "https://docs.ultralytics.com/guides/finetuning-guide"
+  ],
+  "paper_recipe_vs_adaptation": "TP-YOLOv8 trains from scratch, SGD lr0=.01 momentum=.937, batch16, 300epochs/patience50 on A40 48GB. This B0 keeps pretrained yolov8n, SGD/lr/momentum as cited comparison, batch16 with 2 loader workers/60epochs/patience18 on RTX3050Ti 4GB; dataset is ACCIDENT author impact boxes plus train-only weak early negatives, custom source-group split. It does not reproduce TP-YOLOv8 or ACCIDENT metrics.",
+  "limitations": "Only author impact bbox is positive; train early negatives are weak derived labels; val/test negatives are few prior whole-frame-reviewed samples; new positive geometry not fully manually reviewed; no event, long-video, camera-held-out or official ACCIDENT IID benchmark metric",
+  "hardware_decision": "Batch4 used ~1.02GiB training VRAM and GPU was underutilized; increase batch to paper batch16 and workers2, verify memory and throughput before long run"
+}

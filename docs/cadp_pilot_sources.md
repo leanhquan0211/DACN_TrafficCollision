@@ -1,6 +1,10 @@
-# Kiểm tra nguồn để mở rộng pilot CADP — 19/10/2026
+# Kiểm tra nguồn CADP — lịch sử và quyết định hiện tại
 
-## Đếm dữ liệu theo chuỗi/sự kiện
+> **Tài liệu chi tiết/lịch sử:** ưu tiên [mục lục hiện hành](README.md), [policy nhãn B0](b0_label_protocol.md) và [trạng thái dữ liệu mới nhất](b0_pilot_audit.md). Các số liệu/chỉ dẫn cũ bên dưới giữ bối cảnh lúc tạo, không thay hướng public đã chọn.
+
+> **Cập nhật 24/10:** giữ CADP 001407; phần export chưa public bị bỏ khỏi đường mở rộng hiện tại. Không xin tác giả hoặc chờ giảng viên duyệt. Đã có nhãn vùng STTAD công khai và công cụ kiểm thật: [reference](../reference/2026-10-24-public-data-review.md). Các số liệu/tìm nguồn dưới đây là lịch sử 19/10, trước khi thêm STTAD.
+
+## Đếm dữ liệu theo chuỗi/sự kiện — lịch sử 19/10
 
 [Manifest](../data/manifest.csv) có 12 asset, nhưng chỉ có **4 nhóm chuỗi đã biết nhãn**: CADP 001407 (1 sự kiện va chạm, 5 asset ảnh/video) và 3 DETRAC âm đầy đủ. Clip con MVI_20011, preview, detection và tracking không phải sự kiện hoặc chuỗi độc lập mới. Ba MP4 cũ chưa biết nguồn/nhãn vẫn để riêng, không thêm vào số mẫu đã duyệt.
 
@@ -28,17 +32,10 @@
 
 Giới hạn: các thư mục ảnh lớn chỉ kiểm danh mục HTML đầu, không crawl toàn dataset hoặc từng ảnh. Kết luận là **chưa tìm thấy bộ export trong phạm vi đã kiểm**, không khẳng định toàn bộ annotation không tồn tại ở nơi khác hoặc trong tài khoản riêng.
 
-## Hiện có cặp nào? Cần lấy chính xác gì?
+## Quyết định 24/10 và cách tiếp tục
 
-**Cặp duy nhất đã kiểm chứng đầy đủ tại project:** `data_raw/cadp/frames/001407/0.jpg … 220.jpg` + `data_raw/cadp/pilot_1407/1407.txt`. Đây là một chuỗi, không tăng số mẫu độc lập khi tải lại cùng `1407.txt`.
-
-**Chưa có tên/URL tệp VATIC bổ sung đã xác minh để bảo bạn tải ngay.** Không chỉ định tải ngẫu nhiên 000000/000001 rồi tự cho rằng có nhãn tương ứng; chưa yêu cầu tự gán lại bbox bằng tay.
-
-Bước cụ thể để mở rộng:
-
-1. Dùng thông tin liên hệ trong [README phát hành của tác giả](https://docs.google.com/document/d/12F7l4yxNzzUAISZufEd9WFhQKSefVVo_QsPdTsWxZh8/edit), xin **export VATIC TXT cho subset có nhãn spatio-temporal**, gồm ID/class/xyxy/frame/outside/occluded/generated/Colliding, FarRegion/CrowdRegion/Separator nếu có; kèm bảng nối **tên TXT ↔ mã thư mục ảnh 6 chữ số**, nguồn video/sự kiện và FPS/timestamp riêng chuỗi nếu có. Chưa gửi email/tin nhắn thay người dùng.
-2. Khi được cung cấp, lưu ZIP export nguyên bản trong `data_raw/cadp/annotations/`; TXT đã lấy chọn lọc đặt tại **`data_raw/cadp/annotations/vatic/<tên-tác-giả>.txt`**. Thư mục đích đã được tạo; hiện còn trống. Không tự đặt tên file đang chưa biết hoặc đổi tên gần giống để ép ghép.
-3. Đọc danh mục TXT trước, chọn 2–3 **chuỗi có nhãn thực sự**, rồi mới tải đúng các thư mục tương ứng từ extracted_frames về **`data_raw/cadp/frames/<sequence-6-chữ-số>/`**. Nếu Drive tạo ZIP khi tải thư mục, giữ nguyên ZIP trong `data_raw/cadp/frames/`, không cần tải toàn extracted_frames. Kiểm dung lượng trước; ổ còn khoảng 1,09 GB ở đầu lượt này.
-4. Chạy lại kiểm ảnh/mapping với từng cặp mới, kiểm sự kiện/camera/clip trùng và nguồn timing. Công cụ chuẩn hóa/ứng viên đã có, nhưng xác nhận 001407 không lan sang các chuỗi mới.
-
-Nếu tác giả chỉ cung cấp nhãn object/Colliding, có thể tận dụng cho đề xuất vùng B0 sau khi chốt quy tắc; chúng vẫn không tự là GT vùng accident. [Quy tắc đề xuất và trạng thái train](b0_label_protocol.md). Thiếu FPS nguồn không cản việc chuẩn hóa bbox ảnh, nhưng cản kết luận theo giây/vận tốc và đánh giá temporal.
+- Cặp CADP đã kiểm vẫn là `data_raw/cadp/frames/001407/` + `data_raw/cadp/pilot_1407/1407.txt`, review xe/96–130 giữ nguyên. Không cần tải lại hoặc xác nhận lại.
+- Chưa tìm được export VATIC bổ sung public trong phạm vi kiểm: bỏ dependency này, không giao người dùng gửi thư hoặc xin nhãn riêng. Mẫu thư/hướng dẫn xin trước đó đã được rút khỏi hướng dẫn hiện hành; nhật ký giữ lịch sử quyết định.
+- AI chọn nhãn vùng tác giả **STTAD public** cho B0, giữ CADP envelope riêng là auxiliary derived. [Policy](../configs/b0_public_label_policy.json), [paper/kiểm nguồn](../reference/2026-10-24-public-data-review.md), [hướng dẫn tải chọn lọc](GETTING_STARTED.md).
+- Đã có 4 chuỗi STTAD ở `data_raw/sttad/public_examples/`, 176 ảnh đọc được và 31 bbox/frame nguồn; xem `outputs/audits/sttad_public_6/`. Thiếu TXT → unknown, không negative; 2 file ảnh lỗi bị loại, raw giữ nguyên. [Mở rộng/pool/nhóm cảnh](b0_pilot_audit.md).
+- Nguồn TAD có ZIP public, danh mục đã kiểm chỉ 404 MP4, không có bbox export; dùng tham khảo/ứng viên clip-level, không đổi thành GT vùng B0. Không tải cả ZIP 4,54 GB.

@@ -1,12 +1,16 @@
 # Metadata dữ liệu được đưa lên Git
 
-- `manifest.csv`: danh mục **12 asset đã kiểm trên máy phát triển**, gồm đường dẫn/hash/nguồn và review. Có dòng trong manifest không có nghĩa file đã có trên máy vừa clone. Không xóa dòng lịch sử hoặc đổi nhãn chỉ vì file chưa được tải.
-- `reviews/`: xác nhận của người dùng, giữ riêng annotation tác giả; 001407 đã xác nhận đúng xe/Colliding 96–130 theo frame, ba DETRAC đầy đủ âm. Không yêu cầu xác nhận lại nếu phục hồi đúng dữ liệu đã kiểm.
+- `manifest.csv`: danh mục **86asset trên máy phát triển** tại29/10, gồm đường dẫn/hash/nguồn và phạm vi review. Có dòng trong manifest không có nghĩa file đã có trên máy vừa clone. Không xóa dòng lịch sử hoặc đổi nhãn chỉ vì file chưa được tải.
+- `reviews/`: phiếu review có phạm vi/nguồn; tách xác nhận người dùng CADP/DETRAC khỏi kiểm mẫu của AI và nhãn tác giả STTAD/TAD/ACCIDENT. Phiếu 25/10 giữ bốn/loại hai vùng impact ACCIDENT, không sửa bbox. Không yêu cầu xác nhận lại nếu fingerprint đúng.
 - `registries/cadp_001407_images.csv`: hash/kích thước/đường dẫn của 221 JPG đã kiểm; không chứa ảnh hoặc bbox. Dùng kiểm bản tải lại có đúng nội dung đã rà không.
-- `download_catalog.json`: tệp cần lấy, URL, vị trí lưu, vai trò và trạng thái xác minh. Đây là chỉ dẫn tải thủ công, không phải script tải dataset.
+- `registries/b0_verified_pilot_v1_index.csv`, `..._split.csv`, `..._asset_hashes.json`: snapshot nhỏ của index/split/hash đã khóa cho release mới; không chứa media. Có thể xuất lại YOLO từ ba file này sau khi khôi phục dữ liệu và audit đúng fingerprint, không phải dựng release âm chưa rà lịch sử.
+- `registries/b0_tad_normal_test_v1.json`: nguồn/hash năm clip TAD test/normal của tác giả, chỉ số và hash 100 frame được cố định để kiểm model dự đoán nhầm; không chứa video/ảnh và không phải review của người dùng.
+- `download_catalog.json`: tệp/bộ cần lấy, URL, vị trí lưu, vai trò và trạng thái xác minh. ACCIDENT v9 có mục collection và lệnh tải tiếp nối `scripts/download_accident_real.py`; công cụ kiểm asset không tự tải.
 - `pilot_inventory.csv`/`pilot_inventory_summary.json`: nhóm theo chuỗi, không đếm output/clip con là sự kiện mới.
-- `b0_readiness.json`: điều kiện còn thiếu trước train; quy tắc vùng accident hiện vẫn đề xuất.
+- `b0_readiness.json`: gate benchmark đầy đủ và các release pilot ảnh riêng; `expanded_pilot_release` đã thu hồi, `verified_pilot_release` trỏ snapshot hash. Pilot ảnh đã train/đo; benchmark còn thiếu độ phủ/nhóm độc lập. Không sửa hash release để bỏ qua mismatch.
 - `cadp_source_inventory.json`: kết quả tìm nguồn trước đây; link có thể đổi, cần kiểm lại khi mở rộng.
-- `processed/`: kết quả sinh ra như nhãn ứng viên/chỉ mục âm, **bị ignore**, tạo lại bằng script. Nhãn đề xuất không phải GT đã duyệt.
+- `processed/`: kết quả sinh ra, **bị ignore**. `b0_basic_pilot_v1/` là pilot 47 ảnh lịch sử; `b0_accident_scaled_v1/` là release đã thu hồi vì âm chưa rà; `b0_verified_pilot_v1/` là release mới dùng 1.750 ảnh với âm có căn cứ. Hai nhóm test gần trùng train được [loại khỏi phép đo sạch](reviews/2026-10-27-b0-near-duplicate-review.json), còn 112 ảnh test; không sửa ảnh/nhãn nguồn. `b0_proposals/001407/` là envelope CADP dẫn xuất riêng; `b0_reviewed_negatives/` là index DETRAC có hash/review. [Đọc schema, kết quả và lệnh](../docs/b0_pilot_audit.md).
 
 [Hướng dẫn dựng lại từ đầu](../docs/GETTING_STARTED.md). Kiểm những file thực sự đang có bằng `python scripts/check_project_assets.py --check-hashes`; công cụ chỉ đọc dữ liệu, không ghi manifest/review hoặc tải thêm.
+
+**Release chuẩn bị29/10:** `registries/b0_s960_hardneg_v1_{index.csv,split.csv,asset_hashes.json,holdout.json}` và review cùng ngày giữ nhóm/split/hash cho2.680ảnh; `processed/b0_s960_hardneg_v1/dataset/` là media YOLO bịignore. Mới thêm24rawTAD nhưng chỉ14train/3val/4reserve,3cliploại. Reserve mới120frame chưa suy luận; reserve cũ ở`b0_normal_expanded_v1_holdout.json` đã consumed, không dùng train. `pilot_inventory*` là hồ sơ chuỗi pilot trước batch mới, không dùng thay index/split release mới. [Chi tiết và công cụ](../docs/b0_pilot_audit.md#chuẩn-bị-s960-hardneg-v1--29102026).

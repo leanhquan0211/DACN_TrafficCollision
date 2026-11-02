@@ -1,0 +1,184 @@
+{
+  "date": "2026-10-27",
+  "scope": "image-level pilot only; not event detection or deployment",
+  "dataset": {
+    "scope": "verified-negative basic image pilot",
+    "samples": 1750,
+    "split_labels": {
+      "train": {
+        "positive": 1122,
+        "negative": 419
+      },
+      "val": {
+        "positive": 91,
+        "negative": 6
+      },
+      "test": {
+        "negative": 5,
+        "positive": 107
+      }
+    },
+    "label_origins": {
+      "author_accident_impact_region": 1320,
+      "derived_author_preimpact_assistant_frame_review": 30,
+      "author_normal_folder_clip_label": 100,
+      "user_full_sequence_review": 300
+    },
+    "added_negative_samples": {
+      "TAD:20220518_acci-bg34": 50,
+      "TAD:20230818_acci-bg_83": 50,
+      "UA-DETRAC:MVI_20011": 100,
+      "UA-DETRAC:MVI_20012": 100,
+      "UA-DETRAC:MVI_20032": 100
+    },
+    "excluded_test_groups": [
+      "ACCIDENT:VSNqivMhWnM",
+      "ACCIDENT:kaggle-fahaddalwai-cctvfootagevideo_4"
+    ],
+    "no_unreviewed_preimpact_candidates": true,
+    "caveats": [
+      "Added 400 negatives come from only five clips and three conservative source groups",
+      "Negative domain differs from ACCIDENT positives; camera/source shortcut is possible",
+      "Test includes only five reviewed negatives; near-duplicate search is not exhaustive"
+    ]
+  },
+  "epochs_completed": 60,
+  "device": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "checkpoint": "outputs/training/b0_verified_pilot_v1/weights/best.pt",
+  "checkpoint_sha256": "59d58a20700d3e689a33afa20845a670c7a40c7399d80f44db626be4f38a7fbc",
+  "config_sha256": "0f2f9f94c882de0df8423d0714fd9611fb33408a533e50c52b5799350bb11986",
+  "experiment_sha256": "476e1f10cb689739dd6737ecf11abc83a6f4352ed6f311f99f132697a775cad9",
+  "clean_report_sha256": "3c6f3446bd302dd612ac2bdb0de2b213370d9caf7bcee4594ada605b346ad23d",
+  "ultralytics_bbox_test": {
+    "metrics/precision(B)": 0.8473031805971648,
+    "metrics/recall(B)": 0.5607476635514018,
+    "metrics/mAP50(B)": 0.6968123354948781,
+    "metrics/mAP50-95(B)": 0.5223365110474965,
+    "fitness": 0.5223365110474965
+  },
+  "fixed_threshold_test": {
+    "tp": 67,
+    "fp": 46,
+    "fn": 40,
+    "precision": 0.5929203539823009,
+    "recall": 0.6261682242990654,
+    "f1": 0.6090909090909091,
+    "confidence": 0.25,
+    "matching_iou": 0.5,
+    "negative_frames": 5,
+    "negative_frames_with_predictions": 0,
+    "negative_frame_false_positive_rate": 0.0,
+    "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+  },
+  "reference": {
+    "experiment": "outputs/training/b0_basic_pilot_v1/experiment.json",
+    "checkpoint": "outputs/training/b0_basic_pilot_v1/weights/best.pt",
+    "checkpoint_sha256": "9ce694d6874a916fcb1cee7e84bcd6ea0de8b4cc572d26fb173096a02bd7cafb",
+    "ultralytics_bbox_metrics": {
+      "metrics/precision(B)": 0.043974604232755045,
+      "metrics/recall(B)": 0.102803738317757,
+      "metrics/mAP50(B)": 0.01188536912398346,
+      "metrics/mAP50-95(B)": 0.006584026085496797,
+      "fitness": 0.006584026085496797
+    },
+    "fixed_threshold_metrics": {
+      "tp": 14,
+      "fp": 598,
+      "fn": 93,
+      "precision": 0.02287581699346405,
+      "recall": 0.1308411214953271,
+      "f1": 0.03894297635605006,
+      "confidence": 0.25,
+      "matching_iou": 0.5,
+      "negative_frames": 5,
+      "negative_frames_with_predictions": 5,
+      "negative_frame_false_positive_rate": 1.0,
+      "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+    },
+    "interpretation": "Same images and thresholds; multiple training changes prevent causal attribution"
+  },
+  "external_normal_probe": {
+    "manifest": "data/registries/b0_tad_normal_test_v1.json",
+    "manifest_sha256": "c4e7a182f16ae301a1ec9c6ef2286086025b2bddc04a29eb4659b673044b347e",
+    "author_label": "TAD test/normal clip label; not user-reviewed",
+    "model": {
+      "frames": 100,
+      "frames_with_predictions": 41,
+      "negative_frame_false_positive_rate": 0.41,
+      "false_boxes": 46,
+      "clips": 5,
+      "clips_with_any_predictions": 4,
+      "by_clip": {
+        "videox_test_F10": {
+          "frames": 20,
+          "frames_with_predictions": 0,
+          "false_boxes": 0
+        },
+        "videox_test_F11": {
+          "frames": 20,
+          "frames_with_predictions": 6,
+          "false_boxes": 8
+        },
+        "videox_test_F3": {
+          "frames": 20,
+          "frames_with_predictions": 8,
+          "false_boxes": 8
+        },
+        "videox_test_F4": {
+          "frames": 20,
+          "frames_with_predictions": 9,
+          "false_boxes": 12
+        },
+        "videox_test_F9": {
+          "frames": 20,
+          "frames_with_predictions": 18,
+          "false_boxes": 18
+        }
+      },
+      "scope": "sparse labeled-normal frames; not event false alarms/hour"
+    },
+    "reference": {
+      "frames": 100,
+      "frames_with_predictions": 76,
+      "negative_frame_false_positive_rate": 0.76,
+      "false_boxes": 225,
+      "clips": 5,
+      "clips_with_any_predictions": 5,
+      "by_clip": {
+        "videox_test_F10": {
+          "frames": 20,
+          "frames_with_predictions": 15,
+          "false_boxes": 54
+        },
+        "videox_test_F11": {
+          "frames": 20,
+          "frames_with_predictions": 8,
+          "false_boxes": 11
+        },
+        "videox_test_F3": {
+          "frames": 20,
+          "frames_with_predictions": 13,
+          "false_boxes": 18
+        },
+        "videox_test_F4": {
+          "frames": 20,
+          "frames_with_predictions": 20,
+          "false_boxes": 89
+        },
+        "videox_test_F9": {
+          "frames": 20,
+          "frames_with_predictions": 20,
+          "false_boxes": 53
+        }
+      },
+      "scope": "sparse labeled-normal frames; not event false alarms/hour"
+    }
+  },
+  "limitations": [
+    "Five reviewed negative frames only",
+    "Near-duplicate screening is not exhaustive",
+    "Camera and event independence not fully proven",
+    "No temporal or long-video metrics"
+  ],
+  "source_report": "outputs/training/b0_verified_pilot_v1/clean_test/report.json"
+}

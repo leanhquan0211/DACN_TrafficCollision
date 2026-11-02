@@ -1,0 +1,247 @@
+{
+  "scope": "posthoc diagnostic of existing B0 model; no threshold selection or independent event benchmark",
+  "config": "configs/b0_diagnostics_v1.json",
+  "config_sha256": "52834384beed5ffadf957d13b1e2f0a4b891255824a5aca52b0306b1991f8339",
+  "source_report": "outputs/training/b0_verified_pilot_v1/diagnostics/report.json",
+  "source_report_sha256": "a7bde4cb47873e95dfd30022f8554289200badf5c95c7abefce22986d1c97a83",
+  "checkpoint": "outputs/training/b0_verified_pilot_v1/weights/best.pt",
+  "checkpoint_sha256": "59d58a20700d3e689a33afa20845a670c7a40c7399d80f44db626be4f38a7fbc",
+  "image_metrics": {
+    "locked_test_already_consumed": {
+      "frames": 112,
+      "tp": 67,
+      "fp": 46,
+      "fn": 40,
+      "geometry_categories": {
+        "true_positive": 67,
+        "false_positive_disjoint_from_annotated_region": 38,
+        "localization_overlap_below_matching_iou": 5,
+        "duplicate_or_conflicting_prediction": 3
+      }
+    },
+    "external_normal_sparse_already_consumed": {
+      "frames": 100,
+      "tp": 0,
+      "fp": 46,
+      "fn": 0,
+      "geometry_categories": {
+        "false_positive_on_verified_negative": 46
+      }
+    },
+    "validation_already_consumed": {
+      "frames": 97,
+      "tp": 52,
+      "fp": 49,
+      "fn": 39,
+      "geometry_categories": {
+        "true_positive": 52,
+        "false_positive_disjoint_from_annotated_region": 38,
+        "false_positive_on_verified_negative": 5,
+        "localization_overlap_below_matching_iou": 6
+      }
+    }
+  },
+  "gt_size_statistics": {
+    "external_normal_sparse_already_consumed": {
+      "matched": {
+        "count": 0,
+        "median_image_area_percent": null
+      },
+      "missed": {
+        "count": 0,
+        "median_image_area_percent": null
+      }
+    },
+    "locked_test_already_consumed": {
+      "matched": {
+        "count": 67,
+        "median_image_area_percent": 3.2163547954685803
+      },
+      "missed": {
+        "count": 40,
+        "median_image_area_percent": 0.321395391404104
+      }
+    },
+    "validation_already_consumed": {
+      "matched": {
+        "count": 52,
+        "median_image_area_percent": 1.8798018921779733
+      },
+      "missed": {
+        "count": 39,
+        "median_image_area_percent": 0.47708806524534564
+      }
+    }
+  },
+  "sequences": [
+    {
+      "sequence": "MVI_20011",
+      "role": "training_source_operational_diagnostic",
+      "label_origin": "user_full_sequence_review",
+      "frames": 664,
+      "frames_with_predictions": 0,
+      "predicted_boxes": 0,
+      "source_fps_verified": true,
+      "fps_scope": "author_25fps_verified_for_DETRAC_sequence",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/MVI_20011/b0_accident.mp4",
+      "offline_pipeline_fps": 50.264383845898216,
+      "inference_p95_ms": 12.371570011600854,
+      "raw_positive_runs": 0,
+      "longest_raw_run_frames": 0,
+      "output_video_sha256": "58b7e07b72c2c42b32a4661968cee13eda297acf1685427d81a8793446ba1900",
+      "output_decoded_frames": 664
+    },
+    {
+      "sequence": "MVI_20012",
+      "role": "training_source_operational_diagnostic",
+      "label_origin": "user_full_sequence_review",
+      "frames": 936,
+      "frames_with_predictions": 0,
+      "predicted_boxes": 0,
+      "source_fps_verified": true,
+      "fps_scope": "author_25fps_verified_for_DETRAC_sequence",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/MVI_20012/b0_accident.mp4",
+      "offline_pipeline_fps": 92.5192036161832,
+      "inference_p95_ms": 12.136350036598742,
+      "raw_positive_runs": 0,
+      "longest_raw_run_frames": 0,
+      "output_video_sha256": "39f551b3a894effd739ca3ec885c1faa1dc14f56382eabcfee5ae913173be1ce",
+      "output_decoded_frames": 936
+    },
+    {
+      "sequence": "MVI_20032",
+      "role": "training_source_operational_diagnostic",
+      "label_origin": "user_full_sequence_review",
+      "frames": 437,
+      "frames_with_predictions": 0,
+      "predicted_boxes": 0,
+      "source_fps_verified": true,
+      "fps_scope": "author_25fps_verified_for_DETRAC_sequence",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/MVI_20032/b0_accident.mp4",
+      "offline_pipeline_fps": 94.36387465826573,
+      "inference_p95_ms": 11.825759941712022,
+      "raw_positive_runs": 0,
+      "longest_raw_run_frames": 0,
+      "output_video_sha256": "3fa864c8cdcf0215d04c49517500ff797d18ada28fd21de01530f81881ce1f86",
+      "output_decoded_frames": 437
+    },
+    {
+      "sequence": "videox_test_F10",
+      "role": "previously_consumed_external_normal_probe",
+      "label_origin": "author_normal_folder_clip_label",
+      "frames": 249,
+      "frames_with_predictions": 3,
+      "predicted_boxes": 3,
+      "source_fps_verified": false,
+      "fps_scope": "media_PTS_only_camera_timing_unverified",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/videox_test_F10/b0_accident.mp4",
+      "offline_pipeline_fps": 47.57284582401325,
+      "inference_p95_ms": 13.41158002614975,
+      "raw_positive_runs": 2,
+      "longest_raw_run_frames": 2,
+      "output_video_sha256": "fd43c259a3b349ab0cfe57f4b56fc239ee8aa480b10714a010a803284d81ddad",
+      "output_decoded_frames": 249
+    },
+    {
+      "sequence": "videox_test_F11",
+      "role": "previously_consumed_external_normal_probe",
+      "label_origin": "author_normal_folder_clip_label",
+      "frames": 275,
+      "frames_with_predictions": 98,
+      "predicted_boxes": 108,
+      "source_fps_verified": false,
+      "fps_scope": "media_PTS_only_camera_timing_unverified",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/videox_test_F11/b0_accident.mp4",
+      "offline_pipeline_fps": 74.38913334417207,
+      "inference_p95_ms": 18.016750016249716,
+      "raw_positive_runs": 24,
+      "longest_raw_run_frames": 24,
+      "output_video_sha256": "ba42a1a6d068e51a4924beb5533b71f5d7edfc53f73c8df91fa25a0846fede56",
+      "output_decoded_frames": 275
+    },
+    {
+      "sequence": "videox_test_F3",
+      "role": "previously_consumed_external_normal_probe",
+      "label_origin": "author_normal_folder_clip_label",
+      "frames": 249,
+      "frames_with_predictions": 94,
+      "predicted_boxes": 94,
+      "source_fps_verified": false,
+      "fps_scope": "media_PTS_only_camera_timing_unverified",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/videox_test_F3/b0_accident.mp4",
+      "offline_pipeline_fps": 46.9464988459253,
+      "inference_p95_ms": 14.397760014981031,
+      "raw_positive_runs": 10,
+      "longest_raw_run_frames": 60,
+      "output_video_sha256": "9c16c89a1d0a66d81f5fdb252d6b72c6135194df8ce0fc00e4ae53d5dd9b8528",
+      "output_decoded_frames": 249
+    },
+    {
+      "sequence": "videox_test_F4",
+      "role": "previously_consumed_external_normal_probe",
+      "label_origin": "author_normal_folder_clip_label",
+      "frames": 299,
+      "frames_with_predictions": 140,
+      "predicted_boxes": 182,
+      "source_fps_verified": false,
+      "fps_scope": "media_PTS_only_camera_timing_unverified",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/videox_test_F4/b0_accident.mp4",
+      "offline_pipeline_fps": 46.586137464498876,
+      "inference_p95_ms": 19.471049949061126,
+      "raw_positive_runs": 40,
+      "longest_raw_run_frames": 20,
+      "output_video_sha256": "82aeca37386ae6c814e889dc059e40dc65a584824b70b071f1733964cfcd9991",
+      "output_decoded_frames": 299
+    },
+    {
+      "sequence": "videox_test_F9",
+      "role": "previously_consumed_external_normal_probe",
+      "label_origin": "author_normal_folder_clip_label",
+      "frames": 527,
+      "frames_with_predictions": 477,
+      "predicted_boxes": 477,
+      "source_fps_verified": false,
+      "fps_scope": "media_PTS_only_camera_timing_unverified",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/videox_test_F9/b0_accident.mp4",
+      "offline_pipeline_fps": 48.38876122089936,
+      "inference_p95_ms": 17.25100006442517,
+      "raw_positive_runs": 9,
+      "longest_raw_run_frames": 215,
+      "output_video_sha256": "a87ce7e90266ca8a2e32f4b35d186cbde4f5f2076b029958d903cb02d0775718",
+      "output_decoded_frames": 527
+    },
+    {
+      "sequence": "CADP_001407",
+      "role": "external_debug_temporal_presence_only",
+      "label_origin": "author_vatic_user_frame_review",
+      "frames": 221,
+      "frames_with_predictions": 158,
+      "predicted_boxes": 214,
+      "source_fps_verified": false,
+      "fps_scope": "presentation_20fps_only_camera_timing_unverified",
+      "output_video": "outputs/training/b0_verified_pilot_v1/diagnostics/videos/CADP_001407/b0_accident.mp4",
+      "offline_pipeline_fps": 51.30268663989928,
+      "inference_p95_ms": 24.49069998692721,
+      "raw_positive_runs": 7,
+      "longest_raw_run_frames": 60,
+      "output_video_sha256": "6934568671618662d881b06c4a801e4dbf5693a6caca07e4acb93388facf3c28",
+      "output_decoded_frames": 221,
+      "reviewed_intervals": [
+        {
+          "event_id": "CADP_001407_event_1",
+          "start_frame": 96,
+          "end_frame_inclusive": 130,
+          "reviewed_frames": 35,
+          "frames_with_any_bbox": 35,
+          "first_bbox_frame": 96,
+          "first_bbox_offset_frames": 0,
+          "scope": "temporal presence diagnostic; no spatial match or event precision"
+        }
+      ]
+    }
+  ],
+  "full_B0_complete": false,
+  "threshold_tuned": false,
+  "new_training_run": false,
+  "new_downloads": false
+}

@@ -1,0 +1,382 @@
+{
+  "status": "complete",
+  "scope": "saved validation bbox cases only; no new model inference, test or reserve",
+  "same_validation": {
+    "images": 307,
+    "positive": 91,
+    "negative": 216,
+    "identities_match": true,
+    "image_and_label_hashes_match": true,
+    "old_provenance": ".tmp\\kaggle_validation_2c4ad2ef787e4f98bbc0de564d2dbdf9\\metadata\\source_provenance.csv",
+    "new_provenance": ".tmp\\kaggle_validation_2c4ad2ef787e4f98bbc0de564d2dbdf9\\data\\kaggle_full\\provenance.csv"
+  },
+  "baseline_hardneg": {
+    "checkpoint_sha256": "5f38e384362da4a124d081981610efc87878c17b8c57f4e870e5926f098f3ca3",
+    "official": {
+      "metrics/precision(B)": 0.8569949567624202,
+      "metrics/recall(B)": 0.5604395604395604,
+      "metrics/mAP50(B)": 0.6847681432928652,
+      "metrics/mAP50-95(B)": 0.5542640120057796,
+      "fitness": 0.5542640120057796
+    },
+    "fixed": {
+      "tp": 63,
+      "fp": 49,
+      "fn": 28,
+      "precision": 0.5625,
+      "recall": 0.6923076923076923,
+      "f1": 0.6206896551724138,
+      "confidence": 0.25,
+      "matching_iou": 0.5,
+      "negative_frames": 216,
+      "negative_frames_with_predictions": 5,
+      "negative_frame_false_positive_rate": 0.023148148148148147,
+      "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+    }
+  },
+  "new_adamw": {
+    "checkpoint_sha256": "adff35a1da7656908edbea2eb31c60aaf184166bc222e8ae55044b4a12ac7995",
+    "best_csv_epoch": 52,
+    "best_csv_metrics": {
+      "epoch": "52",
+      "time": "4047.34",
+      "train/box_loss": "0.42734",
+      "train/cls_loss": "0.2786",
+      "train/dfl_loss": "0.82688",
+      "metrics/precision(B)": "0.75204",
+      "metrics/recall(B)": "0.63736",
+      "metrics/mAP50(B)": "0.67868",
+      "metrics/mAP50-95(B)": "0.52856",
+      "val/box_loss": "0.80379",
+      "val/cls_loss": "1.01526",
+      "val/dfl_loss": "0.97003",
+      "lr/pg0": "3.05316e-05",
+      "lr/pg1": "3.05316e-05",
+      "lr/pg2": "3.05316e-05"
+    },
+    "official": {
+      "metrics/precision(B)": 0.7590176704573213,
+      "metrics/recall(B)": 0.6373626373626373,
+      "metrics/mAP50(B)": 0.678534547059177,
+      "metrics/mAP50-95(B)": 0.5262613525461466,
+      "fitness": 0.5262613525461466
+    },
+    "fixed": {
+      "tp": 57,
+      "fp": 22,
+      "fn": 34,
+      "precision": 0.7215189873417721,
+      "recall": 0.6263736263736264,
+      "f1": 0.6705882352941177,
+      "confidence": 0.25,
+      "matching_iou": 0.5,
+      "negative_frames": 216,
+      "negative_frames_with_predictions": 2,
+      "negative_frame_false_positive_rate": 0.009259259259259259,
+      "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+    },
+    "epochs_completed": 60,
+    "best_file_sha256": "adff35a1da7656908edbea2eb31c60aaf184166bc222e8ae55044b4a12ac7995",
+    "last_file_sha256": "01633aa4c4a3c1b7388a8390dd896863249cefb203103c77b97a172cc0a43960"
+  },
+  "case_transitions": {
+    "positive_1_to_1": 52,
+    "negative_1_to_0": 4,
+    "positive_1_to_0": 11,
+    "negative_0_to_0": 210,
+    "negative_1_to_1": 1,
+    "positive_0_to_0": 23,
+    "positive_0_to_1": 5,
+    "negative_0_to_1": 1
+  },
+  "transitions_by_source": {
+    "ACCIDENT": {
+      "positive_1_to_1": 52,
+      "negative_1_to_0": 3,
+      "positive_1_to_0": 11,
+      "negative_0_to_0": 2,
+      "negative_1_to_1": 1,
+      "positive_0_to_0": 23,
+      "positive_0_to_1": 5
+    },
+    "TAD": {
+      "negative_0_to_0": 208,
+      "negative_1_to_0": 1,
+      "negative_0_to_1": 1
+    }
+  },
+  "examples": {
+    "negative_1_to_0": [
+      {
+        "sequence": "04O2SOGSG_U_00",
+        "frame": "0",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/04O2SOGSG_U_00_f000000.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/04O2SOGSG_U_00_f000000.jpg"
+      },
+      {
+        "sequence": "04O2SOGSG_U_00",
+        "frame": "8",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/04O2SOGSG_U_00_f000008.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/04O2SOGSG_U_00_f000008.jpg"
+      },
+      {
+        "sequence": "2BBwMYE-FC4_00",
+        "frame": "0",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/2BBwMYE-FC4_00_f000000.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/2BBwMYE-FC4_00_f000000.jpg"
+      },
+      {
+        "sequence": "20220620_acci-bg13",
+        "frame": "340",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/20220620_acci-bg13_f000340.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/20220620_acci-bg13_f000340.jpg"
+      }
+    ],
+    "positive_1_to_0": [
+      {
+        "sequence": "04O2SOGSG_U_00",
+        "frame": "17",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/04O2SOGSG_U_00_f000017.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/04O2SOGSG_U_00_f000017.jpg"
+      },
+      {
+        "sequence": "4ZGq9c3FKlE_00",
+        "frame": "97",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/4ZGq9c3FKlE_00_f000097.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/4ZGq9c3FKlE_00_f000097.jpg"
+      },
+      {
+        "sequence": "CV8iSUAmHvw_00",
+        "frame": "134",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/CV8iSUAmHvw_00_f000134.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/CV8iSUAmHvw_00_f000134.jpg"
+      },
+      {
+        "sequence": "I2syQkUAm0g_00",
+        "frame": "117",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/I2syQkUAm0g_00_f000117.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/I2syQkUAm0g_00_f000117.jpg"
+      },
+      {
+        "sequence": "LGanHyFZCBg_00",
+        "frame": "56",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/LGanHyFZCBg_00_f000056.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/LGanHyFZCBg_00_f000056.jpg"
+      },
+      {
+        "sequence": "Mzuyrdg3hxY_00",
+        "frame": "582",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/Mzuyrdg3hxY_00_f000582.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/Mzuyrdg3hxY_00_f000582.jpg"
+      },
+      {
+        "sequence": "SA_ZC0qlqdg_00",
+        "frame": "128",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/SA_ZC0qlqdg_00_f000128.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/SA_ZC0qlqdg_00_f000128.jpg"
+      },
+      {
+        "sequence": "Tx7F-6IsLCU_00",
+        "frame": "57",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/Tx7F-6IsLCU_00_f000057.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/Tx7F-6IsLCU_00_f000057.jpg"
+      },
+      {
+        "sequence": "YkEtYW_U1IY_00",
+        "frame": "92",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/YkEtYW_U1IY_00_f000092.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/YkEtYW_U1IY_00_f000092.jpg"
+      },
+      {
+        "sequence": "_KmJLS_TJKY_00",
+        "frame": "62",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/_KmJLS_TJKY_00_f000062.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/_KmJLS_TJKY_00_f000062.jpg"
+      },
+      {
+        "sequence": "adNfN1i5mXs_00",
+        "frame": "48",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/adNfN1i5mXs_00_f000048.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/adNfN1i5mXs_00_f000048.jpg"
+      }
+    ],
+    "positive_0_to_1": [
+      {
+        "sequence": "AjhYRdkLdRc_00",
+        "frame": "40",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/AjhYRdkLdRc_00_f000040.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/AjhYRdkLdRc_00_f000040.jpg"
+      },
+      {
+        "sequence": "As0H5IK0CBI_00",
+        "frame": "79",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/As0H5IK0CBI_00_f000079.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/As0H5IK0CBI_00_f000079.jpg"
+      },
+      {
+        "sequence": "DU2mJPGb3ys_00",
+        "frame": "85",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/DU2mJPGb3ys_00_f000085.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/DU2mJPGb3ys_00_f000085.jpg"
+      },
+      {
+        "sequence": "qq34-Ch0SYE_00",
+        "frame": "108",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/qq34-Ch0SYE_00_f000108.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/qq34-Ch0SYE_00_f000108.jpg"
+      },
+      {
+        "sequence": "tmv5qTrk8H4_00",
+        "frame": "44",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/tmv5qTrk8H4_00_f000044.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/tmv5qTrk8H4_00_f000044.jpg"
+      }
+    ],
+    "negative_0_to_1": [
+      {
+        "sequence": "20230818_acci-bg_7",
+        "frame": "197",
+        "old_case": "outputs/training/b0_s960_hardneg_v1/cases_val/20230818_acci-bg_7_f000197.jpg",
+        "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/20230818_acci-bg_7_f000197.jpg"
+      }
+    ]
+  },
+  "test_inference": false,
+  "reserve_inference": false,
+  "version9_comparison": {
+    "same_provenance_sha256": "b7c0bc111f76dd689a2a77b4a4c847e9a9059a1c15000430e4232b82fcaba61e",
+    "scope": "same full train/val data and initial weights; recipes differ in multiple variables",
+    "old_archive_full_sha_reverified": false,
+    "old_members_verified_against_manifest": true,
+    "old_bytes_transferred": 67159,
+    "old_zip_bytes": 121170825,
+    "old_checkpoint_downloaded": false,
+    "old_checkpoint_sha256": "3efbe2ac6974d9854cb14b1fd307e07729d69b7877830d7cc8fd00a2579ac1b3",
+    "old_official": {
+      "metrics/precision(B)": 0.8355048942461983,
+      "metrics/recall(B)": 0.5824175824175825,
+      "metrics/mAP50(B)": 0.6978977532365057,
+      "metrics/mAP50-95(B)": 0.5586660631325714,
+      "fitness": 0.5586660631325714
+    },
+    "old_fixed": {
+      "tp": 61,
+      "fp": 32,
+      "fn": 30,
+      "precision": 0.6559139784946236,
+      "recall": 0.6703296703296703,
+      "f1": 0.6630434782608695,
+      "confidence": 0.25,
+      "matching_iou": 0.5,
+      "negative_frames": 216,
+      "negative_frames_with_predictions": 5,
+      "negative_frame_false_positive_rate": 0.023148148148148147,
+      "metric_scope": "bbox/frame on a tiny held-out source-group pilot; NOT event metrics or false alerts/hour"
+    },
+    "transitions": {
+      "positive_1_to_1": 53,
+      "negative_1_to_0": 4,
+      "positive_1_to_0": 8,
+      "negative_0_to_0": 210,
+      "negative_1_to_1": 1,
+      "positive_0_to_0": 26,
+      "positive_0_to_1": 4,
+      "negative_0_to_1": 1
+    },
+    "examples": {
+      "negative_1_to_0": [
+        {
+          "sequence": "04O2SOGSG_U_00",
+          "frame": "0",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/04O2SOGSG_U_00_f000000.jpg"
+        },
+        {
+          "sequence": "04O2SOGSG_U_00",
+          "frame": "8",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/04O2SOGSG_U_00_f000008.jpg"
+        },
+        {
+          "sequence": "2BBwMYE-FC4_00",
+          "frame": "0",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/2BBwMYE-FC4_00_f000000.jpg"
+        },
+        {
+          "sequence": "20220620_acci-bg13",
+          "frame": "416",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/20220620_acci-bg13_f000416.jpg"
+        }
+      ],
+      "positive_1_to_0": [
+        {
+          "sequence": "04O2SOGSG_U_00",
+          "frame": "17",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/04O2SOGSG_U_00_f000017.jpg"
+        },
+        {
+          "sequence": "CV8iSUAmHvw_00",
+          "frame": "134",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/CV8iSUAmHvw_00_f000134.jpg"
+        },
+        {
+          "sequence": "I2syQkUAm0g_00",
+          "frame": "117",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/I2syQkUAm0g_00_f000117.jpg"
+        },
+        {
+          "sequence": "LGanHyFZCBg_00",
+          "frame": "56",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/LGanHyFZCBg_00_f000056.jpg"
+        },
+        {
+          "sequence": "SA_ZC0qlqdg_00",
+          "frame": "128",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/SA_ZC0qlqdg_00_f000128.jpg"
+        },
+        {
+          "sequence": "Tx7F-6IsLCU_00",
+          "frame": "57",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/Tx7F-6IsLCU_00_f000057.jpg"
+        },
+        {
+          "sequence": "_KmJLS_TJKY_00",
+          "frame": "62",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/_KmJLS_TJKY_00_f000062.jpg"
+        },
+        {
+          "sequence": "adNfN1i5mXs_00",
+          "frame": "48",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/adNfN1i5mXs_00_f000048.jpg"
+        }
+      ],
+      "positive_0_to_1": [
+        {
+          "sequence": "AjhYRdkLdRc_00",
+          "frame": "40",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/AjhYRdkLdRc_00_f000040.jpg"
+        },
+        {
+          "sequence": "As0H5IK0CBI_00",
+          "frame": "79",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/As0H5IK0CBI_00_f000079.jpg"
+        },
+        {
+          "sequence": "DU2mJPGb3ys_00",
+          "frame": "85",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/DU2mJPGb3ys_00_f000085.jpg"
+        },
+        {
+          "sequence": "MAlk_czfNIs_00",
+          "frame": "45",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/MAlk_czfNIs_00_f000045.jpg"
+        }
+      ],
+      "negative_0_to_1": [
+        {
+          "sequence": "20230818_acci-bg_7",
+          "frame": "197",
+          "new_case": "outputs/training/b0_s960_adamw_kaggle_v2/cases_val/20230818_acci-bg_7_f000197.jpg"
+        }
+      ]
+    }
+  }
+}

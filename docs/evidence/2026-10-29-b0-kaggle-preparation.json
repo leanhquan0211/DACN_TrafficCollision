@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "status": "prepared_authentication_required",
+  "dataset_created": false,
+  "notebook_created": false,
+  "remote_run_submitted": false,
+  "remote_training_completed": false,
+  "results_downloaded": false,
+  "cloud_gpu_allocation_verified": false,
+  "continuous_monitoring_enabled": false,
+  "laptop_training_started": false,
+  "laptop_gpu_forward_called": false,
+  "package": {
+    "path": "outputs/kaggle/b0_s960_full_kaggle_v1/dataset/b0_full_bundle.zip",
+    "bytes": 4063541755,
+    "sha256": "b00b76e794c113f4e95885031719908e28665922f09c8c47b726940326306a51",
+    "files": 5996,
+    "samples": 2988,
+    "split_labels": {
+      "train": {
+        "positive": 1122,
+        "negative": 1559
+      },
+      "val": {
+        "positive": 91,
+        "negative": 216
+      }
+    },
+    "original_train_val_frames_preserved": 2568,
+    "additional_train_normal_frames": 420,
+    "new_independent_sequences_or_events_added": 0,
+    "validation_307_rows_unchanged": true,
+    "test_media_included": false,
+    "reserve_media_included": false,
+    "venv_cache_raw_or_credentials_included": false
+  },
+  "recipe": {
+    "source_config": "configs/b0_s960_hardneg_v1.json",
+    "source_config_sha256": "23003db8fd2e7e61cc438c35e7c02ae7b8b2cc4fa942de920b466878de5a7ed2",
+    "cloud_config": "configs/b0_s960_full_kaggle_v1.json",
+    "all_train_keys_identical": true,
+    "training_arguments": {
+      "epochs": 40,
+      "patience": 10,
+      "imgsz": 960,
+      "batch": 2,
+      "workers": 0,
+      "device": "0",
+      "amp": false,
+      "optimizer": "SGD",
+      "seed": 20261026,
+      "lr0": 0.0003,
+      "momentum": 0.937,
+      "lrf": 0.01,
+      "warmup_epochs": 3.0,
+      "weight_decay": 0.0005,
+      "nbs": 64,
+      "mosaic": 0.5,
+      "close_mosaic": 10,
+      "scale": 0.3,
+      "mixup": 0.0,
+      "cos_lr": false
+    },
+    "initial_weights_sha256": "c1fdd6dcbb09d8d2c3dae4c2c90dfcf4189fac88980c045c3eff095dba019302",
+    "initial_is_original_s960_best": true,
+    "use_newly_trained_hardneg_best_as_initial": false,
+    "run": "b0_s960_full_kaggle_v1",
+    "resume": false
+  },
+  "checks": {
+    "unit_tests_passed": 75,
+    "zip_all_member_crc_and_sha_verified": true,
+    "relocated_trainer_check": {
+      "samples": 2988,
+      "splits": {
+        "train": 2681,
+        "val": 307,
+        "test": 0
+      },
+      "status": "verified"
+    },
+    "decoded_images": {
+      "train": 2681,
+      "val": 307
+    },
+    "bbox_counts": {
+      "train": 1122,
+      "val": 91
+    },
+    "hardlinked_media": 2989,
+    "copied_media": 0,
+    "forbidden_files": [],
+    "linux_python312_pinned_wheels_available": true,
+    "notebook_code_cells_syntax_valid": true,
+    "kaggle_notebook_execution_verified": false
+  },
+  "old_hardneg_checkpoint_unchanged": true,
+  "old_hardneg_experiment_unchanged": true,
+  "old_operating_point_unchanged": true,
+  "reserve_manifest_unchanged": true,
+  "reserve_predictions_seen": false,
+  "tools": {
+    "kaggle_cli": "2.2.5",
+    "isolated_environment": ".tmp/kaggle_cli_env",
+    "cloud_python": "3.12.10",
+    "uv": "0.13.4",
+    "torch": "2.11.0+cu128",
+    "ultralytics": "8.4.178",
+    "environment_strategy": "Clean Python/venv in cloud/tmp; no auto use of image augmentation libs; no local train-env upgrade"
+  },
+  "target_dataset_id": "laqun0211/dacn-b0-full-trainval-v1",
+  "target_notebook_id": "laqun0211/dacn-b0-s960-full-v1",
+  "target_urls_are_planned_not_created": true,
+  "blocker": "No standard OAuth/API credentials on current machine; publish stopped before authenticated API mutation.",
+  "guide": "docs/kaggle_training.md",
+  "plan": "KE_HOACH_TRIEN_KHAI.md",
+  "fingerprints": {
+    "configs/b0_s960_full_kaggle_v1.json": "1c50c40494e61e9d054169f4864c44dc7f0182ac61583aada19cc0f75d02c936",
+    "configs/b0_kaggle_full_label_policy.json": "d0779ed2ec7372cf09f10b4a69643b1078b5f92b1ed27fbc2ad4412f33bfdf1b",
+    "scripts/train_b0.py": "2a979bb2333415f02103d9dbf697868b8d50eba6a12af5f76877e01dab665994",
+    "scripts/kaggle_b0.py": "f5bb6f2d99d42f4e49b953793a373deca247757492ee7e63ac00c2569394ac77",
+    "src/training_bundle.py": "fed9766b232ad06c6d0ab9dd34f895defa1ff85bd5d69b1077f06e3e40ef1428",
+    "tests/test_training_bundle.py": "8ee42e0a85fa0b197c80d3fa61fd0d9ddaed32494f8274721d4700f2afb94429",
+    "data/registries/b0_s960_hardneg_v1_holdout.json": "02e5ba42d0d6ce9c6e5b70ed6f4598b407b25c565de61f66c2016e37cfafbd26",
+    "outputs/kaggle/b0_s960_full_kaggle_v1/dataset/bundle_receipt.json": "93bffe97bf2f4ede1eb8710c587164dde6334455747d1a973cf02460b08533b6",
+    "outputs/kaggle/b0_s960_full_kaggle_v1/dataset/dataset-metadata.json": "e8eab55f9de9a19b6acd706944eec3425d3b8161f529782fb50f586d15ce0950",
+    "outputs/kaggle/b0_s960_full_kaggle_v1/notebook/kernel-metadata.json": "9a987c9c8f5a22541033ccd13f9bdd2931473afb420e80de4fd2e40c31e0022f",
+    "outputs/kaggle/b0_s960_full_kaggle_v1/notebook/train_b0.ipynb": "9c56507072658023347ffe4b185e7d2f8a63a4b5f660252be123b23f7a972a9f",
+    "outputs/kaggle/b0_s960_full_kaggle_v1/local_validation.json": "0a405dbe64ecd1f220b8f4d7488af853a852901fe2cf3db6447b5875be341277",
+    "outputs/kaggle/b0_s960_full_kaggle_v1/environment_availability.json": "c3a4b9aacaf994888bb00bef45d00872730c846b5e2b2c58792ce242cfe0ca98",
+    "outputs/kaggle/b0_s960_full_kaggle_v1/deployment.json": "86ee699f3975dc68f140111e8fb5e3350b1648620b4fecc80469fe8356a1199a"
+  }
+}

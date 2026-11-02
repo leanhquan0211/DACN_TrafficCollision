@@ -1,5 +1,7 @@
 # Quy tắc nhãn va chạm — bản nháp 19/10/2026
 
+> **Tài liệu chi tiết/lịch sử:** ưu tiên [mục lục hiện hành](README.md), [policy nhãn B0](b0_label_protocol.md) và [trạng thái dữ liệu mới nhất](b0_pilot_audit.md). Các số liệu/chỉ dẫn cũ bên dưới giữ bối cảnh lúc tạo, không thay hướng public đã chọn.
+
 **Trạng thái: bản nháp để rà với dữ liệu thật và giảng viên; chưa phải nhãn GT đã duyệt.** Tài liệu này cụ thể hóa bước 01 của sheet `05_Cac_buoc` và phần nhãn/split của sheet `08_Du_lieu` trong `YOLO_Lo_trinh_DACN.xlsx`. Không suy ra nhãn từ tên video, bbox YOLO, ID ByteTrack hoặc một vài frame lấy mẫu.
 
 ## Phạm vi đề xuất
