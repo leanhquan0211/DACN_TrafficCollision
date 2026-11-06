@@ -1,7 +1,7 @@
 """Đưa media đã kiểm tra từ audit CADP/DETRAC vào manifest hiện có.
 
 Đầu vào: hai report.json và CSV manifest. Đầu ra: CSV thêm asset/provenance,
-kèm bản sao manifest trước sửa trong outputs/audits. Giữ nhãn dự án unknown,
+kèm bản sao manifest trước sửa trong outputs/data_audits. Giữ nhãn dự án unknown,
 user review pending và split unassigned; không lấy Colliding làm nhãn tự duyệt.
 """
 
@@ -15,6 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from src.data_preparation import new_audit_dir, save_csv, save_json, sha256_file, unique_path
+from src.storage_paths import storage_root
 
 
 EXTRA_FIELDS = ["asset_role", "source_sequence", "derived_from", "source_archive",
@@ -92,7 +93,7 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path, default=Path("data/manifest.csv"))
     parser.add_argument("--cadp-report", type=Path, required=True)
     parser.add_argument("--detrac-report", type=Path, required=True)
-    parser.add_argument("--audit-root", type=Path, default=Path("outputs/audits"))
+    parser.add_argument("--audit-root", type=Path, default=storage_root(ROOT,'data_audit'))
     args = parser.parse_args()
     with args.manifest.open(encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream, skipinitialspace=True)
@@ -115,7 +116,7 @@ def main() -> int:
         row = {name: str(candidate.get(name, "")) for name in fields}
         rows.append(row)
         registered.append(row["video_id"])
-    audit = new_audit_dir(args.audit_root, "manifest_registration")
+    audit = new_audit_dir(args.audit_root, 'v019_manifest_registration' if args.audit_root.resolve()==storage_root(ROOT,'data_audit') else 'manifest_registration')
     with (audit / "manifest_before.csv").open("xb") as backup:
         backup.write(args.manifest.read_bytes())
     temporary = unique_path(args.manifest.with_suffix(".part.csv"))

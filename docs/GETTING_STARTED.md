@@ -1,10 +1,12 @@
 # Bắt đầu từ một máy mới hoặc một AI mới
 
-Hướng dẫn cho Windows/PowerShell, dữ liệu cập nhật **27/10/2026, Asia/Bangkok**. Mục tiêu là clone được code, biết project đang ở đâu, tải đúng phần cần dùng và tái tạo đầu ra. Repo không chứa dataset, video, trọng số, môi trường `.venv` hoặc toàn bộ audit.
+Hướng dẫn cho Windows/PowerShell. Phần phục hồi nguồn bên dưới ghi nhận dữ liệu từ **27/10/2026**; kiến trúc lưu output đã cập nhật **06/11/2026** trong [STORAGE_ARCHITECTURE](STORAGE_ARCHITECTURE.md). Mục tiêu là clone được code, biết project đang ở đâu, tải đúng phần cần dùng và tái tạo đầu ra. Repo không chứa dataset, video, trọng số, môi trường `.venv` hoặc toàn bộ audit. Các lệnh tạo output trong mục lịch sử chỉ dùng để đọc quy trình cũ; khi chạy mới phải dùng path canonical và version mới, không ghi vào `outputs/training/` hoặc `outputs/audits/`.
 
 > **Kiểm khả năng bàn giao source ngày 02/11/2026:** clone chỉ lấy code/config/metadata và tài liệu, **chưa chạy train ngay**. Phần dưới có các hướng dẫn lịch sử của pilot đầu; trạng thái mới nhất đọc ở [bảng baseline](../progress/README.md) và [báo cáo tổng hợp](BAO_CAO_TIEN_DO_DACN.md). Config V11 dùng bố cục bundle (`data/kaggle_full/dataset.yaml`, `weights/initial.pt`, `data/training_bundle_manifest.json`, metadata recipe và runtime), không phải các đường dẫn mặc nhiên có sau clone. Cần phục hồi đúng gói dataset/nhãn/split/provenance, checkpoint khởi đầu và hồ sơ kiểm tương ứng; không đổi hash hoặc bỏ gate để ép chạy. Dataset/Notebook Kaggle hiện PRIVATE: clone GitHub không cấp quyền đọc chúng. Có thể nhận quyền truy cập phù hợp từ chủ tài khoản hoặc dựng lại từ nguồn công khai; không đưa token hay toàn bundle vào Git.
 
 Trình tự kiểm trên máy mới: cài môi trường theo mục 2 → `python scripts/train_b0.py --help` → `python scripts/check_project_assets.py --json` → phục hồi tài sản theo catalog/hướng dẫn → `python scripts/train_b0.py --config <config-phù-hợp> --check`. Lệnh kiểm asset không chứng minh đã có đủ release train mới nhất vì catalog không bao phủ toàn bộ bundle/runtime. Chỉ chạy `--train` khi đầu vào/config đã được kiểm và có chỉ dẫn mở thí nghiệm mới; dùng tên output mới, không ghi đè run lịch sử. Việc `--help` chạy được không phải bằng chứng đã tái lập huấn luyện trên clone sạch.
+
+**Làm nhóm hai người:** xem [mục 10 — chia sẻ dataset, tài khoản Kaggle, Git và phân công](#10-làm-nhóm-hai-người-dùng-chung-dữ-liệu-và-tránh-xung-đột). Không cần hai máy có cùng toàn bộ media/output; cùng phiên bản code và giao diện dữ liệu là phần cần đồng bộ.
 
 ## 1. Hiểu trạng thái trước khi chạy lệnh
 
@@ -23,11 +25,11 @@ Trình tự kiểm trên máy mới: cài môi trường theo mục 2 → `pytho
 
 Snapshot index/split/hash của release mới nằm tại `data/registries/b0_verified_pilot_v1_{index.csv,split.csv,asset_hashes.json}` (metadata khoảng 1 MB). Trên máy mới sau khi phục hồi đúng raw, ảnh audit và evidence theo các hướng dẫn bên dưới, có thể gọi exporter với `--pool-index data/registries/b0_verified_pilot_v1_index.csv --export-split data/registries/b0_verified_pilot_v1_split.csv --release-kind pilot --release-key verified_pilot_release --policy-path configs/b0_verified_label_policy.json --output data/processed/b0_verified_pilot_v1/dataset`; không cần tái tạo release âm yếu bị thu hồi. Export sẽ từ chối nếu media/audit không khớp hash. Phiếu loại gần trùng và evaluator hiện còn tham chiếu audit cục bộ lịch sử, nên phải phục hồi audit đó khi muốn tái chạy so sánh hai checkpoint; không xem snapshot Git là media đã có.
 
-Để phục hồi probe âm 100 frame từ nguồn TAD, chạy lệnh dưới; thay `tad_public_zip_N` bằng đúng thư mục report được in ra sau lệnh đầu. Công cụ giữ nguyên 5 video trong `data_raw/tad/public_selected/TAD-benchmark/test/normal/`, ảnh kiểm ở `outputs/audits/tad_normal_test_v1/` và đối chiếu hash với registry, không tự sửa registry khi có mismatch.
+Để phục hồi probe âm 100 frame từ nguồn TAD, chạy lệnh dưới; report ZIP mới nằm ở `outputs/data_audits/v001_tad_public_zip/report.json` theo registry, hoặc dùng đúng đường dẫn được in ra sau lệnh đầu. Công cụ giữ nguyên 5 video trong `data_raw/tad/public_selected/TAD-benchmark/test/normal/`; output mới dùng `outputs/data_audits/v014_tad_normal_test/`, đối chiếu hash với registry và không tự sửa registry khi có mismatch. `outputs/audits/tad_normal_test_v1/` là vị trí của lần chạy lịch sử.
 
 ```powershell
 .\.venv\Scripts\python.exe -X utf8 -B scripts/inspect_public_zip.py --max-mib 80 --fetch-members TAD-benchmark/test/normal/videox_test_F11.mp4 TAD-benchmark/test/normal/videox_test_F10.mp4 TAD-benchmark/test/normal/videox_test_F9.mp4 TAD-benchmark/test/normal/videox_test_F4.mp4 TAD-benchmark/test/normal/videox_test_F3.mp4
-.\.venv\Scripts\python.exe -X utf8 -B scripts/inspect_public_zip.py --prepare-normal-test outputs/audits/tad_public_zip_N/report.json --samples-per-clip 20
+.\.venv\Scripts\python.exe -X utf8 -B scripts/inspect_public_zip.py --prepare-normal-test outputs/data_audits/v001_tad_public_zip/report.json --samples-per-clip 20
 .\.venv\Scripts\python.exe -X utf8 -B scripts/evaluate_b0_clean.py --check --normal-manifest data/registries/b0_tad_normal_test_v1.json
 ```
 
@@ -241,7 +243,7 @@ Mở các MP4 script báo đã lưu. Bản GT preview dùng xem nhãn tác giả
 .\.venv\Scripts\python.exe scripts/check_project_assets.py --profile detrac --strict
 ```
 
-Nếu ZIP không có nhưng các thư mục ảnh đã đúng, script dùng thư mục hiện có. Ba MP4 sinh trong `data_samples/ua_detrac/`; report tại `outputs/audits/detrac_preparation*/report.json`. Chạy detection/tracking trên clip 10 giây mới in ra; vẫn model/tham số cũ. FPS 25 thuộc DETRAC, không dùng cho CADP.
+Nếu ZIP không có nhưng các thư mục ảnh đã đúng, script dùng thư mục hiện có. Ba MP4 sinh trong `data_samples/ua_detrac/`; report cũ tại `outputs/data_audits/v001_detrac_preparation/report.json`, lượt mới mặc định `v002_detrac_preparation` (đổi `--audit-name` nếu đã tồn tại). Chạy detection/tracking trên clip 10 giây mới in ra; vẫn model/tham số cũ. FPS 25 thuộc DETRAC, không dùng cho CADP.
 
 ## 6. Chuẩn hóa nhãn B0 và tiếp tục đúng lộ trình
 
@@ -257,7 +259,7 @@ Output đã tồn tại thì không chạy lại hoặc dùng đường dẫn ph
 **Về index âm DETRAC và manifest:** hồ sơ trên Git gắn SHA của MP4 đã xem trên máy phát triển. Ghép lại bằng FFmpeg khác phiên bản có thể khác byte dù dùng cùng ảnh. Không tự thay hash trong review để vượt chốt kiểm. Khi có **đúng MP4 đã rà**, ZIP nguồn và report ghép khớp, chạy:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/prepare_b0_negative_index.py --preparation-report outputs/audits/detrac_preparation/report.json
+.\.venv\Scripts\python.exe scripts/prepare_b0_negative_index.py --preparation-report outputs/data_audits/v001_detrac_preparation/report.json
 ```
 
 Nếu video tái mã hóa khác hash, ghi đây là asset mới, chứng minh quan hệ ảnh/chuỗi/review bằng fingerprint/CRC và lập đăng ký dẫn xuất phù hợp ở công việc tiếp theo; chưa báo đã tái tạo index đúng review cũ. Có thể nhận MP4 gốc đã rà từ người đang giữ để phục hồi chính xác. Việc này không đồng nghĩa ba chuỗi mất xác nhận âm. Không chạy mù `register_prepared_manifest.py`/`update_manifest_reviews.py` lên manifest đã có 18 asset: chúng phục vụ lượt đăng ký lịch sử và sẽ từ chối ID/asset khác hoặc trùng.
@@ -359,3 +361,84 @@ Nếu lần tải dở chưa córeport, thêm`--resume-fetch` vào lệnh tải,
 Để dựng đúng phiên bản đã khóa cần khôi phục **audit batch + review/index/split + checkpoint s960 best** đúng SHA, cùng dữ liệu cũ2.170ảnh; raw MP4 một mình chưa thay thế bằng chứng frame đã chọn. Checkpoint cần dùng là `outputs/training/b0_s960_v1/weights/best.pt`, **không phải** pretrained`yolov8s.pt`. Trọng số đã fine-tune không có URL public do project chưa phát hành; lấy bản sao từ máy đã train hoặc tái lập run trước thành thí nghiệm mới, không sửa hash cũ để giả trùng. [Quy trình và lệnh hiện hành](b0_pilot_audit.md#chuẩn-bị-s960-hardneg-v1--29102026).
 
 Mở `outputs/audits/b0_hard_negative_sources_v1/index.html` xem nguồn/split/mốc val và trạng thái train hiện có; `train_preflight.json` chỉ ghi kiểm decode/bbox/forward trước train. Mở `outputs/training/b0_s960_v1/temporal_diagnostics_v1/index.html` xem B0/B1 cũ; kết quả hardneg mới ở`outputs/training/b0_s960_hardneg_v1/diagnostics/index.html`. Lệnh `train_b0.py --config configs/b0_s960_hardneg_v1.json --check` vẫn kiểm dữ liệu được, nhưng run hiện đã hoàn tất; không dùng `--train` hoặc `--resume` để ghi thêm vào run đó. Thí nghiệm tương lai cần config/output mới, không sửa hash của config hoàn tất.
+
+## 10. Làm nhóm hai người: dùng chung dữ liệu và tránh xung đột
+
+Hướng dẫn bổ sung ngày **02/11/2026**. Đây là phương án bàn giao/phân công, chưa tạo tài khoản, mời collaborator, đổi CLI hay mở run mới. Yêu cầu tạm dừng triển khai/model/train vẫn giữ nguyên; các bước chạy thí nghiệm dưới đây chỉ áp dụng khi được tiếp tục.
+
+### 10.1. Một repo chung, phần nào cần giống nhau?
+
+| Thành phần | Quy ước | Lý do |
+| --- | --- | --- |
+| Code dùng chung | Một repo, mỗi người một nhánh theo công việc; hợp nhất bằng pull request | Không duy trì hai bản project lệch nhau hoặc copy hai bộ `src/` theo tên người |
+| Dataset/nhãn/split | Dùng cùng release và fingerprint khi so metric; ưu tiên một Kaggle Dataset PRIVATE chung | Tránh upload lại nhiều GB, bảo đảm đang so cùng dữ liệu |
+| Media trên laptop | Chỉ phục hồi phần cần cho nhiệm vụ; máy làm evaluator không cần toàn bộ raw train | Tiết kiệm dung lượng và giảm thao tác cài đặt |
+| Notebook/GPU | Mỗi người tài khoản riêng, notebook riêng; cùng Dataset input nếu có quyền | Tránh sửa/chạy chồng notebook và không chia sẻ mật khẩu/token |
+| Output lớn | Không Git; lưu kết quả nhận từ đồng đội tại `outputs/collaborators/<username>/<run_id>/` nếu cần | Namespace người làm giúp tra cứu; bản thân output bị ignore nên không gây merge conflict |
+| Config/kết quả nhỏ | Config mới đặt tên run có người làm và mục đích, ví dụ `b0_memberb_<recipe>_v1`; snapshot kết quả nhỏ ở `docs/evidence/` khi có thật | Phân biệt thí nghiệm; không sửa config/kết quả lịch sử để tránh trùng tên |
+| README/tiến độ/manifest | Có người phụ trách tích hợp, mỗi ngày vẫn một file `progress/YYYY-MM-DD.md` | Đây là file chung dễ conflict; không chia thêm nhật ký/người hoặc thêm bảng baseline khác |
+
+Không đổi vị trí output của các run đã xong hoặc sửa các config có hash để áp quy ước mới. Thư mục theo username ở bảng là nơi nhận/lưu **bản kết quả** ngoài Git, không phải một tính năng CLI đã triển khai. Trainer/fetch hiện dùng output trong config; nếu sau này muốn sinh run theo namespace thì phải tạo config mới và kiểm các đường dẫn trước, không chỉ di chuyển thư mục bằng tay.
+
+### 10.2. Người mới bắt đầu và dùng chung Kaggle
+
+1. **Nhận code:** chủ repo push các thay đổi đã rà; người mới clone, đọc AGENTS/README, bảng baseline, báo cáo và phần này. Cài môi trường theo mục 2 nếu cần chạy script local. Không cần tải toàn bộ raw chỉ để đọc báo cáo hoặc chuẩn bị evaluator bằng fixture.
+2. **Tạo tài khoản cá nhân:** người mới tự đăng ký/đăng nhập tại [Kaggle](https://www.kaggle.com/), gửi **username**, không gửi token/mật khẩu. Hoàn thành bước xác minh/điều khoản nếu Kaggle thực tế yêu cầu để bật tính năng. Chỉ dùng GPU miễn phí; GPU/quota có thể khác theo tài khoản, không hứa luôn có T4.
+3. **Chủ dữ liệu chia sẻ Dataset:** mở [Dataset PRIVATE của project](https://www.kaggle.com/datasets/laqun0211/dacn-b0-full-trainval-v1), vào Settings → Sharing theo tài liệu chính thức, thêm đúng username với quyền **Can view** nếu người đó chỉ dùng dữ liệu. Giữ PRIVATE; người mới kiểm mở được tab Data. Không cần upload lại Dataset sang tài khoản người mới.
+4. **Chia sẻ Notebook riêng:** mở [Notebook project](https://www.kaggle.com/code/laqun0211/dacn-b0-s960-full-v1), Share/Sharing, cấp quyền xem nếu cần đọc/lấy bản sao. **Quyền Notebook không tự cấp quyền Dataset PRIVATE**, phải làm cả hai bước. Tên/vị trí nút có thể thay đổi; dùng chức năng chia sẻ/collaborator của đúng tài sản.
+5. **Người mới có Notebook của mình:** tạo notebook mới hoặc lưu một bản sao/import `.ipynb` được bàn giao vào tài khoản cá nhân. Không sửa bản lịch sử của chủ project. Chọn bản Version 11 nếu đối chiếu V11; không lấy notebook V1 lỗi hoặc bundle recipe gốc rồi gọi là đã có công thức V11.
+6. **Gắn Dataset hiện có:** trong editor dùng Add Input/Add Data, chọn `laqun0211/dacn-b0-full-trainval-v1`. Ghi Dataset version và kiểm manifest/fingerprint đúng bản đã khóa. Chọn được dữ liệu chỉ chứng minh có quyền mount, chưa chứng minh đầu vào train đã hợp lệ.
+7. **Kiểm notebook trước khi chạy:** giữ các cell kiểm dữ liệu, môi trường, recipe, checkpoint và GPU; đầu vào mount dưới `/kaggle/input`, output lưu dưới `/kaggle/working`. Notebook hiện có đã xử lý cả trường hợp Kaggle tự giải nén bundle; không viết lại giả định bắt buộc phải còn file ZIP trong Input. Không tự nâng Ultralytics hoặc fallback CPU nếu không có GPU phù hợp.
+8. **Giới hạn CLI hiện tại:** `scripts/kaggle_b0.py` gắn cứng `DATASET_ID`/`KERNEL_ID` tài khoản `laqun0211`; staging/fetch và recipe overlay còn kiểm hash/run cụ thể. **Không gọi nguyên `publish`, `publish-recipe` hoặc `fetch` bằng tài khoản khác với kỳ vọng công cụ tự đổi owner/run.** Đường dùng UI với notebook riêng không đòi chia sẻ credential; tự động hóa CLI nhiều tài khoản là phần chưa triển khai, cần chuẩn bị riêng khi có yêu cầu.
+9. **Chỉ khi mở lại thí nghiệm:** chốt người chịu trách nhiệm, mục đích/config, run mới và output chưa tồn tại; kiểm smoke/preflight rồi mới chạy chính. Cùng Dataset không có nghĩa được phép mở nhiều vòng tối ưu không ghi chép. Nếu chạy bản tái lập nguyên công thức lịch sử trong session riêng, ghi đây là lần tái lập mới với notebook version/owner riêng, không báo là run lịch sử đã được tiếp tục.
+10. **Nhận kết quả:** sau khi hoàn tất thật, lấy `b0_results.zip`, `results_receipt.json`, `run_status.json`, log và môi trường từ Output. Bên trong cần có checkpoint, `results.csv`, experiment/config và validation report tương ứng. Lưu bản tải ngoài Git ở namespace người làm; giữ nguyên đường dẫn bên trong archive và kiểm receipt/hash trước khi dùng. Không gọi `fetch` của chủ repo để lấy notebook của tài khoản khác. Push code/config và snapshot kết quả nhỏ sau review, không push ZIP/checkpoint/video.
+
+Nguồn chính thức đã kiểm 02/11: [Kaggle Notebook sharing](https://www.kaggle.com/docs/notebooks), [Kaggle Datasets](https://www.kaggle.com/docs/datasets), [kernel metadata: owner, private và dataset_sources](https://github.com/Kaggle/kaggle-cli/blob/main/docs/kernels_metadata.md). Các trang UI có phần nội dung dựng động; quyền Notebook/Dataset tách biệt cũng được tài liệu Notebook mô tả trong kết quả tìm kiếm chính thức.
+
+### 10.3. Có thể gửi dataset trực tiếp không?
+
+Có thể bàn giao **bản bundle hiện có**, giữ phạm vi nội bộ và nguồn/điều kiện sử dụng của các dữ liệu thành phần; không cần đưa lên Git hoặc công khai lại dataset. Ưu tiên dùng Dataset PRIVATE chung nếu người mới chỉ train trên Kaggle. USB/ổ cứng/Drive riêng phù hợp khi cần chạy local hoặc cần bản sao offline; không nhân đôi raw dataset chỉ để chia thư mục theo tên người.
+
+Gói gốc hiện có trên máy phát triển:
+
+```text
+outputs/kaggle/b0_s960_full_kaggle_v1/dataset/
+  b0_full_bundle.zip     # 4.063.541.755 byte, khoảng 3,78 GiB
+  bundle_receipt.json    # fingerprint và số mẫu khi chuẩn bị gói
+```
+
+SHA-256 archive: `b00b76e794c113f4e95885031719908e28665922f09c8c47b726940326306a51`.
+
+Gói có 2.681 ảnh train/307 val, nhãn, split/provenance, checkpoint khởi đầu và code/config **bản gốc lúc đóng gói**; không có media test/reserve. Receipt gốc ghi `prepared_not_uploaded` là trạng thái lúc chuẩn bị, không phủ nhận các run cloud đã hoàn tất sau đó. **Gói này chưa tự chứa recipe overlay V10/V11 mới hơn.** Muốn tái lập V11 phải nhận thêm notebook V11 có overlay/manifest đúng và source commit tương ứng, không chỉ đổi tên config trong ZIP.
+
+Kiểm danh sách ZIP ngày 02/11 xác nhận 2.988 member ảnh và 2.988 member nhãn, cùng manifest/checkpoint/code gốc. `data/kaggle_full/dataset.yaml` **được tạo theo đường dẫn môi trường bởi `materialize_paths()` trong luồng execute**, không phải member có sẵn trong ZIP; bản YAML nguồn nằm ở `metadata/source_dataset.yaml`. Vì vậy copy ZIP rồi gọi thẳng checker khi chưa chuẩn bị đường dẫn vẫn có thể thiếu file; ưu tiên dùng notebook/bootstrap đúng phiên bản. Lượt hướng dẫn chỉ kiểm danh sách member/kích thước và receipt, không đọc lại SHA toàn archive 4 GB.
+
+Thao tác bàn giao:
+
+1. Người gửi chuyển ZIP + receipt qua kênh riêng, kèm source commit và notebook/recipe version cần tái lập. Không gửi toàn `.venv`, cache hoặc credential. Nếu cần đọc lại kết quả V11 thay vì train, gửi archive kết quả V11 cùng receipt thay cho việc bắt người nhận train lại.
+2. Người nhận lưu ZIP trong `outputs/collaborators/<username>/incoming/` để vẫn bị ignore. Kiểm bằng `Get-FileHash <duong-dan-ZIP> -Algorithm SHA256` và so **cả hash lẫn kích thước** với receipt; không sửa receipt để khớp file tải lỗi.
+3. Nếu dùng Kaggle, ưu tiên attach Dataset chung. Chỉ upload một Dataset PRIVATE riêng khi thực sự cần bản độc lập và được phép với dữ liệu thành phần; không cần làm thêm bước upload khi đã có quyền Dataset chung.
+4. Nếu dùng local, giữ nguyên cây đường dẫn bên trong bundle ở workspace tái lập riêng. **Không giải nén đè repo đang làm**: bundle có code/config lịch sử; giải nén đúng input/data mà thiếu overlay cũng chưa thành môi trường V11. Máy local vẫn phải cài đúng Python/dependency và đủ RAM/VRAM.
+5. Đối chiếu release/split, SHA checkpoint và recipe với run muốn chạy rồi gọi checker tương ứng. Nếu thiếu hồ sơ hoặc mismatch thì ghi đúng phần thiếu, không tắt kiểm để train. Một gói đủ file không tự chứng minh train end-to-end trên máy mới đã đạt.
+
+### 10.4. Git và thư mục theo người: dùng ở đâu mới có ích?
+
+- **Nên:** một repo, nhánh như `quan/b0-analysis` và `memberb/event-evaluator`; tên run/config mới có owner và mục đích. Code được tích hợp về cùng `src/`/`scripts/`, không thành `project_quan/` và `project_memberb/`.
+- **Không cần:** chia dataset thành hai bản theo người. Nguồn ảnh/nhãn vẫn một release; các file lớn đã ignore nên push/pull không đồng bộ chúng và cũng không gây conflict Git.
+- **Cần phối hợp:** `.gitignore`, dependency, schema, manifest, README và progress là file chung. Giao một người tổng hợp hai file tiến độ; đồng đội ghi nội dung bàn giao trong PR, rồi người tích hợp cập nhật cùng nhật ký ngày. Không tạo hai file `progress` cho hai người trong cùng ngày.
+- **Quy trình:** bắt đầu từ main đã đồng bộ và working tree sạch → tạo nhánh → commit/push nhánh → PR mô tả thay đổi/kiểm tra → tích hợp. Chia nhánh không loại hết conflict; cần tránh cùng lúc đổi giao diện hoặc cùng sửa một mục báo cáo. Không dùng force-push để xử lý việc chưa hiểu.
+- Với repo chung, người thứ hai cần quyền collaborator phù hợp; nếu không có quyền push trực tiếp, dùng fork và PR nếu repo cho phép. Nguồn: [GitHub collaborative development models](https://docs.github.com/en/pull-requests/reference/pull-requests#collaborative-development-models).
+
+### 10.5. Phân công phù hợp ở trạng thái hiện tại
+
+Đây là đề xuất để áp dụng khi tiếp tục triển khai; hiện chưa xây evaluator hoặc mở train trong lượt hướng dẫn.
+
+| Người/phần việc | Nhiệm vụ | Dữ liệu cần | Bàn giao |
+| --- | --- | --- | --- |
+| Người A — B0/dữ liệu/tích hợp | Giữ release, nhãn, split và checkpoint mốc; rà FP/FN, chuẩn bị data/cache cho phép so đã chốt; tổng hợp tài liệu | Bundle train/val, checkpoint và prediction đã có; không bắt buộc train thêm ngay | Model SHA, config, score/bbox có frame/source, báo cáo lỗi và snapshot nhỏ |
+| Người B — evaluator sự kiện/B1 | Đọc workbook/định nghĩa, thiết kế protocol/fixture ghép sự kiện, kiểm lọc theo thời gian và tính metric bằng đầu vào đã lưu | Fixture nhỏ và prediction/score cache liên quan; chỉ nhận clip cần kiểm, không cần toàn raw train | Code evaluator + kiểm thử tình huống, schema đầu vào/đầu ra và báo cáo chẩn đoán có giới hạn |
+| Cùng review | Chốt định nghĩa event/matching/dedup, nguồn/timing và protocol chung trước khi so baseline | Nhãn public/review có căn cứ; phần thiếu giữ unknown | Quy tắc có phiên bản; một người tích hợp README/progress, không tự dựng onset/end từ prediction |
+
+**Giao diện cần thống nhất trước khi code song song:** `source_id`, chỉ số frame gốc, timestamp và mức xác minh, score/bbox + checkpoint SHA; nhãn sự kiện có nguồn, onset/end nếu có thật; ngưỡng và quy tắc gộp/matching được ghi riêng. Dạng CSV/JSONL cụ thể cần đối chiếu cache hiện có trước khi chốt, bảng này không tuyên bố schema mới đã triển khai. Hai máy có thể dùng media/output khác nhau, nhưng khi công bố so sánh phải cùng release/split/protocol/checkpoint đã định, hoặc nêu rõ điểm khác.
+
+Không chia ngay thành “một người tự B0, một người tự GRU với dữ liệu tùy ý”: GRU còn phụ thuộc track, nhãn temporal và đối chứng T0. Việc chia B0 + evaluator/B1 xử lý đúng phần thiếu hiện tại, tái sử dụng model đã có và giúp kết quả hai bên ghép được; dashboard/B2/T0/GRU vẫn là các bước sau có điều kiện.

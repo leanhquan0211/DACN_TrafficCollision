@@ -1,0 +1,20 @@
+{
+  "folders": [{"name": "DACN · bản đồ dự án", "path": "."}],
+  "settings": {
+    "files.exclude": {
+      "**/.venv": true,
+      "**/.venv-dashboard": true,
+      "**/node_modules": true,
+      "**/.tmp": true,
+      "**/__pycache__": true,
+      "data_raw": true,
+      "data_samples": true,
+      "data/processed": true,
+      "outputs/training": true,
+      "outputs/audits": true,
+      "outputs/kaggle": true,
+      "outputs/_legacy": true
+    },
+    "search.exclude": {"**/.venv/**": true, "**/node_modules/**": true, "data_raw/**": true, "data/processed/**": true, "outputs/**": true}
+  }
+}

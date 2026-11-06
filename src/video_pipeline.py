@@ -12,6 +12,7 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
+from src.storage_paths import output_path, require_output_path
 
 
 # Tên class được đối chiếu với model.names, nên chỉ giữ kết quả thuộc nhóm xe.
@@ -24,7 +25,7 @@ def arguments(kind: str) -> argparse.ArgumentParser:
     parser.add_argument("video", type=Path, help="Path to an input video")
     parser.add_argument("--device", default="auto", help="auto, cpu, or CUDA index such as 0")
     parser.add_argument("--imgsz", type=int, default=640, help="Inference image size")
-    parser.add_argument("--output-dir", type=Path, default=Path("outputs"), help="Root directory; results go into a subfolder named after the video")
+    parser.add_argument("--output-dir", type=Path, default=output_path(Path(__file__).resolve().parents[1], 'system_evidence', 'v002_vehicle_preview'), help="Canonical run directory; results go into a subfolder named after the video")
     parser.add_argument("--model", type=Path, default=Path("yolov8n.pt"), help="YOLOv8n weights")
     return parser
 
@@ -34,6 +35,7 @@ def run(args: argparse.Namespace, tracking: bool) -> Path:
     # Kiểm tra đường dẫn và tham số trước khi nạp thư viện nặng: --help/lỗi
     # thiếu video vẫn hoạt động kể cả khi môi trường CV chưa cài đủ.
     source = args.video.expanduser().resolve()
+    args.output_dir = require_output_path(Path(__file__).resolve().parents[1], args.output_dir, 'system_evidence')
     if not source.is_file():
         raise ValueError(f"Video does not exist: {source}")
     if args.imgsz <= 0:

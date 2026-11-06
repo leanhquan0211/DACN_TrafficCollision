@@ -30,6 +30,7 @@ sys.path.insert(0, str(ROOT))
 from src.b0_diagnostics import classify_case, object_size_summary, resized_size_counts, temporal_summary, confidence_metrics, choose_confidence, require_unseen_negative_holdout, CausalScoreFilter, filter_state_summary
 from src.data_preparation import H264Writer, probe_video, save_csv, save_json, sha256_file
 from scripts.train_b0 import check_inputs, evaluate_frames, read_csv, workspace
+from src.storage_paths import require_output_path
 
 
 def validation_references(config_path: Path) -> Path:
@@ -719,6 +720,18 @@ def main() -> int:
     mode.add_argument('--temporal-diagnostics',action='store_true',help='Đo B0 và bộ lọc B1 causal trên video, không train/tune')
     args = parser.parse_args()
     config_path = workspace(args.config)
+    # Các mode ghi chỉ được mở bằng config có output canonical. Config lịch sử
+    # vẫn đọc được, nhưng không tạo thêm diagnostics lồng trong run LEGACY.
+    if not args.check:
+        planned = json.loads(config_path.read_text(encoding='utf-8'))
+        if args.validation_reference:
+            require_output_path(ROOT,planned['reference_validation_output'],'shared_evaluation')
+        elif args.temporal_diagnostics:
+            require_output_path(ROOT,planned['output'],'baseline',baseline='B1')
+        elif args.run:
+            require_output_path(ROOT,planned['output'],'data_audit')
+        else:
+            require_output_path(ROOT,planned['output'],'baseline',baseline='B0')
     if args.select_operating_point:
         select_operating_point(config_path)
         return 0

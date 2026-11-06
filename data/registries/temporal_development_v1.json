@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-11-05",
+  "scope": "Development observations only; no independent test split is released.",
+  "videos": [
+    {
+      "video_id": "-FQxK6HdxNU_00",
+      "source_dataset": "ACCIDENT v9",
+      "source_video": "data_raw/accident/public_selected/real_videos/-FQxK6HdxNU_00.mp4",
+      "video_sha256": "46b7d8aab0e30a4fb0a219eb26685a4cade71638fe113fef739b0c8a1a8d81e6",
+      "metadata_sha256": "a3d06073353a7fedff140b652d025135f017860a240cad693990f5288c6c0ec9",
+      "role": "development_consumed",
+      "author_split_in_distribution": "test",
+      "author_split_geo_aware": "test",
+      "split_note": "Author test clip was inspected and run for development on 2026-11-05 before source-test guard was added; exclude from any future independent evaluation and report this deviation.",
+      "event_id": "ACCIDENT:-FQxK6HdxNU_00:impact",
+      "onset_frame": 48,
+      "end_frame": null,
+      "label_origin": "author impact point; source metadata and OpenCV/ffprobe presentation timestamps matched",
+      "other_frames": "unknown",
+      "source_fps_verified": false,
+      "metadata_no_frames": 77,
+      "decoded_frames": 78,
+      "camera_id": null,
+      "duplicate_status": "byte/perceptual/source-camera independence not established",
+      "evidence": "outputs/audits/event_evaluator_v1/accident_dev_FQx_verified/inspection.json"
+    },
+    {
+      "video_id": "-_J5xdxCZZU_00",
+      "video_sha256": "cfa17a50d906b0f776a378f0a6892d53259c90c7a95d9498960fec82d797fa6a",
+      "role": "development_consumed_decode_only",
+      "author_split_in_distribution": "test",
+      "author_split_geo_aware": "test",
+      "metadata_no_frames": 140,
+      "decoded_frames": 141,
+      "split_note": "Decoded to check frame count before source-test guard; no model run or visual review; exclude from future independent evaluation."
+    },
+    {
+      "video_id": "-dmYsQc-odI_00",
+      "video_sha256": "87b233f98ae0c7956c6dacef2c8cb19f214a3ab0d522e43cd1b4630e55a48831",
+      "role": "development_consumed_decode_only",
+      "author_split_in_distribution": "train",
+      "author_split_geo_aware": "test",
+      "metadata_no_frames": 241,
+      "decoded_frames": 242,
+      "split_note": "Decoded to check frame count before source-test guard; no model run or visual review; exclude from future independent evaluation."
+    }
+  ]
+}

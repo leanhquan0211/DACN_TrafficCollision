@@ -29,6 +29,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.data_preparation import save_csv, save_json, sha256_file
+from src.storage_paths import output_path, require_output_path
 
 DATASET = "picekl/accident"
 VERSION = 9
@@ -283,7 +284,7 @@ def main() -> int:
     mode.add_argument("--verify-preimpact", type=Path, help="Decode lại để so pixel/PTS/hash các ảnh ứng viên")
     parser.add_argument("--max-mib", type=int, default=16)
     parser.add_argument("--raw-root", type=Path, default=Path("data_raw/accident/public_selected"))
-    parser.add_argument("--output", type=Path, default=Path("outputs/audits/accident_public"))
+    parser.add_argument("--output", type=Path, help="New canonical data audit directory")
     parser.add_argument("--members", nargs="+", default=list(SELECTED),
                         help="Exact video member paths from inspected first-page listing; default six selected clips")
     args = parser.parse_args()
@@ -291,12 +292,13 @@ def main() -> int:
         verify_preimpact(args.verify_preimpact)
         return 0
     if args.prepare_preimpact:
-        prepare_preimpact(args.prepare_preimpact, args.output)
+        output = require_output_path(ROOT, args.output or output_path(ROOT,'data_audit','v013_accident_preimpact'), 'data_audit')
+        prepare_preimpact(args.prepare_preimpact, output)
         return 0
     if args.verify_report:
         verify_report(args.verify_report)
         return 0
-    raw, output = inside(args.raw_root), inside(args.output)
+    raw, output = inside(args.raw_root), require_output_path(ROOT, args.output or output_path(ROOT,'data_audit','v005_accident_public'), 'data_audit')
     if args.max_mib <= 0 or output.exists():
         parser.error("Positive budget and a NEW output directory are required")
     if len(set(args.members)) != len(args.members):

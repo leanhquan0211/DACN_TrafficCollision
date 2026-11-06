@@ -1,0 +1,7 @@
+{
+  "folders": [{"name": "DACN · toàn bộ project", "path": "."}],
+  "settings": {
+    "files.exclude": {"**/.venv": true, "**/.venv-dashboard": true, "**/node_modules": true, "**/.tmp": true, "**/__pycache__": true},
+    "search.exclude": {"**/.venv/**": true, "**/node_modules/**": true, "**/.tmp/**": true}
+  }
+}

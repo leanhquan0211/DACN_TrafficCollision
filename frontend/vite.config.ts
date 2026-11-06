@@ -1,0 +1,4 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+export default defineConfig({ plugins: [react(), tailwindcss()], server: { proxy: { '/api': 'http://127.0.0.1:8765' } }, preview: { proxy: { '/api': 'http://127.0.0.1:8765' } }, build: { rolldownOptions: { output: { codeSplitting: { groups: [{ name: 'charts', test: /recharts|victory-vendor|d3-/, priority: 20 }, { name: 'react-ui', test: /node_modules.*(react|radix)/, priority: 10 }] } } } } })

@@ -17,13 +17,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.prepare_detrac import numbered_images, read_image, file_crc32
 from scripts.maintenance.update_manifest_reviews import read_manifest, verify_file
 from src.data_preparation import save_csv, save_json, sha256_file
+from src.storage_paths import artifact_path
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> int:
     parser=argparse.ArgumentParser(description="Index only explicitly reviewed full-sequence accident-negative frames")
     parser.add_argument("--manifest",type=Path,default=Path("data/manifest.csv"))
     parser.add_argument("--review",type=Path,default=Path("data/reviews/2026-10-19-user-confirmations.json"))
-    parser.add_argument("--preparation-report",type=Path,default=Path("outputs/audits/detrac_preparation/report.json"))
+    parser.add_argument("--preparation-report",type=Path,default=artifact_path(ROOT, 'outputs/data_audits/v001_detrac_preparation/report.json'))
     parser.add_argument("--output",type=Path,default=Path("data/processed/b0_reviewed_negatives"))
     args=parser.parse_args()
     if args.output.exists():

@@ -1,0 +1,17 @@
+{
+  "videos": [
+    {"video_id": "example-positive", "camera_id": "cam-a", "source_timing_verified": true, "source_fps": 10},
+    {"video_id": "example-negative", "camera_id": "cam-b", "fully_labeled_negative": true, "first_frame": 0, "last_frame": 2, "duration_verified": true, "duration_seconds": 0.3}
+  ],
+  "events": [
+    {"video_id": "example-positive", "camera_id": "cam-a", "event_id": "synthetic-event-1", "onset_frame": 1, "end_frame": 2, "status": "verified", "label_source": "synthetic fixture only"}
+  ],
+  "samples": [
+    {"video_id": "example-positive", "camera_id": "cam-a", "frame": 0, "timestamp_s": 0.0, "score": 0.1, "label": "negative", "provenance": "synthetic fixture"},
+    {"video_id": "example-positive", "camera_id": "cam-a", "frame": 1, "timestamp_s": 0.1, "score": 0.8, "label": "positive", "provenance": "synthetic fixture"},
+    {"video_id": "example-positive", "camera_id": "cam-a", "frame": 2, "timestamp_s": 0.2, "score": 0.9, "label": "positive", "provenance": "synthetic fixture"},
+    {"video_id": "example-negative", "camera_id": "cam-b", "frame": 0, "timestamp_s": 0.0, "score": 0.0, "label": "negative", "provenance": "synthetic fixture"},
+    {"video_id": "example-negative", "camera_id": "cam-b", "frame": 1, "timestamp_s": 0.1, "score": 0.6, "label": "negative", "provenance": "synthetic fixture"},
+    {"video_id": "example-negative", "camera_id": "cam-b", "frame": 2, "timestamp_s": 0.2, "score": 0.0, "label": "negative", "provenance": "synthetic fixture"}
+  ]
+}

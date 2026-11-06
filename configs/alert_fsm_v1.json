@@ -1,0 +1,10 @@
+{
+  "version": "pair-fsm-dev-v1",
+  "high": 0.75,
+  "low": 0.25,
+  "confirm_frames": 2,
+  "cooldown_frames": 10,
+  "pre_frames": 5,
+  "post_frames": 5,
+  "scope": "Implementation fixture defaults, not calibrated thresholds. Cooldown is per pair; a new collision of the same pair can be suppressed. Evidence is frame metadata, not image/video clips."
+}

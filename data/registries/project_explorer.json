@@ -1,0 +1,537 @@
+{
+  "schema_version": 1,
+  "registry_version": "canonical-storage-v003",
+  "description": "Aliases are assigned explicitly from the established L01–L09 and K09–K12 dashboard mapping, not inferred from timestamps. They are logical labels, not historical folder names or Kaggle notebook versions.",
+  "baseline_folders": [
+    {
+      "id": "B0",
+      "folder": "01_b0_image_detection",
+      "name": "Phát hiện vùng tai nạn trên ảnh",
+      "purpose": "Nhận biết vùng nghi tai nạn trong từng frame.",
+      "input": "Ảnh hoặc frame video",
+      "output": "BBox và confidence lớp accident",
+      "method": "YOLO fine-tune từ nhãn vùng; không phải detector xe COCO.",
+      "status": "Đã đánh giá trên validation ảnh; chưa benchmark sự kiện độc lập.",
+      "data": "ACCIDENT, TAD và UA-DETRAC theo provenance từng release.",
+      "code": [
+        "scripts/train_b0.py",
+        "scripts/analyze_b0.py"
+      ],
+      "evidence": "progress/README.md"
+    },
+    {
+      "id": "B1",
+      "folder": "02_b1_temporal_filter",
+      "name": "Lọc theo thời gian",
+      "purpose": "Giảm tín hiệu thay đổi thất thường theo frame.",
+      "input": "Điểm B0 liên tiếp của cùng video",
+      "output": "Trạng thái B0, EMA và 3-of-5",
+      "method": "Chỉ dùng frame hiện tại và quá khứ; reset khi gián đoạn.",
+      "status": "Đã replay 12 chuỗi; chưa so recall event độc lập.",
+      "data": "CADP, UA-DETRAC và TAD theo config chẩn đoán.",
+      "code": [
+        "src/b0_diagnostics.py",
+        "scripts/evaluate_events.py"
+      ],
+      "evidence": "progress/2026-11-05.md"
+    },
+    {
+      "id": "B2",
+      "folder": "03_b2_motion_rules",
+      "name": "Luật chuyển động theo cặp xe",
+      "purpose": "Xem tương tác giữa các track xe bằng đặc trưng có thể giải thích.",
+      "input": "Video sạch, YOLO vehicle và ByteTrack",
+      "output": "Track, cặp ứng viên, đặc trưng và điểm nghi vấn",
+      "method": "Xét khoảng cách, overlap, tiếp cận và biến đổi chuyển động; điểm luật chưa được hiệu chuẩn.",
+      "status": "Đã chạy thử thực tế; cảnh báo sai trên âm còn cao.",
+      "data": "CADP 001407, DETRAC và một clip ACCIDENT đã dùng development.",
+      "code": [
+        "src/motion_features.py",
+        "scripts/run_b2_system.py"
+      ],
+      "evidence": "progress/2026-11-05.md"
+    },
+    {
+      "id": "T0",
+      "folder": "04_t0_mlp",
+      "name": "MLP đặc trưng hiện tại",
+      "purpose": "Đối chứng học máy nhẹ trên đặc trưng cặp xe.",
+      "input": "Vector đặc trưng hiện tại và quality mask",
+      "output": "Logit dự kiến cho cặp xe",
+      "method": "MLP nhỏ; scaler chỉ fit trên train.",
+      "status": "Có interface và kiểm thử; chưa train, thiếu release nhãn cặp.",
+      "data": "Chưa có release supervised được duyệt.",
+      "code": [
+        "src/temporal_verifiers.py",
+        "scripts/train_temporal_verifier.py"
+      ],
+      "evidence": "progress/2026-11-05.md"
+    },
+    {
+      "id": "B3",
+      "folder": "05_b3_gru",
+      "name": "GRU causal · B3/T1",
+      "purpose": "Kiểm tra lợi ích của lịch sử chuyển động so với T0.",
+      "input": "Cửa sổ feature quá khứ và mask",
+      "output": "Logit dự kiến cho cặp xe",
+      "method": "GRU một chiều; loại padding trước mạng, không dùng frame tương lai.",
+      "status": "Có interface và kiểm thử; chưa train hoặc so sánh.",
+      "data": "Chưa có nhãn chuỗi/cặp và split phù hợp.",
+      "code": [
+        "src/temporal_verifiers.py",
+        "scripts/train_temporal_verifier.py"
+      ],
+      "evidence": "progress/2026-11-05.md"
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "b0_basic_pilot_v1",
+      "baseline": "B0",
+      "version": "v001_basic_pilot",
+      "name": "Basic pilot",
+      "lifecycle": "historical",
+      "source": "progress/2026-10-26.md",
+      "actual_path": "outputs/training/b0_basic_pilot_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_accident_scaled_v1",
+      "baseline": "B0",
+      "version": "v002_scaled_withdrawn",
+      "name": "Scaled · thu hồi",
+      "lifecycle": "withdrawn",
+      "source": "configs/b0_accident_scaled_v1.json",
+      "actual_path": "outputs/training/b0_accident_scaled_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_accident_scaled_v2",
+      "baseline": "B0",
+      "version": "v003_scaled_withdrawn",
+      "name": "Scaled lần 2 · thu hồi",
+      "lifecycle": "withdrawn",
+      "source": "configs/b0_accident_scaled_v2.json",
+      "actual_path": "outputs/training/b0_accident_scaled_v2",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_verified_pilot_v1",
+      "baseline": "B0",
+      "version": "v004_verified_pilot",
+      "name": "Verified pilot",
+      "lifecycle": "historical",
+      "source": "configs/b0_verified_pilot_v1.json",
+      "actual_path": "outputs/training/b0_verified_pilot_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_verified_lr001_val_v1",
+      "baseline": "B0",
+      "version": "v005_lr_validation",
+      "name": "LR 0,001 · validation",
+      "lifecycle": "historical",
+      "source": "configs/b0_verified_lr001_val_v1.json",
+      "actual_path": "outputs/training/b0_verified_lr001_val_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_verified_lr001_full60_v1",
+      "baseline": "B0",
+      "version": "v006_lr_full60",
+      "name": "LR 0,001 · 60 epoch",
+      "lifecycle": "historical",
+      "source": "configs/b0_verified_lr001_full60_v1.json",
+      "actual_path": "outputs/training/b0_verified_lr001_full60_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_normal_expanded_v1",
+      "baseline": "B0",
+      "version": "v007_normal_expanded",
+      "name": "Normal expanded",
+      "lifecycle": "historical",
+      "source": "configs/b0_normal_expanded_v1.json",
+      "actual_path": "outputs/training/b0_normal_expanded_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_s960_v1",
+      "baseline": "B0",
+      "version": "v008_s960_locked",
+      "name": "S960 · mốc đang khóa",
+      "lifecycle": "active",
+      "source": "configs/b0_s960_v1_operating_point_v1.json",
+      "actual_path": "outputs/training/b0_s960_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_s960_hardneg_v1",
+      "baseline": "B0",
+      "version": "v009_hard_negative",
+      "name": "Hard negative",
+      "lifecycle": "historical",
+      "source": "configs/b0_s960_hardneg_v1.json",
+      "actual_path": "outputs/training/b0_s960_hardneg_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_s960_full_kaggle_v1",
+      "baseline": "B0",
+      "version": "v010_kaggle_full",
+      "name": "Full Kaggle pilot",
+      "lifecycle": "historical",
+      "source": "outputs/kaggle/b0_s960_full_kaggle_v1/version9_lightweight_comparison.json",
+      "actual_path": "outputs/training/b0_s960_full_kaggle_v1",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_s960_adamw_kaggle_v2",
+      "baseline": "B0",
+      "version": "v011_kaggle_adamw",
+      "name": "AdamW",
+      "lifecycle": "historical",
+      "source": "configs/b0_s960_adamw_kaggle_v2.json",
+      "actual_path": "outputs/training/b0_s960_adamw_kaggle_v2",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_s960_sgd_kaggle_v3",
+      "baseline": "B0",
+      "version": "v012_kaggle_sgd",
+      "name": "SGD",
+      "lifecycle": "historical",
+      "source": "configs/b0_s960_sgd_kaggle_v3.json",
+      "actual_path": "outputs/training/b0_s960_sgd_kaggle_v3",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b0_s960_sgd_low_lr_kaggle_v4",
+      "baseline": "B0",
+      "version": "v013_kaggle_low_lr",
+      "name": "SGD · LR thấp",
+      "lifecycle": "historical",
+      "source": "configs/b0_s960_sgd_low_lr_kaggle_v4.json",
+      "actual_path": "outputs/training/b0_s960_sgd_low_lr_kaggle_v4",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b1_causal_diagnostics_v1",
+      "baseline": "B1",
+      "version": "v001_causal_replay",
+      "name": "EMA và 3-of-5",
+      "lifecycle": "historical",
+      "actual_path": "outputs/training/b0_s960_v1/temporal_diagnostics_v1",
+      "config": "configs/b1_causal_diagnostics_v1.json",
+      "evidence_path": "outputs/training/b0_s960_v1/temporal_diagnostics_v1/report.json",
+      "source": "progress/2026-10-29.md",
+      "kind": "diagnostic",
+      "storage_state": "LEGACY"
+    },
+    {
+      "run_id": "b2_motion_v1",
+      "baseline": "B2",
+      "version": "v001_motion_pilot",
+      "name": "Motion pilot",
+      "lifecycle": "historical",
+      "actual_path": "outputs/baselines/03_b2_motion_rules/v001_motion_pilot",
+      "previous_path": "outputs/audits/b2_motion_v1",
+      "config": "configs/b2_motion_v1.json",
+      "evidence_path": "outputs/baselines/03_b2_motion_rules/v001_motion_pilot/cadp_001407_final/metadata.json",
+      "source": "progress/2026-11-05.md",
+      "kind": "diagnostic",
+      "storage_state": "CANONICAL"
+    },
+    {
+      "run_id": "b2_motion_v2",
+      "baseline": "B2",
+      "version": "v002_overlap_fix",
+      "name": "Overlap fix",
+      "lifecycle": "historical",
+      "actual_path": "outputs/baselines/03_b2_motion_rules/v002_overlap_fix",
+      "previous_path": "outputs/audits/b2_motion_v2",
+      "config": "configs/b2_motion_v2.json",
+      "evidence_path": "outputs/baselines/03_b2_motion_rules/v002_overlap_fix/cadp_selector_comparison.json",
+      "source": "progress/2026-11-05.md",
+      "kind": "diagnostic",
+      "storage_state": "CANONICAL"
+    }
+  ],
+  "path_aliases": [
+    {
+      "old": "outputs/audits/b2_motion_v1",
+      "new": "outputs/baselines/03_b2_motion_rules/v001_motion_pilot"
+    },
+    {
+      "old": "outputs/audits/b2_motion_v2",
+      "new": "outputs/baselines/03_b2_motion_rules/v002_overlap_fix"
+    },
+    {
+      "old": "outputs/audits/event_evaluator_v1",
+      "new": "outputs/shared_evaluations/v001_event_evaluator"
+    },
+    {
+      "old": "outputs/audits/b2_system_v2",
+      "new": "outputs/system_evidence/v001_b2_alerts"
+    },
+    {
+      "old": "outputs/audits/detrac_preparation",
+      "new": "outputs/data_audits/v001_detrac_preparation"
+    }
+  ],
+  "protected_paths": [
+    {
+      "path": "outputs/audits/accident_scale",
+      "state": "PROTECT",
+      "reason": "Audit lớn chứa dữ liệu dẫn xuất và hồ sơ tham chiếu; chưa kiểm đủ dependency"
+    },
+    {
+      "path": "outputs/audits/b0_hard_negative_sources_v1",
+      "state": "PROTECT",
+      "reason": "Nguồn âm khó và preflight của B0; nhiều config/manifest phụ thuộc"
+    },
+    {
+      "path": "outputs/audits/b0_normal_expansion_v1",
+      "state": "PROTECT",
+      "reason": "Nguồn normal và reference validation lịch sử"
+    },
+    {
+      "path": "outputs/audits/archive",
+      "state": "PROTECT",
+      "reason": "Backup và báo cáo cũ, chưa rà đầy đủ tham chiếu"
+    },
+    {
+      "path": "outputs/kaggle",
+      "state": "PROTECT",
+      "reason": "Bundle, deployment và receipt Kaggle có hash/đường dẫn riêng"
+    },
+    {
+      "path": "data_raw",
+      "state": "PROTECT",
+      "reason": "Dữ liệu nguồn, không thuộc migration output"
+    },
+    {
+      "path": "data/processed",
+      "state": "PROTECT",
+      "reason": "Release có nhãn/split/hash, cần bảo toàn"
+    }
+  ],
+  "dataset_sources": [
+    {
+      "id": "ACCIDENT",
+      "name": "ACCIDENT",
+      "purpose": "Nguồn impact frame và bbox vùng tai nạn CCTV; ảnh dương B0.",
+      "url": "https://github.com/accidentbench/ACCIDENT",
+      "raw_path": "data_raw/accident",
+      "sample_path": null,
+      "selection": "Lấy clip xe–xe có metadata phù hợp; một số source-test đã dùng development và được ghi consumed."
+    },
+    {
+      "id": "TAD",
+      "name": "TAD",
+      "purpose": "Video normal theo nhãn cấp clip, bổ sung ảnh âm.",
+      "url": "https://github.com/UnicomAI/UnicomBenchmark/tree/main/TADBench",
+      "raw_path": "data_raw/tad",
+      "sample_path": null,
+      "selection": "Chọn video normal công khai; không chuyển nhãn clip dương thành bbox."
+    },
+    {
+      "id": "UA-DETRAC",
+      "name": "UA-DETRAC",
+      "purpose": "Chuỗi giao thông để thử detection/tracking và ảnh âm đã được người dùng xem.",
+      "url": "https://arxiv.org/abs/1511.04136",
+      "raw_path": "data_raw/ua_detrac",
+      "sample_path": "data_samples/ua_detrac",
+      "selection": "Chỉ giải nén chọn lọc 3 chuỗi để thử theo phạm vi và dung lượng lúc chuẩn bị. Hồ sơ chưa ghi tiêu chí vì sao chọn đúng ba tên đó; ba chuỗi về sau được nhóm bảo thủ cùng cảnh."
+    },
+    {
+      "id": "CADP",
+      "name": "CADP",
+      "purpose": "Ảnh sạch và nhãn Colliding của tác giả để debug tracking/motion.",
+      "url": "https://github.com/ankitshah009/CarCrash_forecasting_and_detection",
+      "raw_path": "data_raw/cadp",
+      "sample_path": "data_samples/cadp",
+      "selection": "Chuỗi 001407 đã đối chiếu; FPS nguồn chưa xác minh."
+    },
+    {
+      "id": "STTAD",
+      "name": "STTAD",
+      "purpose": "Ví dụ nhãn vùng sự kiện phục vụ định nghĩa bbox B0.",
+      "url": "https://github.com/ZTR02/STTAD",
+      "raw_path": "data_raw/sttad",
+      "sample_path": null,
+      "selection": "Gói examples public; không suy bộ dữ liệu đầy đủ đã phát hành."
+    }
+  ],
+  "structure": [
+    {
+      "id": "baselines",
+      "name": "Baselines",
+      "logical_path": "outputs/baselines/",
+      "actual_paths": [
+        "outputs/training",
+        "outputs/baselines/03_b2_motion_rules/v001_motion_pilot",
+        "outputs/baselines/03_b2_motion_rules/v002_overlap_fix"
+      ],
+      "description": "B2 đã tổ chức vật lý; B0 và B1 còn tại vị trí lịch sử.",
+      "state": "active"
+    },
+    {
+      "id": "datasets",
+      "name": "Datasets",
+      "logical_path": "data/raw + data/samples",
+      "actual_paths": [
+        "data_raw",
+        "data_samples",
+        "data/processed"
+      ],
+      "description": "Dữ liệu nguồn, mẫu và release; không cộng các bản dẫn xuất thành nguồn độc lập.",
+      "state": "active"
+    },
+    {
+      "id": "audits",
+      "name": "Data audits",
+      "logical_path": "outputs/data_audits/",
+      "actual_paths": [
+        "outputs/audits",
+        "outputs/data_audits/v001_detrac_preparation"
+      ],
+      "description": "DETRAC preparation đã tổ chức vật lý; audit còn lại giữ tại chỗ để bảo vệ tham chiếu.",
+      "state": "active"
+    },
+    {
+      "id": "evaluations",
+      "name": "Shared evaluations",
+      "logical_path": "outputs/shared_evaluations/",
+      "actual_paths": [
+        "outputs/shared_evaluations/v001_event_evaluator"
+      ],
+      "description": "Kết quả evaluator và so sánh dùng chung; scope trên từng artifact.",
+      "state": "active"
+    },
+    {
+      "id": "evidence",
+      "name": "Evidence hệ thống",
+      "logical_path": "outputs/system_evidence/",
+      "actual_paths": [
+        "outputs/system_evidence/v001_b2_alerts"
+      ],
+      "description": "Ảnh, clip và metadata cảnh báo thử nghiệm; không phải GT.",
+      "state": "active"
+    },
+    {
+      "id": "code",
+      "name": "Code",
+      "logical_path": "src/ + scripts/",
+      "actual_paths": [
+        "src",
+        "scripts"
+      ],
+      "description": "Module dùng chung và lệnh thực thi.",
+      "state": "active"
+    },
+    {
+      "id": "configs",
+      "name": "Configs",
+      "logical_path": "configs/",
+      "actual_paths": [
+        "configs"
+      ],
+      "description": "Cấu hình, policy và điều kiện chạy.",
+      "state": "active"
+    },
+    {
+      "id": "docs",
+      "name": "Documentation",
+      "logical_path": "docs/ + reference/ + progress/",
+      "actual_paths": [
+        "docs",
+        "reference",
+        "progress"
+      ],
+      "description": "Hướng dẫn, nguồn nghiên cứu và nhật ký.",
+      "state": "active"
+    }
+  ],
+  "storage_layout": {
+    "baseline": "outputs/baselines",
+    "shared_evaluation": "outputs/shared_evaluations",
+    "system_evidence": "outputs/system_evidence",
+    "data_audit": "outputs/data_audits",
+    "legacy_archive": "outputs/_legacy"
+  },
+  "artifacts": [
+    {
+      "id": "shared_event_evaluator_v1",
+      "category": "shared_evaluation",
+      "version": "v001_event_evaluator",
+      "name": "Evaluator và so sánh sự kiện dùng chung",
+      "actual_path": "outputs/shared_evaluations/v001_event_evaluator",
+      "storage_state": "CANONICAL",
+      "source": "outputs/audits/storage_migration_v1/manifest.json"
+    },
+    {
+      "id": "system_b2_evidence_v1",
+      "category": "system_evidence",
+      "version": "v001_b2_alerts",
+      "name": "Ảnh/clip cảnh báo B2 offline",
+      "actual_path": "outputs/system_evidence/v001_b2_alerts",
+      "storage_state": "CANONICAL",
+      "source": "outputs/audits/storage_migration_v1/manifest.json"
+    },
+    {
+      "id": "detrac_preparation_v1",
+      "category": "data_audit",
+      "version": "v001_detrac_preparation",
+      "name": "Audit chọn chuỗi UA-DETRAC",
+      "actual_path": "outputs/data_audits/v001_detrac_preparation",
+      "storage_state": "CANONICAL",
+      "source": "outputs/audits/storage_migration_v1/manifest.json"
+    }
+  ],
+  "legacy_collections": [
+    {
+      "path": "outputs/training",
+      "category": "baseline",
+      "description": "B0 và B1 lồng lịch sử"
+    },
+    {
+      "path": "outputs/kaggle",
+      "category": "operational_staging",
+      "description": "Bundle/deployment/download Kaggle cũ"
+    },
+    {
+      "path": "outputs/audits",
+      "category": "data_audit",
+      "description": "Audit và backup lịch sử chưa phân loại hết"
+    },
+    {
+      "path": "outputs/detection",
+      "category": "system_evidence",
+      "description": "Video vehicle detection cũ"
+    },
+    {
+      "path": "outputs/tracking",
+      "category": "system_evidence",
+      "description": "Video ByteTrack cũ"
+    },
+    {
+      "path": "outputs/annotation_preview",
+      "category": "system_evidence",
+      "description": "Preview annotation tác giả cũ"
+    }
+  ],
+  "audit_default_versions": {
+    "sttad_public": "v001_sttad_public",
+    "cadp_b0_quality": "v001_cadp_b0_quality",
+    "b0_exported_similarity": "v001_b0_exported_similarity",
+    "pilot_groups": "v001_pilot_groups",
+    "tad_public_zip": "v001_tad_public_zip",
+    "cadp_frame_review": "v001_cadp_frame_review",
+    "cadp_clean_manifest_update": "v001_cadp_clean_manifest_update",
+    "manifest_registration": "v001_manifest_registration",
+    "cadp_001407_clean": "v001_cadp_001407_clean",
+    "cadp_1407": "v001_cadp_1407",
+    "detrac_preparation": "v002_detrac_preparation"
+  }
+}

@@ -64,3 +64,10 @@ secrets.*
 /.kaggle/
 logs/*.log
 /logs/environment_check.md
+frontend/node_modules/
+frontend/dist/
+frontend/.hallmark/
+frontend/.browser-temp/
+frontend/.npm-cache/
+frontend/*.tsbuildinfo
+frontend/congcu.txt

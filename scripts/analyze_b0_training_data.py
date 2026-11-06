@@ -9,6 +9,11 @@ import collections
 import csv
 import json
 from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from src.storage_paths import output_path, require_output_path
 
 
 def load_csv(path):
@@ -68,8 +73,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dataset-root', type=Path, required=True)
     parser.add_argument('--cases', type=Path, required=True)
-    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--output', type=Path, default=output_path(ROOT,'data_audit','v009_b0_training_analysis',child='analysis.json'))
     args = parser.parse_args()
+    args.output = require_output_path(ROOT,args.output,'data_audit',allow_version_root=False)
+    if args.output.exists():
+        raise FileExistsError(args.output)
     result = analyze(args.dataset_root / 'provenance.csv', args.cases, args.dataset_root)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

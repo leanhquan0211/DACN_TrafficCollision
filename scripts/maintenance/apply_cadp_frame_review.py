@@ -17,6 +17,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from scripts.prepare_cadp_pilot import read_vatic
 from scripts.maintenance.update_manifest_reviews import read_manifest, append_note, verify_file
 from src.data_preparation import new_audit_dir, save_csv, save_json, unique_path
+from src.storage_paths import storage_root
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def apply_review(rows: list[dict], review: dict, review_path: Path) -> list[str]:
@@ -61,7 +64,7 @@ def main() -> int:
     targets=apply_review(rows,review,args.review)
     # So sánh tất cả chuỗi ngoài scope, không chỉ ba clip mẫu cũ.
     assert all(old==new for old,new in zip(before,rows) if old["video_id"] not in targets)
-    audit=new_audit_dir(Path("outputs/audits"),"cadp_frame_review")
+    audit=new_audit_dir(storage_root(ROOT,'data_audit'),'v017_cadp_frame_review')
     (audit/"manifest_before.csv").write_bytes(args.manifest.read_bytes())
     temporary=unique_path(args.manifest.with_suffix(".part.csv"))
     save_csv(temporary,rows,fields)

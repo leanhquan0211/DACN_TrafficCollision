@@ -1,7 +1,7 @@
 """Đọc nhãn VATIC CADP, xuất bảng đối tượng và video xem lại annotation tác giả.
 
 Đầu vào: cặp MP4/TXT và cấu hình căn chỉnh đã kiểm chứng. Đầu ra: CSV/JSON
-trong outputs/audits và MP4 trong outputs/annotation_preview. Chạy khi có cặp
+trong outputs/data_audits và MP4 trong outputs/system_evidence. Chạy khi có cặp
 mẫu cần đối chiếu; không suy luận model, không biến Colliding thành nhãn do người dùng duyệt.
 """
 
@@ -17,6 +17,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.data_preparation import H264Writer, new_audit_dir, probe_video, save_csv, save_json, sha256_file, unique_path
+from src.storage_paths import output_path, storage_root, require_output_path
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def read_vatic(path: Path) -> list[dict]:
@@ -127,16 +130,17 @@ def main() -> int:
     parser.add_argument("--annotations", type=Path, default=Path("data_raw/cadp/pilot_1407/1407.txt"))
     parser.add_argument("--preview-config", type=Path, help="Required for overlay; no automatic coordinate scaling")
     parser.add_argument("--reference-zip", type=Path, default=Path("data_raw/cadp/reference_code/CarCrash_forecasting_and_detection-master.zip"))
-    parser.add_argument("--audit-root", type=Path, default=Path("outputs/audits"))
-    parser.add_argument("--preview-root", type=Path, default=Path("outputs/annotation_preview"))
+    parser.add_argument("--audit-root", type=Path, default=storage_root(ROOT, 'data_audit'))
+    parser.add_argument("--preview-root", type=Path, default=output_path(ROOT, 'system_evidence', 'v004_cadp_annotation_pilot'))
     args = parser.parse_args()
+    args.preview_root = require_output_path(ROOT, args.preview_root, 'system_evidence')
     import cv2
 
     # Bảng nhãn xuất độc lập với preview; thiếu căn cứ khớp video vẫn xem được
     # ID/lớp/khoảng Colliding mà không áp bbox lên sai khung hình.
     rows = read_vatic(args.annotations)
     objects, collisions = summarize(rows)
-    audit = new_audit_dir(args.audit_root, f"cadp_{args.annotations.stem}")
+    audit = new_audit_dir(args.audit_root, 'v011_cadp_pilot' if args.audit_root.resolve()==storage_root(ROOT,'data_audit') else f"cadp_{args.annotations.stem}")
     save_csv(audit / "objects.csv", objects, list(objects[0]))
     save_csv(audit / "colliding_intervals.csv", collisions,
              ["track_id", "label", "start_frame", "end_frame", "frame_count", "annotation_source", "user_review_status"])

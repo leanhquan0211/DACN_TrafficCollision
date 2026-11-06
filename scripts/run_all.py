@@ -10,6 +10,8 @@ import argparse
 import subprocess
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.storage_paths import output_path
 
 
 def main() -> int:
@@ -19,7 +21,7 @@ def main() -> int:
     parser.add_argument("video", type=Path, help="Path to an input video")
     parser.add_argument("--device", default="auto", help="auto, cpu, or CUDA index such as 0")
     parser.add_argument("--imgsz", type=int, default=640, help="Inference image size")
-    parser.add_argument("--output-dir", type=Path, default=Path("outputs"), help="Root directory for per-video result folders")
+    parser.add_argument("--output-dir", type=Path, default=output_path(Path(__file__).resolve().parents[1], 'system_evidence', 'v002_vehicle_preview'), help="Canonical run directory for per-video result folders")
     parser.add_argument("--model", type=Path, default=Path("yolov8n.pt"), help="YOLOv8n weights")
     args = parser.parse_args()
 

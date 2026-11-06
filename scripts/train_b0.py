@@ -21,6 +21,7 @@ import time
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from src.data_preparation import save_csv, save_json, sha256_file, validate_b0_verified_origins
+from src.storage_paths import require_output_path
 
 # Chỉ các trường này được đưa vào Ultralytics. Khóa cùng danh sách khi resume
 # để augmentation/LR không âm thầm khác công thức đã ghi trong config.
@@ -381,6 +382,14 @@ def main() -> int:
     parser.add_argument('--resume-patience',type=int,default=None,
                         help='Bật early stopping khi resume, ví dụ 15 epoch không tăng mAP50-95; không sửa config gốc')
     args=parser.parse_args();config=json.loads(args.config.read_text(encoding="utf-8"))
+    # Bundle Kaggle lịch sử chạy trong /tmp với config/hash đã khóa. Trên project
+    # thường, mọi run hoặc preflight mới phải dùng cây canonical.
+    portable_bundle = (sys.platform != 'win32' and str(ROOT).startswith('/tmp/DACN_TrafficCollision')
+                       and not (ROOT/'data/registries/project_explorer.json').exists())
+    if not portable_bundle and (args.train or args.preflight or args.resume):
+        require_output_path(ROOT, config['output'], 'baseline', baseline='B0')
+        if args.preflight:
+            require_output_path(ROOT, config['preflight_report'], 'data_audit', allow_version_root=False)
     if args.resume_workers is not None and not args.resume:
         parser.error("--resume-workers chỉ dùng cùng --resume")
     if args.resume_patience is not None and (not args.resume or args.resume_patience<1):
@@ -452,6 +461,10 @@ def main() -> int:
     else:
         output.mkdir(parents=True,exist_ok=False)
         shutil.copy2(args.config,output/"requested_config.json")
+        if not portable_bundle:
+            # Dashboard nhận diện run B0 mới qua ID này; không đổi config hay checkpoint.
+            save_json(output/"artifact_identity.json",dict(
+                run_id=output.name,baseline="B0",name=output.name))
         model.train(data=str(dataset),project=str(output.parent),name=output.name,exist_ok=True,
                     deterministic=True,cache=False,plots=True,save=True,**training_arguments(config))
     organize_train_previews(output)

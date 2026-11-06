@@ -1,0 +1,12 @@
+{
+  "version": "pair-fsm-rearm-v2",
+  "high": 0.75,
+  "low": 0.25,
+  "confirm_frames": 2,
+  "cooldown_frames": 0,
+  "rearm_low_frames": 2,
+  "missing_expire_frames": 30,
+  "pre_frames": 5,
+  "post_frames": 5,
+  "scope": "Development policy: rearm same pair after two observed scores at or below low; missing scores do not count as low. Distinct events without a low phase may merge, while ID switch or brief dips may duplicate alerts."
+}

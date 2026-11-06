@@ -1,5 +1,7 @@
 # Hướng dẫn đọc kết quả huấn luyện B0
 
+> Thư mục này lưu **run B0 lịch sử**. Output mới dùng `outputs/baselines/01_b0_image_detection/vNNN_mo_ta/`; xem [kiến trúc lưu trữ](../../docs/STORAGE_ARCHITECTURE.md). Các lệnh/path bên dưới mô tả run cũ, không phải vị trí mặc định cho run mới.
+
 **Run Kaggle Version 10 đã có kết quả:** mở [b0_s960_adamw_kaggle_v2](b0_s960_adamw_kaggle_v2/) để xem `weights/best.pt`, `weights/last.pt`, `results.csv`, `training_summary/results.png`, `metrics_val/` và `cases_val/`. Đã chạy 60 epoch, best khớp CSV epoch 52; `last.pt` đã strip optimizer và không dùng để resume đầy đủ. Đọc [báo cáo so với Version 9](../../docs/b0_pilot_audit.md#kết-quả-version-10--adamw-kaggle-30102026) trước khi kết luận model tốt hơn. Trạng thái “đang chuẩn bị 29/10” bên dưới là lịch sử.
 
 **Kaggle đang chuẩn bị29/10:** chưa có`b0_s960_full_kaggle_v1/` trong mục này, chưa có model/metriccloud. Gói/notebook và trạng thái thiếuđăngnhập ở`outputs/kaggle/b0_s960_full_kaggle_v1/`; xem [hướng dẫn](../../docs/kaggle_training.md). Sau khi runcloud hoàn tất,`kaggle_b0.py fetch` kiểmZIP/hash rồi mới tạo thư mục run mới tại đây; không ghi đè hardneg hoặc thay checkpoint đang khóa. `prepared`, `uploaded`, `submitted` đều không phải `training_completed`.
@@ -300,4 +302,8 @@ Mở `index.html`, `validation_curves.png`, `s960_thresholds.csv`, `n640_thresho
 # Version 11 — SGD Kaggle
 
 Run `b0_s960_sgd_kaggle_v3` hoàn tất tại epoch 50, best theo fitness ở epoch 3. Validation best mAP50 70,64%, mAP50–95 56,80%; đánh đổi recall và false positives so với Version 10. [Báo cáo, giới hạn và bảng so sánh](../../docs/b0_pilot_audit.md#kết-quả-version-11--sgd-kaggle-30102026). Gói ZIP và toàn bộ thành viên đã kiểm SHA; mở `b0_s960_sgd_kaggle_v3/weights/best.pt`, `last.pt`, `results.csv`, `training_summary/results.png`.
+
+## Version 12 — SGD learning rate 0,00015
+
+Đã fetch và kiểm gói output Kaggle V12 vào [b0_s960_sgd_low_lr_kaggle_v4](b0_s960_sgd_low_lr_kaggle_v4/): `run_status.json` xác nhận 50 epoch và `training_completed=true`; ZIP/manifest/config/checkpoint đã qua kiểm hash. `best.pt`, `last.pt`, `results.csv`, `metrics_val/`, `cases_val/` và ảnh gốc ở trong thư mục run. Chỉ giảm `lr0` so V11, trên cùng 307 val: mAP50 **70,63%**, mAP50–95 **56,10%**, F1 cố định **67,36%** (TP65/FP37/FN26). mAP50 gần như ngang và mAP50–95 thấp hơn V11; F1 cố định tăng. Không dùng test/reserve, không thay checkpoint B0 đang khóa. [Hướng dẫn xem trên dashboard](../../frontend/README.md#theo-dõi-file-local-và-kaggle).
 

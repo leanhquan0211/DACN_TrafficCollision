@@ -20,6 +20,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.prepare_cadp_pilot import read_vatic, summarize, verify_alignment
 from scripts.prepare_detrac import file_crc32, read_image, safe_destination
 from src.data_preparation import H264Writer, new_audit_dir, probe_video, save_csv, save_json, sha256_file, unique_path
+from src.storage_paths import output_path, storage_root, require_output_path
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 SAMPLE_FRAMES = (0, 60, 95, 96, 110, 130, 131, 180, 220)
@@ -215,13 +218,14 @@ def main() -> int:
     parser.add_argument("--demo-config", type=Path, default=Path("configs/cadp_1407_preview.json"))
     parser.add_argument("--presentation-fps", type=float, default=20)
     parser.add_argument("--visual-check-confirmed", action="store_true", help="Operator checked clean images/GT mapping; not user onset/end confirmation")
-    parser.add_argument("--audit-root", type=Path, default=Path("outputs/audits"))
+    parser.add_argument("--audit-root", type=Path, default=storage_root(ROOT, 'data_audit'))
     parser.add_argument("--video-root", type=Path, default=Path("data_samples/cadp"))
-    parser.add_argument("--preview-root", type=Path, default=Path("outputs/annotation_preview"))
+    parser.add_argument("--preview-root", type=Path, default=output_path(ROOT, 'system_evidence', 'v005_cadp_clean_annotations'))
     args = parser.parse_args()
+    args.preview_root = require_output_path(ROOT,args.preview_root,'system_evidence')
     if not 0 < args.presentation_fps < 1000:
         parser.error("Invalid presentation FPS")
-    audit = new_audit_dir(args.audit_root, "cadp_001407_clean")
+    audit = new_audit_dir(args.audit_root, 'v012_cadp_clean_frames' if args.audit_root.resolve()==storage_root(ROOT,'data_audit') else 'cadp_001407_clean')
     report = dict(sequence="001407", frames_directory=args.frames_dir.as_posix(),
                   annotation_path=args.annotations.as_posix(), annotation_sha256=sha256_file(args.annotations),
                   source_timing_verified=False, presentation_fps=args.presentation_fps,

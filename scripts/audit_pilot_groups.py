@@ -24,6 +24,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.data_preparation import new_audit_dir, save_csv, save_json, sha256_file
+from src.storage_paths import run_folder
 
 
 def phash(gray: np.ndarray) -> int:
@@ -90,7 +91,10 @@ def audit_normal_batch(manifest_path: Path, base: Path, probe_path: Path) -> Pat
     expected_provenance=old_report.get('provenance_sha256')
     if not expected_provenance:
         # Export cũ chưa ghi trường này; experiment hoàn tất vẫn khóa hash.
-        experiment=ROOT/'outputs/training'/base.parent.name/'experiment.json'
+        run=run_folder(ROOT,base.parent.name)
+        if run is None:
+            raise FileNotFoundError(f'Không tìm thấy run gốc của release {base.parent.name}')
+        experiment=run/'experiment.json'
         expected_provenance=json.loads(experiment.read_text(encoding='utf-8'))['provenance_sha256']
     if sha256_file(base/'provenance.csv')!=expected_provenance:
         raise ValueError('Base provenance changed')

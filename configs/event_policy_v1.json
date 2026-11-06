@@ -1,0 +1,12 @@
+{
+  "version": "event-edge-v1",
+  "threshold": 0.5,
+  "cooldown_frames": 0,
+  "description": "Diagnostic policy: alert on rising edge; match onset within a verified inclusive event interval; no tuning on consumed data.",
+  "units": "zero-based source frame; source seconds only when timing verified",
+  "references": [
+    "https://github.com/activitynet/ActivityNet/blob/master/Evaluation/eval_detection.py",
+    "https://www.itl.nist.gov/div898/handbook/pmc/section3/pmc314.htm"
+  ],
+  "adaptation": "Online alert onset matching rather than ActivityNet segment IoU/AP; event still active before onset is censored, not a detected event."
+}

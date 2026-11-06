@@ -1,5 +1,33 @@
 # Chạy B0 trên Kaggle
 
+> Các Version 9–12 bên dưới là lịch sử, đã có kết quả tại `outputs/training/` và không được gửi/fetch lại. Từ 06/11/2026, lệnh `kaggle_b0.py fetch` cho run mới đã đăng ký sẽ xác minh ZIP/manifest/SHA rồi lưu vào `outputs/baselines/01_b0_image_detection/<version>/`; gói recipe/cache lịch sử vẫn nằm ở `outputs/kaggle/`. Xem [kiến trúc lưu trữ](STORAGE_ARCHITECTURE.md).
+
+## Version 12 — đối chứng learning rate SGD 04/11/2026
+
+Theo chỉ dẫn mới, chỉ gửi **một** run `b0_s960_sgd_low_lr_kaggle_v4`. [Config](../configs/b0_s960_sgd_low_lr_kaggle_v4.json) giữ cùng Dataset PRIVATE `laqun0211/dacn-b0-full-trainval-v1` và checkpoint khởi tạo của V11; chỉ giảm `lr0` từ 0,0003 xuống 0,00015. Vì vậy không upload lại 4 GB, không tải thêm dữ liệu, không chạy trên laptop và không dùng test/reserve. Notebook dùng GPU miễn phí; `prepare-recipe` chỉ tạo gói nhỏ, `publish-recipe` mới gửi notebook và bắt đầu chạy. Lượt này không theo dõi train liên tục. Thí nghiệm này là giả thuyết kiểm soát một biến, không đảm bảo cải thiện. [Lý do chọn và giới hạn](b0_pilot_audit.md#chuẩn-bị-version-12--đối-chứng-learning-rate-04112026).
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -B scripts/kaggle_b0.py prepare-recipe --experiment sgd-low-lr-v4
+.\.tmp\kaggle_cli_env\Scripts\python.exe -X utf8 -B scripts/kaggle_b0.py publish-recipe --experiment sgd-low-lr-v4
+```
+
+**Version 12 đã fetch/kiểm về local ngày 04/11:** [Notebook PRIVATE](https://www.kaggle.com/code/laqun0211/dacn-b0-s960-full-v1) báo `COMPLETE`; [retrieval receipt](../outputs/kaggle/b0_s960_sgd_low_lr_kaggle_v4/retrieval.json) và `run_status.json` xác nhận `training_completed=true`, 50 epoch; ZIP, manifest, config và best.pt được công cụ kiểm hash trước khi nhập vào `outputs/training/b0_s960_sgd_low_lr_kaggle_v4/`. [Deployment receipt](../outputs/kaggle/b0_s960_sgd_low_lr_kaggle_v4/deployment.json) là snapshot lúc gửi (`RUNNING`), không phải trạng thái cuối. Không gọi lại `publish-recipe` hay `fetch` vào output đã tồn tại. Lệnh dưới đây dành cho lần kiểm status/log về sau:
+
+```powershell
+.\.tmp\kaggle_cli_env\Scripts\python.exe -X utf8 -B scripts/kaggle_b0.py status --version 12
+.\.tmp\kaggle_cli_env\Scripts\python.exe -X utf8 -B scripts/kaggle_b0.py logs --follow --epochs-only --version 12
+```
+
+Ctrl+C chỉ ngắt xem log. Sau khi Kaggle và `run_status.json` báo hoàn tất, tải bằng:
+
+```powershell
+.\.tmp\kaggle_cli_env\Scripts\python.exe -X utf8 -B scripts/kaggle_b0.py fetch --experiment sgd-low-lr-v4 --version 12
+```
+
+**Lệnh fetch trên đã chạy xong; không chạy lại.** Kết quả hiện nằm tại `outputs/training/b0_s960_sgd_low_lr_kaggle_v4/` cùng `best.pt`, `last.pt`, CSV, log và metadata. Trong lần chạy khác, chỉ thêm `--resume-download` khi tải bị ngắt và tiến trình cũ đã dừng; không dùng để ghi đè output đã nhập. Không tự thay checkpoint B0 khóa. Dashboard [gộp một lựa chọn run](../frontend/README.md#theo-dõi-file-local-và-kaggle) và tự đọc lại nội dung khi web đang mở.
+
+> **Làm nhóm/tài khoản thứ hai — 02/11/2026:** đọc [GETTING_STARTED, mục 10](GETTING_STARTED.md#10-làm-nhóm-hai-người-dùng-chung-dữ-liệu-và-tránh-xung-đột) để dùng chung Dataset PRIVATE, có notebook cá nhân, chuyển gói offline và chia việc. Các lệnh CLI bên dưới hiện gắn tài khoản/run `laqun0211`, **chưa phải công cụ đa tài khoản**; không đăng nhập tài khoản khác rồi gọi nguyên publish/fetch. Tài khoản cá nhân dùng notebook riêng qua UI và được cấp quyền Dataset; không chia sẻ credential. Phần này chỉ bổ sung hướng dẫn, không mở train hoặc thay recipe.
+
 **Cập nhật kết quả Version 10:** phiên đã hoàn tất 60 epoch và đã fetch/kiểm hash về `outputs/training/b0_s960_adamw_kaggle_v2/`. Best theo CSV/train_metrics ở epoch 52; đánh giá lại best trên 307 val: mAP50 67,85%, mAP50–95 52,63%, F1 cố định 67,06%, Recall cố định 62,64%. So Version 9 cùng tập, mAP và recall cố định giảm, F1 nhích lên; chưa thay model B0 khóa. [Báo cáo đầy đủ](b0_pilot_audit.md#kết-quả-version-10--adamw-kaggle-30102026), [bằng chứng](evidence/2026-10-30-b0-adamw-validation.json). Các mục đang chạy bên dưới là lịch sử; không chạy fetch lại vào output đã có.
 
 ## Hiện hành: Version 10 — AdamW, AMP và early stopping muộn

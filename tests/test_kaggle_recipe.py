@@ -3,9 +3,11 @@ import hashlib
 import io
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
 import uuid
-from unittest.mock import patch
+from unittest.mock import Mock, patch
+import zipfile
 
 from src.kaggle_recipe import DelayedEarlyStopping,EpochLogFilter,EpochStream,check_revised_inputs
 from src.training_bundle import safe_path
@@ -14,6 +16,55 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 class RecipeTests(unittest.TestCase):
+    def test_fetch_places_verified_checkpoint_in_canonical_run(self):
+        """ZIP fixture kiểm byte checkpoint, đường dẫn và registry; không gọi mạng."""
+        from scripts import kaggle_b0
+        from src.storage_paths import artifact_catalog, run_folder
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            run = 'fixture_kaggle_run'
+            staging = root/'outputs/kaggle'/run
+            staging.mkdir(parents=True)
+            config = root/'configs/fixture.json'
+            config.parent.mkdir(parents=True)
+            config.write_text('{}', encoding='utf-8')
+            registry = root/'data/registries/project_explorer.json'
+            registry.parent.mkdir(parents=True)
+            registry.write_text(json.dumps({'schema_version': 1,
+                'runs': [{'run_id': run, 'baseline': 'B0', 'version': 'v099_fetch_fixture',
+                          'name': 'Fixture', 'actual_path': f'outputs/training/{run}',
+                          'storage_state': 'LEGACY'}]}), encoding='utf-8')
+            source = root/'remote';source.mkdir()
+            checkpoint = b'fixture checkpoint bytes'
+            experiment = json.dumps({'checkpoint_sha256': hashlib.sha256(checkpoint).hexdigest()}).encode()
+            files = {'experiment.json': experiment, 'weights/best.pt': checkpoint}
+            manifest = {'files': {name: {'size_bytes': len(body), 'sha256': hashlib.sha256(body).hexdigest()}
+                                  for name, body in files.items()}}
+            archive = source/'b0_results.zip'
+            with zipfile.ZipFile(archive, 'w') as bundle:
+                for name, body in files.items():
+                    bundle.writestr(f'{run}/{name}', body)
+                bundle.writestr(f'{run}/artifacts_manifest.json', json.dumps(manifest))
+            (source/'results_receipt.json').write_text(json.dumps({
+                'run': run, 'config_sha256': hashlib.sha256(config.read_bytes()).hexdigest(),
+                'archive_sha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
+                'training_completed': True}), encoding='utf-8')
+            def fake_output(_kernel, folder, **_kwargs):
+                import shutil
+                shutil.copy2(archive, Path(folder)/archive.name)
+                shutil.copy2(source/'results_receipt.json', Path(folder)/'results_receipt.json')
+            api = Mock();api.kernels_output.side_effect = fake_output
+            with patch.object(kaggle_b0, 'ROOT', root), patch.object(kaggle_b0, 'STAGING', staging), \
+                 patch.object(kaggle_b0, 'RUN', run), patch.object(kaggle_b0, 'CONFIG', 'configs/fixture.json'), \
+                 patch.object(kaggle_b0, 'api_client', return_value=api):
+                kaggle_b0.fetch(version=1)
+            destination = root/'outputs/baselines/01_b0_image_detection/v099_fetch_fixture'
+            self.assertEqual((destination/'weights/best.pt').read_bytes(), checkpoint)
+            self.assertEqual(run_folder(root, run), destination)
+            self.assertEqual(next(r for r in artifact_catalog(root) if r['id'] == run)['storage_state'], 'CANONICAL')
+            self.assertEqual(json.loads(registry.read_text(encoding='utf-8'))['runs'][0]['actual_path'],
+                             destination.relative_to(root).as_posix())
+
     def test_resume_download_rejects_unknown_files_before_transfer(self):
         from scripts import kaggle_b0
         root=ROOT/'.tmp'/('resume_download_fixture_'+uuid.uuid4().hex)

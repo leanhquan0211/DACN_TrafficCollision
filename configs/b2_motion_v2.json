@@ -1,0 +1,17 @@
+{
+  "version": "b2-motion-overlap-v2",
+  "tracker": "bytetrack.yaml",
+  "model": "yolov8n.pt",
+  "imgsz": 640,
+  "min_track_age": 2,
+  "max_normalized_distance": 0.12,
+  "overlap_bypasses_distance": true,
+  "max_candidates": 32,
+  "max_tracks_for_pairs": 100,
+  "min_approach_per_frame": 0.001,
+  "min_speed_change_per_frame": 0.002,
+  "min_direction_change_radians": 0.35,
+  "roi_normalized_xyxy": [0.0, 0.0, 1.0, 1.0],
+  "scope": "Development-only: preserve overlap candidates independently of center distance; overlap alone is not collision. Thresholds unchanged from v1.",
+  "reference": "https://arxiv.org/html/2208.06461v1"
+}

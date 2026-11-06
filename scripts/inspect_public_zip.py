@@ -27,6 +27,7 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.data_preparation import new_audit_dir, save_csv, save_json, sha256_file
+from src.storage_paths import output_path, require_output_path
 
 TAD_URL = "https://drive.usercontent.google.com/download?id=14GNlNcWLzN-sbzvmrMuSbAg_rZZ5yd26&export=download&confirm=t"
 
@@ -45,6 +46,7 @@ def prepare_normal_batch(plan_path: Path) -> Path:
     if not plan_path.is_relative_to(ROOT):raise ValueError('Plan outside project')
     plan=json.loads(plan_path.read_text(encoding='utf-8'))
     output=(ROOT/plan['audit_output']).resolve()
+    require_output_path(ROOT,output,'data_audit')
     raw=(ROOT/plan['raw_root']).resolve()
     if not output.is_relative_to(ROOT) or not raw.is_relative_to(ROOT):
         raise ValueError('Batch paths outside project')
@@ -152,7 +154,7 @@ def prepare_normal_test(source_report: Path, raw_root: Path, samples: int) -> Pa
         not n.startswith('TAD-benchmark/test/normal/') or not n.lower().endswith('.mp4') for n in names
     ):
         raise ValueError('Only distinct author test/normal MP4 clips are accepted')
-    output=ROOT/'outputs/audits/tad_normal_test_v1'
+    output=output_path(ROOT,'data_audit','v014_tad_normal_test')
     registry=ROOT/'data/registries/b0_tad_normal_test_v1.json'
     if output.exists():
         raise FileExistsError('Use a new normal-test version; existing audit is preserved')
@@ -345,7 +347,7 @@ def main() -> int:
     if args.max_mib <= 0:
         parser.error("--max-mib must be positive")
     if args.audit_dir:
-        audit=args.audit_dir.resolve()
+        audit=require_output_path(ROOT,args.audit_dir,'data_audit')
         if not audit.is_relative_to(ROOT) or (audit.exists() and not args.resume_fetch):
             parser.error('Audit directory must be new and inside project')
         if args.resume_fetch and (not plan or not audit.is_dir() or (audit/'report.json').exists()):

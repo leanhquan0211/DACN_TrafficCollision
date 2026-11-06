@@ -25,6 +25,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from src.data_preparation import sha256_file
 from src.training_bundle import csv_bytes,full_train_projection,load_rows,materialize_paths,safe_path,verify_bundle
+from src.storage_paths import registered_run, registry_data, output_path, run_folder
 
 SOURCE_CONFIG='configs/b0_s960_hardneg_v1.json'
 CONFIG='configs/b0_s960_full_kaggle_v1.json'
@@ -536,25 +537,28 @@ def publish(allow_reupload: bool=False) -> None:
 
 
 def fetch(version: int | None=None, *, resume_download: bool=False) -> None:
-    """Tải một lần khi người dùng yêu cầu; kiểm hash rồi mới đưa vào outputs/training."""
+    """Kiểm hash toàn bộ ZIP rồi đặt bản tải mới vào baseline B0 canonical."""
     api=api_client();download=STAGING/'download'
-    if (ROOT/'outputs/training'/RUN).exists():raise FileExistsError('Local result already exists; no overwrite')
     if download.exists():
         if not resume_download:raise FileExistsError('Download folder exists; preserve evidence; use --resume-download only for an interrupted download')
         allowed={'b0_results.zip','b0_results.zip.kaggle-partial','results_receipt.json','results_receipt.json.kaggle-partial'}
         if any(p.is_symlink() or not p.is_file() or p.name not in allowed for p in download.iterdir()):
             raise ValueError('Unexpected file in download folder; preserve it and inspect manually')
     else:download.mkdir(parents=True)
+    entry=registered_run(ROOT,RUN)
+    if entry is None or entry.get('baseline')!='B0':raise ValueError('Register Kaggle run and canonical version before fetch')
+    destination=output_path(ROOT,'baseline',entry['version'],baseline='B0')
+    if run_folder(ROOT,RUN) is not None or destination.exists():raise FileExistsError('Local result already exists; no overwrite')
     api.kernels_output(KERNEL_ID+('/'+str(version) if version is not None else ''),str(download),file_pattern=r'(b0_results\.zip|results_receipt\.json)$',quiet=False)
     archive=download/'b0_results.zip';receipt=read(download/'results_receipt.json')
     if receipt['run']!=RUN or receipt['config_sha256']!=sha256_file(ROOT/CONFIG):raise ValueError('Wrong experiment output')
     if sha256_file(archive)!=receipt['archive_sha256']:raise ValueError('Downloaded archive differs')
-    destination=ROOT/'outputs/training'/RUN
-    if destination.exists():raise FileExistsError('Local result already exists; no overwrite')
+    pending=destination.with_name(destination.name+'.partial')
+    if pending.exists():raise FileExistsError('Partial extraction exists; inspect before retry')
     with zipfile.ZipFile(archive) as z:
         if len(z.namelist())!=len(set(z.namelist())):raise ValueError('Duplicate result member')
         for name in z.namelist():
-            safe_path(ROOT/'outputs/training',name)
+            safe_path(ROOT,name)
             if not name.startswith(RUN+'/'):raise ValueError('Unexpected result path')
         manifest=json.loads(z.read(RUN+'/artifacts_manifest.json'))
         if set(z.namelist())!={RUN+'/'+p for p in manifest['files']}|{RUN+'/artifacts_manifest.json'}:
@@ -566,7 +570,29 @@ def fetch(version: int | None=None, *, resume_download: bool=False) -> None:
             experiment=json.loads(z.read(RUN+'/experiment.json'))
             if hashlib.sha256(z.read(RUN+'/weights/best.pt')).hexdigest()!=experiment['checkpoint_sha256']:
                 raise ValueError('Best checkpoint differs from experiment')
-        z.extractall(destination.parent)
+        # ZIP lịch sử có tiền tố RUN/; giải nén sang thư mục version mới mà
+        # không đổi byte checkpoint, rồi rename nguyên tử khi đã ghi xong.
+        pending.mkdir(parents=True,exist_ok=False)
+        for member in z.infolist():
+            relative=Path(member.filename).relative_to(RUN)
+            # ZIP dùng dấu /; Path trên Windows đổi sang \\ nên phải trả về POSIX cho safe_path.
+            target=safe_path(pending,relative.as_posix())
+            if member.is_dir():
+                target.mkdir(parents=True,exist_ok=True)
+            else:
+                target.parent.mkdir(parents=True,exist_ok=True)
+                with z.open(member) as src,target.open('xb') as dst:shutil.copyfileobj(src,dst)
+        (pending/'artifact_identity.json').write_text(json.dumps({
+            'run_id':RUN,'baseline':'B0','name':entry.get('name',RUN),
+            'source_archive_sha256':receipt['archive_sha256']},ensure_ascii=False,indent=2),encoding='utf-8')
+        pending.rename(destination)
+    registry=registry_data(ROOT)
+    for row in registry['runs']:
+        if row['run_id']==RUN:
+            row['legacy_previous_path']=row['actual_path']
+            row['actual_path']=destination.relative_to(ROOT).as_posix()
+            row['storage_state']='CANONICAL'
+    write(ROOT/'data/registries/project_explorer.json',registry)
     write(STAGING/'retrieval.json',dict(status='downloaded_verified',training_completed=receipt['training_completed'],
         local_output=str(destination.relative_to(ROOT)),archive_sha256=receipt['archive_sha256'],test_inference=False,reserve_inference=False))
     print('Downloaded and verified:',destination,'; training completed:',receipt['training_completed'])
@@ -633,7 +659,7 @@ def main() -> int:
     parser.add_argument('--version',type=int,help='With logs/status/fetch: select an exact notebook version, e.g. 10')
     parser.add_argument('--epochs-only',action='store_true',help='With logs: show one summary per epoch, no batch progress')
     parser.add_argument('--resume-download',action='store_true',help='With fetch: resume an interrupted Kaggle download without removing existing evidence')
-    parser.add_argument('--experiment',choices=('full','adamw-v2','sgd-v3'),default='full',help='Select the intended recipe for preparation, submission or fetch')
+    parser.add_argument('--experiment',choices=('full','adamw-v2','sgd-v3','sgd-low-lr-v4'),default='full',help='Select the intended recipe for preparation, submission or fetch')
     args=parser.parse_args()
     if args.follow and args.action!='logs':parser.error('--follow is only available with logs')
     if args.epochs_only and args.action!='logs':parser.error('--epochs-only is only available with logs')
@@ -644,7 +670,12 @@ def main() -> int:
     if args.experiment!='full':
         if args.action not in ('fetch','prepare-recipe','publish-recipe'):parser.error('--experiment is only available with recipe preparation, submission or fetch')
         from src.kaggle_recipe import RECIPE_CONFIG,RECIPE_RUN
-        recipe_config,recipe_run=(RECIPE_CONFIG,RECIPE_RUN) if args.experiment=='adamw-v2' else ('configs/b0_s960_sgd_kaggle_v3.json','b0_s960_sgd_kaggle_v3')
+        recipes={
+            'adamw-v2':(RECIPE_CONFIG,RECIPE_RUN),
+            'sgd-v3':('configs/b0_s960_sgd_kaggle_v3.json','b0_s960_sgd_kaggle_v3'),
+            'sgd-low-lr-v4':('configs/b0_s960_sgd_low_lr_kaggle_v4.json','b0_s960_sgd_low_lr_kaggle_v4'),
+        }
+        recipe_config,recipe_run=recipes[args.experiment]
         if args.action=='fetch':CONFIG=recipe_config;RUN=recipe_run;STAGING=ROOT/'outputs/kaggle'/RUN
     if args.action=='prepare':prepare()
     elif args.action=='prepare-recipe':

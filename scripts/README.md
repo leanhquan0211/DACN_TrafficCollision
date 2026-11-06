@@ -1,6 +1,55 @@
-**B0 Version 11:** `analyze_b0_training_data.py --help` thống kê nhóm nguồn/diện tích bbox và lỗi val đã lưu; `kaggle_b0.py logs --follow --epochs-only --version 11` theo dõi, `fetch --experiment sgd-v3 --version 11` lấy sau khi hoàn tất. [Hướng dẫn](../docs/kaggle_training.md#version-11--đối-chứng-sgd).
+**B0 run 04/11:** `prepare-recipe --experiment sgd-low-lr-v4`, `publish-recipe --experiment sgd-low-lr-v4` và `fetch --experiment sgd-low-lr-v4 --version 12` đều đã thực hiện, output đã kiểm về local. [Hướng dẫn](../docs/kaggle_training.md#version-12--đối-chứng-learning-rate-sgd-04112026). Không gọi lại để ghi đè hoặc gửi trùng; Version 11 giữ nguyên.
 
 # Chọn đúng lệnh để chạy
+
+**Output mới:** đọc [kiến trúc artifact](../docs/STORAGE_ARCHITECTURE.md). Dùng `vNNN_short_description` trong nhánh baseline/shared/system/audit phù hợp; `--output` cũ dưới `outputs/training`, `outputs/audits` hoặc root `outputs` sẽ bị các entry point đã chuyển từ chối. Lệnh `run_all.py` giờ mặc định lưu tại `outputs/system_evidence/v002_vehicle_preview/<tên-video>/`; không truyền `--output-dir outputs`.
+
+## Migration output đã kiểm hash
+
+Năm nhóm B2/evaluator/evidence/audit DETRAC đã chuyển vật lý; [bảng cũ → mới và nhóm giữ lại](../frontend/README.md#migration-vật-lý-0511-và-phần-giữ-lại). Công cụ đọc manifest `outputs/audits/storage_migration_v1/manifest.json` (bị Git ignore). Chạy từ gốc project:
+
+```powershell
+.\.venv-dashboard\Scripts\python.exe -X utf8 -B scripts/maintenance/migrate_outputs.py --plan
+.\.venv-dashboard\Scripts\python.exe -X utf8 -B scripts/maintenance/migrate_outputs.py --verify
+```
+
+`--apply --group <tên>` chuyển một nhóm có trong `--help` và dừng nếu destination đã tồn tại khác trạng thái manifest. `--rollback --group <tên>` rename ngược sau kiểm SHA, không xóa file; cần kiểm lại liên kết tài liệu đã sửa theo đường dẫn mới. B0/B1 không có trong danh sách nhóm được phép của công cụ này.
+
+## B2 pipeline và dữ liệu temporal — lượt tiếp theo
+
+Lệnh chạy **toàn bộ video** sau xuất track/motion, FSM, ảnh JPEG, clip MP4 và `summary.json`. Thay đường dẫn output bằng tên **chưa tồn tại**; đây là pipeline offline hai lượt, clip được kiểm đọc lại và không có ý nghĩa là dự đoán tai nạn đã xác minh.
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -B scripts/run_b2_system.py data_samples/cadp/cadp_001407_clean_display20fps.mp4 --output-dir outputs/system_evidence/v002_b2_alerts --device cpu
+```
+
+Lượt đầu dùng [B2 v2](../configs/b2_motion_v2.json), giữ cả cặp có bbox chồng dù tâm xa hơn ngưỡng; [FSM v2](../configs/alert_fsm_v2.json) tái kích hoạt sau hai frame điểm thấp được quan sát. Cooldown giảm lặp nhưng không thể bảo đảm phân biệt hai sự kiện không có giai đoạn score thấp; ID switch có thể sinh cảnh báo trùng. Thời gian container chỉ dùng phát lại clip. Metadata evidence ghi frame, pair, score/feature, hash, tình trạng thiếu frame trước/sau và kiểm số frame/ảnh khi đọc lại. `--max-pending` của renderer giới hạn số clip đang giữ trong RAM; vượt giới hạn thì báo lỗi thay vì tự bỏ cảnh báo.
+
+[Bảng nguyên nhân tám frame](../outputs/baselines/03_b2_motion_rules/v002_overlap_fix/cadp_exclusion_diagnosis.csv), [so CADP](../outputs/baselines/03_b2_motion_rules/v002_overlap_fix/cadp_selector_comparison.json), [so DETRAC](../outputs/baselines/03_b2_motion_rules/v002_overlap_fix/detrac_selector_comparison.json). `replay_b2_candidates.py` tính lại candidate từ track cache; `compare_b2_candidates.py` kiểm track/frame giống nhau trước khi so. Cặp thêm chưa tự là false positive. [B0/B1/B2 trên cùng 300 frame âm](../outputs/shared_evaluations/v001_event_evaluator/detrac_b0_b1_b2_diagnostic_2026-11-05.json) là diagnostic trên nguồn đã dùng, không phải matched recall hay test độc lập.
+
+`inventory_temporal_sources.py` chỉ kiểm metadata/nhóm nguồn và không mở video; [inventory](../outputs/shared_evaluations/v001_event_evaluator/temporal_inventory_2026-11-05_v6.json) chưa chứng minh không trùng nội dung. `inspect_temporal_pilot.py` chỉ nhận clip author-train ở cả hai split, kiểm SHA, giải mã và PTS OpenCV/FFprobe; không tự gán nhãn cho frame khác. Một clip author-test đã bị dùng development và hai clip author-test đã giải mã kiểm số frame trước khi có chốt này; cả ba đã ghi [registry consumed](../data/registries/temporal_development_v1.json), không còn được xem là test độc lập. Với annotation chỉ có một frame onset, evaluator cần policy có `post_onset_tolerance_frames` rõ ràng; đó là cửa sổ ghép, không phải end GT. [Probe 0 frame](../outputs/shared_evaluations/v001_event_evaluator/accident_dev_FQx_impact_probe_v2.json) chỉ kiểm chức năng trên clip consumed.
+
+`train_temporal_verifier.py --help` mô tả trainer chung; chưa có release feature đủ điều kiện và [config](../configs/temporal_supervised_v1.json) khóa `training_enabled=false`. Mỗi record cần `split` train/val, video/group/camera nếu biết, nhãn verified + `label_source`/`label_frame_interval`, event ID nếu dương, `frame`, `window_frame_indices`, `features` 20 cột và mask. `--check` kiểm schema, nhóm/video/camera/event, causal và hai lớp; `--train` chỉ hoạt động khi config và release có hash/readiness evidence cho phép, output mới. Chưa chạy train T0/GRU.
+
+## Theo dõi sự kiện và motion — 05/11/2026
+
+Lệnh dưới đây chạy từ gốc project bằng `.venv`; mỗi `--output`/`--output-dir` phải là đường dẫn **mới** để không ghi đè bằng chứng cũ. Các version `v020`–`v023` chỉ là ví dụ: kiểm registry/thư mục thật và cấp version chưa dùng trước khi chạy. Các số trong fixture là dữ liệu minh họa.
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -B scripts/evaluate_events.py --input tests/fixtures/events_example.json --output outputs/shared_evaluations/v020_fixture_event_demo/report.json
+.\.venv\Scripts\python.exe -X utf8 -B scripts/evaluate_events.py --output outputs/shared_evaluations/v021_event_replay_demo/report.json
+.\.venv\Scripts\python.exe -X utf8 -B scripts/run_b2_motion.py data_samples/cadp/cadp_001407_clean_display20fps.mp4 --output-dir outputs/baselines/03_b2_motion_rules/v020_cadp_motion_demo --max-frames 150 --device cpu
+.\.venv\Scripts\python.exe -X utf8 -B scripts/replay_b2_alerts.py outputs/baselines/03_b2_motion_rules/v020_cadp_motion_demo/frames.jsonl --output outputs/shared_evaluations/v022_cadp_fsm_demo/events.json
+.\.venv\Scripts\python.exe -X utf8 -B scripts/audit_b2_pilot.py --frames outputs/baselines/03_b2_motion_rules/v020_cadp_motion_demo/frames.jsonl --output outputs/data_audits/v020_cadp_pair_audit_demo/pair_audit.json
+```
+
+`evaluate_events.py` khi có `--input` đọc JSON gồm `videos`, `events`, `samples`; [fixture](../tests/fixtures/events_example.json) minh họa đầy đủ. Mỗi video cần ID/camera; event cần ID, `onset_frame`, `end_frame` **bao gồm hai đầu**, `status` (`verified`, `unknown`, `ignore`) và `label_source`; mỗi sample cần frame nguyên tăng dần, `score` 0–1, label (`negative`, `positive`, `unknown`, `ignore`) và `provenance`. `timestamp_s` có thể null. Chỉ khai báo `fully_labeled_negative` cùng phạm vi frame nếu toàn clip âm đã rà; chỉ khai báo `source_timing_verified`/`duration_verified` khi timing nguồn thực sự đáng tin. Code [event_evaluator.py](../src/event_evaluator.py) ghép cạnh bật với một event đã bắt đầu và chưa kết thúc, sau đó khóa event; đang bật trước onset được đánh dấu sớm/censored, không tự gọi TP/FN. Frame chưa biết/ignore không được tính FP. `compare_matched_recall` chỉ so khi hai kết quả có cùng event và recall gần nhau; người dùng code vẫn phải bảo đảm cùng video, coverage và policy, chọn ngưỡng trên validation riêng.
+
+Không có `--input`, script đọc cache B0/B1 s960 khóa theo [config B1](../configs/b1_causal_diagnostics_v1.json), kiểm replay từng trạng thái và xuất kết quả theo nhóm nguồn. Các clip âm đã dùng và CADP là chẩn đoán; CADP `Colliding` của tác giả được để event scene `unknown`, không suy event recall hoặc delay. Ở clip âm, số cạnh bật theo [event policy](../configs/event_policy_v1.json) là cảnh báo thô cho phép so cùng policy, chưa là benchmark đã khóa độc lập.
+
+`run_b2_motion.py` xuất `frames.jsonl` gồm từng frame, tracks, bbox chuẩn hóa, ID tạm, quality/missing, cặp, features và điểm luật; `metadata.json` lưu hash video/model/config, phiên bản, số frame và giới hạn. Vận tốc theo tọa độ ảnh/frame; FPS trình chiếu CADP không phải FPS nguồn. [Config B2](../configs/b2_motion_v1.json) chứa ngưỡng thử chức năng; không phải ngưỡng đã chọn trên validation. `replay_b2_alerts.py` dùng [FSM](../src/alert_fsm.py) và [config](../configs/alert_fsm_v1.json), lưu danh sách cảnh báo nghi vấn cùng metadata frame trước/sau, chưa lưu clip hình ảnh; cooldown theo cặp vẫn có thể bỏ sót sự kiện mới của cùng cặp. [temporal_verifiers.py](../src/temporal_verifiers.py) cung cấp vector/mask chung, cửa sổ causal, scaler train-only và interface MLP/GRU; chưa train hoặc đánh giá.
+
+`audit_b2_pilot.py` là đối chiếu riêng CADP 001407: dùng hai GT ID 0/2 và các frame 96–130 đã rà, ghép từng frame bằng IoU≥0,5 rồi kiểm cặp có trong cache. Kết quả là proxy pilot có giới hạn do nội suy bbox và ID tracker, không phải ground truth identity mới hay benchmark sự kiện. Video đầu vào phải là bản sạch đã kiểm mapping của đúng chuỗi.
 
 **Kaggle Version 10 đã hoàn tất và đã fetch:** `logs --epochs-only --version 10` đọc lại một dòng mỗi epoch; `prepare-recipe`, `publish-recipe` và `fetch --experiment adamw-v2 --version 10` đã thực hiện, không gọi lại vào cùng output. Kiểm [báo cáo](../docs/b0_pilot_audit.md#kết-quả-version-10--adamw-kaggle-30102026). Các dòng Version 8 bên dưới là lịch sử.
 
@@ -17,7 +66,7 @@ Chạy từ gốc project bằng `.\.venv\Scripts\python.exe`. Không cần ch�
 | Chỉ detection / chỉ tracking | `run_detection.py` / `run_tracking.py` | MP4 bbox xe / bbox + ID tạm |
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/run_all.py "data_samples/TEN_VIDEO.mp4" --device auto --imgsz 640 --output-dir outputs
+.\.venv\Scripts\python.exe scripts/run_all.py "data_samples/TEN_VIDEO.mp4" --device auto --imgsz 640
 ```
 
 Thay tên video thật. `yolov8n.pt` phát hiện phương tiện, chưa kết luận tai nạn. `run_all.py` là bộ gọi các tiến trình; vòng frame nằm trong `src/video_pipeline.py`. Các CLI có `--help`; không đổi model/tham số để thử chỉ vì sắp xếp lại thư mục.
@@ -35,6 +84,7 @@ Thay tên video thật. `yolov8n.pt` phát hiện phương tiện, chưa kết l
 | `audit_pilot_groups.py` | Fingerprint frame, gợi ý cảnh gần, so nhóm nguồn; `--exported-dataset` gợi ý cặp gần giống xuyên split YOLO | [Kiểm nhóm B0](../docs/b0_pilot_audit.md) |
 | `prepare_b0_pilot_index.py` | Ghép batch/review; kiểm pool; `--make-pilot-split` chia theo nhóm nguồn; `--export-split --release-kind pilot` xuất YOLO sau gate/hash | [Pilot và lệnh kiểm](../docs/b0_pilot_audit.md#pilot-b0-ảnh-26102026) |
 | `train_b0.py` | Kiểm release/export; fine-tune và đo bbox; `--resume` tiếp tục run dở từ checkpoint/optimizer khi config khớp và không còn process train | [Config](../configs/b0_verified_pilot_v1.json), [kết quả](../docs/b0_pilot_audit.md) |
+| `serve_dashboard.py` | Chạy web local/API read-only tại 127.0.0.1:8765; dùng `.venv-dashboard`, không train/đổi dữ liệu. Đọc artifact, ảnh/video và snapshot Kaggle theo yêu cầu | [Cài và dùng dashboard](../frontend/README.md) |
 | `evaluate_b0_clean.py` | Đo checkpoint trên test đã khóa; có thể so checkpoint cũ và probe TAD normal cùng ngưỡng | [Phiếu loại](../data/reviews/2026-10-27-b0-near-duplicate-review.json) |
 | `analyze_b0.py` | Phân tích lỗi từ prediction đã lưu; chạy checkpoint B0 hiện hành trên 9 chuỗi sạch, xuất log mỗi frame/MP4 và trang HTML | [Chẩn đoán B0](../docs/b0_pilot_audit.md#chẩn-đoán-lỗi-ảnh-và-video-b0--27102026), [config khóa nguồn](../configs/b0_diagnostics_v1.json) |
 | `prepare_detrac.py` | Lấy chọn lọc chuỗi DETRAC, kiểm ảnh và ghép MP4 | [Dựng lại dữ liệu](../docs/GETTING_STARTED.md) |
@@ -115,4 +165,4 @@ Lệnh train **do người dùng tự chạy**, cùng giải thích LR/early sto
 - `fetch`: tảiZIP/receipt, kiểmhash và nhập vào runcloud mới; không tự test/reserve hoặc thay điểm vận hành B0.
 - `bootstrap`/`execute`: chỉ trongKaggle; càiPython/thư viện khóa, kiểmGPU/data/forward rồi mới gọi trainer cũ. Trênlaptop bị chặn trước train.
 
-[Hướng dẫn và lệnh cụ thể](../docs/kaggle_training.md). Gói/lầnchạy ở`outputs/kaggle/b0_s960_full_kaggle_v1/`, kết quảcloud sau khi nhận ở`outputs/training/b0_s960_full_kaggle_v1/`. Không resume hardneg15epoch đã hoàn tất; không upload`.venv`,cache,raw hoặc credential.
+[Hướng dẫn và lệnh cụ thể](../docs/kaggle_training.md). Gói/recipe lịch sử ở `outputs/kaggle/b0_s960_full_kaggle_v1/`; run đã fetch trước 06/11 còn ở `outputs/training/`, còn **fetch mới** lưu vào `outputs/baselines/01_b0_image_detection/<version đã đăng ký>/`. Không resume hardneg 15 epoch đã hoàn tất; không upload `.venv`, cache, raw hoặc credential.

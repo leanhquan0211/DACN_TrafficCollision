@@ -2,6 +2,14 @@
 
 # Cấu hình
 
+**Cấu hình thí nghiệm đã hoàn tất là snapshot lịch sử:** không sửa `output` trong config cũ để chạy lại vì sẽ đổi hash/provenance. Run mới cần config mới trỏ tới `outputs/baselines/<baseline>/vNNN_short_description/` và version được cấp trước; xem [kiến trúc artifact](../docs/STORAGE_ARCHITECTURE.md). Các lệnh `--run`/`--train` với output legacy được mô tả bên dưới là lịch sử, không còn là lệnh tạo output mới.
+
+**05/11 — bản phát triển temporal mới:** [B2 v2](b2_motion_v2.json) thêm nhánh bbox overlap vào gate, giữ ngưỡng v1; [FSM v2](alert_fsm_v2.json) rearm theo score thấp đã quan sát; [trainer T0/GRU](temporal_supervised_v1.json) đang khóa train. Cả ba là giá trị thử nghiệm, chưa hiệu chuẩn trên tập validation độc lập.
+
+**05/11 — công cụ temporal thử nghiệm:** [event_policy_v1.json](event_policy_v1.json) khóa quy tắc cạnh cảnh báo để replay; [b2_motion_v1.json](b2_motion_v1.json) và [alert_fsm_v1.json](alert_fsm_v1.json) ghi ngưỡng khởi tạo để kiểm chức năng, chưa tuning/benchmark. [Cách chạy và schema](../scripts/README.md#theo-dõi-sự-kiện-và-motion--05112026).
+
+**04/11 — run B0 Kaggle đối chứng LR:** [`b0_s960_sgd_low_lr_kaggle_v4.json`](b0_s960_sgd_low_lr_kaggle_v4.json) giữ data/nhãn/split/checkpoint và `TRAIN_KEYS` của SGD V11, chỉ đổi `lr0=0,0003 → 0,00015`; GPU Kaggle miễn phí, val-only, tối đa 60 epoch, bắt đầu xét early stopping epoch25/patience25. Run đã kết thúc ở epoch50, kết quả local đã qua kiểm; chưa chọn làm checkpoint B0 hiện hành. Xem [số liệu và giới hạn](../docs/b0_pilot_audit.md#chuẩn-bị-version-12--đối-chứng-learning-rate-04112026).
+
 **Version 10 đã hoàn tất:** config AdamW bên dưới đã chạy đủ 60 epoch, best CSV epoch52; log xác nhận AMP checks passed, không ghi OOM/giảm batch. Không sửa config khóa. [Báo cáo kết quả](../docs/b0_pilot_audit.md#kết-quả-version-10--adamw-kaggle-30102026).
 
 **Thử nghiệm hiện hành:** [b0_s960_adamw_kaggle_v2.json](b0_s960_adamw_kaggle_v2.json), được khóa trước gửi Version 10. Giữ data/split/checkpoint, đổi SGD→AdamW, batch 2→8, AMP, nbs 64→32, cosine, augmentation nhẹ và tối đa 60 epoch; chỉ tính patience 25 sau epoch 25. Không sửa config đã gửi. Sau kiểm mã thư viện phát hiện config ghi không fallback nhưng Ultralytics có thể tự giảm batch khi OOM epoch đầu; theo dõi log thực và ghi rõ batch thực tế khi báo cáo. [Hướng dẫn](../docs/kaggle_training.md).

@@ -16,6 +16,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from src.data_preparation import new_audit_dir, save_csv, save_json, sha256_file, unique_path
+from src.storage_paths import artifact_path, storage_root
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def read_manifest(path: Path) -> tuple[list[str], list[dict]]:
@@ -155,8 +158,8 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path, default=Path("data/manifest.csv"))
     parser.add_argument("--cadp-report", type=Path, required=True)
     parser.add_argument("--review", type=Path, required=True)
-    parser.add_argument("--detrac-report", type=Path, default=Path("outputs/audits/detrac_preparation/report.json"))
-    parser.add_argument("--audit-root", type=Path, default=Path("outputs/audits"))
+    parser.add_argument("--detrac-report", type=Path, default=artifact_path(ROOT, 'outputs/data_audits/v001_detrac_preparation/report.json'))
+    parser.add_argument("--audit-root", type=Path, default=storage_root(ROOT,'data_audit'))
     args = parser.parse_args()
     fields, rows = read_manifest(args.manifest)
     before = deepcopy(rows)
@@ -167,7 +170,7 @@ def main() -> int:
     if any(next(r for r in before if r["video_id"] == key) != next(r for r in rows if r["video_id"] == key) for key in untouched):
         raise ValueError("Unreviewed old sample changed")
     # Kiểm tra xong mới ghi backup nguyên byte và thay CSV bằng file tạm hoàn chỉnh.
-    audit = new_audit_dir(args.audit_root, "cadp_clean_manifest_update")
+    audit = new_audit_dir(args.audit_root, 'v018_cadp_manifest_update' if args.audit_root.resolve()==storage_root(ROOT,'data_audit') else 'cadp_clean_manifest_update')
     (audit / "manifest_before.csv").write_bytes(args.manifest.read_bytes())
     temporary = unique_path(args.manifest.with_suffix(".part.csv"))
     save_csv(temporary, rows, fields)

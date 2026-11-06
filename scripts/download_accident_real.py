@@ -22,12 +22,17 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from src.data_preparation import sha256_file
 from scripts.audit_accident_public import METADATA_SHA256
+from src.storage_paths import output_path
 
 parser=argparse.ArgumentParser(description='Tải tiếp nối ACCIDENT v9 real vehicle collisions từ Kaggle public')
 parser.add_argument('--workers',type=int,default=16)
+parser.add_argument('--audit-version',default='v016_accident_download',help='New vNNN_short_description audit directory')
 args=parser.parse_args()
 if not 1 <= args.workers <= 16:
     parser.error('--workers must be 1..16')
+report_path=output_path(ROOT,'data_audit',args.audit_version,child='report.json')
+if report_path.exists():
+    raise FileExistsError(f'Audit report exists; choose a new --audit-version: {report_path}')
 
 listing_path=ROOT/'.tmp/accident_v9_full_listing.json'
 if not listing_path.exists():
@@ -140,7 +145,6 @@ with ThreadPoolExecutor(max_workers=args.workers) as pool:
             receipt_path.write_text(json.dumps(receipts,indent=2)+'\n',encoding='utf-8')
             print(f'checked {done+len(failures)}/{len(pending)}, OK {done}, failed {len(failures)}, network {transferred/2**30:.2f} GiB',flush=True)
 receipt_path.write_text(json.dumps(receipts,indent=2)+'\n',encoding='utf-8')
-report_path=ROOT/'outputs/audits/accident_scaled_download/report.json'
 report_path.parent.mkdir(parents=True,exist_ok=True)
 report={'source':'https://www.kaggle.com/datasets/picekl/accident/versions/9',
         'listing_sha256':sha256_file(listing_path),'listed_real_members':len(members),

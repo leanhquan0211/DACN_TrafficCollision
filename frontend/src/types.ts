@@ -1,0 +1,12 @@
+export type History = { epoch: number; seconds: number | null; precision: number; recall: number; map50: number; map95: number; [key: string]: number | null }
+export type Metrics = { precision: number | null; recall: number | null; map50: number | null; map95: number | null }
+export type Fixed = { tp?: number; fp?: number; fn?: number; precision?: number; recall?: number; f1?: number; confidence?: number; matching_iou?: number; negative_frames?: number; negative_frames_with_predictions?: number }
+export type Run = { id: string; title: string; status: string; epochs: number; best_epoch: number | null; metrics: Metrics; fixed: Fixed; config: Record<string, unknown>; provenance: string | null; dataset_hash: string | null; checkpoint_hash: string | null; device?: string; torch?: string; ultralytics?: string; updated_at: number | null; source: string; local_available?: boolean; cloud_version?: number | null; history?: History[]; charts?: { name: string; url: string; source: string }[]; logs?: string[]; limitations?: unknown }
+export type Inventory = { runs: Run[]; warnings: string[]; read_at: number; mode: string; cloud: string }
+export type Dataset = { samples: number; sources: { name: string; positive: number; negative: number; unknown: number; images: number; clips: number; groups: number }[]; splits: Record<string, number>; clips: number; groups: number; note: string; bbox_sizes: {histogram: { name: string; count: number }[]; measured: number; skipped: number; scope: string} }
+export type Prediction = { xyxy: number[]; confidence: number; matched_gt: number | null; iou?: number }
+export type Case = { source_sequence: string; source_frame: string; tp: number; fp: number; fn: number; image: string | null; clean_image: string | null; gt_xyxy: number[][]; predictions: Prediction[] }
+export type Cases = { items: Case[]; total: number; offset: number; limit: number }
+export type Sequence = { id: string; frames: number; role: string; source_fps_verified: boolean; comparison: Record<string, { active_frames: number; false_raw_runs: number }>; history: Record<string, string>[]; video: string | null }
+export type Temporal = { sequences: Sequence[]; checkpoint: string; confidence: number; scope: string }
+export type Document = { id: string; name: string; path: string; url: string | null; format: string }

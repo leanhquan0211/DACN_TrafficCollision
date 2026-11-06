@@ -1,0 +1,4 @@
+# Môi trường web riêng; không cài đè .venv đang dùng train.
+fastapi==0.128.0
+uvicorn==0.40.0
+httpx==0.28.1

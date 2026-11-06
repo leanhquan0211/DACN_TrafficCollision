@@ -1,0 +1,16 @@
+{
+  "version": "b2-motion-dev-v1",
+  "tracker": "bytetrack.yaml",
+  "model": "yolov8n.pt",
+  "imgsz": 640,
+  "min_track_age": 2,
+  "max_normalized_distance": 0.12,
+  "max_candidates": 32,
+  "max_tracks_for_pairs": 100,
+  "min_approach_per_frame": 0.001,
+  "min_speed_change_per_frame": 0.002,
+  "min_direction_change_radians": 0.35,
+  "roi_normalized_xyxy": [0.0, 0.0, 1.0, 1.0],
+  "scope": "Exploratory image-space heuristic, not a validated collision detector. Thresholds are implementation defaults, not learned or tuned.",
+  "reference": "https://arxiv.org/abs/2208.06461"
+}

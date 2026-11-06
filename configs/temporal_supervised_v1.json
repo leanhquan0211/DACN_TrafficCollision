@@ -1,0 +1,14 @@
+{
+  "version": "temporal-supervised-v1",
+  "training_enabled": false,
+  "window_frames": 8,
+  "hidden_size": 32,
+  "seed": 20261105,
+  "epochs": 60,
+  "batch_size": 32,
+  "learning_rate": 0.001,
+  "early_stopping_start_epoch": 21,
+  "patience": 10,
+  "scope": "Trainer defaults for future verified feature releases, not a selected recipe. Enable only after independent label and group-split readiness is documented.",
+  "sources": ["https://docs.pytorch.org/docs/stable/generated/torch.nn.GRU.html", "https://docs.pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html"]
+}

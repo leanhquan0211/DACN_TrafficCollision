@@ -69,7 +69,7 @@ README CADP địa phương nói JSON stage 1 đánh dấu biên đoạn trong v
 
 ## DETRAC: kiểm kê ZIP và tạo video
 
-Central directory của `DETRAC-Images.zip` có **100 chuỗi, 140.131 JPG**, 9.849.591.986 byte ZIP, 9.842.424.283 byte ảnh khi giải nén. Không có README/FPS trong ZIP ảnh. Trước giải nén, ổ còn 28.438.917.120 byte. Chọn ba chuỗi, lấy **2.037 ảnh / 152.824.125 byte**, kiểm CRC từng ảnh với ZIP; không giải nén toàn bộ 9,8 GB. Danh mục 100 chuỗi nằm trong `outputs/audits/detrac_preparation/archive_sequences.csv`.
+Central directory của `DETRAC-Images.zip` có **100 chuỗi, 140.131 JPG**, 9.849.591.986 byte ZIP, 9.842.424.283 byte ảnh khi giải nén. Không có README/FPS trong ZIP ảnh. Trước giải nén, ổ còn 28.438.917.120 byte. Chọn ba chuỗi, lấy **2.037 ảnh / 152.824.125 byte**, kiểm CRC từng ảnh với ZIP; không giải nén toàn bộ 9,8 GB. Danh mục ban đầu tạo tại `outputs/audits/detrac_preparation/archive_sequences.csv`; sau migration vật lý nằm ở `outputs/data_audits/v001_detrac_preparation/archive_sequences.csv`.
 
 | Chuỗi | Ảnh đầu/cuối | Số ảnh = frame đọc lại | Kích thước | FPS | Thời lượng |
 | --- | --- | ---: | --- | ---: | ---: |
@@ -105,14 +105,14 @@ Chạy PowerShell tại thư mục gốc, dùng Python `.venv`:
 ```
 
 - `prepare_cadp_pilot.py`: CSV đối tượng/khoảng Colliding, JSON kiểm tra và ảnh đối chiếu ở `outputs/audits/cadp_1407/`; MP4 ở `outputs/annotation_preview/`. Bỏ `--preview-config` thì chỉ audit, không tự đoán tọa độ.
-- `prepare_detrac.py`: kiểm kê ZIP, tái dùng ảnh đã có khi CRC khớp hoặc lấy ảnh còn thiếu; tạo ba MP4 đầy đủ, một clip ngắn và audit tại `outputs/audits/detrac_preparation/`. Gặp file khác CRC sẽ dừng và giữ file đó.
+- `prepare_detrac.py`: kiểm kê ZIP, tái dùng ảnh đã có khi CRC khớp hoặc lấy ảnh còn thiếu; tạo ba MP4 đầy đủ, một clip ngắn. Audit lịch sử đã chuyển tới `outputs/data_audits/v001_detrac_preparation/`; lượt chạy mới mặc định dùng `v002_detrac_preparation` và yêu cầu tên mới nếu tên này đã tồn tại. Gặp file khác CRC sẽ dừng và giữ file đó.
 - `src/data_preparation.py`: hàm chung đọc hết video, hash, ghi H.264 qua FFmpeg và cắt clip. Không chạy trực tiếp.
 - `register_prepared_manifest.py`: đọc hai report để cập nhật manifest, giữ bản trước sửa tại `outputs/audits/manifest_registration/manifest_before.csv`.
 
 Lệnh đã dùng đăng ký lần này:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/maintenance/register_prepared_manifest.py --cadp-report outputs/audits/cadp_1407/report.json --detrac-report outputs/audits/detrac_preparation/report.json
+.\.venv\Scripts\python.exe scripts/maintenance/register_prepared_manifest.py --cadp-report outputs/audits/cadp_1407/report.json --detrac-report outputs/data_audits/v001_detrac_preparation/report.json
 ```
 
 **Không cần chạy lại các lệnh để xem kết quả.** Script chuẩn bị tự thêm hậu tố `_2` nếu output đã tồn tại; ảnh gốc không bị ghi đè. Script đăng ký từ chối ID đã có để không đè nhãn/ghi chú được rà sau đó. Khi chạy lại, dùng report/tên output mới thực tế, không đoán hậu tố.

@@ -18,7 +18,7 @@ from collections import defaultdict
 from pathlib import Path, PurePosixPath
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.data_preparation import H264Writer, clip_video, new_audit_dir, probe_video, save_csv, save_json, unique_path
+from src.data_preparation import H264Writer, clip_video, probe_video, save_csv, save_json, unique_path
 
 
 IMAGE_NAME = re.compile(r"img(\d+)\.(jpg|jpeg|png)", re.IGNORECASE)
@@ -170,7 +170,8 @@ def main() -> int:
     parser.add_argument("--fps-status", choices=("verified_source", "assumed"), default="assumed")
     parser.add_argument("--fps-source", default="", help="Document/official paper supporting FPS")
     parser.add_argument("--video-root", type=Path, default=Path("data_samples/ua_detrac"))
-    parser.add_argument("--audit-root", type=Path, default=Path("outputs/audits"))
+    parser.add_argument("--audit-root", type=Path, default=Path("outputs/data_audits"))
+    parser.add_argument("--audit-name", default="v002_detrac_preparation", help="Tên mới dạng vNNN_mo_ta; không ghi đè audit cũ")
     parser.add_argument("--smoke-seconds", type=float, default=10, help="First sequence clip, maximum 30 seconds")
     args = parser.parse_args()
     if len(set(args.sequences)) != len(args.sequences) or any(re.fullmatch(r"MVI_\d+", s) is None for s in args.sequences):
@@ -179,7 +180,10 @@ def main() -> int:
         parser.error("Invalid FPS or smoke duration")
     if args.fps_status == "verified_source" and not args.fps_source.strip():
         parser.error("--fps-source is required for verified_source")
-    audit = new_audit_dir(args.audit_root, "detrac_preparation")
+    if not re.fullmatch(r"v\d{3}_[a-z0-9_]+", args.audit_name):
+        parser.error("--audit-name phải có dạng vNNN_mo_ta")
+    audit = args.audit_root / args.audit_name
+    audit.mkdir(parents=True, exist_ok=False)
     report = dict(archive=str(args.archive), selected_sequences=args.sequences,
                   fps=args.fps, fps_status=args.fps_status, fps_source=args.fps_source,
                   collision_label="unknown", user_review_status="pending", sequences=[])

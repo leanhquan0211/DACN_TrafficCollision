@@ -1,7 +1,8 @@
 """Trích ảnh impact và ứng viên âm trước impact từ ACCIDENT v9 đã tải.
 
 Đầu vào: MP4 thật/metadata gốc cùng receipt SHA ở data_raw/accident/public_selected/.
-Đầu ra: PNG sạch, TXT bbox tác giả, báo cáo từng clip ở outputs/audits/accident_scale/.
+Đầu ra: PNG sạch, TXT bbox tác giả, báo cáo từng clip ở
+outputs/data_audits/v004_accident_scale/ cho lần chạy mới.
 Chạy sau khi tải thêm MP4; lệnh có thể chạy lại để tiếp tục clip chưa xử lý. Script
 chỉ kiểm mapping kỹ thuật; ảnh trước impact là ứng viên nhãn dẫn xuất, không là
 annotation âm tác giả hoặc bằng chứng toàn đoạn không tai nạn.
@@ -24,9 +25,10 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from scripts.audit_accident_public import METADATA_SHA256, check_timestamps, validate_row
 from src.data_preparation import sha256_file
+from src.storage_paths import output_path, require_output_path
 
 RAW=ROOT/'data_raw/accident/public_selected'
-DEFAULT_OUTPUT=ROOT/'outputs/audits/accident_scale'
+DEFAULT_OUTPUT=output_path(ROOT,'data_audit','v004_accident_scale')
 TYPES={'t-bone','rear-end','sideswipe','head-on'}
 
 
@@ -126,8 +128,7 @@ def main() -> int:
     if not 1 <= args.workers <= 8:
         parser.error('--workers must be 1..8')
     output=(ROOT/args.output).resolve()
-    if not output.is_relative_to(ROOT):
-        raise ValueError('Output outside project')
+    require_output_path(ROOT,output,'data_audit')
     output.mkdir(parents=True,exist_ok=True)
     journal=output/'clips.jsonl'
     prior={}

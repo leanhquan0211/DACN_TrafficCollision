@@ -2,16 +2,16 @@
 
 **Đề tài:** Phát hiện và cảnh báo va chạm giao thông từ video bằng theo dõi phương tiện và phân tích chuyển động theo thời gian.  
 **Project:** DACN_TrafficCollision.  
-**Ngày đối chiếu:** 31/10/2026, múi giờ Asia/Bangkok.  
-**Phạm vi hồ sơ:** lộ trình ban đầu và các hoạt động có bằng chứng từ 16–30/10/2026; kiểm tra chỉ đọc trạng thái mới nhất ngày 31/10. Báo cáo này bổ sung tài liệu trình bày, không thay thế nhật ký hằng ngày.
+**Ngày đối chiếu:** 04/11/2026, múi giờ Asia/Bangkok.
+**Phạm vi hồ sơ:** lộ trình ban đầu và hoạt động có bằng chứng từ 16/10–04/11/2026. Các nhận định ghi mốc 31/10 được giữ như lịch sử; phần cập nhật V12/dashboard dùng artifact đã kiểm ngày 04/11. Báo cáo này bổ sung tài liệu trình bày, không thay thế nhật ký hằng ngày.
 
 ## Tổng quan ngắn
 
 Đồ án hướng tới nhận biết va chạm xe–xe từ camera giám sát và tạo cảnh báo có thời điểm, vị trí cùng bằng chứng video. Quá trình thực hiện đã đi từ thử phát hiện/theo dõi xe, kiểm dữ liệu và nhãn, đến huấn luyện detector ảnh vùng tai nạn B0. Phần B1 lọc điểm theo thời gian đã có code và kết quả chẩn đoán; các bước luật chuyển động B2, mạng MLP T0 và GRU B3/T1 chưa được triển khai thành baseline hoàn chỉnh.
 
-Run gần nhất, SGD trên Kaggle Version 11, đã hoàn tất 50 epoch do dừng sớm. Checkpoint tốt nhất ở epoch 3 được đánh giá lại trên 307 ảnh validation: mAP50 **70,64%**, mAP50–95 **56,80%**. Tại confidence 0,25 và IoU ghép bbox 0,5, kết quả là **64 TP, 40 FP, 27 FN**, precision **61,54%**, recall **70,33%**, F1 **65,64%**. So với Version 10, khả năng tìm vùng đúng tăng nhưng số hộp sai cũng tăng. Đây là kết quả pilot ảnh trên validation đã dùng nhiều lần, chưa là phép đo phát hiện sự kiện trên test độc lập.
+Run gần nhất, SGD learning rate giảm một nửa trên Kaggle **Version 12**, đã hoàn tất 50 epoch và được tải/kiểm về máy. Checkpoint best epoch 3 đánh giá lại trên cùng 307 ảnh validation: mAP50 **70,63%**, mAP50–95 **56,10%**. Tại confidence 0,25 và IoU ghép bbox 0,5: **65 TP, 37 FP, 26 FN**, precision **63,73%**, recall **71,43%**, F1 **67,36%**. So với Version 11, F1 tại điểm vận hành này tăng nhẹ, còn mAP50 gần ngang và mAP50–95 giảm. Đây là kết quả pilot ảnh trên validation đã dùng nhiều lần, chưa là phép đo phát hiện sự kiện trên test độc lập hoặc căn cứ tự đổi checkpoint vận hành.
 
-Đóng góp thực tế đến thời điểm báo cáo gồm quy trình giữ nguồn gốc dữ liệu, phân biệt nhãn tác giả/nhãn dẫn xuất/xác nhận thủ công, chia tập theo nhóm nguồn, huấn luyện có config và checkpoint, phân tích lỗi ảnh/video, cùng quy trình chạy Kaggle riêng tư và tải kết quả có kiểm hash. Những sửa chữa đáng chú ý là loại dữ liệu trùng xuyên split, thu hồi run sử dụng nhãn âm chưa đủ căn cứ, xử lý lỗi RAM và phân biệt resume với khởi tạo thí nghiệm mới.
+Đóng góp thực tế đến thời điểm báo cáo gồm quy trình giữ nguồn gốc dữ liệu, phân biệt nhãn tác giả/nhãn dẫn xuất/xác nhận thủ công, chia tập theo nhóm nguồn, huấn luyện có config và checkpoint, phân tích lỗi ảnh/video, cùng quy trình chạy Kaggle riêng tư và tải kết quả có kiểm hash. Dashboard local đã có một lựa chọn run thống nhất: xem log/trạng thái Kaggle trước khi fetch và metric/curve/checkpoint từ artifact local sau khi fetch; giao diện chỉ đọc, không điều khiển train. Những sửa chữa đáng chú ý là loại dữ liệu trùng xuyên split, thu hồi run sử dụng nhãn âm chưa đủ căn cứ, xử lý lỗi RAM và phân biệt resume với khởi tạo thí nghiệm mới.
 
 Ưu tiên tiếp theo được đề xuất là cố định detector phục vụ phát triển, hoàn thiện dữ liệu và evaluator sự kiện, rồi so B0/B1 trước khi xây B2/T0/GRU. Tối ưu thêm B0 chỉ nên mở khi có giả thuyết cụ thể từ lỗi hoặc có nhãn công khai phù hợp. Chưa có căn cứ xem 70% mAP50 là chuẩn nghiệm thu bắt buộc hoặc xem thêm epoch là biện pháp chắc chắn cải thiện chất lượng.
 
@@ -311,6 +311,7 @@ P/R/F1 cố định n640 là 60,67/59,34/60,00%; s960 là 59,81/70,33/64,65%. Re
 | Kaggle V9, 2.681 ảnh | 11 / 1 | 69,79% | 55,87% | Thêm 420 normal; cùng recipe hardneg, đổi môi trường. |
 | Kaggle V10, 2.681 ảnh | 60 / 52 | 67,85% | 52,63% | AdamW và nhiều thay đổi schedule/resource. |
 | Kaggle V11, 2.681 ảnh | 50 / 3 | 70,64% | 56,80% | Chỉ đổi optimizer so V10 trong training arguments. |
+| Kaggle V12, 2.681 ảnh | 50 / 3 | 70,63% | 56,10% | Chỉ giảm `lr0` SGD 0,0003→0,00015 so V11. |
 
 | Run | Precision | Recall | F1 | TP / FP / FN | Ảnh âm có FP /216 |
 | --- | ---: | ---: | ---: | --- | ---: |
@@ -318,8 +319,11 @@ P/R/F1 cố định n640 là 60,67/59,34/60,00%; s960 là 59,81/70,33/64,65%. Re
 | V9 | 65,59% | 67,03% | 66,30% | 61 / 32 / 30 | 5 |
 | V10 | 72,15% | 62,64% | 67,06% | 57 / 22 / 34 | 2 |
 | V11 | 61,54% | 70,33% | 65,64% | 64 / 40 / 27 | 8 |
+| V12 | 63,73% | 71,43% | 67,36% | 65 / 37 / 26 | 7 |
 
 Nhóm Kaggle cùng fingerprint provenance và trọng số khởi tạo, còn hardneg khác lượng train. V11 so V10 tăng 2,79 điểm phần trăm mAP50, tăng 4,17 điểm mAP50–95 và tăng 7,69 điểm recall cố định; precision giảm 10,61 điểm, F1 giảm 1,42 điểm và FP tăng 18 bbox. V11 so V9 tăng khoảng 0,85 điểm mAP50 và0,93 điểm mAP50–95; không nên diễn giải mức tăng nhỏ trên validation tái sử dụng là tổng quát hóa đã được chứng minh.
+
+V12 là đối chứng một biến với V11: cùng 2.681 train/307 val, checkpoint đầu, seed, SGD, batch8, AMP, augmentation và lịch huấn luyện; chỉ `lr0` từ0,0003 xuống0,00015. Cả hai dừng ởepoch50 và chọn best epoch3. V12 so V11 gần như ngang mAP50 (giảm0,01 điểm phần trăm khi làm tròn), mAP50–95 giảm0,70 điểm, trong khi F1 cố định tăng1,72 điểm, FP giảm3 bbox và FN giảm1 bbox; số ảnh âm có hộp sai giảm8→7 trên216. Các thay đổi nhỏ trên một validation đã dùng nhiều lần không chứng minh LR thấp hơn tốt hơn tổng quát, đặc biệt khi mAP50–95 đi ngược F1. V10 vẫn có FP thấp hơn cả hai run SGD ở ngưỡng này. [Config V12](../configs/b0_s960_sgd_low_lr_kaggle_v4.json) ghi trước run giả thuyết và giới hạn; không thay checkpoint/operating point B0 đang khóa.
 
 Ví dụ chính xác về khác biệt metric: Ultralytics revalidation V11 báo P81,46%/R62,77%, còn ngưỡng cố định cho P61,54%/R70,33%. Hai cặp đều hợp lệ trong protocol của chúng; không chọn precision cao của cặp đầu và recall cao của cặp sau để dựng một cấu hình không tồn tại.
 
@@ -329,9 +333,13 @@ Ví dụ chính xác về khác biệt metric: Ultralytics revalidation V11 báo
 
 *Hình 1. Đồ thị thực tế Version 11, lấy từ kết quả đã kiểm hash. Loss train giảm trong khi loss validation và mAP không tạo cải thiện vượt epoch 3; diễn biến này là dấu hiệu cần kiểm tổng quát hóa, chưa cô lập riêng nguyên nhân quá khớp, lệch nguồn hoặc độ phủ nhãn.*
 
+![Đồ thị train và validation của Version 12](../outputs/training/b0_s960_sgd_low_lr_kaggle_v4/training_summary/results.png)
+
+*Hình 2. Đồ thị thực tế Version 12 từ output đã kiểm hash. Best vẫn ở epoch 3 dù LR đỉnh thấp hơn; kéo dài đến epoch 50 không tạo checkpoint vượt best theo fitness. Đây là quan sát trên cùng validation, không là bằng chứng độc lập rằng một LR tối ưu đã được tìm thấy.*
+
 Trong hardneg, mAP50 CSV epoch 2 từng vượt70% nhưng checkpoint best chọn ởepoch5 theo mAP50–95. Không có checkpoint epoch 2 để đánh giá lại, nên con số CSV đó không được gọi là modelbest đã đạt mục tiêu. Ở V11, bestCSV3 mAP50≈70,643% và revalidation70,643% nhất quán gần nhau; mAP50–95 CSV56,815% và revalidation56,800% được giữ là hai nguồn khác nhau. Một số run trước có chênh lớn hơn; nguyên nhân riêng chưa được cô lập, không tự quy cho random hay lỗi evaluator.
 
-Hồ sơ V10/V11 có ZIP, receipt và từng file qua hash. V9 được đọc chọn lọc metadata bằng HTTP Range, từng member khớp manifest; toàn bộ ZIP/checkpoint V9 không được tải và kiểm lại SHA đầy đủ. Những khác biệt về mức bằng chứng này phải được giữ khi trình bày khả năng tái lập.
+Hồ sơ V10/V11/V12 có ZIP, receipt và từng file qua hash; V12 thêm `run_status.json` xác nhận `training_completed=true`,50epoch và `best.pt` khớp hash trong experiment. V9 được đọc chọn lọc metadata bằng HTTP Range, từng member khớp manifest; toàn bộ ZIP/checkpoint V9 không được tải và kiểm lại SHA đầy đủ. Những khác biệt về mức bằng chứng này phải được giữ khi trình bày khả năng tái lập.
 
 ### F.7. Vì sao không đối chiếu các “phần trăm” paper như cùng thang đo?
 
@@ -380,23 +388,23 @@ Git giữ source/config/docs/metadata nhỏ; dataset, trọng số, cache và vi
 
 ### H.1. Trạng thái đã kiểm tại ngày báo cáo
 
-Kaggle Version 11 được API kiểm chỉ đọc ngày 31/10 xác nhận COMPLETE. Hồ sơ local có `training_completed=true`,50 epoch; ZIP124.368.049 byte cùng các thành viên đã quaSHA, best/last đều đã thu thập. Dataset và Notebook được xác minh PRIVATE trong hồ sơ triển khai; không có upload hoặc run mới trong lượt báo cáo. Không phát hiện tiến trình train/upload local theo mẫu lệnh đã kiểm; các công việc trước không bị hủy hoặc khởi chạy lại.
+Kaggle Version 11 được kiểm/thu thập từ 31/10 và giữ nguyên như mốc lịch sử. Theo chỉ dẫn riêng ngày04/11, Version 12 được gửi trên Dataset PRIVATE cũ mà không upload lại dữ liệu, chạy 50 epoch và đã fetch về `outputs/training/b0_s960_sgd_low_lr_kaggle_v4/`. Receipt và manifest ZIP, config hash, `run_status.json` cùng SHA checkpoint best đã qua kiểm; `training_completed=true`. Không có train trên laptop, không chạy test/reserve hay thay checkpoint B0 đang khóa. Deployment receipt lúc gửi vẫn ghi `RUNNING`, vì đó là snapshot lịch sử; API sau đó báo `COMPLETE` và kết quả local mới là bằng chứng hoàn tất train.
 
 Lỗi401/403 đọc log trước đó đã không còn tái hiện ở lần kiểm trạng thái này, nhưng nguyên nhân nội bộ hết lỗi chưa được xác minh. Trạng thái upload thành công trước đây không được dùng thay trạng thái train. Quota GPU được đọc tại từng mốc, từng có thông tin khả dụng khác con số giao diện30 giờ/tuần; không coi hạn mức đó là hằng số bảo đảm.
 
 | Mức hoàn thành | Thành quả có bằng chứng | Phần chưa đạt |
 | --- | --- | --- |
 | Công cụ dữ liệu | Kiểm media/mapping/nhãn/hash, export YOLO và group split. | Độc lập camera và độ phủ ngữ nghĩa toàn dataset chưa chứng minh. |
-| B0 pilot ảnh | Có checkpoint, config, curves, metric và FP/FN; V11 mAP50>70% val. | Chưa có test sự kiện độc lập hoặc lựa chọn model vận hành mới. |
+| B0 pilot ảnh | Có checkpoint, config, curves, metric và FP/FN; V11/V12 đều quanh70,6% mAP50 val. | Chưa có test sự kiện độc lập hoặc lựa chọn model vận hành mới. |
 | B1 chẩn đoán | Bộ lọc causal/replay và12 chuỗi đã chạy. | Chưa có event matching/recall/delay được kiểm đầy đủ. |
 | B2/T0/B3 | Có kế hoạch, nền detection/tracking và tài liệu. | Candidate/features/labels/verifier/evaluator còn thiếu. |
-| Hệ thống cuối | Luồng đọc/ghi video và evidence thí nghiệm có sẵn. | FSM cảnh báo, dashboard, video dài và benchmark toàn pipeline chưa hoàn chỉnh. |
+| Hệ thống cuối | Luồng đọc/ghi video, evidence thí nghiệm và dashboard local chỉ đọc đã có; xem được một run từ cloud đến artifact đã fetch. | FSM cảnh báo, xử lý online/video dài và benchmark toàn pipeline chưa hoàn chỉnh. |
 
 ### H.2. Có nên tiếp tục tối ưu B0 ngay?
 
-B0 đã có tín hiệu ảnh hữu ích và lỗi đủ rõ để phát triển bước kiểm chứng temporal. Các vòng đổi LR, tăng epoch, thêm normal, tăng model/resolution và đổi optimizer cho thấy sự đánh đổi; chưa có xu hướng cho phép bảo đảm cứ train tiếp sẽ cải thiện. V11 có mAP tốt nhất trong các run307 val đã báo nhưng fixed F1 thấp hơn V10. Không có căn cứ chọn model chỉ theo một số tối đa rồi bỏ phần FP tăng.
+B0 đã có tín hiệu ảnh hữu ích và lỗi đủ rõ để phát triển bước kiểm chứng temporal. Các vòng đổi LR, tăng epoch, thêm normal, tăng model/resolution và đổi optimizer cho thấy sự đánh đổi; chưa có xu hướng cho phép bảo đảm cứ train tiếp sẽ cải thiện. V11 giữ mAP50/mAP50–95 cao hơn V12 một ít trên307 val, nhưng V12 có F1 cố định cao hơn V11; V10 vẫn có FP thấp nhất trong ba run này ở cùng ngưỡng. Không có căn cứ chọn model chỉ theo một số tối đa rồi bỏ trade-off FP/recall và validation tái sử dụng.
 
-Phương án đề xuất là tạm khóa ứng viên và tiêu chí trước khi mở dữ liệu đánh giá mới. Checkpoint/operating point s960 đã khóa vẫn là mốc của các phép đo B1 cũ; V11 được giữ như ứng viên có kết quả ảnh mới, chưa tự thay thế. Nếu cần chọn điểm vận hành mới thì thực hiện trên validation có ghi protocol, sau đó giữ nguyên cho phép đo độc lập. Mốc70% không là điều kiện chặn B1/B2 hoặc là bằng chứng hệ thống hoàn tất.
+Phương án đề xuất là tạm khóa ứng viên và tiêu chí trước khi mở dữ liệu đánh giá mới. Checkpoint/operating point s960 đã khóa vẫn là mốc của các phép đo B1 cũ; V11 và V12 là hai ứng viên ảnh có trade-off khác nhau, chưa tự thay thế. Nếu cần chọn điểm vận hành mới thì thực hiện trên validation có ghi protocol, sau đó giữ nguyên cho phép đo độc lập. Mốc70% không là điều kiện chặn B1/B2 hoặc là bằng chứng hệ thống hoàn tất.
 
 ### H.3. Thứ tự công việc đề xuất sau báo cáo
 
@@ -408,19 +416,19 @@ Phương án đề xuất là tạm khóa ứng viên và tiêu chí trước kh
 | 4. So B0/B1 | Replay cùng score, cùng bộ dữ liệu và policy; đo matched recall, FP và độ trễ. | Bảng PR/event, case lỗi và chi phí tăng thêm. | Phân biệt val/development với test mới; B1 không cần phải thắng. |
 | 5. Xây B2 rồi T0 | Xuất track quality/missing; tạo cặp, đo candidate recall, xây đặc trưng và luật rồi MLP. | Track/feature cache, nhãn có phiên bản và baseline có metric. | Candidate/nhãn đủ rõ; không dùng ID tracker như GT identity. |
 | 6. Thử B3/T1 có điều kiện | GRU causal cùng features/split với T0; bỏ từng nhóm feature và nhiều seed nếu ngân sách cho phép. | Bảng ablation và kết luận RQ1 có giới hạn. | Chỉ mở khi đủ temporal labels và các baseline đơn giản đã đo. |
-| 7. Hệ thống/benchmark | FSM, cooldown, ring buffer, dashboard và đo video dài trên laptop. | Demo, false alerts/giờ âm, FPS/VRAM/latency đầy đủ để trả lời RQ2. | Tính cả hai detector nếu dùng; không loại bỏ thời gian I/O/queue. |
+| 7. Hệ thống/benchmark | Dashboard chỉ đọc đã có; còn FSM, cooldown, ring buffer, pipeline online và đo video dài trên laptop. | Demo, false alerts/giờ âm, FPS/VRAM/latency đầy đủ để trả lời RQ2. | Tính cả hai detector nếu dùng; không loại bỏ thời gian I/O/queue. |
 
-Một vòng train B0 mới chỉ có căn cứ khi xác định được lỗi có thể sửa bằng dữ liệu/recipe cụ thể và có phép so kiểm soát. Nếu thêm dữ liệu, ưu tiên nguồn/cảnh/sự kiện độc lập và nhãn vùng phù hợp thay vì lặp dày frame. Nếu nguồn chỉ public nhãn temporal/clip, có thể phục vụ evaluator/B1 theo đơn vị đó; không tự biến thành bbox để tăng ảnh B0. Các bước trong bảng là kế hoạch sau báo cáo, chưa được triển khai trong lượt tổng hợp này.
+Một vòng train B0 mới chỉ có căn cứ khi xác định được lỗi có thể sửa bằng dữ liệu/recipe cụ thể và có phép so kiểm soát. Phép kiểm LR V12 đã hoàn thành nhưng chưa giải quyết giới hạn validation; không mở thêm run theo quán tính. Nếu thêm dữ liệu, ưu tiên nguồn/cảnh/sự kiện độc lập và nhãn vùng phù hợp thay vì lặp dày frame. Nếu nguồn chỉ public nhãn temporal/clip, có thể phục vụ evaluator/B1 theo đơn vị đó; không tự biến thành bbox để tăng ảnh B0. Các mục evaluator và baseline còn lại trong bảng là kế hoạch, dashboard đọc kết quả là phần đã triển khai.
 
 ## I. Kết luận tiến độ
 
 Đồ án đã hoàn thành một chuỗi công việc có thể truy xuất từ dữ liệu public đến huấn luyện và phân tích detector ảnh. Quá trình không tiến tuyến tính: đã có sai nhãn âm, trùng nguồn, lỗi RAM/serialize và tích hợp cloud; những thay đổi có căn cứ đã được ghi, run không phù hợp được thu hồi và các phép đo lịch sử được giữ phạm vi.
 
-Thành quả mới nhất là checkpoint V11 với mAP50val70,64%, cùng đánh đổi FP/recall rõ ràng. Thành quả B1 hiện tại là triển khai causal và chẩn đoán có dữ liệu thật, chưa là benchmark sự kiện. Hạn chế chính nằm ở độ độc lập/độ phủ nhãn, timing và evaluator hệ thống. Ưu tiên phù hợp là hoàn thiện phép đánh giá và đối chứng temporal trên một detector được khóa, rồi mới xác định nhu cầu motion verifier hoặc train tiếp bằng bằng chứng.
+Thành quả mới nhất là run V12 đã tải/kiểm: mAP50 val70,63%, mAP50–95 56,10%, F1 cố định67,36%; giảm LR so V11 tạo trade-off chứ không thắng trên mọi metric. Dashboard đã gộp trạng thái Kaggle và artifact local theo một run, tự đọc lại khi đang mở nhưng không tự tải trọng số hoặc điều khiển train. Thành quả B1 hiện tại là triển khai causal và chẩn đoán có dữ liệu thật, chưa là benchmark sự kiện. Hạn chế chính nằm ở độ độc lập/độ phủ nhãn, timing và evaluator hệ thống. Ưu tiên phù hợp là hoàn thiện phép đánh giá và đối chứng temporal trên một detector được khóa, rồi mới xác định nhu cầu motion verifier hoặc train tiếp bằng bằng chứng.
 
 ## Tài liệu tham khảo
 
-Các mã R trong báo cáo thống nhất theo danh mục dưới đây; ngày kiểm nguồn trực tuyến phục vụ báo cáo là 31/10/2026. Mã S/R lịch sử trong workbook/literature được đối chiếu tại phụ lục, không có nghĩa tất cả nguồn đều đã được tái lập.
+Các mã R trong báo cáo thống nhất theo danh mục dưới đây; nguồn nền được kiểm trực tuyến phục vụ báo cáo 31/10/2026, mã và tài liệu Ultralytics cho đối chứng LR được đối chiếu tiếp 04/11 trong `reference/LITERATURE_REVIEW.md`. Mã S/R lịch sử trong workbook/literature được đối chiếu tại phụ lục, không có nghĩa tất cả nguồn đều đã được tái lập.
 
 - **[R1]** Q. N. H. Minh và cộng sự (2025). *Real-time traffic accident detection using YOLOv8*. Transportation Research Procedia85,68–75. [Publisher/abstract](https://www.sciencedirect.com/science/article/pii/S2352146525001942), [DOI](https://doi.org/10.1016/j.trpro.2025.03.135). Full PDF chưa truy cập được; không dùng chi tiết chưa đọc.
 - **[R2]** S. Xu và cộng sự (2025). *Surveillance-based Spatial Temporal Traffic Accident Detection: A novel Dataset and tailored Algorithm*. [Toàn văn](https://dsg.tuwien.ac.at/team/snastic/publications/ITSC25_0424_FI.pdf), [STTAD repo](https://github.com/ZTR02/STTAD). Dùng mục nhãn và recipe/kết quả; chưa chạy STFN.
@@ -448,17 +456,18 @@ Các đường dẫn dưới đây tính từ gốc project. Chúng phục vụ 
 | Mã hồ sơ | Nội dung kiểm chứng | Đường dẫn chính |
 | --- | --- | --- |
 | E01 | Mục tiêu, baseline và điều kiện | `README.md`; `YOLO_Lo_trinh_DACN.xlsx`, sheet01/05/07/08/09/11/13/15. |
-| E02 | Lịch sử và nguồn nghiên cứu | `progress/2026-10-16.md` đến `2026-10-30.md`; `reference/LITERATURE_REVIEW.md`; `reference/workbook_sources.csv`. |
+| E02 | Lịch sử và nguồn nghiên cứu | `progress/2026-10-16.md` đến `2026-11-04.md`; `reference/LITERATURE_REVIEW.md`; `reference/workbook_sources.csv`. |
 | E03 | CADP sạch và review theo frame | `docs/cadp_001407_clean.md`; `outputs/audits/cadp_001407_clean_2/report.json`; `data/reviews/2026-10-19-cadp-001407-frame-confirmation.json`. |
 | E04 | Nhãn/public sources và thu hồi | `docs/b0_label_protocol.md`; `configs/b0_verified_label_policy.json`; `data/b0_readiness.json`; review26–27/10 và nhật ký27/10. |
 | E05 | Dataset, split, provenance | `data/processed/b0_verified_pilot_v1/`; `b0_normal_expanded_v1/`; `b0_s960_hardneg_v1/`; mỗi release có split report và dataset/provenance.csv. |
 | E06 | Các run local hợp lệ | `outputs/training/<run>/experiment.json`, `requested_config.json`, `args.yaml`, `results.csv`, `cases_val/cases.csv`; tên run ở phụ lục2. |
-| E07 | Kaggle V9/V10/V11 | `outputs/kaggle/b0_s960_full_kaggle_v1/version9_lightweight_comparison.json`; V10/V11 `outputs/training/<run>/experiment.json`, `run_status.json`, `recipe_revision.json`, `live_console.log`. |
+| E07 | Kaggle V9–V12 | `outputs/kaggle/b0_s960_full_kaggle_v1/version9_lightweight_comparison.json`; V10–V12 `outputs/training/<run>/experiment.json`, `run_status.json`, `recipe_revision.json`, `live_console.log`; V12 `outputs/kaggle/b0_s960_sgd_low_lr_kaggle_v4/retrieval.json`. |
 | E08 | Kết quả/metric nhỏ trên Git | `docs/evidence/2026-10-27-b0-verified-pilot.json`; `2026-10-28-b0-s960-validation.json`; `2026-10-30-b0-adamw-validation.json`; `2026-10-30-b0-sgd-validation.json`. |
 | E09 | Ngưỡng khóa và holdout đã dùng | `configs/b0_s960_v1_operating_point_v1.json`; `outputs/training/b0_s960_v1/operating_point_v1/selection.json`; `docs/evidence/2026-10-29-b0-operating-point.json`. |
 | E10 | B1 causal và12 chuỗi | `src/b0_diagnostics.py`; `configs/b1_causal_diagnostics_v1.json`; `outputs/training/b0_s960_v1/temporal_diagnostics_v1/report.json`. |
 | E11 | Pipeline và trainer thực tế | `src/video_pipeline.py`; `scripts/train_b0.py`; `src/kaggle_recipe.py`; `scripts/kaggle_b0.py`. |
 | E12 | Phục hồi và Kaggle | `docs/GETTING_STARTED.md`; `data/download_catalog.json`; `docs/kaggle_training.md`; các deployment/retrieval receipt dưới `outputs/kaggle/`. |
+| E13 | Dashboard đã triển khai 02–04/11 | `frontend/README.md`; `src/dashboard_data.py`; `src/dashboard_cloud.py`; `frontend/src/`; `tests/test_dashboard.py`; một lựa chọn run, polling local/Kaggle chỉ đọc, không tự fetch/train. |
 
 ### Những thông tin vẫn chưa đủ bằng chứng
 
@@ -478,5 +487,6 @@ Chưa có FPS ghi hình nguồn CADP001407; chưa có số camera/sự kiện đ
 | Kaggle V9 | `b0_s960_full_kaggle_v1` — local chủ yếu giữ metadata chọn lọc, không đủ weights. |
 | Kaggle V10 | `b0_s960_adamw_kaggle_v2` |
 | Kaggle V11 | `b0_s960_sgd_kaggle_v3` |
+| Kaggle V12 | `b0_s960_sgd_low_lr_kaggle_v4` |
 
-Best V11 có SHA-256 `87dedc00ba63541a957abf7ee7e36201a63388ede2aed816d216cafd17ce00a6`; last V11 `338cf4ed39718ee9907a0c264099c0e85e495f67352459aef037d338da3a4626`. Checkpoint s960 đang khóa cho phép đo B1 có SHA `c1fdd6dcbb09d8d2c3dae4c2c90dfcf4189fac88980c045c3eff095dba019302`. Các mã này phân biệt model đã đo, không có nghĩa các checkpoint cùng vai trò hoặc đã được tự động thay thế.
+SHA-256 đầy đủ của best/last V11–V12 và checkpoint s960 đang khóa nằm trong `experiment.json`, `artifacts_manifest.json` và retrieval receipt tương ứng; báo cáo giữ đường dẫn thay vì lặp chuỗi hash dài. Trên web, `K09`–`K12` là version notebook Kaggle; `L01`–`L09` là alias cho run local cũ. Không nhãn hiển thị nào đổi ID run hoặc tự thay checkpoint vận hành.

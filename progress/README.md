@@ -1,12 +1,40 @@
-**Mới nhất 31/10 — báo cáo và bản trình bày:** [PDF 14 slide ngang](../docs/SLIDE_TIEN_DO_DACN.pdf) dùng Times New Roman, nền kem/cam san hô và góc vuông/bo nhẹ. Slide 6–7 giải thích IoU, P/R/F1 và AP/mAP; slide 8/10 đưa ảnh biểu đồ gốc local/Kaggle trước các slide so sánh vẽ lại. Giữ nội dung/số liệu 10 slide trước, chỉ đổi số thứ tự; [chú thích và lời trình bày](../docs/CHU_THICH_SLIDE_DACN.md) đã đồng bộ đủ 14 mục. [Báo cáo Markdown](../docs/BAO_CAO_TIEN_DO_DACN.md) / [PDF đầy đủ](../docs/BAO_CAO_TIEN_DO_DACN.pdf) giữ giải thích và bằng chứng. API xác nhận Version11 COMPLETE trong lượt kiểm trước; local kết quả/hashes khớp. Dừng triển khai/thí nghiệm mới theo yêu cầu; [nhật ký31/10](2026-10-31.md). Kết quả V11 vẫn là pilot trên validation: mAP50 **70,64%**, mAP50–95 **56,80%**, fixed F1 **65,64%**/recall **70,33%**; chưa benchmark sự kiện hoặc thay model khóa.
+**31/10 — báo cáo và bản trình bày:** [PDF 14 slide ngang](../docs/SLIDE_TIEN_DO_DACN.pdf) dùng Times New Roman, nền kem/cam san hô và góc vuông/bo nhẹ. Slide 6–7 giải thích IoU, P/R/F1 và AP/mAP; slide 8/10 đưa ảnh biểu đồ gốc local/Kaggle trước các slide so sánh vẽ lại. Giữ nội dung/số liệu 10 slide trước, chỉ đổi số thứ tự; [chú thích và lời trình bày](../docs/CHU_THICH_SLIDE_DACN.md) đã đồng bộ đủ 14 mục. [Báo cáo Markdown](../docs/BAO_CAO_TIEN_DO_DACN.md) / [PDF đầy đủ](../docs/BAO_CAO_TIEN_DO_DACN.pdf) giữ giải thích và bằng chứng. API xác nhận Version11 COMPLETE trong lượt kiểm trước; local kết quả/hashes khớp. Dừng triển khai/thí nghiệm mới theo yêu cầu; [nhật ký31/10](2026-10-31.md). Kết quả V11 vẫn là pilot trên validation: mAP50 **70,64%**, mAP50–95 **56,80%**, fixed F1 **65,64%**/recall **70,33%**; chưa benchmark sự kiện hoặc thay model khóa.
 
-**02/11 — rà soát trước push:** kiểm `.gitignore`, file tracked/untracked, kích thước và khả năng phục hồi sau clone; chưa commit/push hoặc train. Source/config/metadata/tài liệu phù hợp đưa lên Git; dataset/checkpoint/bundle vẫn ngoài Git. Clone chưa train ngay: thiếu tài sản và quyền Dataset Kaggle PRIVATE. [Hướng dẫn máy mới](../docs/GETTING_STARTED.md), [nhật ký02/11](2026-11-02.md). Trạng thái thực nghiệm B0/B1 giữ nguyên.
+**02/11 — bàn giao và làm nhóm:** kiểm `.gitignore`, file/kích thước và khả năng phục hồi sau clone; bổ sung [hướng dẫn hai người — mục 10](../docs/GETTING_STARTED.md#10-làm-nhóm-hai-người-dùng-chung-dữ-liệu-và-tránh-xung-đột): một repo, Dataset PRIVATE chung, nhánh/notebook cá nhân, bàn giao bundle và phân công B0 + evaluator/B1. CLI chưa hỗ trợ tự đổi owner/run; chỉ mô tả quy trình, chưa chia sẻ dữ liệu thực tế, tạo tài khoản, commit/push hoặc mở train. [Nhật ký02/11](2026-11-02.md). Trạng thái thực nghiệm B0/B1 giữ nguyên.
 
 # Tiến độ từng baseline và nhật ký đồ án
 
+**06/11 — bàn giao code/tài liệu:** README của output, script, khởi đầu trên máy mới, Kaggle và frontend đã được đồng bộ theo cây artifact chuẩn; đường dẫn run cũ được đánh dấu lịch sử. Bộ kiểm Python 162 test (5 skip), frontend lint/build đạt; quét file chuẩn bị commit không thấy media/checkpoint lớn hoặc mẫu credential. [Chi tiết trong nhật ký chung 06/11](2026-11-06.md). Không thay đổi trạng thái nghiệm thu baseline.
+
+**06/11 — kiểm chứng kiến trúc artifact:** output B0/T0/B3 mới có metadata nhận diện, dashboard phân biệt trang Huấn luyện B0 với catalog Explore mọi baseline/LEGACY; fixture Kaggle fetch giữ nguyên checkpoint và cập nhật registry ở cây chuẩn. Suite 162 test (5 skip), frontend lint/build và verify 5 nhóm migration đạt. Không có run Kaggle, train hay migration vật lý mới; [nhật ký trong ngày](2026-11-06.md) và [bảng phụ thuộc legacy](../docs/STORAGE_ARCHITECTURE.md).
+
+**06/11 — kiến trúc lưu artifact:** registry/resolver dùng chung, entry point chính B0/T0/B3, video, B2, evaluator và Kaggle fetch chuyển sang cây chuẩn hoặc từ chối ghi mới vào legacy. Dashboard Explore có tab tìm artifact chuẩn + LEGACY; hai workspace VS Code đã tạo. B0/B1/Kaggle và nhiều audit lịch sử vẫn ở vị trí thật, không copy/move khi chưa đủ manifest/dependency; [bảng kiểm kê và giới hạn](../docs/STORAGE_ARCHITECTURE.md), [nhật ký cùng ngày](2026-11-06.md). Đây là thay đổi hạ tầng, không nghiệm thu baseline hoặc mở thí nghiệm.
+
+**06/11 — migration storage:** đã chuyển 5 nhóm nhỏ gồm B2 v1/v2, event evaluator, evidence hệ thống và audit DETRAC; manifest có SHA-256 từng file và rollback. B0/B1, Kaggle và raw chưa chuyển vì tham chiếu config/snapshot hoặc nguồn phục hồi. Đây là thay đổi vị trí lưu, không phải bước nghiệm thu baseline. [Đường dẫn và giới hạn](../frontend/README.md#migration-vật-lý-0511-và-phần-giữ-lại), [nhật ký 06/11](2026-11-06.md); mục 05/11 bên dưới mô tả trạng thái trước migration.
+
+**Điều hướng 05/11:** dashboard có trang [Khám phá đồ án](http://127.0.0.1:8765/explore) đọc registry ánh xạ ảo các baseline và artifact; không thay đổi trạng thái nghiên cứu hay di chuyển output. Xem [hướng dẫn và đề xuất migration](../frontend/README.md#khám-phá-đồ-án-và-kiểm-kê), nhật ký [05/11](2026-11-05.md). Bảng dưới vẫn là nguồn trạng thái baseline chính.
+
+**05/11 — tiếp tục B2/evidence:** sửa gate overlap, proxy đúng cặp CADP 27/35 → 35/35 nhưng candidate/alert trên DETRAC âm tăng; chưa chọn làm baseline tốt hơn. Pipeline offline đã lưu và đọc lại ảnh/clip evidence. Kiểm nguồn cho thấy một clip ACCIDENT split test tác giả đã bị dùng development trước khi phát hiện split: đã ghi consumed và khóa source test khỏi công cụ chuẩn bị. [Chi tiết](2026-11-05.md#b2-evaluator-và-evidence--lượt-tiếp-theo).
+
+**05/11 — chuyển sang event/B1/B2:** evaluator, replay B0/B1, B2 tracking→candidate→motion→luật, interface T0/GRU và FSM theo cặp đã có code và kiểm thử; B2 chạy thật 150 frame CADP sạch. Chưa benchmark event, đánh giá candidate recall, train T0/GRU hoặc lưu clip evidence; các ngưỡng B2/FSM mới để kiểm chức năng. Không mở thêm train B0. [Chi tiết và bằng chứng](2026-11-05.md), [hướng dẫn](../scripts/README.md#theo-dõi-sự-kiện-và-motion--05112026).
+
+**04/11 — báo cáo tổng hợp đã cập nhật:** [Markdown](../docs/BAO_CAO_TIEN_DO_DACN.md) và [PDF 23 trang](../docs/BAO_CAO_TIEN_DO_DACN.pdf) đã bổ sung V12, phép so có kiểm soát với V11, kết quả dashboard thống nhất và giới hạn validation. PDF được kiểm 23 trang, font/chữ, mục lục và không tràn trang; slide 14 trang vẫn là bản trình bày lịch sử 31/10. [Nhật ký cùng ngày](2026-11-04.md). Chưa đánh giá test sự kiện hoặc thay checkpoint B0 khóa.
+
+**04/11 — Version 12 đã lưu và web Huấn luyện đã thống nhất:** `fetch` kiểm SHA/manifest/config/checkpoint và `run_status.json` xác nhận 50 epoch, `training_completed=true`; kết quả tại [outputs/training/b0_s960_sgd_low_lr_kaggle_v4](../outputs/training/b0_s960_sgd_low_lr_kaggle_v4/). mAP50 val 70,63%, mAP50–95 56,10%, F1 cố định 67,36%; so V11 AP50 gần ngang, AP95 giảm, F1 tăng nhẹ. Dashboard dùng một lựa chọn `K12 · SGD LR 0,00015`, polling danh sách/local/cloud; không tự fetch trọng số hoặc thay checkpoint khóa. [Hướng dẫn](../frontend/README.md#theo-dõi-file-local-và-kaggle), [nhật ký chung](2026-11-04.md). B0 event vẫn chưa hoàn thành.
+
+**04/11 — sửa kết nối dashboard Kaggle:** server web cũ chạy trong sandbox proxy nên trả lỗi đọc API; khởi động lại ngoài sandbox và endpoint `/api/kaggle?version=12` đã trả `connected=true`, `COMPLETE`, **50 epoch log**. Đây mới là trạng thái notebook; chưa tải hoặc xác minh `run_status.json`/checkpoint/metric V12, chưa thay model B0 khóa. [Hướng dẫn web](../frontend/README.md#theo-dõi-file-local-và-kaggle), [nhật ký chung](2026-11-04.md).
+
+**04/11 — B0 Kaggle Version 12 đã gửi:** đã đối chiếu V11 và nguồn sơ cấp, gửi đối chứng SGD giảm riêng `lr0` trên cùng 2.681 ảnh train/307 val và checkpoint gốc. API báo `RUNNING` lúc gửi; không theo dõi train và chưa có kết quả V12. Dataset PRIVATE được tái dùng, không upload lại. [Config](../configs/b0_s960_sgd_low_lr_kaggle_v4.json), [deployment](../outputs/kaggle/b0_s960_sgd_low_lr_kaggle_v4/deployment.json), [căn cứ](../docs/b0_pilot_audit.md#chuẩn-bị-version-12--đối-chứng-learning-rate-04112026), [nhật ký chung 04/11](2026-11-04.md). Chưa thay checkpoint B0 khóa; B0 chưa hoàn thành đánh giá sự kiện. Các mốc V11 bên dưới vẫn là kết quả thực đã kiểm.
+
+**04/11 — giao diện dashboard theo ảnh tham khảo:** đổi hệ màu hiển thị sang hồng phấn/tím than cho cả sáng/tối, tăng nhịp chữ và thẻ; giữ font mặc định Be Vietnam Pro + Geist, thêm bộ chọn font tiếng Việt có lưu tùy chọn. [Cách dùng](../frontend/README.md), [nhật ký04/11](2026-11-04.md). Build/lint và kiểm browser 24 tổ hợp route/kích thước đạt; không đổi model, nhãn, train hay metric. Trạng thái B0/B1 phía dưới giữ nguyên.
+
+**02/11 — frontend đã triển khai sau phê duyệt:** [Mở/chạy Traffic Observatory](../frontend/README.md) tại `http://127.0.0.1:8765`: sáu màn hình đọc kết quả thật, biểu đồ epoch/best, so sánh có kiểm provenance, dữ liệu/split/histogram bbox val, ảnh GT/prediction, video B1 và tài liệu. Có polling file local và snapshot Kaggle chỉ đọc; kiểm V11 COMPLETE/50 epoch, chưa mở run mới để thử đang train. Build/lint, 19 kiểm thử adapter/API và kiểm browser/tương tác/mobile đã thực hiện; [nhật ký02/11](2026-11-02.md). Không sửa/train model, dataset hoặc nhãn; B0/B1 giữ nguyên trạng thái nghiên cứu. Đề xuất phía dưới là lịch sử trước phê duyệt.
+
+**02/11 — đề xuất frontend theo yêu cầu mới:** đã đọc rule `frontend/` và code web workshop tham khảo, đối chiếu CSV/experiment/case B0/B1. [DESIGN dashboard](../frontend/DESIGN.md) thay phạm vi portfolio sao chép bằng sáu khu vực đồ án, giữ kiểu kem/san hô, font/token/kính; SVG camera/giao lộ thay quạt/hoa. Đề xuất đọc lịch sử thật trước, nối local/Kaggle live sau; chưa dựng app/API, cài package hoặc mở train. Công việc làm nhóm tạm gác theo người dùng; B0/B1 giữ nguyên kết quả. [Nhật ký02/11](2026-11-02.md).
+
 **Lịch sử — Kaggle Version 10 đã hoàn tất:** đủ 60 epoch, best theo CSV/train_metrics tại epoch 52. Đánh giá lại best trên 307 val: mAP50 **67,85%**, mAP50–95 **52,63%**; F1 tại confidence0,25/IoU0,5 **67,06%**, Recall **62,64%**. So Version 9 cùng dữ liệu: mAP50 giảm 1,94 điểm %, F1 tăng 0,75 điểm %, recall cố định giảm 4,40 điểm %. Đã tải và kiểm hash kết quả; không dùng test/reserve hoặc thay model khóa. [Báo cáo](../docs/b0_pilot_audit.md#kết-quả-version-10--adamw-kaggle-30102026), [bằng chứng](../docs/evidence/2026-10-30-b0-adamw-validation.json), [nhật ký](2026-10-30.md).
 
-**Đây là file tổng hợp duy nhất cho tất cả baseline.** Cập nhật lần cuối: **02/11/2026**, múi giờ Asia/Bangkok. Muốn biết mỗi baseline còn thiếu gì, đọc file này; muốn xem chi tiết một lần làm việc, theo liên kết nhật ký bên dưới. Không tạo file tiến độ riêng cho B0/B1/B2/T0/B3.
+**Đây là file tổng hợp duy nhất cho tất cả baseline.** Cập nhật lần cuối: **06/11/2026**, múi giờ Asia/Bangkok. Muốn biết mỗi baseline còn thiếu gì, đọc file này; muốn xem chi tiết một lần làm việc, theo liên kết nhật ký bên dưới. Không tạo file tiến độ riêng cho B0/B1/B2/T0/B3.
 
 Kế hoạch và điều kiện chuyển bước: [README gốc](../README.md), sheet `05_Cac_buoc`/`08_Du_lieu`/`09_Danh_gia` trong [XLSX](../YOLO_Lo_trinh_DACN.xlsx). Thuật ngữ tra ở [GLOSSARY](../reference/GLOSSARY.md). **B3 và T1 là hai ký hiệu của cùng phương án GRU**, không phải hai baseline độc lập.
 
@@ -40,11 +68,11 @@ Trước mỗi lần triển khai hoặc train, đối chiếu [literature revie
 
 | Baseline | Làm gì? | Trạng thái thực tế | Việc cần hoàn thành tiếp |
 | --- | --- | --- | --- |
-| [B0](#b0--detector-ảnh-vùng-tai-nạn) | YOLO học bbox vùng accident trên từng ảnh | **Version 11 hoàn tất: mAP50 70,64%, F1 cố định 65,64%; recall tăng nhưng FP tăng so Version 10** | Rà ca bỏ sót và FP, quyết định trade-off trên val; chưa thay model khóa, chưa benchmark sự kiện |
-| [B1](#b1--b0-cộng-lọc-theo-thời-gian) | Làm mượt điểm B0 bằng EMA hoặc k-of-N causal | **Đã triển khai và đo chẩn đoán, chưa benchmark sự kiện** | Cần nguồn dương temporal/độc lập và protocol event/matched recall; không gọi bout ON là cảnh báo |
-| [B2](#b2--tracking-phương-tiện-và-luật-chuyển-động) | YOLO xe + ByteTrack + đặc trưng/luật va chạm | **Mới có phần detection/tracking chạy thử** | Chưa có tracks cache phục vụ motion, candidate, features và luật quyết định |
-| [T0](#t0--mlp-trên-đặc-trưng-hiện-tại) | MLP học từ đặc trưng cặp xe tại thời điểm hiện tại | **Chưa triển khai** | Cần candidate/features/nhãn và đối chứng B2 |
-| [B3/T1](#b3t1--gru-trên-chuỗi-quá-khứ) | GRU một chiều học diễn biến của cùng candidate/features | **Chưa triển khai** | Chỉ thực hiện sau dữ liệu chuỗi và các đối chứng phù hợp |
+| [B0](#b0--detector-ảnh-vùng-tai-nạn) | YOLO học bbox vùng accident trên từng ảnh | **V12 đã fetch/kiểm: mAP50 70,63%, mAP50–95 56,10%, F1 cố định 67,36% trên val; AP95 giảm so V11** | Phân loại ca FP/FN theo nguồn và kích thước, đánh giá event độc lập; chưa thay model khóa |
+| [B1](#b1--b0-cộng-lọc-theo-thời-gian) | Làm mượt điểm B0 bằng EMA hoặc k-of-N causal | **TESTED:** replay 4.845 frame, evaluator thăm dò clip âm | Cần nhãn event độc lập để so recall/delay tại recall tương đương |
+| [B2](#b2--tracking-phương-tiện-và-luật-chuyển-động) | YOLO xe + ByteTrack + đặc trưng/luật va chạm | **TESTED development:** CADP 35/35 proxy cặp sau sửa; DETRAC âm nhiều alert | Kiểm cặp dư, hiệu chỉnh trên validation phù hợp; event test độc lập chưa có |
+| [T0](#t0--mlp-trên-đặc-trưng-hiện-tại) | MLP học từ đặc trưng cặp xe tại thời điểm hiện tại | **IMPLEMENTED/TESTED gate; BLOCKED_BY_DATA** | Cần release nhãn cặp, group split và thực nghiệm train/evaluate |
+| [B3/T1](#b3t1--gru-trên-chuỗi-quá-khứ) | GRU một chiều học diễn biến của cùng candidate/features | **IMPLEMENTED/TESTED gate và padding; BLOCKED_BY_DATA** | Cần nhãn cặp theo thời gian và so cùng T0/B2 |
 
 **Chưa baseline nào hoàn thành.** B0 đã có metric bbox trên ảnh pilot, nhưng chưa có metric sự kiện/cảnh báo tai nạn. YOLOv8n pretrained ban đầu tìm xe; checkpoint B0 pilot riêng đã fine-tune class `accident`. Video bbox/track ID cũ chỉ kiểm chức năng B2. Không dùng phần trăm hoàn thành khi các đầu việc có độ lớn khác nhau.
 
@@ -78,7 +106,7 @@ Chi tiết dữ liệu, pilot và mẫu bị loại: [báo cáo B0](../docs/b0_p
 | Điểm vận hành / holdout âm | **Đã chọn/khóa và đo một lần** | [Khóa](../configs/b0_s960_v1_operating_point_v1.json), [trang xem](../outputs/training/b0_s960_v1/operating_point_v1/index.html), [snapshot29/10](../docs/evidence/2026-10-29-b0-operating-point.json). ValTP/FP/FN64/39/27; holdout34/120ảnh có35hộp, không phải event metric |
 | Công thức s960 sau đọc lại paper | **Hoàn tất45epoch, early stop15; best30** | [Kết quả](../docs/evidence/2026-10-28-b0-s960-validation.json), [checkpoint](../outputs/training/b0_s960_v1/weights/best.pt), [đồ thị](../outputs/training/b0_s960_v1/training_summary/results.png); mAP50 68,60%, mAP50–95 53,94%, TP/FP/FN64/43/27; chưa đạt mục tiêu70% |
 | Fine-tune với âm khó | **Hoàn tất15epoch, early stop10; bestCSV5** | [Config](../configs/b0_s960_hardneg_v1.json), [snapshot sau train](../docs/evidence/2026-10-29-b0-hardneg-validation.json), [so sánh/ảnh lỗi](../outputs/training/b0_s960_hardneg_v1/diagnostics/index.html). Val307mAP50/95=68,48/55,43%;F162,07%;ảnh âm sai7→5 nhưng tổngFP43→49. Snapshot chuẩn bị vẫn giữ lịch sử; reserve mới chưa mở |
-| Chuyển train sang KagglePRIVATE | **Đã có Dataset/NotebookPRIVATE và các run V9–V11 hoàn tất** | [Hướng dẫn](../docs/kaggle_training.md), [báo cáo tổng hợp](../docs/BAO_CAO_TIEN_DO_DACN.md#e9-chuyển-sang-kaggle-và-version-9). Gói2681train/307val; test/reserve ngoàiZIP; V10/V11 đã tải/kiểmhash, V9 giữ metadata chọn lọc. Mốc chặn đăng nhập29/10 chỉ là lịch sử. |
+| Chuyển train sang KagglePRIVATE | **Dataset/Notebook PRIVATE; V9–V12 kết thúc, V10–V12 đã tải/kiểm, V9 giữ metadata chọn lọc** | [Hướng dẫn](../docs/kaggle_training.md), [retrieval V12](../outputs/kaggle/b0_s960_sgd_low_lr_kaggle_v4/retrieval.json), [báo cáo tổng hợp lịch sử](../docs/BAO_CAO_TIEN_DO_DACN.md#e9-chuyển-sang-kaggle-và-version-9). Gói2681train/307val; test/reserve ngoàiZIP; không tự thay model khóa. |
 | Suy luận, đánh giá và phân loại FP/FN | **Đã phân tích lỗi và chạy 9 chuỗi đủ 3.857 frame; chưa benchmark event** | [Trang kết quả](../outputs/training/b0_verified_pilot_v1/diagnostics/index.html), [báo cáo](../outputs/training/b0_verified_pilot_v1/diagnostics/report.json); TAD normal 812/1.599 frame có bbox, CADP 35/35 frame Colliding có bbox nhưng chưa ghép vùng GT |
 
 **Điều kiện hoàn thành:** có detector accident được huấn luyện và đo trên split đã khóa; lưu checkpoint/config, prediction và các lỗi FP/FN để biết vấn đề nào cần B1/B2 giải quyết. Không đặt số accuracy hay FPS giả làm mốc đã đạt.
@@ -101,14 +129,18 @@ Run `b0_verified_lr001_full60_v1` đã hoàn tất **60/60 epoch** trên cùng 9
 
 ## B1 — B0 cộng lọc theo thời gian
 
+**Lượt tiếp theo 05/11:** [so B0/B1/B2](../outputs/shared_evaluations/v001_event_evaluator/detrac_b0_b1_b2_diagnostic_2026-11-05.json) cùng 300 frame DETRAC đã dùng: raw scene alert 0/0/0/46 cho B0/3-of-5/EMA/B2; score và detector khác nhau, chưa calibration, chưa có recall. Evaluator hỗ trợ onset dạng điểm khi policy chỉ rõ tolerance, không tự tạo end GT.
+
+**Cập nhật 05/11:** [evaluator chung](../src/event_evaluator.py) và [replay cache](../outputs/shared_evaluations/v001_event_evaluator/b1_replay_2026-11-05_v3.json) đã kiểm 4.845 frame. Trên 11 clip âm thuộc các vai trò train/val/consumed, policy cạnh bật cho B0 71, 3-of-5 28 và EMA 29 cảnh báo; đây là thăm dò không phải so recall tương đương. CADP scene event để unknown; không có event recall/delay. Mốc trong bảng dưới giữ chi tiết công việc 29/10.
+
 **Mục tiêu:** nhận điểm accident của B0 qua nhiều frame, lọc bằng EMA hoặc k-of-N chỉ dùng hiện tại/quá khứ để giảm cảnh báo chập chờn. B1 không bắt buộc ByteTrack.
 
 | Phần cần làm | Trạng thái | Đầu ra cần đạt |
 | --- | --- | --- |
-| Score B0, thứ tự frame/timestamp và GT temporal | **12chuỗi/4.845frame mới đã đo** | Cache score≥0,01, PTS media và source frame; CADP96–130 theo frame. Nguồn FPS CADP chưa biết; ngoài interval unknown |
+| Score B0, thứ tự frame/timestamp và GT temporal | **12 chuỗi/4.845 frame đã replay; event dương độc lập chưa có** | Cache score≥0,01, PTS media và source frame; CADP96–130 theo frame. Nguồn FPS CADP chưa biết; event scene giữ unknown |
 | Lọc EMA/k-of-N và reset khi đổi video | **Đã triển khai/kiểm causal, warmup và gap** | [Code](../src/b0_diagnostics.py), [config](../configs/b1_causal_diagnostics_v1.json):3-of-5 đủ cửa sổ,EMAalpha0,3 init0; reset nguồn/gap |
 | Chọn cửa sổ/ngưỡng trên validation | **Config cố định trước chẩn đoán; chưa tune cửa sổ** | conf0,27 từ val cũ; không tối ưu theo holdout đã mở. k/N/alpha là giả thuyết đồ án |
-| Replay/đánh giá cùng B0 | **Đã đo tín hiệu, chưa event benchmark** | [HTML/report](../outputs/training/b0_s960_v1/temporal_diagnostics_v1/index.html): valnormal99→92/90frameON; consumednormal300→293/302; bout giảm nhưng sai kéo dài còn tồn tại. EventF1/delay/matchedrecall chưa có |
+| Replay/đánh giá cùng B0 | **TESTED evaluator thăm dò; chưa event benchmark** | [Kết quả replay](../outputs/shared_evaluations/v001_event_evaluator/b1_replay_2026-11-05_v3.json): cảnh báo cạnh bật 71→28/29 trên 11 clip âm đã dùng; event F1/delay/matched recall chưa có |
 
 **Điều kiện hoàn thành:** đo được B0 so với B1 trên cùng split/protocol, nêu thay đổi báo sai và độ trễ tại recall tương đương. Không bắt buộc B1 phải thắng; kết quả âm vẫn phải được ghi đúng.
 
@@ -116,15 +148,19 @@ Run `b0_verified_lr001_full60_v1` đã hoàn tất **60/60 epoch** trên cùng 9
 
 ## B2 — Tracking phương tiện và luật chuyển động
 
+**Lượt tiếp theo 05/11:** [chẩn đoán tám frame](../outputs/baselines/03_b2_motion_rules/v002_overlap_fix/cadp_exclusion_diagnosis.csv) cho thấy ngưỡng tâm 0,12 loại cặp dù bbox giao nhau. [V2](../configs/b2_motion_v2.json) xét overlap trước distance: 27/35 → 35/35 trên CADP development, candidate trung bình 2,81 → 3,49; trên 300 frame DETRAC âm 10,80 → 10,98 và FSM cũ 74 → 76 alert. Cặp bổ sung chưa được rà từng cặp; không kết luận cải thiện tổng thể. [So sánh](../outputs/baselines/03_b2_motion_rules/v002_overlap_fix/detrac_selector_comparison.json).
+
+**Cập nhật 05/11:** [code features](../src/motion_features.py), [lệnh cache](../scripts/run_b2_motion.py), [config](../configs/b2_motion_v1.json), [kết quả CADP](../outputs/baselines/03_b2_motion_rules/v001_motion_pilot/cadp_001407_final/metadata.json): 150/221 frame, 1.150 quan sát track, 421 dòng candidate, ngưỡng chưa hiệu chuẩn. [Audit IoU pilot](../outputs/baselines/03_b2_motion_rules/v001_motion_pilot/cadp_001407_pair_audit.json) ghép hai bbox GT với track ở 35/35 frame Colliding, cặp xuất hiện 27/35; ghép tự động trên một ca, chưa xác minh identity thủ công hoặc benchmark event. Có missing ID, gap/reset, quality mask và đơn vị ảnh/frame.
+
 **Mục tiêu:** nhận video sạch, phát hiện/theo dõi xe, chọn cặp nghi vấn và dùng luật chuyển động để tạo score/alert va chạm. Hai bbox chồng nhau hoặc hai track gần nhau chưa đủ ra quyết định.
 
 | Phần cần làm | Trạng thái | Bằng chứng / đầu ra cần đạt |
 | --- | --- | --- |
 | Đọc video → YOLO xe → ByteTrack → vẽ/lưu | **Đã chạy thử phần kỹ thuật** | [Pipeline hiện có](../src/video_pipeline.py); đã đọc lại đủ 250 frame DETRAC và 221 frame CADP sạch. Đây chưa là metric tracking hoặc accident |
-| Xuất tracks có bbox/ID/time/confidence và trạng thái thiếu | **Chưa triển khai cho motion** | Cache dữ liệu quỹ đạo; tách GT ID với track ID, ghi mất/đổi ID và reset giữa video |
-| Chọn cặp trong ROI | **Chưa triển khai** | Candidate log và candidate recall; bộ tạo cặp vận hành khác với nhãn vùng đề xuất CADP |
-| Tính đặc trưng chuyển động | **Chưa triển khai** | Vị trí/khoảng cách/biến thiên hướng, chất lượng/missing mask; dùng timing có căn cứ, không gọi chuyển vị ảnh là km/h |
-| Luật quyết định và chính sách alert | **Chưa triển khai** | Luật/ngưỡng chọn bằng validation, score và event log; xác nhận/chống lặp không che sự kiện mới |
+| Xuất tracks có bbox/ID/time/confidence và trạng thái thiếu | **TESTED trên 150 frame CADP** | [Cache](../outputs/baselines/03_b2_motion_rules/v001_motion_pilot/cadp_001407_final/frames.jsonl) có ID/bbox/conf/missing; chưa đo ID switch, nguồn FPS không rõ |
+| Chọn cặp trong ROI | **TESTED thử nghiệm** | Có proximity/approach/overlap, giới hạn cặp; chưa có candidate recall hoặc đối chiếu track–GT |
+| Tính đặc trưng chuyển động | **TESTED thử nghiệm** | Vị trí/khoảng cách/biến thiên hướng, quality/missing mask; đơn vị ảnh/frame, không gọi km/h |
+| Luật quyết định và chính sách alert | **IMPLEMENTED/TESTED fixture** | Điểm đa tín hiệu và FSM theo cặp; ngưỡng chưa hiệu chuẩn, có thể che sự kiện mới cùng cặp |
 | Đánh giá và phân tích lỗi | **Chưa triển khai** | Cùng split/evaluator; đo báo sai, recall, delay và chi phí toàn pipeline; tách lỗi detector/tracker/luật |
 
 **Điều kiện hoàn thành:** có bộ luật chuyển động chạy được trên candidate/features đã kiểm, phát alert và được đánh giá công bằng. Video có bbox/ID đơn thuần không đáp ứng điều kiện này.
@@ -133,13 +169,17 @@ Run `b0_verified_lr001_full60_v1` đã hoàn tất **60/60 epoch** trên cùng 9
 
 ## T0 — MLP trên đặc trưng hiện tại
 
+**Lượt tiếp theo 05/11:** đã có [trainer chung](../scripts/train_temporal_verifier.py), kiểm nhãn/coverage/nhóm/causal và scaler train-only. [Config](../configs/temporal_supervised_v1.json) khóa train; test kiểm gate, chưa có release đủ điều kiện hoặc chạy training thật.
+
+**Cập nhật 05/11:** [interface](../src/temporal_verifiers.py) có vector chung, mask, scaler chỉ fit train, kiểm group split và MLP; đã kiểm fixture/tensor chưa train. Chưa có loader supervised/train, nhãn cặp được duyệt hoặc metric T0. Bảng dưới giữ kế hoạch ban đầu.
+
 **Mục tiêu:** dùng Multi-Layer Perceptron để học score của cùng candidate/features như B2/B3, từ đặc trưng hiện tại. Đây là đối chứng kiểm xem có cần học cả chuỗi hay không.
 
 | Phần cần làm | Trạng thái | Đầu ra cần đạt |
 | --- | --- | --- |
-| Candidate/features và nhãn phù hợp | **Chưa có** | Tái dùng cùng bộ tạo cặp/đặc trưng, giữ split và phạm vi nhãn nhất quán |
-| Chuẩn hóa và dataloader | **Chưa triển khai** | Fit scaler trên train, lưu scaler/mask/schema; không lấy thống kê từ val/test |
-| MLP, train và chọn cấu hình | **Chưa triển khai** | Code PyTorch, config/seed/log, checkpoint và ngưỡng chọn trên validation |
+| Candidate/features và nhãn phù hợp | **Có feature cache pilot; nhãn cặp thiếu** | Tái dùng cùng bộ tạo cặp/đặc trưng, giữ split và phạm vi nhãn nhất quán |
+| Chuẩn hóa và dataloader | **TESTED scaler; chưa có loader supervised** | Fit scaler trên train, lưu scaler/mask/schema; không lấy thống kê từ val/test |
+| MLP, train và chọn cấu hình | **TESTED interface; chưa train** | Code PyTorch có forward, chưa có config train/seed/log/checkpoint hoặc ngưỡng validation |
 | So B2/T0 và chuẩn bị so B3 | **Chưa triển khai** | Cùng evaluator/alert policy và đầu vào; bảng lỗi, event metrics và chi phí |
 
 **Điều kiện hoàn thành:** có T0 tái lập được và phép so công bằng trên candidate/features chung; không thay detector khi muốn đo riêng tác dụng verifier.
@@ -148,12 +188,16 @@ Run `b0_verified_lr001_full60_v1` đã hoàn tất **60/60 epoch** trên cùng 9
 
 ## B3/T1 — GRU trên chuỗi quá khứ
 
+**Lượt tiếp theo 05/11:** GRU bỏ padding trước khi đưa vào mạng, kiểm chuỗi độ dài khác nhau và lưu/nạp state dict; dùng chung trainer/gate với T0. Chưa huấn luyện hoặc đánh giá thật.
+
+**Cập nhật 05/11:** cùng [interface](../src/temporal_verifiers.py) đã có cửa sổ causal/mask và GRU một chiều, kiểm tensor và reset; chưa có loader supervised/train, nhãn chuỗi được duyệt hoặc metric. Bảng dưới giữ kế hoạch ban đầu.
+
 **Mục tiêu:** dùng Gated Recurrent Unit một chiều để đọc lịch sử đặc trưng của cặp xe và xác minh va chạm. Không dùng BiGRU hoặc frame tương lai khi tuyên bố xử lý online.
 
 | Phần cần làm | Trạng thái | Đầu ra cần đạt |
 | --- | --- | --- |
-| Chuỗi `[T,F]`, sampling, mask và nhãn cửa sổ | **Chưa có** | Cửa sổ chỉ đến thời điểm hiện tại, giữ thứ tự/timing; nhãn dựa vào thời điểm cuối cửa sổ, không gán mọi frame của clip tai nạn là dương |
-| GRU nhỏ và dataloader chuỗi | **Chưa triển khai** | Code/config; hidden 32/64, một layer chỉ là gợi ý trong XLSX, chưa là cấu hình tối ưu |
+| Chuỗi `[T,F]`, sampling, mask và nhãn cửa sổ | **TESTED cửa sổ causal; chưa có nhãn** | Cửa sổ chỉ đến thời điểm hiện tại, giữ thứ tự/timing; không gán mọi frame của clip tai nạn là dương |
+| GRU nhỏ và dataloader chuỗi | **TESTED GRU forward; chưa có loader supervised** | Code một chiều hidden 32 mặc định; chưa có config huấn luyện, không coi mặc định là tối ưu |
 | Train, scaler và checkpoint | **Chưa triển khai** | Cùng split/features như T0; lưu seed/log/model/scaler, chọn cấu hình trên validation |
 | So với B1/B2/T0 và ablation | **Chưa triển khai** | Phân biệt so hệ thống với ablation; tách đóng góp temporal/features/policy, báo cả recall, FP và delay |
 | Benchmark và quyết định có dùng GRU không | **Chưa triển khai** | FPS/latency/VRAM toàn pipeline; nếu không hơn đối chứng thì phân tích nguyên nhân và chọn phương án phù hợp |
@@ -164,11 +208,15 @@ Run `b0_verified_lr001_full60_v1` đã hoàn tất **60/60 epoch** trên cùng 9
 
 ## Đầu ra hệ thống dùng chung sau các baseline
 
+**Lượt tiếp theo 05/11:** [CLI hai lượt offline](../scripts/run_b2_system.py) xử lý hết clip thật, [ảnh/clip CADP](../outputs/system_evidence/v001_b2_alerts/cadp_evidence_readback/events.json) gồm 14 cảnh báo heuristic; tất cả clip đọc lại đủ frame, một clip thiếu hậu cảnh và được đánh dấu. [FSM v2](../configs/alert_fsm_v2.json) chỉ rearm sau score thấp có quan sát, ID switch vẫn có thể trùng. Đã có ảnh/clip evidence nhưng chưa chứng minh tính đúng, chưa benchmark streaming hoặc xử lý sự kiện không có pha score thấp.
+
+**Cập nhật 05/11:** [FSM theo cặp](../src/alert_fsm.py) và [replay](../scripts/replay_b2_alerts.py) đã kiểm trên cache CADP: 9 alert heuristic, kèm metadata frame trước/sau, không phải 9 va chạm. Chưa có clip ảnh/video evidence, event pipeline hoàn chỉnh hoặc benchmark runtime. Cooldown riêng cặp không che cặp khác nhưng vẫn có thể che sự kiện mới của cùng cặp. Mô tả chưa triển khai bên dưới là mốc trước 05/11.
+
 FSM `idle → suspected → confirmed → cooldown`, event matching/chống trùng, ảnh/clip bằng chứng, dashboard và báo cáo hiện **chưa triển khai**. Đây là các thành phần hệ thống, không tách thành baseline mới. Theo kế hoạch cần event precision/recall/F1, false alerts/hour trên âm dài, delay có GT timing, FPS end-to-end, p50/p95 latency và peak VRAM; hiện chưa có các số đo đó. Thiếu timing thì ghi giới hạn, không tự suy số giây nguồn.
 
 ## Quá trình cập nhật và nhật ký theo ngày
 
-Mốc mới nhất: **31/10 — báo cáo tổng hợp và đối chiếu bằng chứng:** [nhật ký31/10](2026-10-31.md). Các runKaggle hoàn tất30/10 ở [nhật ký30/10](2026-10-30.md); không có train mới trong lượt báo cáo. Mốc29/10 điểm vận hành/B1 và28/10 s960 giữ vai trò lịch sử riêng.
+Mốc mới nhất: **05/11 — evaluator, replay B1 và B2 motion:** [nhật ký 05/11](2026-11-05.md). Báo cáo tổng hợp cập nhật 04/11 và các run Kaggle trước đó giữ vai trò lịch sử; không mở thêm train B0 trong lượt 05/11.
 
 Bảng này là lịch sử các thay đổi có ý nghĩa đối với baseline, dẫn tới **nhật ký cùng ngày**. Không sao toàn bộ log/audit vào đây.
 
@@ -188,6 +236,7 @@ Bảng này là lịch sử các thay đổi có ý nghĩa đối với baseline
 | 30/10/2026 | B0 Kaggle và vận hành | Khôi phục upload/GPU/môi trường; V9/V10/V11 hoàn tất; V11valmAP50/95=70,64/56,80%, fixedF165,64%, chưa event benchmark | [30/10](2026-10-30.md) |
 | 31/10/2026 | Tổng hợp/hướng trình bày | Đối chiếu lịch sử/config/log/cases/checkpoint và nguồn; báo cáo MD/PDF, căn cứ mọi lựa chọn; không train hoặc mở dữ liệu mới | [31/10](2026-10-31.md) |
 | 02/11/2026 | Bàn giao source | Kiểm Git ignore/file/kích thước, phân biệt clone code với phục hồi train; cập nhật giới hạn hướng dẫn, chưa commit/push hoặc train | [02/11](2026-11-02.md) |
+| 05/11/2026 | Evaluator/B1/B2/T0/B3/FSM | Replay 4.845 frame; B2 150 frame; interface MLP/GRU và FSM thử nghiệm; chưa benchmark event hoặc train verifier | [05/11](2026-11-05.md) |
 
 ## Quy tắc cập nhật từ lần làm việc sau
 

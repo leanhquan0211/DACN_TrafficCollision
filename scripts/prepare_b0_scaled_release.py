@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT))
 from src.data_preparation import save_csv, save_json, sha256_file
 from scripts.prepare_b0_pilot_index import export_plan, export_dataset
 from src.data_preparation import validate_b0_verified_origins
+from src.storage_paths import output_path, run_folder
 
 OUT = ROOT / "data/processed/b0_accident_scaled_v1"
 READY = ROOT / "data/b0_readiness.json"
@@ -258,8 +259,9 @@ def write_normal_overview(review_path: Path, output: Path) -> Path:
     groups={s:g for g in review['groups'] for s in g['sequences']}
     reference=audit/'reference_val/report.json'
     reference=json.loads(reference.read_text(encoding='utf-8')) if reference.exists() else None
-    completed_path=ROOT/'outputs/training'/output.name/'experiment.json'
-    completed=json.loads(completed_path.read_text(encoding='utf-8')) if completed_path.exists() else None
+    completed_folder=run_folder(ROOT,output.name)
+    completed_path=completed_folder/'experiment.json' if completed_folder else None
+    completed=json.loads(completed_path.read_text(encoding='utf-8')) if completed_path and completed_path.exists() else None
     training_state=f"Đã train xong {completed['epochs_completed']} epoch và đo validation." if completed else 'Chưa có báo cáo train hoàn tất cho dataset mới.'
     counts=Counter(groups[c['sequence']]['assignment'] for c in manifest['clips'])
     decoded=sum(c['decoded_frames'] for c in manifest['clips'])
@@ -399,9 +401,10 @@ def build_verified(output: Path) -> None:
     asset_manifest=output/"asset_hashes.json";save_json(asset_manifest,hashes)
     if "verified_pilot_release" in readiness:
         raise ValueError("Verified pilot release already exists")
-    backup=ROOT/"outputs/audits/accident_scale/readiness_before_verified_release.json"
+    backup=output_path(ROOT,'data_audit','v015_verified_release_readiness',child='readiness_before_verified_release.json')
     if backup.exists():
         raise FileExistsError("Readiness backup already exists")
+    backup.parent.mkdir(parents=True,exist_ok=True)
     shutil.copy2(READY,backup)
     readiness["verified_pilot_release"]=dict(can_train=True,split_created=True,scope="verified_negative_image_pilot",
         decision="Author impact boxes, individually reviewed ACCIDENT negative frames, user-reviewed DETRAC and author normal TAD; no unreviewed weak labels",

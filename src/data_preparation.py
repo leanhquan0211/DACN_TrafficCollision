@@ -52,7 +52,25 @@ def unique_path(path: Path) -> Path:
 
 
 def new_audit_dir(root: Path, name: str) -> Path:
-    target = unique_path(root / name)
+    """Tạo audit mới theo registry; tên lịch sử chỉ là khóa tra version chuẩn."""
+    from src.storage_paths import output_path, registry_data, storage_root
+    project = Path(__file__).resolve().parents[1]
+    resolved = root.resolve()
+    if resolved == (project / 'outputs/audits').resolve():
+        version = registry_data(project).get('audit_default_versions', {}).get(name)
+        if version is None:
+            raise ValueError(f'Chưa đăng ký version audit mới cho {name}')
+        target = output_path(project, 'data_audit', version)
+    elif resolved == storage_root(project, 'data_audit'):
+        target = output_path(project, 'data_audit', name)
+    elif resolved.is_relative_to(project / '.tmp'):
+        # Fixture và scratch trong .tmp không phải output chính thức.
+        target = root / name
+    elif resolved.is_relative_to(project):
+        raise ValueError('Audit output phải nằm trong outputs/data_audits/vNNN_short_description')
+    else:
+        # Fixture ở ngoài project được giữ nguyên để test không chạm dữ liệu thật.
+        target = root / name
     target.mkdir(parents=True, exist_ok=False)
     return target
 

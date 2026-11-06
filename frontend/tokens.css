@@ -1,0 +1,60 @@
+:root {
+  color-scheme: light;
+  --color-paper: oklch(0.983 0.012 350);
+  --color-panel: oklch(0.995 0.008 350);
+  --color-panel-muted: oklch(0.965 0.022 350);
+  --color-ink: oklch(0.26 0.037 310);
+  --color-muted: oklch(0.51 0.025 315);
+  --color-accent: oklch(0.48 0.165 350);
+  --color-accent-hover: oklch(0.42 0.155 350);
+  --color-accent-soft: oklch(0.955 0.035 350);
+  --color-rule: oklch(0.89 0.021 345);
+  --color-button: oklch(0.86 0.09 350);
+  --color-button-hover: oklch(0.81 0.11 350);
+  --color-success: oklch(0.46 0.07 165);
+  --color-success-soft: oklch(0.943 0.02 160);
+  --color-error: oklch(0.49 0.15 25);
+  --color-warning: oklch(0.52 0.105 70);
+  --color-focus: oklch(0.46 0.17 350);
+  --color-on-accent: oklch(0.26 0.037 310);
+  --color-overlay: oklch(0.20 0.04 300 / .58);
+  --color-glow: oklch(0.76 0.12 350 / .27);
+  --color-gradient: oklch(0.935 0.045 350);
+  --color-art-light: oklch(0.91 0.035 350);
+  --color-art-dark: oklch(0.44 0.045 300);
+  --color-art-cross: oklch(0.96 0.015 345);
+  --color-art-mark: oklch(0.998 0.005 340);
+  --color-art-car: oklch(0.69 0.13 350);
+  --chart-map50: oklch(0.49 0.165 350);
+  --chart-map95: oklch(0.47 0.065 180);
+  --chart-precision: oklch(0.40 0.07 290);
+  --chart-recall: oklch(0.60 0.10 70);
+  --chart-f1: oklch(0.55 0.08 300);
+  --font-display: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-body: 'Geist Variable', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
+  --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px; --space-16: 64px;
+  --roundness: 1; --radius-panel: clamp(0px, calc(var(--roundness) * 16px), 30px); --radius-control: clamp(0px, calc(var(--roundness) * 12px), 24px);
+  --glass-opacity: .65; --neon: .15;
+  --shadow-panel: 0 14px 34px oklch(.56 .09 350 / .07);
+  --shadow-dialog: 0 24px 100px oklch(.20 .04 300 / .22);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --duration: 180ms;
+}
+:root[data-font='be-vietnam'] { --font-display: 'Be Vietnam Pro', system-ui, sans-serif; --font-body: 'Be Vietnam Pro', system-ui, sans-serif; }
+:root[data-font='inter'] { --font-display: 'Inter Variable', system-ui, sans-serif; --font-body: 'Inter Variable', system-ui, sans-serif; }
+:root[data-font='lora'] { --font-display: 'Lora Variable', Georgia, serif; --font-body: 'Inter Variable', system-ui, sans-serif; }
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-paper: oklch(.18 .028 295); --color-panel: oklch(.22 .029 295); --color-panel-muted: oklch(.26 .03 300);
+  --color-ink: oklch(.97 .012 345); --color-muted: oklch(.75 .025 325); --color-accent: oklch(.80 .11 350);
+  --color-accent-hover: oklch(.87 .09 350); --color-accent-soft: oklch(.30 .045 345); --color-rule: oklch(.37 .027 300);
+  --color-button: oklch(.72 .115 350); --color-button-hover: oklch(.79 .10 350);
+  --color-success: oklch(.77 .07 165); --color-success-soft: oklch(.28 .025 160); --color-error: oklch(.76 .12 30);
+  --color-warning: oklch(.78 .10 70); --color-focus: oklch(.83 .12 350); --color-on-accent: oklch(.21 .03 300);
+  --color-gradient: oklch(.27 .05 335); --color-art-light: oklch(.39 .04 325); --color-art-dark: oklch(.59 .04 315);
+  --color-art-cross: oklch(.31 .03 305); --color-art-mark: oklch(.72 .02 330); --color-art-car: oklch(.74 .11 350);
+  --chart-map50: oklch(.80 .11 350); --chart-map95: oklch(.75 .075 180); --chart-precision: oklch(.79 .05 280);
+  --chart-recall: oklch(.78 .10 70); --chart-f1: oklch(.76 .07 300);
+}
