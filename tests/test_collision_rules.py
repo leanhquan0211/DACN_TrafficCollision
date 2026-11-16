@@ -108,6 +108,36 @@ class CollisionRuleTests(unittest.TestCase):
         self.assertEqual(original.events[0]['frame_index'],doubled.events[0]['frame_index'])
         self.assertEqual(tiny.events,[])
 
+    def test_braking_background_vehicle_overlapping_foreground_box_is_not_contact(self):
+        # Large nearby car and a smaller, distant bike share image pixels.
+        # The bike approaches and brakes, but their lower edges are far apart.
+        sequence=[[dict(obj(1,100),bbox_xyxy=[100,100,220,300]),
+                   obj(2,380-4*min(i,50),y=100)] for i in range(85)]
+        legacy=copy.deepcopy(CONFIG)
+        legacy.pop('maximum_bottom_edge_gap_min_height')
+        self.assertTrue(self.replay(sequence,legacy)[0].events)
+        engine,rows=self.replay(sequence)
+        self.assertEqual(engine.events,[])
+        features=[c['features'] for row in rows for c in row['candidates'] if c['features']]
+        self.assertTrue(any(f['overlap_contact'] and f['motion_change'] for f in features))
+        self.assertTrue(all(not f['bottom_edge_compatible'] for f in features))
+
+    def test_different_vehicle_heights_with_nearby_lower_edges_still_allow_alert(self):
+        sequence=[[dict(obj(1,100),bbox_xyxy=[100,100,220,300]),
+                   obj(2,380-4*min(i,50),y=250)] for i in range(85)]
+        engine,_=self.replay(sequence)
+        self.assertEqual(len(engine.events),1)
+        self.assertTrue(engine.events[0]['features']['bottom_edge_compatible'])
+        self.assertLessEqual(engine.events[0]['features']['bottom_edge_gap_min_height'],1)
+
+    def test_invalid_bottom_edge_limit_is_rejected(self):
+        for value in (0,-1,float('nan'),float('inf'),True,'1'):
+            with self.subTest(value=value):
+                config=copy.deepcopy(CONFIG)
+                config['maximum_bottom_edge_gap_min_height']=value
+                with self.assertRaisesRegex(ValueError,'bottom-edge'):
+                    CollisionRules(config)
+
 
 if __name__=='__main__':
     unittest.main()

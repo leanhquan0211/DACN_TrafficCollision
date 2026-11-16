@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "rule_id": "motion_contact_v4",
+  "rule_id": "motion_contact_v5",
   "purpose": "experimental_collision_detection",
   "history_frames": 32,
   "motion_window_frames": 4,
@@ -15,6 +15,7 @@
   "candidate_gap_body_units": 0.25,
   "contact_intersection_over_min": 0.25,
   "contact_increase": 0.08,
+  "maximum_bottom_edge_gap_min_height": 1.0,
   "approach_body_units": 0.10,
   "minimum_prior_speed_body_per_frame": 0.025,
   "stop_speed_ratio": 0.45,
@@ -30,5 +31,5 @@
   "score_is_probability": false,
   "temporal_units": "source frame indices; speeds are image displacement/body diagonal/frame; output seconds are video clock only unless verified",
   "evaluation_scope": "development and diagnostic replay; not a locked benchmark",
-  "limitations": ["Perspective overlap is not physical contact", "Braking and occlusion can imitate collisions", "Missing or switched vehicle IDs can hide events", "Abrupt camera motion or cuts invalidate track history", "No calibrated probability or metric speed"]
+  "limitations": ["Perspective overlap is not physical contact", "Bottom-edge compatibility is an image heuristic, not calibrated ground-plane geometry", "The bottom-edge gate can miss occluded, tipped or different-elevation vehicles", "Braking and occlusion can imitate collisions", "Missing or switched vehicle IDs can hide events", "Abrupt camera motion or cuts invalidate track history", "No calibrated probability or metric speed"]
 }

@@ -144,8 +144,17 @@ class DemoState:
 
     def register(self, entry: dict, item: dict):
         with self.lock:
+            checked = datetime.fromisoformat(entry['report']['checked_at'])
+            if checked.tzinfo is None:
+                raise ValueError('Lượt chạy thiếu múi giờ kiểm tra')
+            mode = entry['report']['mode']
+            previous = self.runs.get(item['runs'].get(mode))
             self.runs[entry["id"]] = entry
-            item["runs"][entry["report"]["mode"]] = entry["id"]
+            # Recovery enumerates random UUID folders, not chronological jobs.
+            # Preserve every report, but select the newest completed run so a
+            # corrected rerun cannot be replaced by an older false alert.
+            if previous is None or checked >= datetime.fromisoformat(previous['report']['checked_at']):
+                item['runs'][mode] = entry['id']
 
     def catalog(self):
         with self.lock:
@@ -209,6 +218,10 @@ class DemoState:
                        collision_experimental=report.get('collision_experimental',False),
                        collision_method=report.get('collision_method'),event_count=report.get('event_count',0),
                        collision_quality=report.get('collision_quality'))
+        if report['mode'] == 'collision':
+            config = self.root / 'configs/collision_rules.json'
+            details['current_collision_config'] = (config.is_file()
+                and report.get('collision_config_sha256') == sha256_file(config))
         return dict(id=run_id, sample_id=entry["sample_id"], verified=True,
                     report=details,events=entry.get('events',[]),
                     counts=[len(f["observations"]) for f in entry["frames"]])

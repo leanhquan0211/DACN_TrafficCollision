@@ -52,7 +52,7 @@ async function loadSelected(){
     $("metric-obs").textContent=number(report.observation_count);
     $("metric-ids").textContent=mode!=="detection"?number(report.unique_track_ids):"—";
     $("metric-fps").textContent=report.runtime.offline_processing_fps.toFixed(1)+" fps";
-    $("run-state").textContent="● Đã kiểm MP4 · cache · hash";
+    $("run-state").textContent=report.current_collision_config===false?"Kết quả dùng luật cũ · Chạy lại trên CPU để cập nhật":"● Đã kiểm MP4 · cache · hash";
     $("video-method").textContent=mode==="collision"?"PHÁT HIỆN VA CHẠM · THỬ NGHIỆM":(mode==="tracking"?"YOLO + BYTETRACK":"YOLO DETECTION");
     $("seek").max=report.processed_frames-1;$("seek").value=0;frameIndex=0;
     original.src=`/media?id=${id}&kind=source`;processed.src=`/media?id=${id}&kind=output`;

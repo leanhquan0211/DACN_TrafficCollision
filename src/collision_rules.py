@@ -46,6 +46,11 @@ class CollisionRules:
         self.config = dict(config)
         if min(image_width,image_height,detector_imgsz) <= 0:
             raise ValueError('Invalid collision input image size')
+        bottom_limit = config.get('maximum_bottom_edge_gap_min_height')
+        if bottom_limit is not None and (not isinstance(bottom_limit, (int, float))
+                                        or isinstance(bottom_limit, bool)
+                                        or not math.isfinite(bottom_limit) or bottom_limit <= 0):
+            raise ValueError('Invalid bottom-edge compatibility limit')
         self.detector_scale = detector_imgsz/max(image_width,image_height)
         if (not 1 <= config['confirmation_hits'] <= config['confirmation_window_frames']
                 or config['history_frames'] < config['minimum_history_frames']
@@ -170,10 +175,21 @@ class CollisionRules:
         scale = max(1, statistics.mean(diagonal(b) for b in current))
         closing = (distance(*map(center, before))-distance(*map(center, current)))/scale
         prior_overlap = interaction(*before)[0]
-        flags = dict(contact=overlap >= cfg['contact_intersection_over_min'],
+        # Partial image overlap can place a distant vehicle inside a foreground
+        # box. Compare lower edges at the scale of the smaller vehicle instead
+        # of treating that overlap plus braking as physical contact. This is a
+        # conservative image-space gate, not a calibrated road-plane estimate.
+        smaller_height = max(1, min(box[3]-box[1] for box in current))
+        bottom_gap = abs(current[0][3]-current[1][3])/smaller_height
+        bottom_limit = cfg.get('maximum_bottom_edge_gap_min_height')
+        bottom_compatible = bottom_limit is None or bottom_gap <= bottom_limit
+        overlap_contact = overlap >= cfg['contact_intersection_over_min']
+        flags = dict(contact=overlap_contact and bottom_compatible,
                      new_contact=overlap-prior_overlap >= cfg['contact_increase'],
                      approach=closing >= cfg['approach_body_units'], motion_change=any(stop) or any(turn))
         return dict(**flags, evidence_score=sum(bool(v) for v in flags.values())/4,
+                    overlap_contact=overlap_contact, bottom_edge_compatible=bottom_compatible,
+                    bottom_edge_gap_min_height=bottom_gap,
                     overlap=overlap, prior_overlap=prior_overlap, approach_body_units=closing,
                     prior_speed_body_per_frame=old_speed, current_speed_body_per_frame=now_speed,
                     sudden_stop=stop, direction_change=turn, comparison_frame=source_frame)

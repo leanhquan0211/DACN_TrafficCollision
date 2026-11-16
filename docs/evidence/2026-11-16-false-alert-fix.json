@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-16T22:08:32.946679+07:00",
+  "purpose": "development_false_alert_diagnosis_and_fix",
+  "historical_snapshot_not_current_machine_inventory": true,
+  "method": "motion_contact_v5",
+  "config_sha256": "5cd9138b988268efa58c2d284080e7847f0138073754158c70922b3b5f010170",
+  "user_case": {
+    "input_sha256": "977c45debc5101c5f150a67ece8dfe12206a5dc7dd8d872f8dfc65da8b22cccb",
+    "frames": 900,
+    "container_fps": 59.94005994005994,
+    "old_method": "motion_contact_v4",
+    "new_method": "motion_contact_v5",
+    "before_alert_frames": [
+      165
+    ],
+    "after_alert_count": 0,
+    "same_input_and_weights": true,
+    "detector_observations_changed_frames": [],
+    "before_report": "outputs/demo_app/runs/b7466ef9ca2641caab9c1ec2863ff927/video/video_collision.run.json",
+    "after_report": "outputs/demo_app/runs/32391b2d202249e6886fd8bd8b27ed57/video/video_collision.run.json",
+    "before_report_sha256": "8cbcc84d68c17df37fb01077602f076051dee11b374fc032cf8fb0f248d245fe",
+    "after_report_sha256": "84b631415ddcc5d929bc513b02e130351c6b5f723e21fcc23f3e2997bf1d8760",
+    "user_video_published": false,
+    "whole_clip_user_negative_review": false,
+    "scope": "development_diagnostic_not_independent_test"
+  },
+  "regression_replay": [
+    {
+      "input_sha256": "9be3604080e268997a34cc427adb13934f1bf607a9ecbb89c2861bc8d5749ece",
+      "frames": 221,
+      "event_frames": [
+        109
+      ],
+      "reviewed_negative_sequence": false
+    },
+    {
+      "input_sha256": "59162b6525ae420a63d9683d9e0fa7fdd9144bd18b1f1da0fbcdd5ccab602971",
+      "frames": 664,
+      "event_frames": [],
+      "reviewed_negative_sequence": true
+    },
+    {
+      "input_sha256": "63acfb37b3283c5358a8f23112285190d50d87ac8415dca609c810ed5497a883",
+      "frames": 936,
+      "event_frames": [],
+      "reviewed_negative_sequence": true
+    },
+    {
+      "input_sha256": "59b3ceed35c23bdfffefdea45312776ec93f63b3251564176592bb8ed18ec3a2",
+      "frames": 437,
+      "event_frames": [],
+      "reviewed_negative_sequence": true
+    },
+    {
+      "input_sha256": "5ee70b88101502198e8b1e2ba1f1276cd309add4537425f0ddf1f3571048a270",
+      "frames": 250,
+      "event_frames": [],
+      "reviewed_negative_sequence": false
+    },
+    {
+      "input_sha256": "977c45debc5101c5f150a67ece8dfe12206a5dc7dd8d872f8dfc65da8b22cccb",
+      "frames": 900,
+      "event_frames": [],
+      "reviewed_negative_sequence": false
+    }
+  ],
+  "tests": {
+    "passed": 74,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "passed": true,
+    "checks": [
+      "cadp_latest_v5_keeps_alert_109",
+      "user_900_frame_video_v5_zero_alerts_no_stale_cadp_card",
+      "corrected_actual_video_decodes_plays_and_seeks_at_old_false_alert",
+      "historical_v4_result_remains_valid_but_marked_outdated",
+      "refresh_selects_newest_corrected_result"
+    ],
+    "user_video_published": false,
+    "browser": "firefox"
+  },
+  "recovery": {
+    "recovered_latest_user_run": "84b631415ddcc5d929bc513b",
+    "event_count": 0,
+    "method": "motion_contact_v5",
+    "errors": [],
+    "old_report_still_present": true
+  },
+  "actual_cpu_reruns": [
+    {
+      "run_id": "84b631415ddcc5d929bc513b",
+      "frames": 900,
+      "event_frames": [],
+      "method": "motion_contact_v5",
+      "cpu_threads": 4,
+      "runtime": {
+        "pipeline_wall_s": 61.823836049999954,
+        "offline_processing_fps": 14.557492020911257,
+        "frame_wall_ms_p50": 61.55413150003142,
+        "frame_wall_ms_p95": 103.85315365004429,
+        "scope": "offline decode+inference+tracking(if enabled)+render+cache+encode; includes cold first inference, excludes model loading and post-run hashes; not a streaming benchmark; collision rules and post-run evidence clip encoding included"
+      },
+      "quality": {
+        "observations": 27720,
+        "eligible_track_observations": 14260,
+        "abstained_observations": 13460,
+        "frames_with_two_eligible_tracks": 900
+      }
+    },
+    {
+      "run_id": "810a9ee33785ce66c868d086",
+      "frames": 221,
+      "event_frames": [
+        109
+      ],
+      "method": "motion_contact_v5",
+      "cpu_threads": 4,
+      "runtime": {
+        "pipeline_wall_s": 18.39794954299998,
+        "offline_processing_fps": 12.01220818023635,
+        "frame_wall_ms_p50": 79.4384869999476,
+        "frame_wall_ms_p95": 106.37747399994169,
+        "scope": "offline decode+inference+tracking(if enabled)+render+cache+encode; includes cold first inference, excludes model loading and post-run hashes; not a streaming benchmark; collision rules and post-run evidence clip encoding included"
+      },
+      "quality": {
+        "observations": 1831,
+        "eligible_track_observations": 746,
+        "abstained_observations": 1085,
+        "frames_with_two_eligible_tracks": 184
+      }
+    }
+  ],
+  "test_set_evaluated": false,
+  "research_gate_satisfied": false,
+  "labels_or_splits_modified": false,
+  "user_video_published": false,
+  "public_pages_updated": false,
+  "delivery_bundle_regenerated": false,
+  "artifacts": [
+    {
+      "path": "configs/collision_rules.json",
+      "sha256": "5cd9138b988268efa58c2d284080e7847f0138073754158c70922b3b5f010170",
+      "bytes": 1705
+    },
+    {
+      "path": "src/collision_rules.py",
+      "sha256": "1397896bc3bc169b22699d7bcc4dd1fa7ae002f5228dd635dd86bbd497b85a7e",
+      "bytes": 11041
+    },
+    {
+      "path": "src/demo_server.py",
+      "sha256": "f5c0e84732b071a26c00bb064911e1a281aeebee48f91e46ca7459805cfbd74e",
+      "bytes": 24386
+    },
+    {
+      "path": "scripts/evaluate_collision_rules.py",
+      "sha256": "68ac7825533f460cc588bcb9a5cf99a571a4c7888708e9b7299087aaea9c6ef0",
+      "bytes": 6189
+    },
+    {
+      "path": "demo/app.js",
+      "sha256": "f4c3c60e1c74592db18b0f6cc97f3e2637d40f711575dbb817ee7582b07b4f12",
+      "bytes": 14979
+    },
+    {
+      "path": "tests/test_collision_rules.py",
+      "sha256": "dd48679211e8c4c2ca32740d03cd8652adcd464dc7367a3d26cb49322687ccda",
+      "bytes": 7106
+    },
+    {
+      "path": "tests/test_demo_server.py",
+      "sha256": "274ffcfbe6c6a3ae213fc62b7dba4f06c49eae264442cf695eb9f79ebcc21c26",
+      "bytes": 6863
+    },
+    {
+      "path": "docs/FALSE_ALERT_FIX.md",
+      "sha256": "327477e7a7d1e89b721c5e6685304fcca9d5223af100b29042a36d9bd21555c1",
+      "bytes": 6918
+    },
+    {
+      "path": "outputs/audits/false_alert_2026-11-16/comparison.json",
+      "sha256": "177ee70b55ad73003ea99971a4d0f9629998bbb3b5126d593c0313790f8abeb6",
+      "bytes": 4216
+    },
+    {
+      "path": "outputs/audits/false_alert_2026-11-16/tests.log",
+      "sha256": "02ec36051d41c6cff955d177d8355d8b14ce8163c6762c6b327c04ab38d7f929",
+      "bytes": 12151
+    },
+    {
+      "path": "outputs/audits/false_alert_2026-11-16/v5_replay/report.json",
+      "sha256": "91322da78074d8fba34aeaf1dbafb287a436161504c785ab6276918536dcdaba",
+      "bytes": 5541
+    },
+    {
+      "path": "outputs/audits/false_alert_2026-11-16/gate_disabled_replay/report.json",
+      "sha256": "af199f1f1d035775645564766f2642a29ab25e2345dc68bcf617fc27c80c23d5",
+      "bytes": 7172
+    },
+    {
+      "path": "outputs/audits/false_alert_2026-11-16/browser_check.json",
+      "sha256": "70e0589bdc0a161b6e95825d4dea4bca2e9fcfab8b7de66aadc5acb5dc290f79",
+      "bytes": 378
+    },
+    {
+      "path": "outputs/audits/false_alert_2026-11-16/recovery_check.json",
+      "sha256": "09c1c6b12ebf0d2f272c2c3c853a6ca13aa3bf860056ca509f54b8a309589693",
+      "bytes": 167
+    },
+    {
+      "path": "outputs/demo_app/runs/b7466ef9ca2641caab9c1ec2863ff927/video/video_collision.run.json",
+      "sha256": "8cbcc84d68c17df37fb01077602f076051dee11b374fc032cf8fb0f248d245fe",
+      "bytes": 6354
+    },
+    {
+      "path": "outputs/demo_app/runs/32391b2d202249e6886fd8bd8b27ed57/video/video_collision.run.json",
+      "sha256": "84b631415ddcc5d929bc513b02e130351c6b5f723e21fcc23f3e2997bf1d8760",
+      "bytes": 6586
+    }
+  ],
+  "limitations": [
+    "Development scenes used to adjust the rule, not a locked independent test",
+    "User-reported false alert is not a reviewed negative label for the whole clip",
+    "Bottom-edge compatibility is an image heuristic and can miss occluded, tipped or different-elevation vehicles",
+    "Quality gate can exclude small or distant vehicles",
+    "Frame-based history and confirmation remain sensitive to FPS; no streaming or generalization claim"
+  ]
+}

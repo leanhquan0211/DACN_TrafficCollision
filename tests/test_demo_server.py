@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -55,6 +56,20 @@ class RelocationTests(unittest.TestCase):
                 inspect_report(path,path_overrides=overrides)
             with self.assertRaisesRegex(ValueError,"Unsupported relocated"):
                 inspect_report(path,path_overrides={"input_sha256":"fake"})
+
+
+class RecoverySelectionTests(unittest.TestCase):
+    def test_recovery_order_cannot_replace_corrected_run_with_older_alerts(self):
+        state=DemoState.__new__(DemoState)
+        state.lock=threading.RLock();state.runs={}
+        sample={'runs':{}}
+        # Newer UUID sorts first; timestamps also use different UTC offsets.
+        newer={'id':'aaa-new','report':{'mode':'collision','checked_at':'2026-11-16T08:00:00+00:00','event_count':0}}
+        older={'id':'zzz-old','report':{'mode':'collision','checked_at':'2026-11-16T14:00:00+07:00','event_count':1}}
+        state.register(newer,sample);state.register(older,sample)
+        self.assertEqual(sample['runs']['collision'],'aaa-new')
+        self.assertEqual(state.get_run(sample['runs']['collision'])['report']['event_count'],0)
+        self.assertEqual(state.get_run('zzz-old')['report']['event_count'],1)
 
 
 class ManualReviewTests(unittest.TestCase):

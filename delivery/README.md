@@ -1,5 +1,7 @@
 # Bộ bàn giao demo
 
+**Cập nhật sau lượt sửa báo nhầm16/11:** source/web local hiện dùng luật v5, đã chạy lại clip người dùng900frame (1cảnh báo nhầm→0), CADP vẫn cảnh báo109 và74testđạt. [Bằng chứng và giới hạn](../docs/FALSE_ALERT_FIX.md). Word/PDF/ZIP bên dưới đã tạo trước lượt sửa, giữ là snapshot v4; chưa tái xuất bằng v5 và không kèm video người dùng.
+
 ## Bản cảnh báo thử nghiệm — 16/11/2026
 
 Chế độ collision đã có luật/FSM tự động, khung đỏ và bằng chứng ảnh/clip/Events JSON, chạy được trên MP4 upload. [Kết quả, cách dùng và giới hạn](../docs/COLLISION_DETECTION.md). Báo cáo phát triển mới nằm trong `collision_2026-11-16/`; không thay bằng chứng nghiên cứu hoặc mẫu báo cáo chính thức của trường. Gói mới `TrafficLab_demo_2026-11-16.zip` giữ nguồn/model/hai clip và cả kết quả cảnh báo mẫu; bỏ upload cá nhân và không chứa `.venv`/toàn dataset.

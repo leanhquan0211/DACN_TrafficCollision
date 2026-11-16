@@ -35,7 +35,7 @@ def evaluate(paths, config, output):
     for number, path in enumerate(paths):
         inspect_report(path)
         report = json.loads(path.read_text())
-        if report['mode'] != 'tracking':
+        if report['mode'] not in {'tracking', 'collision'}:
             raise ValueError('Collision replay requires actual tracks')
         engine = CollisionRules(config,image_width=report['width_px'],image_height=report['height_px'],detector_imgsz=report['requested_imgsz'])
         frames = [json.loads(s) for s in Path(report['frame_cache']).read_text().splitlines()]
@@ -57,7 +57,12 @@ def evaluate(paths, config, output):
         candidates = []
         with (output/f'{number:02d}_frames.jsonl').open('x') as stream:
             for row in frames:
-                result = engine.update(row)
+                # Reuse raw observations from a verified collision cache without
+                # passing its old decisions/events into the new rule engine.
+                # Scene-cut is an exogenous image-derived marker, not an alert.
+                observed = {k: v for k, v in row.items() if k != 'collision'}
+                scene_cut = row.get('collision', {}).get('scene_cut', False)
+                result = engine.update(observed, scene_cut=scene_cut)
                 stream.write(json.dumps(result,allow_nan=False)+'\n')
                 if is_cadp and 96 <= row['frame_index'] <= 130:
                     pair = expected_pair_by_frame.get(row['frame_index'])
