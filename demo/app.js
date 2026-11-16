@@ -4,6 +4,14 @@ let catalog, current, frameIndex = 0, generation = 0, frameRequest = 0, jobId = 
 let lastRendered = -1, jobBusy = false, polling = false, uploading = false;
 const original = $("original"), processed = $("processed");
 const classNames = {car:"Ô tô",bus:"Xe buýt",truck:"Xe tải",bicycle:"Xe đạp",motorcycle:"Xe máy",motorbike:"Xe máy"};
+function vehicleLabel(o){
+  const display=o.display_class;
+  if(display){
+    if(!display.name)return "Xe · chưa rõ loại";
+    return (classNames[display.name]||display.name)+(display.status==="tentative"?" · tạm thời":"");
+  }
+  return (classNames[o.class_name]||o.class_name)+" · dự đoán cũ";
+}
 const number = n => n.toLocaleString("vi-VN");
 function error(message) { $("error").textContent = message; $("error").hidden = !message; }
 async function api(path, data) {
@@ -52,7 +60,7 @@ async function loadSelected(){
     $("metric-obs").textContent=number(report.observation_count);
     $("metric-ids").textContent=mode!=="detection"?number(report.unique_track_ids):"—";
     $("metric-fps").textContent=report.runtime.offline_processing_fps.toFixed(1)+" fps";
-    $("run-state").textContent=report.current_collision_config===false?"Kết quả dùng luật cũ · Chạy lại trên CPU để cập nhật":"● Đã kiểm MP4 · cache · hash";
+    $("run-state").textContent=report.current_collision_config===false?"Kết quả dùng luật cũ · Chạy lại trên CPU để cập nhật":(report.current_vehicle_config===false?"Kết quả dùng cấu hình nhận dạng xe cũ · Chạy lại trên CPU để cập nhật":"● Đã kiểm MP4 · cache · hash");
     $("video-method").textContent=mode==="collision"?"PHÁT HIỆN VA CHẠM · THỬ NGHIỆM":(mode==="tracking"?"YOLO + BYTETRACK":"YOLO DETECTION");
     $("seek").max=report.processed_frames-1;$("seek").value=0;frameIndex=0;
     original.src=`/media?id=${id}&kind=source`;processed.src=`/media?id=${id}&kind=output`;
@@ -77,7 +85,7 @@ async function renderFrame(index){
     const frame=await api(`/api/frame?id=${id}&index=${frameIndex}`);
     if(request!==frameRequest || !current || current.id!==id)return;
     $("objects-count").textContent=`${frame.observations.length} bbox · ${frame.missing_tracks.length} ID thiếu`;
-    const rows=frame.observations.map(o=>{const tr=document.createElement("tr");const values=[o.track_id===null?"—":`#${o.track_id}`,classNames[o.class_name]||o.class_name,`${(o.confidence*100).toFixed(1)}%`,o.track_id===null?"—":o.track_age_observations];values.forEach((v,i)=>{const td=document.createElement("td");td.textContent=v;if(i===0)td.className="track";tr.append(td);});return tr;});
+    const rows=frame.observations.map(o=>{const tr=document.createElement("tr");const values=[o.track_id===null?"—":`#${o.track_id}`,vehicleLabel(o),`${(o.confidence*100).toFixed(1)}%`,o.track_id===null?"—":o.track_age_observations];values.forEach((v,i)=>{const td=document.createElement("td");td.textContent=v;if(i===0)td.className="track";if(i===1)td.title=`YOLO thô: ${classNames[o.class_name]||o.class_name} · ${(o.confidence*100).toFixed(1)}%; loại hiển thị có thể dùng lịch sử ID, không phải nhãn thật.`;tr.append(td);});return tr;});
     if(!rows.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=4;td.textContent="Không có quan sát tại frame này.";tr.append(td);rows.push(tr);}
     $("objects").replaceChildren(...rows);
   }catch(e){if(request===frameRequest)error(e.message);}

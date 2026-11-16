@@ -2,11 +2,13 @@
 
 Đã có luồng chạy hoàn chỉnh trong demo: **video → YOLOv8n/ByteTrack → luật chuyển động causal → xác nhận/chống lặp theo cặp → cảnh báo + khung đỏ + ảnh/clip + Events JSON**. Áp dụng được cho MP4 tải lên, không đọc nhãn hoặc tên video để quyết định. Đầu ra ghi `suspected_collision` / **NGHI VA CHẠM**, cần kiểm bằng chứng; chưa phải detector đã được kiểm định trên nhiều camera.
 
+**Cập nhật nhận dạng xe cuối16/11:** bật NMS giữa các lớp để giảm khung trùng, thêm lớp hiển thị theo lịch sử/“chưa rõ loại”, giữ dự đoán thô và luật v5. CADP chạy lại đúng cặp tại108, candidate35/35 (trước thay NMS:109/34trên35); clip900frame vẫn0alert, ba DETRAC vẫn0alert.80test và6nhóm Firefox đạt. [Chi tiết và giới hạn](VEHICLE_LABEL_FIX.md). Số frame109 và74test của lượt dưới đây giữ là lịch sử, không phải giá trị mới nhất.
+
 **Cập nhật v5 sau phản hồi báo nhầm:** clip người dùng900frame giảm từ1cảnh báo sai ở165 xuống0 sau chạy CPU đầy đủ; CADP chạy lại vẫn có cảnh báo109. Bộ test mới74/74đạt. [Chẩn đoán và bằng chứng trước/sau](FALSE_ALERT_FIX.md). Các ảnh/video kết quả v4 dưới đây giữ là lịch sử; web local đánh dấu kết quả cũ và dùng lượt mới nhất sau khôi phục.
 
 ## Sử dụng
 
-Chạy `bash demo.sh`, mở <http://127.0.0.1:8765> và chọn **Phát hiện va chạm · Thử nghiệm** (mặc định). CADP có kết quả sẵn: một cảnh báo frame109, ID tracker1/19. Bấm **Xem thời điểm cảnh báo**, **Ảnh bằng chứng**, **Clip bằng chứng** hoặc tải **Events JSON**. Mốc96–130 trên mô tả mẫu là nhãn người rà, không được truyền vào thuật toán. Các chế độ detection/tracking giữ riêng, không tự có cảnh báo.
+Chạy `bash demo.sh`, mở <http://127.0.0.1:8765> và chọn **Phát hiện va chạm · Thử nghiệm** (mặc định). CADP local mới nhất có một cảnh báo108; bản lưu trước thay NMS là109, ID1/19. Bấm **Xem thời điểm cảnh báo**, **Ảnh bằng chứng**, **Clip bằng chứng** hoặc tải **Events JSON**. Mốc96–130 trên mô tả mẫu là nhãn người rà, không được truyền vào thuật toán. Các chế độ detection/tracking giữ riêng, không tự có cảnh báo.
 
 Chọn MP4 H.264 từ máy và bấm **Tải lên & phân tích** để chạy trên video khác. Giới hạn như [hướng dẫn upload](EXTERNAL_VIDEO_DEMO.md). Kết quả chỉ xuất hiện sau khi xử lý và kiểm đủ MP4/cache/hash/evidence; giao diện hiện là xử lý **file offline**, không phải cảnh báo streaming tức thời. Khi xem đầu video, danh sách sự kiện đã biết của cả lượt chạy vẫn được hiển thị để tra cứu.
 

@@ -24,6 +24,8 @@ Tên đã có MP4/cache/report/file dở hoặc đang được giữ sẽ nhận
 
 Mỗi quan sát có `bbox_xyxy`, `bbox_cxcywh_norm`, class/confidence, `track_id`, `missing_mask=0` và `track_age_observations`. Nhánh detection giữ `track_id=null`. Frame thiếu track có `missing_tracks` với ID/gap/mask=1, không bịa bbox. Export chỉ giữ trạng thái missing tối đa 30 frame; đây là giới hạn bộ nhớ cache, không phải đo chất lượng tracker. Mỗi run tạo model/clock mới, không nối ID giữa camera/video.
 
+**Cập nhật16/11:** pipeline mặc định đọc `configs/vehicle_inference.json`, bật NMS giữa lớp và thêm `display_class` riêng cho cách hiển thị. `class_id/class_name/confidence` vẫn là dự đoán thô của quan sát còn lại; `display_class.name=null` là chưa đủ bằng chứng, không phải nhãn phương tiện mới. Lớp ổn định có thể dùng lịch sử ID trong khi confidence thuộc frame hiện tại; tỷ lệ phiếu không là xác suất. Report ghi config/hash/effective `agnostic_nms`, frame ghi `vehicle_scene_cut`; cache cũ thiếu trường mới vẫn giữ lịch sử, web nhắc chạy lại. [Chẩn đoán, ngưỡng, số đo và giới hạn](VEHICLE_LABEL_FIX.md).
+
 Clock dùng PTS của container. Nếu PTS lỗi trên timing chưa xác minh, có thể dùng `frame_index/container_fps`, ghi rõ `timestamp_origin`; source seconds vẫn null. Với `verified_source`, PTS lỗi hoặc không tăng làm lượt chạy thất bại thay vì tự tạo giây nguồn.
 
 ## Kết quả đã chạy

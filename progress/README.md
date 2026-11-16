@@ -13,6 +13,8 @@ Quy ước này thay quy ước cũ một file/buổi. Đã hợp nhất ba bả
 
 ## Trạng thái hiện tại — 16/11/2026
 
+**Mới nhất — xử lý nhầm lớp xe người dùng chỉ:** xe trắng/SUV trong clip140frame bị rawtruck0,23; tăng resolution cùng model vẫn sai. Giữ YOLOv8n640, bật NMS giữa lớp và nhãn hiển thị theo lịch sử causal/“chưa rõ loại”. Xe được chỉ hiện `vehicle?`, **raw vẫn truck, chưa sửa detector thành car**. Cặp khác lớp IoU≥0,8 từ141→0, ID tạm65→50 trên clip này; không gọi là accuracy. CPU chạy lại7clip/3548frame: CADP đúng cặp108/candidate35trên35, clip900frame0alert, ba DETRAC2037frame0alert, cao tốc250frame0alert, clip140frame vẫn cảnh báo52 chưaGTđầyđủ. **80/80test,6nhóm Firefox đạt**, recovery chọn đúng3run mới nhất. [Hồ sơ](../docs/VEHICLE_LABEL_FIX.md), [snapshot](../docs/evidence/2026-11-16-vehicle-labels.json), [nhật ký](2026-11-16.md). Web local đã khởi động lại và có kết quả mới; Pages/ZIP/Word/PDF chưa tái xuất. NMS có thể làm mất xe thật chồng bbox mạnh, lịch sử vẫn có thể nhầm; giữ gate nghiên cứu chưa hoàn thành.
+
 **Đã sửa case báo nhầm người dùng gửi:** `motion_contact_v5` bổ sung chốt tương thích mép dưới bbox. CPU chạy lại đủ900frame: **1cảnh báo sai ở165→0**; input/trọng số và mọi quan sát detector giống trước sửa. CPU CADP221frame vẫn bắt đúng cặp tại109; replay6cache không phát sinh cảnh báo khác. **74/74test đạt**, Firefox5nhóm đạt; khôi phục chọn run mới nhất theo timestamp, web ghi rõ kết quả dùng config cũ. [Chẩn đoán/giới hạn](../docs/FALSE_ALERT_FIX.md), [snapshot nhỏ](../docs/evidence/2026-11-16-false-alert-fix.json), [nhật ký](2026-11-16.md). Clip mới chỉ dùng phát triển, không tự duyệt âm toàn clip hoặc sửa nhãn/split/model. Chốt có thể miss xe che khuất/lật/khác độ cao; gate nghiên cứu chưa hoàn thành.
 
 **Web local đang chạy bản sửa:** <http://127.0.0.1:8765>, chọn `13275193-hd_1920_1080_60fps.mp4`/collision để xem900frame0alert. Kết quả cũ giữ nguyên; CADP có lượt v5 mới1alert. Server chạy trong terminal riêng. Lượt mở web trước sửa được ghi tại [local_showcase/status.json](../outputs/audits/local_showcase_2026-11-16/status.json).
@@ -85,7 +87,7 @@ Quy ước này thay quy ước cũ một file/buổi. Đã hợp nhất ba bả
 | 09/11/2026 | Rà phần chưa hoàn thiện, phục hồi CADP MP4/TXT, audit metadata/split, sửa kiểm fingerprint/môi trường; chưa đủ điều kiện train | [2026-11-09.md](2026-11-09.md) |
 | 12/11/2026 | Tìm link trực tiếp, phục hồi 2.258 ảnh có fingerprint, video dẫn xuất và 35 vùng B0 đề xuất; 23 test đạt | [2026-11-12.md](2026-11-12.md) |
 | 14/11/2026 | Môi trường CPU/cache, dashboard/Word/slide/ZIP; nghiên cứu nguồn, tải chọn lọc và kiểm nhãn STTAD, bảy test importer mới | [2026-11-14.md](2026-11-14.md) |
-| 16/11/2026 | B0 khả thi, upload/cảnh báo B2/FSM, GitHub/Pages; sửa báo nhầm clip900frame bằng v5,74test đạt và kiểm CPU/Firefox/khôi phục | [2026-11-16.md](2026-11-16.md) |
+| 16/11/2026 | B0 khả thi, upload/B2/FSM/GitHub/Pages; sửa báo nhầm v5, xử lý lớp xe/NMS,80test và7clip3548frame/Firefox/khôi phục | [2026-11-16.md](2026-11-16.md) |
 
 ## Mẫu mục bổ sung trong file ngày
 

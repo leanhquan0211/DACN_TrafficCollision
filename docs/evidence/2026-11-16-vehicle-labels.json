@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-16T22:31:16.849616+07:00",
+  "purpose": "development_vehicle_class_error_handling",
+  "historical_snapshot_not_current_machine_inventory": true,
+  "vehicle_policy": {
+    "schema_version": 1,
+    "policy_id": "vehicle_labels_v1",
+    "agnostic_nms": true,
+    "history_frames": 15,
+    "maximum_track_gap_frames": 3,
+    "maximum_box_scale_ratio": 1.6,
+    "minimum_class_confidence": 0.5,
+    "minimum_support_observations": 3,
+    "minimum_vote_share": 0.75,
+    "scene_cut_mean_difference": 0.3,
+    "scope": "causal display labels; raw detector class/confidence remain unchanged; votes are not calibrated probabilities"
+  },
+  "weights_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+  "reported_vehicle": {
+    "frame": 139,
+    "old_track_id": 245,
+    "new_track_id": 199,
+    "raw_class": "truck",
+    "raw_confidence": 0.2298426628112793,
+    "display_class": null,
+    "display_status": "uncertain",
+    "raw_prediction_corrected": false,
+    "ground_truth_status": "user_reported_and_agent_visual_diagnostic_not_training_label"
+  },
+  "resolution_probe": {
+    "frames": [
+      137,
+      138,
+      139
+    ],
+    "imgsz": [
+      640,
+      960,
+      1280
+    ],
+    "all_have_truck_prediction": true,
+    "default_imgsz_unchanged": 640,
+    "not_a_latency_benchmark": true
+  },
+  "cross_class_pairs_at_iou_at_least_08": {
+    "before": 141,
+    "after": 0,
+    "before_affected_frames": 92,
+    "not_a_class_accuracy_metric": true
+  },
+  "temporary_track_ids": {
+    "before": 65,
+    "after": 50,
+    "not_identity_accuracy": true
+  },
+  "actual_cpu_reruns": [
+    {
+      "case": "highway",
+      "frames": 140,
+      "input_sha256": "947b9a97edf33b4f4ff3f81191b90eef177369eb2ea8adbf22725471a8d1fc92",
+      "report_sha256": "23f6f2d0e918c7c4bd7d6692661e4d7423b17022e23383b24ce43b1a2f908a5d",
+      "event_frames": [
+        52
+      ],
+      "agnostic_nms": true,
+      "nms_iou": 0.7,
+      "runtime": {
+        "pipeline_wall_s": 7.282099188999837,
+        "offline_processing_fps": 19.22522563431718,
+        "frame_wall_ms_p50": 40.88471149975703,
+        "frame_wall_ms_p95": 61.97256244977324,
+        "scope": "offline decode+inference+tracking(if enabled)+render+cache+encode; includes cold first inference, excludes model loading and post-run hashes; not a streaming benchmark; collision rules and post-run evidence clip encoding included"
+      }
+    },
+    {
+      "case": "cadp",
+      "frames": 221,
+      "input_sha256": "9be3604080e268997a34cc427adb13934f1bf607a9ecbb89c2861bc8d5749ece",
+      "report_sha256": "05ad7e3a1e63610d2c32c25d889ca87b03babd811a7746be6532551d9de53605",
+      "event_frames": [
+        108
+      ],
+      "agnostic_nms": true,
+      "nms_iou": 0.7,
+      "runtime": {
+        "pipeline_wall_s": 8.758372291999876,
+        "offline_processing_fps": 25.23299908156075,
+        "frame_wall_ms_p50": 33.13241799969546,
+        "frame_wall_ms_p95": 46.042591000059474,
+        "scope": "offline decode+inference+tracking(if enabled)+render+cache+encode; includes cold first inference, excludes model loading and post-run hashes; not a streaming benchmark; collision rules and post-run evidence clip encoding included"
+      }
+    },
+    {
+      "case": "user900",
+      "frames": 900,
+      "input_sha256": "977c45debc5101c5f150a67ece8dfe12206a5dc7dd8d872f8dfc65da8b22cccb",
+      "report_sha256": "456eaabe1b53159f380d994fb8109e27e9362a3fb03a2c674e043b76f2b8b5f3",
+      "event_frames": [],
+      "agnostic_nms": true,
+      "nms_iou": 0.7,
+      "runtime": {
+        "pipeline_wall_s": 44.764120766999895,
+        "offline_processing_fps": 20.105387631414843,
+        "frame_wall_ms_p50": 48.337622000190095,
+        "frame_wall_ms_p95": 63.89019034982084,
+        "scope": "offline decode+inference+tracking(if enabled)+render+cache+encode; includes cold first inference, excludes model loading and post-run hashes; not a streaming benchmark; collision rules and post-run evidence clip encoding included"
+      }
+    },
+    {
+      "case": "MVI_20011",
+      "frames": 664,
+      "input_sha256": "59162b6525ae420a63d9683d9e0fa7fdd9144bd18b1f1da0fbcdd5ccab602971",
+      "report_sha256": "b8a2673faacaa748d41763af1d426e03515a9f4d84f0395bd100ac3b8b58ee95",
+      "event_frames": [],
+      "agnostic_nms": true,
+      "nms_iou": 0.7
+    },
+    {
+      "case": "MVI_20012",
+      "frames": 936,
+      "input_sha256": "63acfb37b3283c5358a8f23112285190d50d87ac8415dca609c810ed5497a883",
+      "report_sha256": "cc41341df1d5c87f225dc33076cee3c3b8a938d688cae328e1bdd68b841d0b98",
+      "event_frames": [],
+      "agnostic_nms": true,
+      "nms_iou": 0.7
+    },
+    {
+      "case": "MVI_20032",
+      "frames": 437,
+      "input_sha256": "59b3ceed35c23bdfffefdea45312776ec93f63b3251564176592bb8ed18ec3a2",
+      "report_sha256": "ee91917ac3c0ef569847f113b002053e7e5826c2f8a08bcf09f3aa338e283709",
+      "event_frames": [],
+      "agnostic_nms": true,
+      "nms_iou": 0.7
+    },
+    {
+      "case": "video",
+      "frames": 250,
+      "input_sha256": "5ee70b88101502198e8b1e2ba1f1276cd309add4537425f0ddf1f3571048a270",
+      "report_sha256": "3b9283d11509172af17b1dcb7a22a5f7c429d6266dcc3e4fe2340f0d5ab27f33",
+      "event_frames": [],
+      "agnostic_nms": true,
+      "nms_iou": 0.7
+    }
+  ],
+  "cadp_pair_evaluation": {
+    "input_report": "outputs/demo_app/runs/16ad8ea777f145768896d4aa06610615/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_collision.run.json",
+    "input_report_sha256": "05ad7e3a1e63610d2c32c25d889ca87b03babd811a7746be6532551d9de53605",
+    "input_sha256": "9be3604080e268997a34cc427adb13934f1bf607a9ecbb89c2861bc8d5749ece",
+    "frames": 221,
+    "events": [
+      {
+        "event_id": "event-0001",
+        "method": "motion_contact_v5",
+        "decision": "suspected_collision",
+        "automatic": true,
+        "needs_review": true,
+        "segment": 0,
+        "frame_index": 108,
+        "video_time_s": 5.4,
+        "source_time_s": null,
+        "track_ids": [
+          1,
+          18
+        ],
+        "bbox_xyxy": [
+          362.70819091796875,
+          307.100341796875,
+          585.609375,
+          511.689697265625
+        ],
+        "evidence_score": 1.0,
+        "score_is_probability": false,
+        "features": {
+          "contact": true,
+          "new_contact": true,
+          "approach": true,
+          "motion_change": true,
+          "evidence_score": 1.0,
+          "overlap_contact": true,
+          "bottom_edge_compatible": true,
+          "bottom_edge_gap_min_height": 0.43659969586779723,
+          "overlap": 0.31942980505502117,
+          "prior_overlap": 0.0,
+          "approach_body_units": 0.5819534545992242,
+          "prior_speed_body_per_frame": [
+            0.006573121851160405,
+            0.03418975206263631
+          ],
+          "current_speed_body_per_frame": [
+            0.003943546590132222,
+            0.005362096247937556
+          ],
+          "sudden_stop": [
+            false,
+            true
+          ],
+          "direction_change": [
+            false,
+            false
+          ],
+          "comparison_frame": 77
+        },
+        "first_support_frame": 106
+      }
+    ],
+    "scope": "development_diagnostic_not_locked_test",
+    "verified_negative_sequence": false,
+    "unlabelled_external_video": false,
+    "reviewed_event_count": 1,
+    "matched_events": 1,
+    "missed_events": 0,
+    "extra_or_wrong_pair_events": 0,
+    "candidate_frames_in_gt_interval": 35,
+    "gt_interval_frames": 35,
+    "candidate_event_recalled": true,
+    "first_alert_frame": 108,
+    "source_delay_seconds": null
+  },
+  "tests": {
+    "passed": 80,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "passed": true,
+    "checks": [
+      "cadp_alert_preserved_with_current_vehicle_policy",
+      "reported_vehicle_uncertain_in_table_with_raw_truck_score_in_tooltip",
+      "actual_annotated_video_decodes_seeks_and_plays_in_sync",
+      "prior_900_frame_false_alert_fix_not_regressed",
+      "historical_result_is_marked_outdated",
+      "refresh_keeps_newest_vehicle_policy_result_available"
+    ],
+    "browser": "firefox",
+    "user_media_published": false
+  },
+  "recovery": {
+    "passed": true,
+    "errors": [],
+    "checks": [
+      {
+        "sample_id": "upload-e3d45dd5e8314be28fa656ee1e94ed81",
+        "latest_run": "23f6f2d0e918c7c4bd7d6692"
+      },
+      {
+        "sample_id": "cadp-001407",
+        "latest_run": "05ad7e3a1e63610d2c32c25d"
+      },
+      {
+        "sample_id": "upload-a9e495eefb3646ea909e437433925500",
+        "latest_run": "456eaabe1b53159f380d994f"
+      }
+    ]
+  },
+  "labels_or_splits_modified": false,
+  "weights_changed": false,
+  "collision_rules_changed": false,
+  "classification_accuracy_evaluated": false,
+  "independent_test_evaluated": false,
+  "research_gate_satisfied": false,
+  "user_media_published": false,
+  "pages_or_delivery_regenerated": false,
+  "artifacts": [
+    {
+      "path": "configs/vehicle_inference.json",
+      "sha256": "24d46398c0fd7aaaeab4d3101233b229e515ec0495ecb3b89ec0074f8e194860",
+      "bytes": 439
+    },
+    {
+      "path": "src/vehicle_labels.py",
+      "sha256": "652b5ef98766f140c9539024bac5ef475d2c74e6668a85ac7aabdbbadf3e6cb1",
+      "bytes": 4671
+    },
+    {
+      "path": "src/video_pipeline.py",
+      "sha256": "90a25924c6a2e358fdd795f9453a63549be8f70f45e4f525eeade9d9c93c81d7",
+      "bytes": 14955
+    },
+    {
+      "path": "src/demo_server.py",
+      "sha256": "7260fdaf7869b95d200fccad6465b758367ac9c80fcf8b1417a8736edac01390",
+      "bytes": 24722
+    },
+    {
+      "path": "demo/app.js",
+      "sha256": "3a9c517cf5ab8ccc18c2470e1fba79beba79c56f1fd13859de5c26d12f2984bd",
+      "bytes": 15598
+    },
+    {
+      "path": "demo/index.html",
+      "sha256": "4bedce5e0c73d0bffcd0b472d61811cd4f531bfc129087929ec7e6c227d3331a",
+      "bytes": 12365
+    },
+    {
+      "path": "tests/test_vehicle_labels.py",
+      "sha256": "c8d6ffb658faf3d7ce131d42d78a1b081b849513c20469eb7527c0f90d878d0f",
+      "bytes": 3227
+    },
+    {
+      "path": "docs/VEHICLE_LABEL_FIX.md",
+      "sha256": "e6314d8d5c0c108b83d7d1bd46d90b2dfae043aa41e4fe1bbd438abd8e6ead98",
+      "bytes": 7619
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/resolution_probe.json",
+      "sha256": "83845d2b07e562f6c4c98f1cdb98579287761bd7176e855f8c4cb076d12d80e3",
+      "bytes": 4443
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/duplicate_boxes_before.json",
+      "sha256": "a9d031658001b72eb1d04a726a16de8d60b0413bb5256699535c26f4a6e0c6f9",
+      "bytes": 20960
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/duplicate_boxes_after.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/reported_vehicle_after.json",
+      "sha256": "5f7efe4b33ea6d7f2902542d8b6b897cad982908365501c2a48b6947fc3e486a",
+      "bytes": 850
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/browser_check.json",
+      "sha256": "5a5f670042c179ba2476710daf989f6b981005f5c7ad5e96e4ffbd141c838bc1",
+      "bytes": 446
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/recovery_check.json",
+      "sha256": "2dd35460ea77314450cdfd65e558f14a8abaf4d3266ced3f4110e9f0bfbb4e07",
+      "bytes": 393
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/tests.log",
+      "sha256": "dc90de21ead952d477de77ce8845ef4d34d1dec5a3a0dfa81d60179e8caf5d99",
+      "bytes": 13211
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/cadp_pair_check/report.json",
+      "sha256": "c9294ab72f6b7ec4b8197fd36cc0c58821cfa558cf90d25033485b4f44947a2f",
+      "bytes": 2902
+    },
+    {
+      "path": "outputs/demo_app/runs/0c68c04e5e374240bae76bb541e1febe/video/video_collision.run.json",
+      "sha256": "23f6f2d0e918c7c4bd7d6692661e4d7423b17022e23383b24ce43b1a2f908a5d",
+      "bytes": 7281
+    },
+    {
+      "path": "outputs/demo_app/runs/16ad8ea777f145768896d4aa06610615/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_collision.run.json",
+      "sha256": "05ad7e3a1e63610d2c32c25d889ca87b03babd811a7746be6532551d9de53605",
+      "bytes": 7427
+    },
+    {
+      "path": "outputs/demo_app/runs/e424fc97645149d4a3540b56029bdd44/video/video_collision.run.json",
+      "sha256": "456eaabe1b53159f380d994fb8109e27e9362a3fb03a2c674e043b76f2b8b5f3",
+      "bytes": 7304
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/regression_runs/00/MVI_20011/MVI_20011_collision.run.json",
+      "sha256": "b8a2673faacaa748d41763af1d426e03515a9f4d84f0395bd100ac3b8b58ee95",
+      "bytes": 7418
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/regression_runs/01/MVI_20012/MVI_20012_collision.run.json",
+      "sha256": "cc41341df1d5c87f225dc33076cee3c3b8a938d688cae328e1bdd68b841d0b98",
+      "bytes": 7419
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/regression_runs/02/MVI_20032/MVI_20032_collision.run.json",
+      "sha256": "ee91917ac3c0ef569847f113b002053e7e5826c2f8a08bcf09f3aa338e283709",
+      "bytes": 7413
+    },
+    {
+      "path": "outputs/audits/class_label_2026-11-16/regression_runs/03/video/video_collision.run.json",
+      "sha256": "3b9283d11509172af17b1dcb7a22a5f7c429d6266dcc3e4fe2340f0d5ab27f33",
+      "bytes": 7286
+    }
+  ],
+  "limitations": [
+    "The raw detector still misclassifies the reported vehicle; display abstains instead of forcing car",
+    "NMS may suppress genuinely distinct vehicles with high bbox overlap",
+    "Temporal class aggregation can preserve an incorrect class or be corrupted by ID switches",
+    "All reported scenes are development; no independent class/detection/event benchmark"
+  ]
+}

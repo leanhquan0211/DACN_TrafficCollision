@@ -1,6 +1,10 @@
 # Cấu hình
 
-Giai đoạn này dùng tham số dòng lệnh của các script. Chưa có cấu hình huấn luyện hoặc quy tắc kết luận va chạm.
+Các script đọc cấu hình có phiên bản và ghi hash trong output; README gốc phân biệt nhánh khả thi/demo với gate nghiên cứu chưa hoàn thành.
+
+- `vehicle_inference.json`: NMS giữa lớp và chính sách nhãn hiển thị causal theo ID, có trạng thái chưa rõ loại. Không thay class/confidence thô hoặc tạo nhãn GT. [Bằng chứng/giới hạn](../docs/VEHICLE_LABEL_FIX.md).
+- `collision_rules.json`: luật va chạm thử nghiệm `motion_contact_v5`, không là classifier đã kiểm định độc lập. [Ngưỡng/lịch sử lỗi](../docs/COLLISION_DETECTION.md).
+- `demo_catalog.json`: allowlist mẫu và report đã lưu; không đại diện toàn dataset hoặc upload cá nhân.
 
 `cadp_1407_preview.json` chỉ lưu căn chỉnh của **demo đã render** 1407: hash MP4/TXT, canvas và phép biến đổi từ tọa độ VATIC vào vùng ảnh Matplotlib. `prepare_cadp_pilot.py` kiểm hash và ZIP tham chiếu trước khi áp mapping; không dùng config này cho video sạch hoặc mẫu khác.
 

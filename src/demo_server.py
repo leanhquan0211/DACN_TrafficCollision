@@ -218,6 +218,10 @@ class DemoState:
                        collision_experimental=report.get('collision_experimental',False),
                        collision_method=report.get('collision_method'),event_count=report.get('event_count',0),
                        collision_quality=report.get('collision_quality'))
+        vehicle_config = self.root / 'configs/vehicle_inference.json'
+        details['vehicle_label_policy'] = report.get('vehicle_inference_config', {}).get('policy_id')
+        details['current_vehicle_config'] = (vehicle_config.is_file()
+            and report.get('vehicle_inference_config_sha256') == sha256_file(vehicle_config))
         if report['mode'] == 'collision':
             config = self.root / 'configs/collision_rules.json'
             details['current_collision_config'] = (config.is_file()

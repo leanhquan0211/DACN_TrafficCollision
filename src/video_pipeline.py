@@ -19,6 +19,7 @@ from zoneinfo import ZoneInfo
 
 from src.data_preparation import H264Writer, save_json, sha256_file
 from src.inference_export import FrameCache, observations, reserve_outputs
+from src.vehicle_labels import VehicleLabels, draw_vehicle_labels
 
 VEHICLE_NAMES = {"bicycle", "car", "motorcycle", "motorbike", "bus", "truck"}
 
@@ -34,6 +35,7 @@ def arguments(kind: str) -> argparse.ArgumentParser:
     parser.add_argument("--timing-evidence", type=Path, help="Required local source-timing evidence for verified_source")
     parser.add_argument("--cpu-threads", type=int, help="Optional PyTorch CPU thread count, recorded in report")
     parser.add_argument("--collision-config", type=Path, default=Path(__file__).resolve().parents[1]/'configs/collision_rules.json')
+    parser.add_argument("--vehicle-config", type=Path, default=Path(__file__).resolve().parents[1]/'configs/vehicle_inference.json')
     return parser
 
 
@@ -46,6 +48,10 @@ def percentile(values, probability):
 
 def run(args: argparse.Namespace, tracking: bool) -> Path:
     source = args.video.expanduser().resolve()
+    vehicle_config_path = getattr(args, 'vehicle_config', Path(__file__).resolve().parents[1]/'configs/vehicle_inference.json')
+    vehicle_config = json.loads(vehicle_config_path.read_text())
+    vehicle_config_hash = sha256_file(vehicle_config_path)
+    label_engine = VehicleLabels(vehicle_config)
     collision_mode = bool(getattr(args,'collision',False))
     rule_engine = None
     if collision_mode:
@@ -125,17 +131,25 @@ def run(args: argparse.Namespace, tracking: bool) -> Path:
                     if frame.shape[:2] != (height, width):
                         raise ValueError("Changing frame dimensions")
                     pts_ms = capture.get(cv2.CAP_PROP_POS_MSEC)
-                    options = dict(device=device, imgsz=args.imgsz, classes=classes, verbose=False)
+                    options = dict(device=device, imgsz=args.imgsz, classes=classes, verbose=False,
+                                   agnostic_nms=vehicle_config['agnostic_nms'])
                     # A new YOLO object per run isolates ByteTrack state between videos.
                     results = (model.track(frame, persist=True, tracker="bytetrack.yaml", **options)
                                if tracking else model.predict(frame, **options))
                     objects = observations(results[0], names, width, height)
-                    record = clock.record(count, pts_ms, objects)
-                    if rule_engine:
+                    scene_difference = 0.0
+                    if tracking:
                         import numpy as np
                         thumbnail = cv2.resize(frame,(64,36)).astype('float32')/255
-                        scene_cut = previous_thumbnail is not None and float(np.mean(np.abs(thumbnail-previous_thumbnail))) >= collision_config['scene_cut_mean_difference']
+                        if previous_thumbnail is not None:
+                            scene_difference = float(np.mean(np.abs(thumbnail-previous_thumbnail)))
                         previous_thumbnail = thumbnail
+                    label_cut = scene_difference >= vehicle_config['scene_cut_mean_difference']
+                    objects = label_engine.update(count, objects, scene_cut=label_cut)
+                    record = clock.record(count, pts_ms, objects)
+                    record['vehicle_scene_cut'] = label_cut
+                    if rule_engine:
+                        scene_cut = scene_difference >= collision_config['scene_cut_mean_difference']
                         record['collision'] = rule_engine.update(record,scene_cut=scene_cut)
                         quality = record['collision']['quality']
                         collision_quality['observations'] += quality['observations']
@@ -144,7 +158,7 @@ def run(args: argparse.Namespace, tracking: bool) -> Path:
                         collision_quality['frames_with_two_eligible_tracks'] += quality['eligible_tracks'] >= 2
                     cache.write(json.dumps(record, ensure_ascii=False, allow_nan=False) + "\n")
                     track_ids.update(o["track_id"] for o in objects if o["track_id"] is not None)
-                    rendered = results[0].plot()
+                    rendered = draw_vehicle_labels(frame,objects)
                     if rule_engine:
                         draw_alerts(rendered,rule_engine.events,count)
                     writer.write(rendered)
@@ -173,6 +187,8 @@ def run(args: argparse.Namespace, tracking: bool) -> Path:
                                     collision_quality=collision_quality)
             pipeline_seconds = time.perf_counter()-pipeline_started
         effective = model.predictor.args
+        if sha256_file(vehicle_config_path) != vehicle_config_hash:
+            raise ValueError('Vehicle inference configuration changed during the run')
         tracker_config = Path(check_yaml("bytetrack.yaml")) if tracking else None
         report = dict(
             schema_version=1, complete=True, checked_at=datetime.now(ZoneInfo("Asia/Bangkok")).isoformat(),
@@ -186,7 +202,8 @@ def run(args: argparse.Namespace, tracking: bool) -> Path:
             timing_evidence_sha256=sha256_file(evidence) if evidence else None,
             device=device, cpu_threads=torch.get_num_threads(), cpu_threads_requested=threads, requested_imgsz=args.imgsz,
             vehicle_classes={str(i): names[i] for i in classes},
-            effective_args={k: getattr(effective, k, None) for k in ("conf", "iou", "max_det", "half", "rect", "batch", "vid_stride")},
+            vehicle_inference_config=vehicle_config, vehicle_inference_config_sha256=vehicle_config_hash,
+            effective_args={k: getattr(effective, k, None) for k in ("conf", "iou", "max_det", "half", "rect", "batch", "vid_stride", "agnostic_nms")},
             tracker="bytetrack.yaml" if tracking else None,
             tracker_config_sha256=sha256_file(tracker_config) if tracker_config else None,
             tracker_config=tracker_config.read_text() if tracker_config else None,
@@ -198,7 +215,7 @@ def run(args: argparse.Namespace, tracking: bool) -> Path:
                          scope="offline decode+inference+tracking(if enabled)+render+cache+encode; includes cold first inference, excludes model loading and post-run hashes; not a streaming benchmark"),
             python=platform.python_version(), platform=platform.platform(),
             packages={p: importlib.metadata.version(p) for p in ("torch", "torchvision", "ultralytics", "numpy", "opencv-python", "lap")},
-            code_sha256={name: sha256_file(Path(__file__).parent/name) for name in ("video_pipeline.py", "inference_export.py", "data_preparation.py")},
+            code_sha256={name: sha256_file(Path(__file__).parent/name) for name in ("video_pipeline.py", "inference_export.py", "data_preparation.py", "vehicle_labels.py")},
             labels_or_splits_modified=False, collision_detection_implemented=collision_mode,**collision_fields)
         if rule_engine:
             report['runtime']['scope'] += '; collision rules and post-run evidence clip encoding included'

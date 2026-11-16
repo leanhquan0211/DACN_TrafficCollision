@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "policy_id": "vehicle_labels_v1",
+  "agnostic_nms": true,
+  "history_frames": 15,
+  "maximum_track_gap_frames": 3,
+  "maximum_box_scale_ratio": 1.6,
+  "minimum_class_confidence": 0.5,
+  "minimum_support_observations": 3,
+  "minimum_vote_share": 0.75,
+  "scene_cut_mean_difference": 0.3,
+  "scope": "causal display labels; raw detector class/confidence remain unchanged; votes are not calibrated probabilities"
+}

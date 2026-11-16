@@ -1,5 +1,7 @@
 # Bộ bàn giao demo
 
+**Lượt nhận dạng xe cuối16/11:** source/web local đã thêm NMS giữa lớp và nhãn hiển thị theo lịch sử/“chưa rõ loại”,80testđạt; [bằng chứng/giới hạn](../docs/VEHICLE_LABEL_FIX.md). Gói Word/PDF/ZIP bên dưới chưa chứa thay đổi này, vẫn là snapshot trước sửa; cần tái xuất khi chốt bản nộp.
+
 **Cập nhật sau lượt sửa báo nhầm16/11:** source/web local hiện dùng luật v5, đã chạy lại clip người dùng900frame (1cảnh báo nhầm→0), CADP vẫn cảnh báo109 và74testđạt. [Bằng chứng và giới hạn](../docs/FALSE_ALERT_FIX.md). Word/PDF/ZIP bên dưới đã tạo trước lượt sửa, giữ là snapshot v4; chưa tái xuất bằng v5 và không kèm video người dùng.
 
 ## Bản cảnh báo thử nghiệm — 16/11/2026
