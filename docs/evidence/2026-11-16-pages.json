@@ -1,0 +1,80 @@
+{
+  "recorded_at": "2026-11-16T14:14:42.735029+07:00",
+  "published": true,
+  "public_url": "https://minhquan0500.github.io/DACN_TrafficCollision/",
+  "pages_commit": "87e8e18afa6b7743afa5affeac3cc2468565501c",
+  "static_replay_only": true,
+  "browser_inference_implemented": false,
+  "private_uploads_included": false,
+  "model_weights_included": false,
+  "research_gate_modified": false,
+  "local_browser_checks": [
+    "initial_cadp_221_frames_actual_videos_decode_and_alert_109",
+    "jump_alert_play_pause_step_and_synchronized_video",
+    "both_samples_all_three_modes_correct_metrics_no_stale_alert_and_video_decode",
+    "static_only_no_backend_or_upload_requests_and_six_artifact_links",
+    "system_guide_workspace_navigation",
+    "mobile_390px_without_horizontal_overflow",
+    "refresh_initializes_under_project_subpath"
+  ],
+  "live_browser_checks": [
+    "initial_cadp_221_frames_actual_videos_decode_and_alert_109",
+    "jump_alert_play_pause_step_and_synchronized_video",
+    "both_samples_all_three_modes_correct_metrics_no_stale_alert_and_video_decode",
+    "static_only_no_backend_or_upload_requests_and_six_artifact_links",
+    "system_guide_workspace_navigation",
+    "mobile_390px_without_horizontal_overflow",
+    "refresh_initializes_under_project_subpath"
+  ],
+  "live_artifact_payloads_verified": 36,
+  "manifest_matches_local": true,
+  "total_public_files": 37,
+  "public_manifest_sha256": "abab990ec759c5d6bfa9dc757b2a95d2de7c9f0e582b87c1123ef1b0a381fc08",
+  "pages": {
+    "build_type": "legacy",
+    "https_enforced": true,
+    "source": {
+      "branch": "gh-pages",
+      "path": "/"
+    },
+    "status": "built",
+    "url": "https://minhquan0500.github.io/DACN_TrafficCollision/"
+  },
+  "build": {
+    "commit": "87e8e18afa6b7743afa5affeac3cc2468565501c",
+    "error": null,
+    "status": "built"
+  },
+  "pages_ref": {
+    "ref": "refs/heads/gh-pages",
+    "sha": "87e8e18afa6b7743afa5affeac3cc2468565501c"
+  },
+  "origin_main": {
+    "sha": "0f223f7e8fd49c5c642a9dac4c375cb4b2993f3e"
+  },
+  "fork_main": {
+    "sha": "0f223f7e8fd49c5c642a9dac4c375cb4b2993f3e"
+  },
+  "source_artifacts": [
+    {
+      "path": "demo/pages/index.html",
+      "sha256": "128e14b13c96f4724e651a62f0d5705063f830baf2a001f153712d6b742f3395"
+    },
+    {
+      "path": "demo/pages/app.js",
+      "sha256": "12397a56f3b801c0466092d0ab5e1efa7080275c7ad75d95e6de633c9695f994"
+    },
+    {
+      "path": "demo/style.css",
+      "sha256": "bc5a57fe2db0fb5857bcc9f3284243468b7c3809a7c4f66423957a1e72073d00"
+    },
+    {
+      "path": "scripts/build_pages_demo.py",
+      "sha256": "f4291895e05059d5c39867b7e25ec3c09799dd602191e9d75381bb68ebce1723"
+    },
+    {
+      "path": "scripts/check_pages_browser.py",
+      "sha256": "1221606b17c15e97c80d392148c356049908ceb6b81306ca255253ccaacfdd05"
+    }
+  ]
+}

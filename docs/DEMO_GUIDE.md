@@ -1,5 +1,7 @@
 # Chạy và trình diễn Traffic Lab
 
+> **Xem trực tuyến:** <https://minhquan0500.github.io/DACN_TrafficCollision/>. Bản GitHub Pages phát lại hai clip mẫu đã xử lý, xem từng frame/ID và ảnh/clip cảnh báo. Không cần máy phát triển bật; không phân tích upload mới trên web tĩnh. [Chi tiết và cách cập nhật](GITHUB_PAGES.md). Phần bên dưới hướng dẫn bản Python chạy suy luận thật.
+
 > **Bản hiện tại cuối16/11:** đã thêm chế độ **Phát hiện va chạm · Thử nghiệm**, mặc định khi mở trang. Có cảnh báo CADP frame109, ảnh/clip/Events JSON và chạy trên MP4 upload. [Kết quả, cấu hình, lịch sử lỗi và giới hạn](COLLISION_DETECTION.md). Bộ ZIP/Word/slide ngày14/11 bên dưới là bản cũ trước chức năng này.
 
 ## Chạy trên máy hiện tại
