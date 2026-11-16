@@ -3,7 +3,35 @@
   "checked_date": "2026-10-20",
   "timezone": "Asia/Bangkok",
   "guide": "docs/GETTING_STARTED.md",
-  "downloads_are_manual": true,
+  "downloads_are_manual": false,
+  "supplemental_sources": [
+    {
+      "id": "sttad_author_pilot",
+      "checked_date": "2026-11-14",
+      "source_url": "https://github.com/ZTR02/STTAD",
+      "commit": "21f3f5fea50b071f1db61186b481c2a7ccf525c9",
+      "path": "data_raw/sttad/author_samples",
+      "registry": "data/registries/sttad_selected_sources.json",
+      "download_command": ".venv/bin/python -B scripts/download_sttad_subset.py --download",
+      "audit_command": ".venv/bin/python -B scripts/prepare_sttad_pilot.py",
+      "guide": "docs/RESEARCH_NOTES.md",
+      "selection": "Four T-T/V-V sample sequences; 212 pinned files, 176 decoded images, 31 source boxes, two text files named JPG excluded",
+      "training_eligible": false,
+      "note": "Separate supplemental-source audit; check_project_assets.py profiles do not cover this field. Historical inventory is not proof of local presence. Do not download the whole dataset or assume unlabelled frames negative."
+    },
+    {
+      "id": "roboflow_vehicles_external_demo",
+      "checked_date": "2026-11-16",
+      "source_url": "https://media.roboflow.com/supervision/video-examples/vehicles.mp4",
+      "path": "data_raw/external_demo/roboflow_vehicles.mp4",
+      "registry": "data/registries/external_demo_vehicles.json",
+      "expected_sha256": "ac81100d9310bd4e9c02bc0b13b6492781d009742ced347766b2601be3c44ad4",
+      "observed_size_bytes": 35345757,
+      "purpose": "external_demo_only",
+      "training_eligible": false,
+      "note": "One external MP4 requested for upload/inference demonstration. No accident labels or research split. See docs/EXTERNAL_VIDEO_DEMO.md."
+    }
+  ],
   "assets": [
     {
       "id": "yolov8n",
@@ -68,7 +96,11 @@
       "source_folder_hint": "Dataset/manual/extracted_frames/001407",
       "expected_image_count": 221,
       "image_inventory": "data/registries/cadp_001407_images.csv",
-      "note": "Download only folder 001407; source names 0.jpg through 220.jpg; keep ZIP if Drive packages it"
+      "note": "Download only folder 001407; source names 0.jpg through 220.jpg; keep ZIP if Drive packages it",
+      "direct_folder_url": "https://drive.google.com/drive/folders/16vpAatZkuLguVMT4n4SMtrf3zu9VR3uE",
+      "public_file_registry": "data/registries/cadp_001407_drive_files.json",
+      "download_command": "python3 scripts/download_cadp_frames.py",
+      "link_checked_date": "2026-11-12"
     },
     {
       "id": "detrac_images_zip",
@@ -91,7 +123,10 @@
       ],
       "optional": false,
       "expected_image_count": 664,
-      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward"
+      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward; 2026-11-12: original Drive download quota exceeded. Selected mirror images are required to match official ZIP CRC/size and pinned mirror SHA-256.",
+      "image_inventory": "data/registries/detrac_MVI_20011_images.csv",
+      "alternative_transport_registry": "data/registries/detrac_subset_sources.json",
+      "download_command": "python3 scripts/download_detrac_mirror.py"
     },
     {
       "id": "detrac_MVI_20012",
@@ -103,7 +138,10 @@
       ],
       "optional": false,
       "expected_image_count": 936,
-      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward"
+      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward; 2026-11-12: original Drive download quota exceeded. Selected mirror images are required to match official ZIP CRC/size and pinned mirror SHA-256.",
+      "image_inventory": "data/registries/detrac_MVI_20012_images.csv",
+      "alternative_transport_registry": "data/registries/detrac_subset_sources.json",
+      "download_command": "python3 scripts/download_detrac_mirror.py"
     },
     {
       "id": "detrac_MVI_20032",
@@ -115,7 +153,10 @@
       ],
       "optional": false,
       "expected_image_count": 437,
-      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward"
+      "note": "Extract selected original sequence from DETRAC-Images.zip; names img00001.jpg onward; 2026-11-12: original Drive download quota exceeded. Selected mirror images are required to match official ZIP CRC/size and pinned mirror SHA-256.",
+      "image_inventory": "data/registries/detrac_MVI_20032_images.csv",
+      "alternative_transport_registry": "data/registries/detrac_subset_sources.json",
+      "download_command": "python3 scripts/download_detrac_mirror.py"
     },
     {
       "id": "detrac_train_xml",
@@ -166,5 +207,6 @@
     "ZCQcKnFSJvg",
     "zVzXEht1aME"
   ],
-  "new_vatic_package_status": "No additional matching VATIC/clean-frame pairs verified beyond 001407; see docs/cadp_pilot_sources.md"
+  "new_vatic_package_status": "No additional matching VATIC/clean-frame pairs verified beyond 001407; see docs/cadp_pilot_sources.md",
+  "download_policy": "Explicit opt-in commands restore only registered CADP 001407 / three DETRAC sequences; no automatic full dataset download"
 }

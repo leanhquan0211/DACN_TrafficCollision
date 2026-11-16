@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-14",
+  "timezone": "Asia/Bangkok",
+  "unit_tests": {
+    "passed": 39,
+    "failed": 0,
+    "skipped": 0,
+    "evidence": "outputs/audits/delivery_2026-11-14/tests.log"
+  },
+  "http_checks": 9,
+  "browser": {
+    "checked_at": "2026-11-14T13:12:55.356606+07:00",
+    "passed": true,
+    "browser": "firefox",
+    "version": "159.0",
+    "checks": [
+      "initial_real_metrics_and_both_videos_decoded",
+      "seek_play_pause_step_and_synchronized_video",
+      "sample_and_method_switch_show_correct_reports",
+      "run_button_actual_cpu_job_and_polling_complete",
+      "manual_review_form_and_persistent_evidence_link",
+      "system_and_guide_navigation",
+      "mobile_390px_without_horizontal_overflow"
+    ],
+    "collision_accuracy_measured": false
+  },
+  "relocation": {
+    "files_verified": 126,
+    "runs_verified": 4,
+    "tampering_detected": true,
+    "actual_relocated_cpu_job": true,
+    "same_linux_interpreter": true
+  },
+  "documents": {
+    "report_pdf_pages": 5,
+    "slides": 11,
+    "word": "delivery/BAO_CAO_HIEN_TRANG.docx",
+    "powerpoint": "delivery/SLIDE_DEMO.pptx"
+  },
+  "artifact_hashes": {
+    "src/demo_server.py": {
+      "bytes": 17012,
+      "sha256": "c13938fe836252b26e353cd9ce21b72ce26e2821912081591095733fa9f05bae"
+    },
+    "scripts/run_demo.py": {
+      "bytes": 2077,
+      "sha256": "30d57fefdd1bc5216d1088881370c4321e66b1cd59a45a804c823b848d6ab73a"
+    },
+    "scripts/check_inference_outputs.py": {
+      "bytes": 6054,
+      "sha256": "91a63c8d4875bfd4a00d5f83adfc4ed1f9dfa10dd841a4b2cbbfdaaa3aeaf1cf"
+    },
+    "demo/index.html": {
+      "bytes": 10713,
+      "sha256": "95e2411c947441ac90b1c75ef00f71497c2a89a97714fc5d60bd051e49ababd2"
+    },
+    "demo/app.js": {
+      "bytes": 11452,
+      "sha256": "d9fdc90c7fc0efb720227d4a143d8f8a998a6973b37c85fd5e5f5b8645997ea7"
+    },
+    "demo/style.css": {
+      "bytes": 10033,
+      "sha256": "3550c48b40b834620b1f7022a976791c9ae485fa9a45432fc99fafd227e7f5c0"
+    },
+    "configs/demo_catalog.json": {
+      "bytes": 1278,
+      "sha256": "193369963d236b8be2a027f2f160b073c489a2b0439b3197bfc45c0863d3d1ea"
+    },
+    "delivery/BAO_CAO_HIEN_TRANG.docx": {
+      "bytes": 1239539,
+      "sha256": "f49e348ebe48d06ca8e94c61e97f35ce3c090bbd000a1910670d0dc427caabc6"
+    },
+    "delivery/BAO_CAO_HIEN_TRANG.pdf": {
+      "bytes": 568786,
+      "sha256": "b6123486fcbc2d09c32139340f2907cbb3f30ea42978ac215a466020fe43ba1c"
+    },
+    "delivery/SLIDE_DEMO.pptx": {
+      "bytes": 256372,
+      "sha256": "093b8dee7883e753357c29161b384c108036ce156dc421ca8f35f9b48d23d742"
+    },
+    "delivery/SLIDE_DEMO.pdf": {
+      "bytes": 212981,
+      "sha256": "22686459a02877e3799e7dc621998fdfd96479aaf9ee3071d4f58060d80ff7a9"
+    }
+  },
+  "can_train": false,
+  "collision_detection_implemented": false,
+  "final_research_submission_ready": false
+}

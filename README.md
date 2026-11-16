@@ -2,6 +2,8 @@
 
 > **Mới clone hoặc bắt đầu với AI mới? Đọc [GETTING_STARTED — cài môi trường, tải gì/ở đâu/lưu đâu và tiếp tục thế nào](docs/GETTING_STARTED.md).** Repo giữ code/config/metadata/nhật ký; dataset, trọng số, `.venv`, video và audit đầy đủ nằm cục bộ, không có sau clone. [Catalog tải](data/download_catalog.json), [kiểm file hiện có](scripts/check_project_assets.py), [snapshot bằng chứng nhỏ](docs/evidence/README.md).
 
+> **Chạy demo:** `bash demo.sh` → <http://127.0.0.1:8765>. Mặc định **Phát hiện va chạm · Thử nghiệm**: tự tạo cảnh báo, khung đỏ, ảnh/clip và Events JSON bằng luật chuyển động sau YOLO/ByteTrack. Hỗ trợ MP4 tải lên. [Kết quả/giới hạn/cách chạy](docs/COLLISION_DETECTION.md), [hướng dẫn demo](docs/DEMO_GUIDE.md). Bản thử đã chạy được, chưa thay nghiệm thu độ chính xác trên camera độc lập.
+
 > **Tài liệu định hướng của project.** README này tóm tắt kế hoạch trong [YOLO_Lo_trinh_DACN.xlsx](YOLO_Lo_trinh_DACN.xlsx) và ghi trạng thái triển khai thực tế. File XLSX là bản phác thảo ban đầu, không phải kết quả thực nghiệm hoặc yêu cầu đã được giảng viên duyệt. Các thông số, mô hình và mốc thời gian ghi là **dự kiến** cho đến khi được kiểm chứng. Khi cần chi tiết về dữ liệu, pipeline, đánh giá hoặc nguồn tham khảo, đọc các sheet `01_Huong_DACN`, `05_Cac_buoc`, `07_Pipeline`, `08_Du_lieu`, `09_Danh_gia`, `13_Ke_hoach` và `15_Nguon`.
 
 ## Quy tắc định hướng cho mọi công việc tiếp theo
@@ -75,7 +77,44 @@ Sheet `13_Ke_hoach` chia các bước thành **10 tuần dự kiến**, không p
 
 Các phương án dùng cùng split, định nghĩa sự kiện, quy tắc ghép alert với GT và chính sách chống trùng khi so hệ thống. Một alert ghép tối đa một event; alert thừa là FP, event không được ghép là FN. Báo **event precision/recall/F1**, đường precision–recall, **false alerts/hour** trên video âm tính dài, tỷ lệ clip âm có cảnh báo sai theo từng hard-negative group, **event delay** từ onset đến alert, FPS end-to-end, p50/p95 thời gian xử lý, peak VRAM, số frame bỏ và queue lag. So số cảnh báo sai ở **recall tương đương**; chọn ngưỡng trên validation và báo recall thực tế trên test. FPS chỉ của YOLO không đại diện pipeline. `10 Hz` trong XLSX chỉ là ví dụ mục tiêu, cần đo khả năng xử lý ổn định trên máy thật. Không so F1 detection trực tiếp với AP/mTTA của bài toán anticipation.
 
-## Trạng thái hiện tại (20/10/2026)
+## Trạng thái hiện tại
+
+**Đã có cảnh báo tự động thử nghiệm — cập nhật cuối16/11:** chế độ collision chạy causal trên tracker, xác nhận3/5frame, cooldown theo cặp, đánh dấu và xuất ảnh/clip/Events JSON; hỗ trợ upload và khôi phục kết quả sau restart. Rulev4 bắt đúng cặp CADP tại frame109; candidatecoverage34/35frame interval. Không báo trên2037frame/≈81,48giây ba DETRAC đã rà âm và clip cao tốc250frame chưa có GT. **Các cảnh đã dùng phát triển luật**, chưa phải test độc lập; lọc bbox nhỏ giúp giảm báo nhầm nhưng có thể bỏ sót va chạm ở xa. **70/70 test đạt**, HTTP/Firefox đã kiểm CPU rerun/upload/evidence. [Báo cáo đầy đủ và lịch sử lỗi v1–v4](docs/COLLISION_DETECTION.md), [nhật ký](progress/2026-11-16.md). Các trạng thái “chưa cảnh báo” bên dưới phản ánh các lượt trước trong ngày; gate nghiên cứu/B0 vẫn chưa hoàn thành.
+
+**Quyết định theo chỉ dẫn mới 16/11 — triển khai cảnh báo tự động thử nghiệm:** người dùng yêu cầu hoàn thiện phát hiện va chạm và cho phép chủ động chọn phương tiện thực hiện. Do B0 khả thi bỏ sót12/12 vùng validation ở conf0,25, lọc B1 không thể khôi phục tín hiệu đã mất; triển khai nhánh B2 luật chuyển động/FSM song song để có luồng cảnh báo vận hành và đo lỗi. Giữ YOLOv8n/ByteTrack, không đổi sang model lớn hoặc dùng nhãn/frame va chạm làm điều kiện runtime. Luật kết hợp tiếp cận + tương tác không gian + biến đổi chuyển động + xác nhận causal; overlap đơn lẻ không xác nhận. CADP là **development**, ba DETRAC rà âm dùng chẩn đoán; không gọi là test độc lập hoặc nghiệm thu nghiên cứu. Với nguồn chưa rõ FPS, chuyển động đo theo frame/độ lớn bbox, thời gian cảnh báo là thời gian video; không suy source seconds/km/h. Không tự duyệt proposal CADP, sửa review/hash hay đánh hoàn thành gate nghiên cứu. Đây là thay đổi thứ tự triển khai theo yêu cầu mới, cần báo đủ lỗi, config, hạn chế và bằng chứng trước khi kết luận chất lượng.
+
+**Tải video mới 16/11:** theo yêu cầu người dùng, dashboard đã có chọn file MP4 H.264 từ máy và tự chạy detection/tracking. Đã thử qua trình duyệt với clip cao tốc Roboflow 10 giây ngoài CADP/DETRAC: 250 frame, 837 lượt bbox, 17 ID tạm; kết quả giữ sau refresh và khôi phục state. **57/57 test đạt**. [Cách dùng/nguồn/giới hạn](docs/EXTERNAL_VIDEO_DEMO.md). Video mới chỉ phục vụ demo suy luận, không tự vào tập nghiên cứu hoặc có nhãn tai nạn; giữ model/gate nghiên cứu và các review cũ.
+
+**Kết quả 16/11/2026:** đã chạy lượt B0 khả thi 12 epoch, có checkpoint một lớp `accident`, 25 ảnh train/18 validation và **53/53 test đạt**. Tại conf 0,25/IoU 0,5: train bắt 17/19 vùng nhưng báo nhầm trên 3/6 ảnh âm; validation **TP=0, FP=0, FN=12**, mAP50 0,01208. Model học được cảnh train nhưng chưa tổng quát sang cảnh khác; chưa đủ tin cậy để bật cảnh báo trong demo. [Báo cáo/cách chạy lại](docs/B0_FEASIBILITY.md), [snapshot bằng chứng](docs/evidence/2026-11-16-b0-feasibility.json), [nhật ký](progress/2026-11-16.md). Gate nghiên cứu dữ liệu/B0 chưa hoàn thành; Word/slide/ZIP ngày 14/11 giữ là snapshot trước lượt này.
+
+**Quyết định 16/11/2026 — thử huấn luyện B0 ở mức khả thi phần mềm:** nhãn vùng STTAD của tác giả đã kiểm byte/bounds; thực hiện một thí nghiệm riêng trên bốn cảnh để xác minh data loader, backprop, checkpoint và đầu ra lớp `accident`. Dùng 31 frame có bbox nguồn; frame âm chỉ lấy từ các frame đầu được agent rà riêng, không tự đổi 145 frame thiếu nhãn thành âm. Tách trọn T-T_crash_1/V-V_crash_0 cho train và T-T_crash_2/V-V_crash_1 cho validation chẩn đoán; không có test khóa. Đây là split **development** theo cảnh quan sát được, chưa chứng nhận camera/sự kiện gốc. Giữ YOLOv8n và cấu hình cố định trước chạy; không lấy kết quả này làm benchmark sự kiện hoặc nghiệm thu. Không dùng proposal CADP chưa duyệt; `data/b0_readiness.json` vẫn chặn huấn luyện nghiên cứu chính thức. Thí nghiệm phải ghi rõ nhãn âm do agent rà, giới hạn mẫu, hash/config và lỗi thực tế; không tự chuyển sang B1/verifier/FSM khi gate nghiên cứu còn thiếu.
+
+**Quyết định nghiên cứu bổ sung 14/11:** theo yêu cầu tự tìm hiểu/làm tiếp, kiểm nguồn chính thức CADP và các nguồn CCTV có nhãn vùng. CADP hiện chưa tìm được export bổ sung; STTAD công bố mẫu ảnh/nhãn vùng phù hợp B0. Đã lấy **chọn lọc bốn chuỗi V–V/T–T** ở commit `21f3f5fea50b071f1db61186b481c2a7ccf525c9`: 212 tệp khớp Git blob, **176 ảnh giải mã được, 31 frame có bbox nguồn, 145 frame chưa có nhãn**, hai tệp JPG chứa văn bản được loại khỏi index và giữ nguyên nguồn. Không tải toàn dataset, không thay CADP/split nghiên cứu. Nhóm V–T trong cây nguồn có ảnh `.jpg` nằm dưới `labels/` và không khớp tên chuỗi; không tự đổi tên để ép ghép. Bbox V–V/T–T diễn giải `class xmin_px ymin_px xmax_px ymax_px` đã kiểm bounds/overlay, không mặc định định dạng YOLO. [Ghi nhận nghiên cứu và nguồn](docs/RESEARCH_NOTES.md), [registry chọn lọc](data/registries/sttad_selected_sources.json). `training_eligible=false`; chưa có nhãn temporal đầy đủ, FPS nguồn hoặc group split. Giữ YOLOv8n/ByteTrack và gate B0.
+
+**Quyết định bàn giao 14/11:** người dùng yêu cầu bản có thể nộp/demo và cho biết còn một tháng. Triển khai trước giao diện **cục bộ** cho pipeline đã kiểm chứng, chạy lại video, xuất bằng chứng và tài liệu trình diễn. Phần ghi mốc sự kiện trong giao diện là **review thủ công**, không phải dự đoán va chạm. Đây là công việc đóng gói song song, không thay gate dữ liệu/nhãn, không coi giai đoạn nghiên cứu 6 đã hoàn thành. Giữ YOLOv8n/ByteTrack; giao diện HTML/JS + Python standard library để không thêm framework hoặc dịch vụ mạng cho bản demo CPU.
+
+**Đã hoàn thiện môi trường suy luận CPU và cache theo frame:** YOLOv8n/ByteTrack chạy đủ CADP 221 frame và ba DETRAC 664/936/437 frame; có MP4, JSONL bbox/ID/missing-mask và report hash/config thực tế. Đã đọc lại output, kiểm clock và tách source seconds chưa xác minh khỏi FPS trình chiếu CADP. [Kết quả/cách chạy](docs/INFERENCE_CACHE.md), [nhật ký 14/11](progress/2026-11-14.md).
+
+**Có lỗi thực tế để phân tích:** trong interval 96–130, đề xuất track của xe buýt có 13 frame bị trả class `car`; một frame không đạt ngưỡng overlap debug. Liên kết GT↔track còn là ứng viên, chưa báo IDF1 hoặc metric va chạm. Giai đoạn 1/B0 nghiên cứu vẫn chưa hoàn thành: thiếu pilot đa sự kiện, nhãn vùng nhất quán và split được xác minh; lượt khả thi STTAD ở trên không thay các điều kiện này. Máy hiện tại chạy CPU, không có GPU NVIDIA khả dụng qua `/dev/nvidia*`/`nvidia-smi`; các lượt offline không đại diện benchmark RTX 3050 Ti.
+
+### Phục hồi dữ liệu ngày 12/11/2026
+
+**Đã phục hồi 2.258 ảnh:** CADP 221 ảnh khớp SHA-256 cũ; DETRAC 2.037 ảnh từ mirror ghim revision, đều khớp SHA-256 mirror và CRC/kích thước ZIP chính thức. Có video sạch/preview, 35 vùng B0 đề xuất và registry video tái mã hóa. Google Drive DETRAC bị quota nên dùng mirror làm kênh tải. [Bằng chứng 12/11](docs/evidence/2026-11-12-restoration.json), [hướng dẫn phục hồi](docs/RESTORE_PILOT.md). Metadata/review và điều kiện train giữ nguyên.
+
+### Kết quả kiểm máy ngày 09/11/2026
+
+**Rà trên máy Linux hiện tại:** đồ án vẫn ở giai đoạn 1, chưa đủ điều kiện train B0. Đã tìm và phục hồi `1407.mp4` từ Downloads, tải riêng TXT tác giả `1407.txt`; cả hai SHA-256 khớp catalog. Ảnh sạch CADP, DETRAC, trọng số, output nhãn và môi trường suy luận chưa được phục hồi. Các số lượng ảnh/kết quả tháng 10 dưới đây là **lịch sử máy phát triển**, không phải file đã có trên máy này.
+
+**Hoàn thiện kỹ thuật mới:** [audit hiện trạng](scripts/audit_project.py) xuất JSON/Markdown có hash đầu vào, kiểm metadata và rò rỉ split qua chuỗi/camera/sự kiện/hash/quan hệ dẫn xuất; sửa kiểm fingerprint ảnh và mã lỗi kiểm môi trường. 17 test: **16 đạt, 1 skip** do thiếu pilot ảnh sạch/output. Test đối chiếu TXT/review 96–130 đã chạy đạt. Không đổi nhãn, review, model hoặc tự chia split; `can_train=false` giữ nguyên. [Báo cáo phần còn thiếu và thứ tự hoàn thiện](docs/completion_audit.md), [nhật ký 09/11](progress/2026-11-09.md).
+
+```bash
+python3 -B scripts/audit_project.py --strict
+python3 -B -m unittest discover -s tests -v
+```
+
+Audit trả mã **1** khi còn blocker, lưu báo cáo mới dưới `outputs/audits/project_YYYY-MM-DD*/`. Mã 0 không thay nghiệm thu dữ liệu/nhãn. Kiểm metadata không thay rà near-duplicate bằng media và không chứng minh đủ điều kiện huấn luyện. Không yêu cầu tải toàn ZIP DETRAC chỉ để phục hồi các chuỗi đã trích.
+
+### Hồ sơ đến 20/10/2026 — không phải inventory máy hiện tại
 
 Ngày 20/10 bổ sung hướng dẫn dựng lại, catalog/fingerprint, kiểm file sau clone và xuất bản source lên [GitHub/main](https://github.com/leanhquan0211/DACN_TrafficCollision). Bản công khai giữ metadata nhỏ và loại log máy cá nhân; dữ liệu/mô hình/định nghĩa nhãn không đổi. Các kết quả nghiên cứu dưới đây được thực hiện đến 19/10, không phải run huấn luyện mới. Nhật ký hiện tại: [2026-10-20](progress/2026-10-20.md).
 
@@ -146,7 +185,7 @@ Dữ liệu CADP gốc đặt trong `data_raw/cadp/`, ảnh sạch đã chuẩn 
 
 ## Đọc code theo thứ tự nào?
 
-Luồng **đã triển khai** hiện nay chỉ vẽ phương tiện và ID theo dõi, chưa quyết định có tai nạn:
+Luồng video có detection/tracking riêng và chế độ collision thử nghiệm. Nhánh fine-tune B0 chạy riêng theo [hướng dẫn](docs/B0_FEASIBILITY.md); nhánh cảnh báo dùng [run_collision.py](scripts/run_collision.py) → cùng `video_pipeline.run()` → [CollisionRules](src/collision_rules.py) → [ảnh/clip](src/collision_output.py). Không truyền GT vào runtime. Hai chế độ phương tiện giữ luồng sau:
 
 ```text
 Video nguồn
@@ -158,7 +197,7 @@ Video nguồn
        đọc lại video → YOLO.track + ByteTrack từng frame → vẽ bbox/ID → MP4 tracking
 ```
 
-`run_all.py` **không chuyển bbox hoặc frame từ detection sang tracking**: mỗi nhánh mở lại video gốc và nạp model trong tiến trình riêng. Cả hai dùng `video_pipeline.arguments()` để nhận tham số và `video_pipeline.run()` để xử lý. Trong `run()`, `cv2.VideoCapture.read()` đưa ra từng frame là mảng ảnh BGR kích thước `(cao, rộng, 3)`; YOLO trả `Results` chứa bbox, class và confidence. Khi tracking, kết quả có thể có thêm ID. `results[0].plot()` tự lấy các thông tin đó để tạo ảnh đã vẽ; code hiện **không tách bbox/ID ra biến riêng**. Ảnh được đổi thành byte BGR, đưa qua pipe cho FFmpeg mã hóa thành MP4.
+`run_all.py` chạy hai nhánh độc lập: mỗi nhánh mở lại video và nạp model riêng. `cv2.VideoCapture.read()` đưa ra ảnh BGR; YOLO trả `Results`. `inference_export.observations()` tách bbox/class/confidence/ID ra số Python; `FrameCache` ghi JSONL theo frame, giữ clock/missing-mask. `results[0].plot()` tạo ảnh đã vẽ; `H264Writer` trong `src/data_preparation.py` đưa ảnh qua FFmpeg thành MP4. `*.run.json` công bố lượt complete cùng hash và config. [Schema/cách kiểm cache](docs/INFERENCE_CACHE.md).
 
 Mở file trong VS Code theo thứ tự sau:
 
@@ -168,16 +207,17 @@ Mở file trong VS Code theo thứ tự sau:
 4. [`scripts/run_tracking.py`](scripts/run_tracking.py): thấy `run(args, tracking=True)` chọn nhánh thêm ByteTrack.
 5. [`src/video_pipeline.py`](src/video_pipeline.py): đọc `arguments()` rồi `run()`; đây là nơi cả hai nhánh thật sự nạp model, đọc frame, suy luận, vẽ và ghi MP4. Khi đọc vòng lặp, theo dõi hai nhánh `predict()` và `track()` riêng.
 6. [`scripts/check_environment.py`](scripts/check_environment.py): xem cách kiểm tra thư viện và PyTorch CUDA trước khi xử lý video; file này chạy độc lập, không nằm trong chuỗi `run_all.py`.
+7. [`src/inference_export.py`](src/inference_export.py), [`scripts/check_inference_outputs.py`](scripts/check_inference_outputs.py): cache quan sát/clock và kiểm lại MP4, hash, frame count trước khi dùng cho bước sau.
 
 `yolov8n.pt` hiện là trọng số YOLO pretrained để **phát hiện phương tiện**, không có class `accident` mặc định. `bytetrack.yaml` chọn cấu hình thuật toán ByteTrack; nó không phải trọng số YOLO. Track ID là mã tạm do tracker gán trong một lần theo dõi, có thể đổi hoặc mất khi xe bị che. Trong vòng lặp một video, `persist=True` giữ trạng thái ByteTrack từ frame trước để nối ID sang frame sau. Mỗi lần gọi `run()` hiện tạo một đối tượng YOLO mới, nên hai lần chạy/video riêng không dùng chung trạng thái. Nếu sau này sửa code để dùng **cùng đối tượng model** cho nhiều video hoặc camera, phải reset tracker hoặc tạo model mới khi đổi nguồn. Bbox xe và track ID vẫn **chưa chứng minh có va chạm**.
 
 **Ví dụ minh họa, không phải kết quả đo:** Một frame giả định có hai ô tô. YOLO trả hai bbox, class `car` và confidence cho từng bbox. Ở nhánh detection, `plot()` vẽ hai khung xe. Ở nhánh tracking, ByteTrack so hai bbox với trạng thái từ các frame trước và có thể gán ID tạm `7` và `12`; `plot()` vẽ khung kèm ID. Code biến frame đã vẽ thành byte rồi FFmpeg ghi nó vào MP4; frame kế tiếp lại đi qua các bước đó. Hai ID đứng gần nhau vẫn chưa đủ để gọi là tai nạn.
 
-### Sau này huấn luyện bằng gì?
+### Huấn luyện bằng gì?
 
-- **YOLO qua Ultralytics:** khi có ảnh/frame với nhãn bbox tai nạn được định nghĩa nhất quán, có thể fine-tune một detector accident để làm baseline B0. Code hiện mới **suy luận** bằng `yolov8n.pt` pretrained cho xe; chưa có nhãn hoặc script fine-tune accident.
+- **YOLO qua Ultralytics:** đã có script chuẩn bị dữ liệu, fine-tune và chẩn đoán B0 khả thi một lớp `accident` trên nhãn nguồn STTAD. [Lượt chạy 16/11](docs/B0_FEASIBILITY.md) lưu config/checkpoint/hash và kết quả yếu; chưa đủ benchmark nghiên cứu. Video/demo vẫn dùng `yolov8n.pt` pretrained cho xe.
 - **MLP/GRU qua PyTorch:** khi có quỹ đạo, đặc trưng chuỗi và nhãn thời gian/cặp xe phù hợp, có thể huấn luyện bộ xác minh va chạm. Code hiện chưa tạo các đặc trưng đó và chưa có MLP/GRU.
-- Các bước huấn luyện dự kiến có thể chạy bằng Python trên laptop nếu tài nguyên đủ, hoặc chuyển sang Colab khi cần thêm tài nguyên. Nơi chạy được chọn sau khi kiểm tra dữ liệu và nhu cầu thực tế; chưa có run huấn luyện hoặc benchmark tương ứng.
+- Lượt B0 khả thi đã chạy CPU trên máy hiện tại; chưa đo benchmark trên GPU. Việc chuyển máy/Colab chỉ cân nhắc theo nhu cầu dữ liệu và tài nguyên thực tế, giữ cùng config/split khi so sánh.
 
 ## Chạy trong PowerShell
 
@@ -202,6 +242,8 @@ Lệnh này chạy `inspect_video.py`, rồi `run_detection.py`, rồi `run_trac
 Đổi `TEN_VIDEO_GOC.mp4` thành tên thật. Có thể dùng đường dẫn tuyệt đối trong dấu ngoặc kép. `--device cpu` ép CPU, `--device 0` chọn GPU NVIDIA đầu tiên. `--model` nhận đường dẫn trọng số khác, nhưng mặc định luôn là `yolov8n.pt`. Nếu tệp mặc định chưa có, Ultralytics sẽ thử tải trọng số YOLOv8n chính thức. Không dùng model khác thay thế khi tải thất bại. Script in ra tên và số thứ tự class phương tiện lấy trực tiếp từ model.
 
 Mở cả hai MP4 trong `outputs/<tên-video-không-gồm-đuôi>/`, ví dụ `outputs/YSGhwU9XxuY/YSGhwU9XxuY_detection.mp4` và `..._tracking.mp4`. `--output-dir` chọn thư mục gốc, các script tự tạo thư mục con theo tên video. Kết quả mới nhận hậu tố `_2`, `_3`... nếu tên cũ đã có. Video nguồn không bị sửa. Vòng lặp chỉ giữ frame hiện tại trong RAM; video quá lớn vẫn cần đủ dung lượng trống cho file xuất.
+
+Từ 14/11, mỗi MP4 có thêm `*.frames.jsonl` và `*.run.json`. Mặc định timing là `unknown`; dùng `presentation_only` cho CADP sạch và chỉ dùng `verified_source` kèm file `--timing-evidence` khi có căn cứ nguồn. `run_all.py` truyền các tùy chọn này cho cả hai nhánh. [Lệnh Linux và kết quả hiện tại](docs/INFERENCE_CACHE.md).
 
 ## Tái lập môi trường
 

@@ -1,0 +1,28 @@
+{
+  "created_at": "2026-11-14T13:17:00.666946+07:00",
+  "report_source": "docs/BAO_CAO_HIEN_TRANG.md",
+  "report_source_sha256": "3af9c08699a1c6718eba8993bdb4e638badb821248bf47ce6fb9c454b3ea87d2",
+  "artifact_paths": [
+    "delivery/BAO_CAO_HIEN_TRANG.docx",
+    "delivery/SLIDE_DEMO.pptx"
+  ],
+  "run_reports": [
+    {
+      "path": "outputs/demo_2026-11-14/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_tracking.run.json",
+      "sha256": "bece61e7da181780d0090db428b125a7ecdf665d98afc4604de61d6f65f64f4e"
+    },
+    {
+      "path": "outputs/demo_2026-11-14/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_detection.run.json",
+      "sha256": "8dcc1bd041432f865c60c8be9cd100352208f593c524acf12a75c1072a4edb97"
+    },
+    {
+      "path": "outputs/inference_2026-11-14/MVI_20011_first_10s/MVI_20011_first_10s_tracking_2.run.json",
+      "sha256": "85b5a9037b19e0cb926366f7c6d49dbb3ba09934ad7779cdd5f1e437ee86a137"
+    },
+    {
+      "path": "outputs/inference_2026-11-14/MVI_20011_first_10s/MVI_20011_first_10s_detection_2.run.json",
+      "sha256": "8b3cae9a71ca89d53de770d300d03ae578ef93fe1b6d46c94ac3d3220f153520"
+    }
+  ],
+  "final_research_submission_ready": false
+}

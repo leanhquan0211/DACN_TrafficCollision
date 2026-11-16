@@ -1,230 +1,218 @@
-"""Xử lý chung để biến video gốc thành video có bbox hoặc bbox + track ID.
+"""YOLO/ByteTrack → MP4 + JSONL quan sát + report input/config/runtime có hash.
 
-Đầu vào: args từ run_detection.py/run_tracking.py và cờ tracking.
-Đầu ra: đường dẫn MP4 đã vẽ chú thích trong outputs/<tên-video>/.
-Không chạy trực tiếp file này; hai script trên gọi arguments() và run().
+Đây là pipeline phương tiện; cache không phải GT hoặc score accident.
 """
 
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
+import importlib.metadata
+import json
+import math
 import os
-import shutil
-import subprocess
 from pathlib import Path
+import platform
+import statistics
+import time
+from zoneinfo import ZoneInfo
 
+from src.data_preparation import H264Writer, save_json, sha256_file
+from src.inference_export import FrameCache, observations, reserve_outputs
 
-# Tên class được đối chiếu với model.names, nên chỉ giữ kết quả thuộc nhóm xe.
 VEHICLE_NAMES = {"bicycle", "car", "motorcycle", "motorbike", "bus", "truck"}
 
 
 def arguments(kind: str) -> argparse.ArgumentParser:
-    """Tạo cùng bộ tham số dòng lệnh cho detection và tracking."""
-    parser = argparse.ArgumentParser(description=f"Run YOLOv8n {kind} on one video")
+    parser = argparse.ArgumentParser(description=f"Run YOLOv8n {kind}; export video, frame cache and provenance")
     parser.add_argument("video", type=Path, help="Path to an input video")
     parser.add_argument("--device", default="auto", help="auto, cpu, or CUDA index such as 0")
-    parser.add_argument("--imgsz", type=int, default=640, help="Inference image size")
-    parser.add_argument("--output-dir", type=Path, default=Path("outputs"), help="Root directory; results go into a subfolder named after the video")
-    parser.add_argument("--model", type=Path, default=Path("yolov8n.pt"), help="YOLOv8n weights")
+    parser.add_argument("--imgsz", type=int, default=640)
+    parser.add_argument("--output-dir", type=Path, default=Path("outputs"))
+    parser.add_argument("--model", type=Path, default=Path("yolov8n.pt"))
+    parser.add_argument("--timing-status", choices=("unknown", "presentation_only", "verified_source"), default="unknown")
+    parser.add_argument("--timing-evidence", type=Path, help="Required local source-timing evidence for verified_source")
+    parser.add_argument("--cpu-threads", type=int, help="Optional PyTorch CPU thread count, recorded in report")
+    parser.add_argument("--collision-config", type=Path, default=Path(__file__).resolve().parents[1]/'configs/collision_rules.json')
     return parser
 
 
+def percentile(values, probability):
+    ordered = sorted(values)
+    index = (len(ordered) - 1) * probability
+    low, high = math.floor(index), math.ceil(index)
+    return ordered[low] + (ordered[high] - ordered[low]) * (index - low)
+
+
 def run(args: argparse.Namespace, tracking: bool) -> Path:
-    """Đọc từng frame, suy luận, vẽ và ghi MP4; trả về đường dẫn file kết quả."""
-    # Kiểm tra đường dẫn và tham số trước khi nạp thư viện nặng: --help/lỗi
-    # thiếu video vẫn hoạt động kể cả khi môi trường CV chưa cài đủ.
     source = args.video.expanduser().resolve()
+    collision_mode = bool(getattr(args,'collision',False))
+    rule_engine = None
+    if collision_mode:
+        if not tracking:
+            raise ValueError('Collision analysis requires tracking')
+        from src.collision_rules import CollisionRules
+        from src.collision_output import draw_alerts, export_evidence
+        collision_config = json.loads(args.collision_config.read_text())
+        collision_config_hash = sha256_file(args.collision_config)
     if not source.is_file():
         raise ValueError(f"Video does not exist: {source}")
     if args.imgsz <= 0:
         raise ValueError("--imgsz must be positive")
-    # Ultralytics lưu cấu hình trong project; các import này chỉ cần khi thực sự
-    # xử lý video. cv2 đọc frame, torch chọn GPU, YOLO suy luận, numpy đổi ảnh.
-    os.environ.setdefault("YOLO_CONFIG_DIR", str(Path(__file__).resolve().parents[1] / "configs" / "ultralytics"))
+    timing_status = getattr(args, "timing_status", "unknown")
+    evidence = getattr(args, "timing_evidence", None)
+    if timing_status == "verified_source" and (evidence is None or not evidence.is_file()):
+        raise ValueError("verified_source requires an existing --timing-evidence file")
+    if evidence is not None and not evidence.is_file():
+        raise ValueError("Timing evidence does not exist")
+    threads = getattr(args, "cpu_threads", None)
+    if threads is not None and threads <= 0:
+        raise ValueError("--cpu-threads must be positive")
+    os.environ.setdefault("YOLO_CONFIG_DIR", str(Path(__file__).resolve().parents[1] / "configs/ultralytics"))
     try:
         import cv2
         import torch
         from ultralytics import YOLO
-        import numpy as np
+        from ultralytics.utils.checks import check_yaml
     except ImportError as exc:
         raise RuntimeError("Install packages in .venv before running video inference") from exc
-
-    # args.device="auto" ưu tiên GPU đầu tiên nếu PyTorch CUDA sẵn sàng.
-    # Dữ liệu sau bước này là chuỗi "0" (GPU) hoặc "cpu" đưa vào YOLO.
+    if threads:
+        torch.set_num_threads(threads)
     device = ("0" if torch.cuda.is_available() else "cpu") if args.device == "auto" else args.device
     if device != "cpu" and not torch.cuda.is_available():
         raise RuntimeError("CUDA device requested, but PyTorch cannot use CUDA")
-
-    # Nạp checkpoint YOLO: yolov8n.pt hiện học các class COCO như car/bus/truck,
-    # chưa có class accident. Chỉ trọng số yolov8n.pt được phép tải ngầm khi thiếu.
     model_path = args.model.expanduser()
     if not model_path.is_file() and model_path.name != "yolov8n.pt":
         raise FileNotFoundError(f"Model does not exist: {model_path}")
-    try:
-        model = YOLO(str(model_path))
-    except Exception as exc:
-        raise RuntimeError(f"Cannot load YOLOv8n model: {exc}") from exc
-    # model.names ánh xạ class ID -> tên. Lọc thành danh sách class ID xe để
-    # YOLO chỉ trả bbox/class/conf của nhóm này, không trả mọi class COCO.
-    names = model.names
-    if isinstance(names, list):
-        names = dict(enumerate(names))
+    model = YOLO(str(model_path))
+    if threads and device == "cpu":
+        # Ultralytics setup_model/select_device resets the thread count.
+        # Public prediction callback restores the requested count after setup.
+        model.add_callback("on_predict_start", lambda predictor: torch.set_num_threads(threads))
+    names = dict(enumerate(model.names)) if isinstance(model.names, list) else model.names
     classes = [int(i) for i, name in names.items() if str(name).lower() in VEHICLE_NAMES]
     if not classes:
-        raise RuntimeError(f"Model has no supported vehicle classes. Model classes: {names}")
+        raise RuntimeError(f"Model has no supported vehicle classes: {names}")
     print("Vehicle classes:", ", ".join(f"{i}={names[i]}" for i in classes), flush=True)
-
-    # VideoCapture mở luồng giải mã. Frame sẽ được lấy lần lượt, không giữ cả
-    # video trong RAM; read() trả (ok, ảnh BGR dạng mảng cao x rộng x 3).
     capture = cv2.VideoCapture(str(source))
     if not capture.isOpened():
+        capture.release()
         raise RuntimeError(f"Cannot open video: {source}")
-    encoder = None
-    output = None
+    paths, completed = None, []
     try:
-        # Đọc trước frame đầu để biết kích thước ảnh thật và kiểm tra video đọc
-        # được. FPS nguồn sẽ được dùng lại để video kết quả chạy đúng nhịp.
+        fps = capture.get(cv2.CAP_PROP_FPS)
+        if not 0 < fps < 1000:
+            raise RuntimeError("Video container FPS unavailable or invalid")
+        reported_frames = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
+        frame_started = time.perf_counter()
         ok, frame = capture.read()
         if not ok or frame is None:
             raise RuntimeError(f"Cannot read first frame: {source}")
         height, width = frame.shape[:2]
-        fps = capture.get(cv2.CAP_PROP_FPS)
-        if not 0 < fps < 1000:
-            raise RuntimeError("Video FPS is unavailable or invalid; cannot write timed output")
-        ffmpeg = shutil.which("ffmpeg")
-        if ffmpeg is None:
-            raise RuntimeError("FFmpeg is required to save H.264 MP4; install it and add ffmpeg to PATH")
-        # Gom hai loại kết quả theo tên video nguồn để dễ so sánh; chạy lại thì
-        # dùng hậu tố _2, _3... thay vì ghi đè kết quả trước.
-        out_dir = args.output_dir.expanduser().resolve() / source.stem
-        out_dir.mkdir(parents=True, exist_ok=True)
-        stem = f"{source.stem}_{'tracking' if tracking else 'detection'}"
-        output = out_dir / f"{stem}.mp4"
-        counter = 2
-        while output.exists() or output == source:
-            output = out_dir / f"{stem}_{counter}.mp4"
-            counter += 1
-        # Ghi vào file .part.mp4 trước; chỉ đổi tên thành MP4 cuối cùng khi
-        # FFmpeg thành công, tránh để một video xuất dở trông như kết quả hợp lệ.
-        temp_output = output.with_name(output.stem + ".part" + output.suffix)
-        if temp_output.exists():
-            try:
-                temp_output.unlink()
-            except OSError:
-                pass
-        # FFmpeg nhận từng ảnh BGR 24-bit qua stdin rồi mã hóa H.264/yuv420p.
-        # Dữ liệu ra là MP4 mở được trong trình xem video của VS Code.
-        print(f"Input: {source}", flush=True)
-        print(f"Temporary output: {temp_output}", flush=True)
-        print(f"Final output will be: {output}", flush=True)
-        print(f"Using ffmpeg: {ffmpeg}", flush=True)
-        command = [ffmpeg, "-hide_banner", "-loglevel", "error", "-xerror", "-n",
-             "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{width}x{height}",
-             "-r", str(fps), "-i", "pipe:0", "-an", "-c:v", "libx264",
-             "-preset", "veryfast", "-crf", "23", "-pix_fmt", "yuv420p",
-             "-movflags", "+faststart", "-f", "mp4", str(temp_output)]
-        try:
-            encoder = subprocess.Popen(command, stdin=subprocess.PIPE,
-                                       stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-        except OSError as exc:
-            raise RuntimeError(f"Cannot start FFmpeg: {exc}") from exc
-        count = 0
-        while ok and frame is not None:
-            # Cùng ảnh frame BGR đi vào YOLO ở cả hai chế độ. predict() chỉ tìm
-            # bbox xe ở frame hiện tại; track() gọi detector rồi ByteTrack theo
-            # bytetrack.yaml để nối xe với frame trước và gán ID tạm.
-            options = dict(device=device, imgsz=args.imgsz, classes=classes, verbose=False)
-            if tracking:
-                # persist=True giữ trạng thái tracker giữa các lần track(frame)
-                # của CÙNG video. Mỗi lần run() tạo YOLO mới; nếu sau này tái dùng
-                # cùng model cho video/camera khác, phải reset tracker hoặc tạo
-                # model mới để ID/quỹ đạo cũ không lẫn sang video mới.
-                results = model.track(frame, persist=True, tracker="bytetrack.yaml", **options)
-            else:
-                results = model.predict(frame, **options)
-            # results[0].boxes chứa bbox (xyxy), class, confidence; chế độ
-            # tracking có thể thêm boxes.id nếu tracker gán được ID. Code hiện
-            # không tách các trường này ra: plot() tự đọc chúng và trả ảnh BGR
-            # đã vẽ khung/nhãn/ID, vẫn có dạng cao x rộng x 3.
-            img = results[0].plot()
-            # FFmpeg cần dãy byte BGR liền mạch, không nhận trực tiếp ndarray.
-            try:
-                if isinstance(img, np.ndarray):
-                    frame_bytes = np.ascontiguousarray(img).tobytes()
-                else:
-                    # Trường hợp thư viện trả ảnh dạng buffer khác ndarray.
-                    frame_bytes = img.tobytes()
-            except Exception as exc:
-                raise RuntimeError(f"Cannot convert plotted frame to bytes: {exc}") from exc
-            # Đưa byte của frame đã vẽ sang FFmpeg; lỗi encoder cần được báo
-            # trước khi đọc frame kế tiếp để không tạo file đầu ra hỏng.
-            if encoder.poll() is not None:
-                error = encoder.stderr.read().decode(errors="replace").strip()
-                raise RuntimeError(f"FFmpeg exited early (rc={encoder.poll()}): {error}")
-            try:
-                encoder.stdin.write(frame_bytes)
-            except BrokenPipeError as exc:
-                error = encoder.stderr.read().decode(errors="replace").strip()
-                raise RuntimeError(f"FFmpeg could not write output: {error or exc}") from exc
-            except OSError as exc:
-                # Trên Windows, OSError(22) có thể là pipe lỗi; kèm stderr để chẩn đoán.
-                error = encoder.stderr.read().decode(errors="replace").strip()
-                raise RuntimeError(f"OS error writing to FFmpeg stdin: {exc}; stderr: {error}") from exc
-            count += 1
-            # Chỉ sau khi xử lý và ghi xong frame hiện tại mới đọc frame tiếp.
-            # ByteTrack còn trạng thái trong model, còn ảnh cũ được thay thế.
-            ok, frame = capture.read()
-        # Hết frame: đóng pipe để FFmpeg nhận tín hiệu kết thúc, ghi phần cuối
-        # của MP4 và trả mã lỗi/thành công trước khi đổi tên file tạm.
-        encoder.stdin.close()
-        encoder.stdin = None
-        error = encoder.stderr.read().decode(errors="replace").strip()
-        ret = encoder.wait()
-        encoder.stderr.close()
-        encoder = None
-        if ret != 0:
-            # Encoder lỗi thì bỏ file tạm chưa hoàn chỉnh.
-            if temp_output.exists():
-                try:
-                    temp_output.unlink()
-                except OSError:
-                    pass
-            raise RuntimeError(f"FFmpeg could not write output: {error or temp_output}")
-        # Mã hóa xong mới công bố tên file MP4 cuối cùng.
-        try:
-            temp_output.replace(output)
-        except Exception as exc:
-            raise RuntimeError(f"Cannot finalize output file: {exc}") from exc
-        # Báo số frame và file xuất; đây là kiểm tra luồng xử lý, không phải
-        # số liệu độ chính xác phát hiện xe hay kết luận tai nạn.
-        try:
-            size = output.stat().st_size
-        except OSError:
-            size = None
-        print(f"Processed {count} frames; saved: {output} (size={size})", flush=True)
-        return output
-    except Exception:
-        if encoder is not None:
-            if encoder.stdin is not None:
-                try:
-                    encoder.stdin.close()
-                except OSError:
-                    pass
-            if encoder.poll() is None:
-                encoder.terminate()
-            encoder.wait()
-            encoder.stderr.close()
-        if output is not None and output.exists():
-            try:
-                output.unlink()
-            except OSError:
-                pass
-        # Dọn file tạm còn sót để lần chạy sau không nhầm là kết quả.
-        try:
-            if 'temp_output' in locals() and temp_output.exists():
-                temp_output.unlink()
-        except OSError:
-            pass
+        if collision_mode:
+            rule_engine = CollisionRules(collision_config,image_width=width,image_height=height,detector_imgsz=args.imgsz)
+        kind = 'collision' if collision_mode else ("tracking" if tracking else "detection")
+        paths = reserve_outputs(args.output_dir.expanduser().resolve() / source.stem, f"{source.stem}_{kind}")
+        clock = FrameCache(fps, timing_status)
+        durations, count, track_ids = [], 0, set()
+        previous_thumbnail = None
+        collision_quality = dict(observations=0,eligible_track_observations=0,abstained_observations=0,frames_with_two_eligible_tracks=0)
+        pipeline_started = frame_started
+        print(f"Input: {source}\nOutput: {paths['video']}", flush=True)
+        with paths["partial"].open("x", encoding="utf-8") as cache:
+            with H264Writer(paths["video"], width, height, fps) as writer:
+                while ok and frame is not None:
+                    if frame.shape[:2] != (height, width):
+                        raise ValueError("Changing frame dimensions")
+                    pts_ms = capture.get(cv2.CAP_PROP_POS_MSEC)
+                    options = dict(device=device, imgsz=args.imgsz, classes=classes, verbose=False)
+                    # A new YOLO object per run isolates ByteTrack state between videos.
+                    results = (model.track(frame, persist=True, tracker="bytetrack.yaml", **options)
+                               if tracking else model.predict(frame, **options))
+                    objects = observations(results[0], names, width, height)
+                    record = clock.record(count, pts_ms, objects)
+                    if rule_engine:
+                        import numpy as np
+                        thumbnail = cv2.resize(frame,(64,36)).astype('float32')/255
+                        scene_cut = previous_thumbnail is not None and float(np.mean(np.abs(thumbnail-previous_thumbnail))) >= collision_config['scene_cut_mean_difference']
+                        previous_thumbnail = thumbnail
+                        record['collision'] = rule_engine.update(record,scene_cut=scene_cut)
+                        quality = record['collision']['quality']
+                        collision_quality['observations'] += quality['observations']
+                        collision_quality['eligible_track_observations'] += quality['eligible_tracks']
+                        collision_quality['abstained_observations'] += quality['abstained_observations']
+                        collision_quality['frames_with_two_eligible_tracks'] += quality['eligible_tracks'] >= 2
+                    cache.write(json.dumps(record, ensure_ascii=False, allow_nan=False) + "\n")
+                    track_ids.update(o["track_id"] for o in objects if o["track_id"] is not None)
+                    rendered = results[0].plot()
+                    if rule_engine:
+                        draw_alerts(rendered,rule_engine.events,count)
+                    writer.write(rendered)
+                    durations.append((time.perf_counter() - frame_started) * 1000)
+                    count += 1
+                    frame_started = time.perf_counter()
+                    ok, frame = capture.read()
+                if reported_frames > 0 and count != reported_frames:
+                    raise RuntimeError(f"Incomplete decode: {count}/{reported_frames}; outputs not finalized")
+        completed.append(paths["video"])
+        pipeline_seconds = time.perf_counter() - pipeline_started
+        paths["partial"].rename(paths["frames"])
+        completed.append(paths["frames"])
+        collision_fields = {}
+        if rule_engine:
+            events_path = paths['video'].with_suffix('.events.json')
+            events = export_evidence(source,paths['video'],rule_engine.events,collision_config,fps,count)
+            if sha256_file(args.collision_config) != collision_config_hash:
+                raise ValueError('Collision configuration changed during the run')
+            save_json(events_path,dict(schema_version=1,method=collision_config['rule_id'],
+                                      experimental=True,score_is_probability=False,events=events))
+            completed.append(events_path)
+            collision_fields = dict(collision_experimental=True,collision_method=collision_config['rule_id'],
+                                    collision_config=collision_config,collision_config_sha256=collision_config_hash,
+                                    events_file=str(events_path),events_sha256=sha256_file(events_path),event_count=len(events),
+                                    collision_quality=collision_quality)
+            pipeline_seconds = time.perf_counter()-pipeline_started
+        effective = model.predictor.args
+        tracker_config = Path(check_yaml("bytetrack.yaml")) if tracking else None
+        report = dict(
+            schema_version=1, complete=True, checked_at=datetime.now(ZoneInfo("Asia/Bangkok")).isoformat(),
+            mode=kind, input_video=str(source), input_sha256=sha256_file(source),
+            weights_path=str(model_path.resolve()), weights_sha256=sha256_file(model_path),
+            output_video=str(paths["video"]), output_sha256=sha256_file(paths["video"]),
+            frame_cache=str(paths["frames"]), frame_cache_sha256=sha256_file(paths["frames"]),
+            processed_frames=count, reported_input_frames=reported_frames, width_px=width, height_px=height,
+            container_fps=fps, timing_status=timing_status, source_seconds_verified=timing_status == "verified_source",
+            timing_evidence=str(evidence) if evidence else None,
+            timing_evidence_sha256=sha256_file(evidence) if evidence else None,
+            device=device, cpu_threads=torch.get_num_threads(), cpu_threads_requested=threads, requested_imgsz=args.imgsz,
+            vehicle_classes={str(i): names[i] for i in classes},
+            effective_args={k: getattr(effective, k, None) for k in ("conf", "iou", "max_det", "half", "rect", "batch", "vid_stride")},
+            tracker="bytetrack.yaml" if tracking else None,
+            tracker_config_sha256=sha256_file(tracker_config) if tracker_config else None,
+            tracker_config=tracker_config.read_text() if tracker_config else None,
+            observation_count=clock.observation_count, empty_frames=clock.empty_frames,
+            unique_track_ids=len(track_ids), fallback_video_timestamps=clock.fallback_timestamps,
+            missing_track_export_max_gap_frames=clock.max_gap,
+            runtime=dict(pipeline_wall_s=pipeline_seconds, offline_processing_fps=count/pipeline_seconds,
+                         frame_wall_ms_p50=statistics.median(durations), frame_wall_ms_p95=percentile(durations, .95),
+                         scope="offline decode+inference+tracking(if enabled)+render+cache+encode; includes cold first inference, excludes model loading and post-run hashes; not a streaming benchmark"),
+            python=platform.python_version(), platform=platform.platform(),
+            packages={p: importlib.metadata.version(p) for p in ("torch", "torchvision", "ultralytics", "numpy", "opencv-python", "lap")},
+            code_sha256={name: sha256_file(Path(__file__).parent/name) for name in ("video_pipeline.py", "inference_export.py", "data_preparation.py")},
+            labels_or_splits_modified=False, collision_detection_implemented=collision_mode,**collision_fields)
+        if rule_engine:
+            report['runtime']['scope'] += '; collision rules and post-run evidence clip encoding included'
+            report['code_sha256'].update({name:sha256_file(Path(__file__).parent/name) for name in ('collision_rules.py','collision_output.py')})
+        save_json(paths["report"], report)
+        print(f"Processed {count} frames; observations {clock.observation_count}; tracks {len(track_ids)}", flush=True)
+        print(f"Frame cache: {paths['frames']}\nRun report: {paths['report']}", flush=True)
+        return paths["video"]
+    except BaseException:
+        for path in completed:
+            path.unlink(missing_ok=True)
         raise
     finally:
         capture.release()
+        if paths:
+            paths["partial"].unlink(missing_ok=True)
+            paths["lock"].unlink(missing_ok=True)

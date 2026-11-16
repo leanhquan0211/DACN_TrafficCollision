@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-11-12",
+  "official_page": "https://sites.google.com/view/daweidu/projects/ua-detrac",
+  "official_drive_file_id": "1fQC6CEWOeL9pnJ4ZdD7U2gromcnWDRgm",
+  "official_metadata": {
+    "id": "1fQC6CEWOeL9pnJ4ZdD7U2gromcnWDRgm",
+    "name": "DETRAC-Images.zip",
+    "capabilities": {
+      "canDownload": true
+    },
+    "md5Checksum": "8ab94c8f99548dd27996cde8513b30ef",
+    "size": "9849591986"
+  },
+  "official_download_status": "downloadQuotaExceeded after partial central-directory download",
+  "official_crc_evidence": "outputs/audits/detrac_subset_download/range_cache/9831448576-9835642879.bin",
+  "official_crc_evidence_sha256": "e60526cb36d211e13a24b19b277f7f5ae7660e6da673e89cfecc00e411b632dd",
+  "zip64_central_directory_offset": 9832091806,
+  "central_directory_records_parsed": 30096,
+  "selected_reference_images": 2037,
+  "mirror_repo": "https://huggingface.co/datasets/kalyan1729/sentineledgedataset",
+  "mirror_revision": "de18d2110ac93e94f9955029ee20341e4cd5ea61",
+  "mirror_resolve_prefix": "https://huggingface.co/datasets/kalyan1729/sentineledgedataset/resolve/de18d2110ac93e94f9955029ee20341e4cd5ea61/",
+  "inventory": "data/registries/detrac_selected_images.csv",
+  "inventory_sha256": "420ec06049e08497079af416c97b458b8c5d4c2b577f1f126eb34b435657d819",
+  "verification_policy": "Every image must match mirror SHA-256 and official ZIP member size/CRC before publication. Mirror license assertions are not a replacement for source terms. MP4 review hashes remain unchanged."
+}

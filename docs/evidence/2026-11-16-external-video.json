@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-16T11:15:00.387286+07:00",
+  "purpose": "external_video_upload_demo",
+  "historical_snapshot_not_current_machine_inventory": true,
+  "source": "https://media.roboflow.com/supervision/video-examples/vehicles.mp4",
+  "registry": "data/registries/external_demo_vehicles.json",
+  "result": {
+    "passed": true,
+    "recovered_after_fresh_state": true,
+    "sample_id": "upload-aa256560dab7442c9b84734270a500ad",
+    "run_id": "01ff6b2c93ebe7a74157d771",
+    "input_sha256": "5ee70b88101502198e8b1e2ba1f1276cd309add4537425f0ddf1f3571048a270",
+    "output_video": "outputs/demo_app/runs/6113376e6e85471f9a16fe0daf0d6a74/video/video_tracking.mp4",
+    "report": "outputs/demo_app/runs/6113376e6e85471f9a16fe0daf0d6a74/video/video_tracking.run.json",
+    "processed_frames": 250,
+    "observation_count": 837,
+    "unique_track_ids": 17,
+    "runtime": {
+      "pipeline_wall_s": 10.253524005000145,
+      "offline_processing_fps": 24.38186128769847,
+      "frame_wall_ms_p50": 34.64489199996024,
+      "frame_wall_ms_p95": 53.73957764977603,
+      "scope": "offline decode+inference+tracking(if enabled)+render+cache+encode; includes cold first inference, excludes model loading and post-run hashes; not a streaming benchmark"
+    },
+    "source_seconds_verified": false,
+    "collision_detection_implemented": false
+  },
+  "browser_upload_passed": true,
+  "refresh_preserved_result": true,
+  "fresh_state_recovery_passed": true,
+  "tests": {
+    "passed": 57,
+    "failed": 0,
+    "skipped": 0
+  },
+  "formal_inputs_unchanged": true,
+  "training_labels_created": false,
+  "collision_detection_implemented": false,
+  "accuracy_measured": false,
+  "artifacts": [
+    {
+      "path": "src/demo_server.py",
+      "sha256": "0ba1b2326f2875561134d02bfaebcb06ede0de6249a9b07478de079f8bfef57c"
+    },
+    {
+      "path": "demo/index.html",
+      "sha256": "bed7dede1e5bbf1ddb695b6a34bb7da280df28c1692b4b0bbb95519077145f81"
+    },
+    {
+      "path": "demo/app.js",
+      "sha256": "0638c3e098e150db86e65402e53411a079cc3703c64316e57b81d36811eb6c62"
+    },
+    {
+      "path": "demo/style.css",
+      "sha256": "beaf20335597b5a992b2f5584799f56878006b08941d7a93e2f637e5ddbb7ff7"
+    },
+    {
+      "path": "tests/test_demo_upload.py",
+      "sha256": "1c8050fb1f682d93f379221f21a64b2a5da1ff9c54ca77dacf0a89f2e3efdfe6"
+    },
+    {
+      "path": "data/registries/external_demo_vehicles.json",
+      "sha256": "f80e5cac3dab5afb1a4c93a142adb61aaa33451ee68c2740691f82e3eaf7645f"
+    },
+    {
+      "path": "docs/EXTERNAL_VIDEO_DEMO.md",
+      "sha256": "60f281459070e8a1734383a6117e2fc623db917fdc3cf843ab7ea1ec5bb81e18"
+    },
+    {
+      "path": "outputs/audits/external_video_2026-11-16/browser_upload_check.json",
+      "sha256": "468bc8ca7c06e5dcd613b41af18a7ce67c4fbbf1185cff15eed35b64a0450f3d"
+    },
+    {
+      "path": "outputs/audits/external_video_2026-11-16/http_check.json",
+      "sha256": "ff8546e689641363fe315a929ad7515a90d8dd77338557c6c1620d06c218042b"
+    },
+    {
+      "path": "outputs/audits/external_video_2026-11-16/result.json",
+      "sha256": "103e44eeead5486bc448e8b3f5eca24ca822ec66cdf93cd5b7241ad11a4b9fcc"
+    },
+    {
+      "path": "outputs/audits/external_video_2026-11-16/tests.log",
+      "sha256": "7d180c54680d68f4da7eddb78267278f5b543c36f07a43a4521d8ffb3e6b4893"
+    },
+    {
+      "path": "outputs/demo_app/runs/6113376e6e85471f9a16fe0daf0d6a74/video/video_tracking.run.json",
+      "sha256": "01ff6b2c93ebe7a74157d77136756b7ad336f22d58fc630bdbdd4d88bd640ba1"
+    },
+    {
+      "path": "outputs/demo_app/runs/6113376e6e85471f9a16fe0daf0d6a74/video/video_tracking.mp4",
+      "sha256": "f5714c386eb751a2b5d6caab82f430ae03e706e2d212e460b3e0c7ce9f33ee97"
+    }
+  ]
+}

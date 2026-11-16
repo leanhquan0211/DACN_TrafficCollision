@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-11-14T19:58:58.254118+07:00",
+  "tests": {
+    "passed": 46,
+    "failed": 0,
+    "skipped": 0,
+    "evidence": "outputs/audits/research_sources_2026-11-14/tests_final.log"
+  },
+  "download": {
+    "verified_files": 212,
+    "bytes": 83058778,
+    "complete": true
+  },
+  "pilot": {
+    "sequences": 4,
+    "decoded_images": 176,
+    "source_labelled_frames": 31,
+    "unknown_frames": 145,
+    "excluded_text_jpg": 2,
+    "author_regions_not_project_approved": true
+  },
+  "cross_source_exact_hash_check": {
+    "new_images": 176,
+    "existing_reference_images": 2258,
+    "exact_matches": [],
+    "near_duplicates_verified": false
+  },
+  "output": "/home/minh-quan/Downloads/DACN_TrafficCollision-main/outputs/audits/sttad_pilot_2026-11-14_3",
+  "code_sha256": {
+    "src/sttad_pilot.py": "37eceaee99bc41c6946b96bf6e27bc3609451e076eacee522e9f41af2519eab6",
+    "scripts/download_sttad_subset.py": "58e93397723bb8ed1716773eb63f0ef3aa18ea6abc3e1ce43ca5add8869a56da",
+    "scripts/prepare_sttad_pilot.py": "e85e9556e544af1e31a3df8cbcd0d8476e03829204eb44862e606bd9ede2bdf8",
+    "tests/test_sttad_pilot.py": "a3d1db5a358a5aaa24169b020944bef7ae25cbab73669188fb0d9a7ddae695b5",
+    "data/registries/sttad_selected_sources.json": "45e2e438b549e2e6af62a1d30c6461bc520024a7b29dde72e77677179587687b"
+  },
+  "existing_manifest_sha256": "71e119e9b13b7a387fca973c1e7eff4f0ece47d13d984b2c1240894a44380087",
+  "b0_readiness_sha256": "3d3b81729609623c779489378dce1162d63d43d4d85e29abd7d68ebaa0cdae01",
+  "can_train": false,
+  "split_created": false,
+  "training_performed": false,
+  "collision_metrics_measured": false,
+  "source_layout_summary": {
+    "tree_blob_paths": 1693,
+    "rgb_image_paths": 1293,
+    "label_txt": 197,
+    "label_jpg": 200,
+    "trainlist_available": 12,
+    "testlist_available": 0
+  }
+}

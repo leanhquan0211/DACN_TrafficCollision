@@ -1,0 +1,6 @@
+# Môi trường phục hồi/kiểm ảnh 12/11/2026; Python 3.12.
+# Không bao gồm PyTorch/Ultralytics, không phải môi trường huấn luyện đầy đủ.
+numpy==2.5.2
+opencv-python==5.0.0.93
+# Cung cấp FFmpeg cục bộ khi máy chưa cài, bản Linux đã kiểm: FFmpeg 7.0.2.
+imageio-ffmpeg==0.6.0

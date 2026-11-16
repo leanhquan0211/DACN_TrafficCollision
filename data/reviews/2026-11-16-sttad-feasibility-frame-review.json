@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "reviewed_date": "2026-11-16",
+  "reviewer": "codex_agent",
+  "review_kind": "agent_development_frame_review",
+  "purpose": "software_feasibility_only",
+  "user_or_teacher_approval": false,
+  "independent_second_review": false,
+  "full_video_negative_review": false,
+  "source_seconds_verified": false,
+  "negative_frames": [
+    {
+      "sequence": "T-T_crash/T-T_crash_1",
+      "source_frame_number": 1,
+      "image": "data_raw/sttad/author_samples/rgb-images/T-T_crash/T-T_crash_1/00001.jpg",
+      "image_sha256": "562f9daffab8f18af45467106e0b99e1f15a5a71b0a377b4c2afa64e3c183751",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "T-T_crash/T-T_crash_1",
+      "source_frame_number": 2,
+      "image": "data_raw/sttad/author_samples/rgb-images/T-T_crash/T-T_crash_1/00002.jpg",
+      "image_sha256": "5526c9038774d9e989df73d6a419df1b9c301ad6d4c7287b78c02a1efa77edd8",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "T-T_crash/T-T_crash_1",
+      "source_frame_number": 3,
+      "image": "data_raw/sttad/author_samples/rgb-images/T-T_crash/T-T_crash_1/00003.jpg",
+      "image_sha256": "40481aaf80d247a3b8d215a5bd59b4c25481039ac05612db1c37f19b3d150f4a",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "V-V_crash/V-V_crash_0",
+      "source_frame_number": 1,
+      "image": "data_raw/sttad/author_samples/rgb-images/V-V_crash/V-V_crash_0/00001.jpg",
+      "image_sha256": "1ba8108de3db527fdc46f8d90df40d5bbf1ec69c2dfbf2ac3369804b2ae0d358",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "V-V_crash/V-V_crash_0",
+      "source_frame_number": 2,
+      "image": "data_raw/sttad/author_samples/rgb-images/V-V_crash/V-V_crash_0/00002.jpg",
+      "image_sha256": "b4f674bcd54b9af655c3bba7ec2151357900299e11f7e4a84c6f5d032902b463",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "V-V_crash/V-V_crash_0",
+      "source_frame_number": 3,
+      "image": "data_raw/sttad/author_samples/rgb-images/V-V_crash/V-V_crash_0/00003.jpg",
+      "image_sha256": "19ae5374058490acdc88950798227e0ae0da98259aab1fba18bb22f0fcafc5f1",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "T-T_crash/T-T_crash_2",
+      "source_frame_number": 1,
+      "image": "data_raw/sttad/author_samples/rgb-images/T-T_crash/T-T_crash_2/00001.jpg",
+      "image_sha256": "d7ece7edcdc403f1b63a7d4cd1de1fbb89a2af546aea79342a9f0484678c7b62",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "T-T_crash/T-T_crash_2",
+      "source_frame_number": 2,
+      "image": "data_raw/sttad/author_samples/rgb-images/T-T_crash/T-T_crash_2/00002.jpg",
+      "image_sha256": "506498db57ded2e264144d618edad01130fb3ba7456c07a67c5d4bf5db4a3187",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "T-T_crash/T-T_crash_2",
+      "source_frame_number": 3,
+      "image": "data_raw/sttad/author_samples/rgb-images/T-T_crash/T-T_crash_2/00003.jpg",
+      "image_sha256": "63dfd688a5cd3e6fb0da9c080ff270589db6433a4258c1030123d06018079a16",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "V-V_crash/V-V_crash_1",
+      "source_frame_number": 1,
+      "image": "data_raw/sttad/author_samples/rgb-images/V-V_crash/V-V_crash_1/00001.jpg",
+      "image_sha256": "b706ae38b4782d710da4b6630f8fcf9fbdbd5b30daff5435c10bfedd84d94dae",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "V-V_crash/V-V_crash_1",
+      "source_frame_number": 2,
+      "image": "data_raw/sttad/author_samples/rgb-images/V-V_crash/V-V_crash_1/00002.jpg",
+      "image_sha256": "f289644305b8a432eb2f3ed5d9602c457dc54c93a6268574ca2a73b5a8b509f6",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    },
+    {
+      "sequence": "V-V_crash/V-V_crash_1",
+      "source_frame_number": 3,
+      "image": "data_raw/sttad/author_samples/rgb-images/V-V_crash/V-V_crash_1/00003.jpg",
+      "image_sha256": "105b8ecf099359605eb9fea17c6b30a0ca4528fac21734d37b242721dc884d9b",
+      "label": "negative_frame",
+      "reason": "Vehicles are visibly separated in this inspected image; label applies to this frame only."
+    }
+  ],
+  "evidence": [
+    {
+      "path": "outputs/audits/b0_feasibility_2026-11-16/negative_frame_candidates.jpg",
+      "sha256": "26539d5a196121bebc4cc5e16ff4e947e7d3a60971a23222037b32ac45691e16"
+    },
+    {
+      "path": "outputs/audits/b0_feasibility_2026-11-16/vv0_context_crops.jpg",
+      "sha256": "c2acf8a94d0b86ecdd2b4b91e79f4136616511c0a3f7c3f41d80d3d52602a44f"
+    }
+  ],
+  "positive_policy": "Use only pinned author accident-region labels with class 6/11; no CADP proposals or automatic labels for unknown frames.",
+  "grouping_scope": "Four visually distinct scene groups for development separation only; original camera/event IDs remain unverified."
+}

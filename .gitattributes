@@ -9,3 +9,5 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 *.xlsx binary
+# Keep byte fingerprints of source registries unchanged after clone.
+data/registries/*.csv -text

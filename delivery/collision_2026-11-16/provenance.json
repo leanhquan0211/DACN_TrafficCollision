@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-11-16T11:41:23.282271+07:00",
+  "purpose": "development_report_not_final_thesis",
+  "document_sha256": "04cda50bd60dc4cc90d7649d4e90c0826fefdde06208e5575e76bac0b934f27d",
+  "sources": {
+    "outputs/audits/collision_2026-11-16/final_replay/report.json": "7dea6c3da8e8c459d2ceb2f14b8015458ec53da3cbd09b0683fb9a4644412356",
+    "outputs/audits/collision_2026-11-16/browser_check.json": "87ec703f2586c1859dc2fd4779923ec5d2c207118ad6f5f9f9a60a1a8e3e66ad",
+    "outputs/audits/collision_2026-11-16/tests.log": "ceb3ada802e03c9c526aa214ff9443db6729cb1915b35f8e740260619555eae6",
+    "configs/collision_rules.json": "bc1ffb9f7c71068362efe8bdca299177bfda606cc36e937820e61d8d0751a3c0",
+    "outputs/audits/collision_2026-11-16/collision_dashboard.png": "e1e06fbc1c7e4b5d2444c660f16df58b3ad32586fec6200443e73ab5da4bcf04"
+  }
+}

@@ -1,6 +1,36 @@
 # Bắt đầu từ một máy mới hoặc một AI mới
 
-Hướng dẫn cho Windows/PowerShell, cập nhật **20/10/2026, Asia/Bangkok**. Mục tiêu là clone được code, biết project đang ở đâu, tải đúng phần cần dùng và tái tạo đầu ra. Repo không chứa dataset, video, trọng số, môi trường `.venv` hoặc toàn bộ audit.
+> **Cập nhật cuối16/11 — có cảnh báo tự động thử nghiệm:** dashboard mặc định chế độ collision, chạy được trên mẫu và MP4 upload; có event/khung/ảnh/clip/JSON. [Cách dùng, số đo thật và hạn chế](COLLISION_DETECTION.md). Rulev4 đã dùng CADP/DETRAC để phát triển, chưa test độc lập; không tự duyệt nhãn hoặc bỏ gate nghiên cứu. Bộ test mới70/70 đạt. Các mục trước đó cùng ngày dưới đây giữ lịch sử B0/upload.
+
+> **Tải video mới 16/11:** dashboard hỗ trợ MP4 H.264 từ máy và tự chạy pipeline. [Đã thử clip cao tốc khác và cách sử dụng](EXTERNAL_VIDEO_DEMO.md); bộ test sau upload57/57 đạt. Media upload và output vẫn cục bộ, không có sau clone.
+
+> **Cập nhật 16/11/2026:** đã train một lượt B0 khả thi một lớp `accident` trên STTAD: 25 ảnh train/18 validation; validation bỏ sót 12/12 vùng tại conf 0,25. [Báo cáo, giới hạn và lệnh tái lập](B0_FEASIBILITY.md). Đây là thử nghiệm phát triển, không thay gate nghiên cứu; dashboard vẫn vehicle detection/tracking. Bộ test hiện tại 53/53 đạt trên máy có dữ liệu.
+
+> **Cập nhật 14/11/2026:** môi trường CPU đã chạy YOLO/ByteTrack trên pilot; có cache frame và kiểm output. [Cách chạy và kết quả hiện tại](INFERENCE_CACHE.md). Môi trường chỉ xử lý ảnh của ngày 12/11 đã được bổ sung PyTorch/Ultralytics theo pin gốc.
+
+> **Demo giao diện cục bộ:** `bash demo.sh` → <http://127.0.0.1:8765>. [Hướng dẫn chuyển máy và trình diễn](DEMO_GUIDE.md), [bộ Word/slide](../delivery/README.md), [kế hoạch bốn tuần](KE_HOACH_4_TUAN.md). Chức năng va chạm tự động chưa có; review trên giao diện là thủ công.
+
+> **Pilot nguồn bổ sung ngày 14/11:** [ghi nhận nghiên cứu STTAD](RESEARCH_NOTES.md), [registry 212 file chọn lọc](../data/registries/sttad_selected_sources.json). Dữ liệu thô không có sau clone; dùng lệnh tải/audit trong `supplemental_sources` của catalog để kiểm lại. Không thuộc profile CADP/DETRAC hiện có; tập thử phát triển ngày 16/11 được xuất riêng, chưa hợp nhất vào manifest/split nghiên cứu.
+
+> **Cập nhật 12/11/2026:** đã tìm được link trực tiếp 221 ảnh CADP và công cụ tải chọn lọc có kiểm fingerprint; thêm phương án mirror DETRAC đối chiếu CRC nguồn khi Drive bị quota. Xem [phục hồi pilot](RESTORE_PILOT.md). Các kết quả kiểm máy 09/11 bên dưới là lịch sử.
+
+Hướng dẫn gốc cho Windows/PowerShell; bổ sung kiểm tra Linux ngày **09/11/2026, Asia/Bangkok**. Mục tiêu là clone được code, biết project đang ở đâu, tải đúng phần cần dùng và tái tạo đầu ra. Repo không chứa dataset, video, trọng số, môi trường `.venv` hoặc toàn bộ audit.
+
+### Kiểm hiện trạng trên Linux trước khi cài hoặc train
+
+Chạy từ thư mục gốc, không cần cài thư viện ML để thực hiện các kiểm tra này:
+
+```bash
+python3 -B scripts/check_project_assets.py --check-hashes --json
+python3 -B scripts/audit_project.py --strict
+python3 -B -m unittest discover -s tests -v
+```
+
+`audit_project.py` xuất báo cáo mới trong `outputs/audits/`, không sửa metadata hoặc tải dữ liệu. `--strict` trả 1 nếu còn blocker. Báo cáo phân biệt số liệu lịch sử với file thật, kiểm liên hệ source/camera/event/hash/parent giữa split; không rà near-duplicate bằng hình ảnh. Kiểm packages trong audit chỉ đọc phiên bản đã cài; dùng `check_environment.py` để thử import và CUDA. Công cụ môi trường trả lỗi khi thiếu package hoặc gặp lỗi binary lúc import.
+
+**Kết quả máy hiện tại 09/11:** Python 3.14.4; chưa có môi trường suy luận của project hoặc FFmpeg. Chưa kiểm chứng bộ pin cũ trên Python này. Khi dựng môi trường ML, dùng Python 3.12 như cấu hình gốc; tạo bằng `python3.12 -m venv .venv`, gọi `.venv/bin/python` thay cho `.\\venv\\Scripts\\python.exe` trong các lệnh bên dưới. Chọn CPU/CUDA theo máy thật; không mặc định GPU của máy cũ có trên máy này. Không thay pin/model chỉ để bỏ qua lỗi cài đặt.
+
+Đã khôi phục video demo và TXT CADP 1407 với hash đúng; vẫn thiếu 221 ảnh sạch, các chuỗi DETRAC và trọng số. [Báo cáo hoàn thiện](completion_audit.md) ghi bằng chứng và điều kiện còn thiếu. Một test tích hợp vẫn skip trên máy này.
 
 ## 1. Hiểu trạng thái trước khi chạy lệnh
 
@@ -11,7 +41,7 @@ Hướng dẫn cho Windows/PowerShell, cập nhật **20/10/2026, Asia/Bangkok**
 3. [progress/README.md](../progress/README.md), file nhật ký gần nhất: những gì thực sự đã làm.
 4. [Định nghĩa/đề xuất nhãn B0](b0_label_protocol.md), [nguồn dữ liệu đã kiểm](cadp_pilot_sources.md), [metadata dữ liệu](../data/README.md).
 
-**Hiện tại:** đang ở giai đoạn 1 — định nghĩa và chuẩn bị dữ liệu. Đã chạy YOLOv8n pretrained để tìm phương tiện, ByteTrack để giữ ID tạm. Chúng **chưa phát hiện tai nạn**. B0 trong kế hoạch là YOLO fine-tune **vùng accident**, chưa train.
+**Hiện tại:** giai đoạn dữ liệu nghiên cứu chưa hoàn thành. Bên cạnh YOLO/ByteTrack, đã triển khai **B2 luật chuyển động/FSM thử nghiệm** theo yêu cầu mới để có cảnh báo vận hành; B0 STTAD vẫn chưa tổng quát sang validation. Nhánh luật có kết quả development, chưa thay benchmark độc lập/B0/split/nhãn đã duyệt. Không tự hợp nhất dữ liệu thử hoặc upload vào manifest CADP.
 
 - Một sự kiện CADP **001407**: 221 ảnh sạch, TXT khớp; người dùng đã xác nhận đúng xe và Colliding **frame 96–130**, gồm hai đầu, GT ID0 Bus/ID2 Car. Không yêu cầu xác nhận lại mẫu này khi phục hồi đúng dữ liệu đã kiểm. FPS nguồn chưa biết, không đổi interval thành giây bằng FPS bản render/trình chiếu.
 - Ba DETRAC đầy đủ **MVI_20011/MVI_20012/MVI_20032** đã được người dùng xem và xác nhận không va chạm. Đây là review của người dùng, không suy từ nhãn xe XML.
@@ -67,7 +97,7 @@ Nếu pin không có wheel cho máy/OS đang dùng, ghi rõ lỗi, tra nguồn P
 .\.venv\Scripts\python.exe scripts/check_project_assets.py --create-dirs
 ```
 
-Ba test dùng fixture nhỏ chạy không cần dataset. Hai test tích hợp cần TXT/pilot thật sẽ ghi **skipped** nếu chưa phục hồi; skipped không có nghĩa đã kiểm pipeline trên dữ liệu thật. Khi phục hồi đủ pilot, cả năm test mới chạy đầy đủ.
+Bộ test hiện có70 test:68 test fixture (gồm media/demo/upload/review/STTAD/B0 khả thi/collision) và2 test tích hợp cần TXT/pilot thật. Test thiếu input ghi **skipped**; skipped không có nghĩa đã kiểm pipeline trên dữ liệu thật. Ngày09/11 có16 đạt/1skip trong bộ17 test lúc đó; đầu ngày14/11 có34/34, sau dashboard39/39, sau importer STTAD46/46; ngày16/11 sau B0 đạt53/53, sau upload57/57, sau nhánh collision70/70 trên máy có dữ liệu. Test upload H.264 cần FFmpeg hoặc imageio-ffmpeg, thiếu thì bốn test skip. Kiểm HTTP/Firefox riêng không được tính thành metric accuracy.
 
 ## 3. Những gì có và không có trong repo
 
@@ -98,7 +128,7 @@ DACN_TrafficCollision/
 
 ## 4. Tải dữ liệu đúng vị trí
 
-**Không có script tự tải toàn dataset.** Catalog có URL và hash để kiểm: [data/download_catalog.json](../data/download_catalog.json). Kiểm dung lượng trống trước; môi trường GPU cũng cần dung lượng riêng, ngoài dataset.
+**Không có script tự tải toàn dataset.** Có script tải chọn lọc các chuỗi đã đăng ký theo [hướng dẫn phục hồi](RESTORE_PILOT.md). Catalog có URL và hash để kiểm: [data/download_catalog.json](../data/download_catalog.json). Kiểm dung lượng trống trước; môi trường GPU cũng cần dung lượng riêng, ngoài dataset.
 
 ### A. Model và mẫu CADP 001407
 
@@ -210,6 +240,8 @@ Nếu video tái mã hóa khác hash, ghi đây là asset mới, chứng minh qu
 
 Lộ trình tiếp theo:
 
+Lượt [khả thi STTAD 16/11](B0_FEASIBILITY.md) chạy riêng để kiểm phần mềm và phân tích lỗi, không bỏ qua các bước nghiên cứu dưới đây.
+
 1. Chốt [quy tắc vùng accident đề xuất](b0_label_protocol.md) — khác với xác nhận xe/interval 001407 đã hoàn tất.
 2. Lấy thêm **VATIC sẵn có và mapping** từ tác giả; chọn thêm sự kiện độc lập và âm/hard negatives gần miền camera. Không tự gán lại bbox trước khi giải quyết nguồn có sẵn.
 3. Kiểm near-duplicate, nhóm camera/nguồn/sự kiện, rà pilot và nhãn vùng nhất quán. Khi đủ điều kiện mới làm công việc chia split theo nhóm.
@@ -219,7 +251,7 @@ Lộ trình tiếp theo:
 
 Có thể gửi nguyên đoạn sau sau khi mở repo trong IDE:
 
-> Đọc AGENTS.md, README.md, docs/GETTING_STARTED.md, định nghĩa B0 và progress gần nhất trước khi làm. Kiểm kê file thực tế bằng scripts/check_project_assets.py; manifest và evidence trên Git là hồ sơ máy phát triển, đừng giả định dữ liệu/output đã tải trên máy này. CADP 001407 đã xác nhận xe và Colliding 96–130 theo frame, ba DETRAC đầy đủ đã xác nhận âm; không hỏi lại nếu fingerprint đúng. Source FPS CADP chưa xác minh. Nhãn vùng B0 hiện là đề xuất dẫn xuất chưa duyệt GT, can_train=false. Không tự tải cả dataset, thay model, tạo split hoặc train. Hoàn thành phần kỹ thuật đủ điều kiện và ghi giới hạn thật. Trước kết thúc cập nhật progress/README.md và đúng một file progress/YYYY-MM-DD.md theo Asia/Bangkok.
+> Đọc AGENTS.md, README.md, docs/GETTING_STARTED.md, định nghĩa B0 và progress gần nhất trước khi làm. Kiểm kê file thực tế bằng scripts/check_project_assets.py; manifest và evidence trên Git là hồ sơ máy phát triển, đừng giả định dữ liệu/output đã tải trên máy này. CADP 001407 đã xác nhận xe và Colliding 96–130 theo frame, ba DETRAC đầy đủ đã xác nhận âm; không hỏi lại nếu fingerprint đúng. Source FPS CADP chưa xác minh. Nhãn vùng CADP hiện là đề xuất dẫn xuất chưa duyệt GT, can_train=false cho nghiên cứu. Đã có nhánh STTAD khả thi phần mềm riêng ngày16/11 với config/giới hạn trong docs/B0_FEASIBILITY.md, kết quả yếu, không thay gate chính thức. Không tự tải cả dataset, đổi model hoặc dùng proposal chưa duyệt để train. Hoàn thành phần kỹ thuật đủ điều kiện và ghi giới hạn thật. Trước kết thúc cập nhật progress/README.md và đúng một file progress/YYYY-MM-DD.md theo Asia/Bangkok.
 
 ## 8. Git: đưa code lên, giữ media ở máy
 

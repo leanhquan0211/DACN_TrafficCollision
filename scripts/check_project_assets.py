@@ -53,11 +53,16 @@ def inspect(asset: dict, check_hashes: bool) -> dict:
             with within_root(asset["image_inventory"]).open(encoding="utf-8", newline="") as stream:
                 inventory = list(csv.DictReader(stream))
             # Hash từng ảnh gốc ngăn việc cùng tên/thư mục nhưng khác nội dung.
+            inventory_paths = [within_root(r["relative_path"]) for r in inventory]
+            if any(p.parent != path for p in inventory_paths):
+                raise ValueError(f"Image inventory points outside asset directory: {asset['id']}")
             failures = [r["relative_path"] for r in inventory
                         if not within_root(r["relative_path"]).is_file()
                         or digest(within_root(r["relative_path"])) != r["sha256"]]
             result["mismatched_images"] = failures
-            if failures or len(inventory) != len(images):
+            if (failures or len(set(inventory_paths)) != len(inventory)
+                    or set(inventory_paths) != set(images)
+                    or len(images) != asset["expected_image_count"]):
                 result["status"] = "image_fingerprint_mismatch"
             else:
                 result["status"] = "verified_image_fingerprints"

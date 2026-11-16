@@ -215,6 +215,7 @@ def main() -> int:
     parser.add_argument("--demo-config", type=Path, default=Path("configs/cadp_1407_preview.json"))
     parser.add_argument("--presentation-fps", type=float, default=20)
     parser.add_argument("--visual-check-confirmed", action="store_true", help="Operator checked clean images/GT mapping; not user onset/end confirmation")
+    parser.add_argument("--review", type=Path, help="Existing source-frame user review; checked against original VATIC, no seconds inferred")
     parser.add_argument("--audit-root", type=Path, default=Path("outputs/audits"))
     parser.add_argument("--video-root", type=Path, default=Path("data_samples/cadp"))
     parser.add_argument("--preview-root", type=Path, default=Path("outputs/annotation_preview"))
@@ -240,6 +241,24 @@ def main() -> int:
                                     size_bytes=sum(r["size_bytes"] for r in inventory))
         save_csv(audit / "images.csv", inventory, list(inventory[0]))
         rows = read_vatic(args.annotations)
+        if args.review:
+            review = json.loads(args.review.read_text(encoding="utf-8"))
+            if (review.get("sequence") != "001407"
+                    or review.get("annotation_sha256") != report["annotation_sha256"]
+                    or review.get("review_status") != "vehicles_and_colliding_frames_confirmed"
+                    or review.get("frame_index_base") != 0 or not review.get("events")):
+                raise ValueError("Frame review does not match the restored annotation")
+            for event in review["events"]:
+                expected = set(range(event["start_frame"], event["end_frame_inclusive"] + 1))
+                if not expected or not event["participant_gt_ids"]:
+                    raise ValueError("Empty reviewed interval/participants")
+                for gt_id in event["participant_gt_ids"]:
+                    actual = {r["frame"] for r in rows if r["track_id"] == gt_id and "Colliding" in r["attributes"]}
+                    if actual != expected:
+                        raise ValueError("Review interval differs from original VATIC")
+            report.update(user_onset_end_review="confirmed_source_frames_only",
+                          user_review_path=args.review.as_posix(), user_review_sha256=sha256_file(args.review),
+                          reviewed_events=review["events"])
         if set(images) != {r["frame"] for r in rows}:
             raise ValueError("Image numbers and annotation frame numbers differ; no offset guessed")
         for row in rows:
@@ -258,6 +277,12 @@ def main() -> int:
         report["mapping_verified"] = passed and args.visual_check_confirmed
         report["cleanliness"] = "no_annotation_boxes_ids_or_plot_border_in_9_inspected_frames;source_watermark_retained" if args.visual_check_confirmed else "visual_review_pending"
         objects, collisions = summarize(rows)
+        for collision in collisions:
+            if any(collision["track_id"] in event["participant_gt_ids"]
+                   and collision["start_frame"] == event["start_frame"]
+                   and collision["end_frame"] == event["end_frame_inclusive"]
+                   for event in report.get("reviewed_events", [])):
+                collision["user_review_status"] = "vehicles_and_colliding_frames_confirmed"
         save_csv(audit / "objects.csv", objects, list(objects[0]))
         save_csv(audit / "colliding_intervals.csv", collisions, ["track_id", "label", "start_frame", "end_frame", "frame_count", "annotation_source", "user_review_status"])
         normalized = []

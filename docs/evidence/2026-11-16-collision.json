@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-16T11:43:34.210925+07:00",
+  "purpose": "experimental_causal_collision_alerts",
+  "historical_snapshot_not_current_machine_inventory": true,
+  "user_instruction": "Complete collision detection and use appropriate available means",
+  "method": "motion_contact_v4",
+  "config_sha256": "bc1ffb9f7c71068362efe8bdca299177bfda606cc36e937820e61d8d0751a3c0",
+  "development_results": [
+    {
+      "input_report": "outputs/demo_2026-11-14/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_tracking.run.json",
+      "frames": 221,
+      "matched_events": 1,
+      "missed_events": 0,
+      "extra_or_wrong_pair_events": 0,
+      "candidate_frames_in_gt_interval": 34,
+      "first_alert_frame": 109,
+      "unlabelled_external_video": false
+    },
+    {
+      "input_report": "outputs/inference_2026-11-14/MVI_20011/MVI_20011_tracking.run.json",
+      "frames": 664,
+      "false_alerts": 0,
+      "verified_negative_video_hours": 0.007377777777777777,
+      "unlabelled_external_video": false
+    },
+    {
+      "input_report": "outputs/inference_2026-11-14/MVI_20012/MVI_20012_tracking.run.json",
+      "frames": 936,
+      "false_alerts": 0,
+      "verified_negative_video_hours": 0.0104,
+      "unlabelled_external_video": false
+    },
+    {
+      "input_report": "outputs/inference_2026-11-14/MVI_20032/MVI_20032_tracking.run.json",
+      "frames": 437,
+      "false_alerts": 0,
+      "verified_negative_video_hours": 0.004855555555555556,
+      "unlabelled_external_video": false
+    },
+    {
+      "input_report": "outputs/demo_app/runs/6113376e6e85471f9a16fe0daf0d6a74/video/video_tracking.run.json",
+      "frames": 250,
+      "unlabelled_external_video": true
+    }
+  ],
+  "test_set_evaluated": false,
+  "research_gate_satisfied": false,
+  "formal_inputs_preserved": true,
+  "labels_or_splits_modified": false,
+  "cadp_source_fps_verified": false,
+  "score_is_probability": false,
+  "tests": {
+    "passed": 70,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser_checks": [
+    "cached_cadp_automatic_alert_at_109_and_evidence_controls",
+    "actual_cadp_cpu_rerun_and_verified_event",
+    "detrac_collision_mode_no_alert_and_no_stale_cadp_card",
+    "actual_external_browser_upload_collision_pipeline_no_alert",
+    "uploaded_collision_result_survives_refresh"
+  ],
+  "http_check_count": 19,
+  "artifacts": [
+    {
+      "path": "src/collision_rules.py",
+      "sha256": "a186cd2866cbf55de1ef94793c8179ff660cfde7d96273a95c595839958c76c9",
+      "bytes": 9818
+    },
+    {
+      "path": "src/collision_output.py",
+      "sha256": "21d03a5d9277f9315d294458106e193d1cc226375d7f9def2dbd1d095d5e3c6e",
+      "bytes": 2849
+    },
+    {
+      "path": "src/video_pipeline.py",
+      "sha256": "7b093347b3ea832cc286120b4a33a2f386f08a8e018cb4bd2e77ff4adc4731de",
+      "bytes": 13653
+    },
+    {
+      "path": "src/demo_server.py",
+      "sha256": "7cc78b434a48f4e8dd74d036a8abd56a52b8840c4db21577980be251763ad32d",
+      "bytes": 23510
+    },
+    {
+      "path": "configs/collision_rules.json",
+      "sha256": "bc1ffb9f7c71068362efe8bdca299177bfda606cc36e937820e61d8d0751a3c0",
+      "bytes": 1489
+    },
+    {
+      "path": "scripts/check_inference_outputs.py",
+      "sha256": "ee1728fe000d0015f5f0c2b067d4b9fca8cd6bfc732e17797f67ae094b369a44",
+      "bytes": 8439
+    },
+    {
+      "path": "scripts/evaluate_collision_rules.py",
+      "sha256": "eff6ae761f2af905d8be160d46c04e798caf6af460c1b91b82a35907877adbb6",
+      "bytes": 5751
+    },
+    {
+      "path": "outputs/audits/collision_2026-11-16/final_replay/report.json",
+      "sha256": "7dea6c3da8e8c459d2ceb2f14b8015458ec53da3cbd09b0683fb9a4644412356",
+      "bytes": 4906
+    },
+    {
+      "path": "outputs/audits/collision_2026-11-16/browser_check.json",
+      "sha256": "87ec703f2586c1859dc2fd4779923ec5d2c207118ad6f5f9f9a60a1a8e3e66ad",
+      "bytes": 950
+    },
+    {
+      "path": "outputs/audits/collision_2026-11-16/http_check.json",
+      "sha256": "0df09b14c1d9b4127606ffda787a49d80f2a9695ac884cfda97ba9ae3cf10f00",
+      "bytes": 1575
+    },
+    {
+      "path": "outputs/audits/collision_2026-11-16/tests.log",
+      "sha256": "ceb3ada802e03c9c526aa214ff9443db6729cb1915b35f8e740260619555eae6",
+      "bytes": 11441
+    },
+    {
+      "path": "outputs/audits/collision_2026-11-16/collision_dashboard.png",
+      "sha256": "e1e06fbc1c7e4b5d2444c660f16df58b3ad32586fec6200443e73ab5da4bcf04",
+      "bytes": 915434
+    },
+    {
+      "path": "delivery/collision_2026-11-16/BAO_CAO_PHAT_HIEN_VA_CHAM.docx",
+      "sha256": "04cda50bd60dc4cc90d7649d4e90c0826fefdde06208e5575e76bac0b934f27d",
+      "bytes": 945654
+    },
+    {
+      "path": "delivery/collision_2026-11-16/BAO_CAO_PHAT_HIEN_VA_CHAM.pdf",
+      "sha256": "c33f6005d4d2d68c0092797b6acb31131ae5f1c19d4a64d85af357a5edf80247",
+      "bytes": 318173
+    }
+  ],
+  "limitations": [
+    "Thresholds developed on the reported scenes; no locked independent evaluation",
+    "Quality gate excludes small/distant vehicles and can miss collisions",
+    "One reviewed positive event is insufficient to prove generalization",
+    "No calibrated collision probability, metric speed, source delay for CADP, or streaming benchmark"
+  ]
+}

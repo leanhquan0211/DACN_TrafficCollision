@@ -24,12 +24,17 @@ def main() -> int:
     print(f"OS: {platform.platform()}")
     # Thử import các gói mà pipeline dùng; tên phiên bản cho biết interpreter
     # hiện tại có đúng môi trường .venv đã cài phụ thuộc hay không.
-    for name in ("torch", "torchvision", "ultralytics", "cv2"):
+    failures = []
+    for name in ("torch", "torchvision", "ultralytics", "cv2", "numpy", "lap"):
         try:
             module = importlib.import_module(name)
             print(f"{name}: {getattr(module, '__version__', 'installed')}")
-        except ImportError as exc:
-            print(f"{name}: MISSING ({exc})")
+        except Exception as exc:
+            # Binary/ABI mismatches can raise RuntimeError or OSError on import.
+            failures.append(name)
+            print(f"{name}: UNAVAILABLE ({type(exc).__name__}: {exc})")
+    if "torch" in failures:
+        return 1
     try:
         import torch
     except ImportError:
@@ -43,7 +48,7 @@ def main() -> int:
         print(f"PyTorch GPU: {torch.cuda.get_device_name(0)}")
         tensor = torch.tensor([1.0, 2.0], device="cuda")
         print(f"CUDA tensor test: {(tensor * 2).sum().item()} (expected 6.0)")
-    return 0
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

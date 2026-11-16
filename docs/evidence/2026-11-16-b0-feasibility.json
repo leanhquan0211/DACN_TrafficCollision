@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-16T10:58:19.865685+07:00",
+  "purpose": "software_feasibility_only",
+  "historical_snapshot_not_current_machine_inventory": true,
+  "source_commit": "21f3f5fea50b071f1db61186b481c2a7ccf525c9",
+  "source_registry_sha256": "45e2e438b549e2e6af62a1d30c6461bc520024a7b29dde72e77677179587687b",
+  "config_sha256": "e710fe017ec0fac5132a9118f387dcc2049544ccc4bda08926be01a7eb54f7f7",
+  "review_sha256": "62a8a44177a612ecb4e54ba08fe3ca3fe00d691860fa7f022e13964bd48d825c",
+  "counts": {
+    "train": {
+      "images": 25,
+      "positive_frames": 19,
+      "negative_frames": 6,
+      "scenes": [
+        "T-T_crash/T-T_crash_1",
+        "V-V_crash/V-V_crash_0"
+      ]
+    },
+    "val": {
+      "images": 18,
+      "positive_frames": 12,
+      "negative_frames": 6,
+      "scenes": [
+        "T-T_crash/T-T_crash_2",
+        "V-V_crash/V-V_crash_1"
+      ]
+    }
+  },
+  "negative_reviewer": "codex_agent",
+  "user_or_teacher_approval": false,
+  "minimum_cross_split_phash_distance": 24,
+  "camera_independence_verified": false,
+  "unknown_images_excluded": 133,
+  "invalid_image_files_excluded": 2,
+  "training_epochs": 12,
+  "training_wall_s": 49.67446371200003,
+  "device": "cpu",
+  "cpu_threads": 4,
+  "packages": {
+    "torch": "2.11.0+cpu",
+    "torchvision": "0.26.0+cpu",
+    "ultralytics": "8.4.178",
+    "numpy": "2.5.2",
+    "opencv-python": "5.0.0.93"
+  },
+  "class_names": {
+    "0": "accident"
+  },
+  "validation_metrics": {
+    "metrics/precision(B)": 0.026237704783590568,
+    "metrics/recall(B)": 0.16666666666666666,
+    "metrics/mAP50(B)": 0.012082743097890024,
+    "metrics/mAP50-95(B)": 0.0034650431771022215,
+    "fitness": 0.0034650431771022215
+  },
+  "validation_fixed_threshold": {
+    "tp_boxes": 0,
+    "fp_boxes": 0,
+    "fn_boxes": 12,
+    "negative_frames": 6,
+    "negative_frames_with_predictions": 0,
+    "confidence_threshold": 0.25,
+    "iou_threshold": 0.5,
+    "scope": "diagnostic frame/bbox counts on development validation; not event precision/recall"
+  },
+  "generalization_diagnostics": {
+    "train": {
+      "positive_frames": 19,
+      "positive_frames_with_iou50_match_conf025": 17,
+      "positive_frames_with_iou50_match_conf001": 19,
+      "median_iou50_matched_confidence": 0.5101903676986694,
+      "negative_frames": 6,
+      "negative_frames_with_predictions": 3
+    },
+    "val": {
+      "positive_frames": 12,
+      "positive_frames_with_iou50_match_conf025": 0,
+      "positive_frames_with_iou50_match_conf001": 12,
+      "median_iou50_matched_confidence": 0.006691113114356995,
+      "negative_frames": 6,
+      "negative_frames_with_predictions": 0
+    }
+  },
+  "formal_inputs_preserved": {
+    "data/manifest.csv": true,
+    "data/b0_readiness.json": true,
+    "configs/b0_region_proposal.json": true
+  },
+  "formal_b0_gate_satisfied": false,
+  "test_set_evaluated": false,
+  "collision_alert_implemented": false,
+  "event_metrics_measured": false,
+  "tests": {
+    "passed": 53,
+    "skipped": 0,
+    "failed": 0,
+    "log": "outputs/audits/b0_feasibility_2026-11-16/tests.log"
+  },
+  "limitations": [
+    "Four author example scenes and 31 positive frames, not an adequate research benchmark",
+    "Negative labels are agent image review, without independent human adjudication",
+    "Validation is diagnostic development data, not a locked test set",
+    "Original camera/event IDs and source timing are unverified",
+    "No event metrics, alert reliability or streaming claims"
+  ],
+  "artifacts": [
+    {
+      "path": "outputs/experiments/b0_feasibility_2026-11-16/report.json",
+      "sha256": "dd75204b931ba713f4ed78f674de0b00fd2fe7b86c7780c4e993603118e33d0e",
+      "bytes": 2696
+    },
+    {
+      "path": "outputs/experiments/b0_feasibility_2026-11-16/run_metadata.json",
+      "sha256": "579436d34fcdea7925a24a6e4d578911f3d41b7e00007caefcd54a41cef4da0f",
+      "bytes": 4258
+    },
+    {
+      "path": "outputs/experiments/b0_feasibility_2026-11-16/train/results.csv",
+      "sha256": "546197e67f65bed650a6f12f441caa9a3ca7e25bcce18999a47ab6462c7f0bf6",
+      "bytes": 1570
+    },
+    {
+      "path": "outputs/experiments/b0_feasibility_2026-11-16/train/weights/best.pt",
+      "sha256": "16352246565cd707b8125b836839efb5199631a02a50ab3bee608f5e4008b794",
+      "bytes": 6479210
+    },
+    {
+      "path": "outputs/experiments/b0_feasibility_2026-11-16/train/weights/last.pt",
+      "sha256": "ea32d9a024c8a2268bf7d6c84e7586589caef8e6053a33c376282e46f7e615c8",
+      "bytes": 6479210
+    },
+    {
+      "path": "data/processed/b0_feasibility_2026-11-16/readiness.json",
+      "sha256": "3f806c4e03ae8b5bbb300f9dff5b5bcd40053822f290a6ae931272244a57ec66",
+      "bytes": 20800
+    },
+    {
+      "path": "data/processed/b0_feasibility_2026-11-16/manifest.csv",
+      "sha256": "787dd83a17866bf06e6e82eeb038a59d516a8159a79f5c9125203a607a00605f",
+      "bytes": 20369
+    },
+    {
+      "path": "outputs/audits/b0_feasibility_2026-11-16/generalization/report.json",
+      "sha256": "dbc9ac24ed51d3bfdcfb92e5d9b5b211df85880fbb16e3a9b9fdd6f93010501b",
+      "bytes": 1249
+    },
+    {
+      "path": "outputs/audits/b0_feasibility_2026-11-16/generalization/frames.csv",
+      "sha256": "b9962cc8fb8839a102affb60475039fd570004d16e7c67a570b435bd44d70856",
+      "bytes": 3475
+    },
+    {
+      "path": "outputs/audits/b0_feasibility_2026-11-16/generalization/confidence_by_split.png",
+      "sha256": "efe36bd5317703246ce55272717acfe17bb4ade0eb433ad5d2b314689a43b6be",
+      "bytes": 75355
+    },
+    {
+      "path": "outputs/audits/b0_feasibility_2026-11-16/tests.log",
+      "sha256": "908bf35ed74750ae47773f4fb5587681b75cb3579d29b37c77a8b2439587c5de",
+      "bytes": 8354
+    },
+    {
+      "path": "scripts/analyze_b0_generalization.py",
+      "sha256": "23651055912750d551241356f13375568b40c292f3f1327d8c5e93cbd3fa22db",
+      "bytes": 6170
+    },
+    {
+      "path": "tests/test_b0_feasibility.py",
+      "sha256": "6d25329ca9f0ae49fd4fd03046684ee73eaae93661e3817012f0b1bd05e67d8c",
+      "bytes": 6053
+    },
+    {
+      "path": "docs/B0_FEASIBILITY.md",
+      "sha256": "505ee8c0422f3deeac9f6aab2039724b0ec4aff0cdc973318d05fc49be86d24d",
+      "bytes": 7942
+    }
+  ]
+}

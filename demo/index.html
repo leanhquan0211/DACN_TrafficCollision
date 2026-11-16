@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1220"><title>Traffic Lab · Phân tích video giao thông</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="Traffic Lab trang chính"><span class="brand-icon">T<span>↗</span></span><span>TRAFFIC LAB<small>ĐỒ ÁN CHUYÊN NGÀNH</small></span></a>
+  <p class="nav-label">KHÔNG GIAN LÀM VIỆC</p>
+  <button class="nav active" data-page="workspace"><span>▣</span> Phân tích video</button>
+  <button class="nav" data-page="system"><span>◈</span> Dữ liệu & hệ thống</button>
+  <button class="nav" data-page="guide"><span>≡</span> Hướng dẫn demo</button>
+  <div class="side-bottom"><span class="dot"></span> XỬ LÝ CỤC BỘ<small>YOLOv8n + ByteTrack<br>Video và kết quả lưu trên máy</small><div class="version">RESEARCH PROTOTYPE · 01</div></div>
+</aside>
+<main>
+  <header class="topbar"><span>PHÒNG THỰC NGHIỆM <span class="slash">/</span> CCTV</span><span class="pill"><span class="dot"></span> CPU · OFFLINE</span></header>
+  <div class="page" id="workspace">
+    <div class="heading"><div><p class="eyebrow">VIDEO INTELLIGENCE</p><h1>Quan sát. Theo dõi. Đối chiếu.</h1><p>Phân tích phương tiện từ video camera cố định.</p></div><span class="outline-tag">BẢN DEMO KỸ THUẬT</span></div>
+    <div class="scope-note"><span>i</span><p><strong>Phát hiện va chạm thử nghiệm:</strong> kết hợp tiếp cận, tương tác giữa xe và thay đổi chuyển động qua nhiều frame. Cảnh báo tự động cần được người xem kiểm tra; hệ thống còn có thể báo nhầm hoặc bỏ sót.</p></div>
+    <section class="controls panel" aria-label="Cấu hình phân tích">
+      <label>01 · VIDEO ĐẦU VÀO<select id="sample" aria-label="Chọn video"></select></label>
+      <label>02 · PHƯƠNG PHÁP<select id="mode" aria-label="Chọn phương pháp"><option value="collision">Phát hiện va chạm · Thử nghiệm</option><option value="tracking">YOLO + ByteTrack · Theo dõi ID</option><option value="detection">YOLO · Phát hiện phương tiện</option></select></label>
+      <button id="run" class="primary">↻ &nbsp; Chạy lại trên CPU</button>
+      <p id="sample-description"></p>
+      <form id="upload-form" class="upload-controls"><label for="upload-file">Hoặc tải video từ máy <input id="upload-file" type="file" accept=".mp4,video/mp4" required></label><button id="upload-button" type="submit" class="secondary">↑ Tải lên & phân tích</button><small>MP4 H.264 · tối đa 100 MiB, 2 phút, Full HD · xử lý trên máy này</small></form>
+    </section>
+    <div id="job-status" role="status" aria-live="polite"></div><div id="error" role="alert" hidden></div>
+    <section id="automatic-alerts" class="panel automatic-alerts" hidden><div class="panel-heading"><h2>Cảnh báo va chạm tự động</h2><span class="manual-tag">THỬ NGHIỆM</span></div><p id="collision-state" role="status" aria-live="polite"></p><div id="collision-events"></div><p class="footnote">Luật xác nhận đủ tín hiệu không đồng nghĩa xác nhận va chạm ngoài thực tế. Không có cảnh báo cũng không chứng minh video an toàn. Nhận xét thủ công ở dưới được lưu riêng.</p></section>
+    <section class="metrics" aria-label="Kết quả chạy thực tế">
+      <article><span>FRAME ĐÃ XỬ LÝ</span><strong id="metric-frames">—</strong><small>Giải mã và kiểm lại đầy đủ</small></article>
+      <article><span>QUAN SÁT PHƯƠNG TIỆN</span><strong id="metric-obs">—</strong><small>Tổng bbox trên các frame</small></article>
+      <article><span>ID THEO DÕI TẠM</span><strong id="metric-ids">—</strong><small>Không phải số xe duy nhất thực tế</small></article>
+      <article><span>TỐC ĐỘ XỬ LÝ OFFLINE</span><strong id="metric-fps">—</strong><small>Gồm suy luận, render và encode</small></article>
+    </section>
+    <section class="panel viewer">
+      <div class="panel-heading"><h2>Đối chiếu video</h2><span id="run-state" class="muted">Đang đọc dữ liệu…</span></div>
+      <div class="video-grid">
+        <div class="video-cell"><div class="video-label"><span>01 / VIDEO GỐC SẠCH</span><span>INPUT</span></div><video id="original" muted playsinline preload="metadata" aria-label="Video gốc"></video></div>
+        <div class="video-cell"><div class="video-label"><span>02 / KẾT QUẢ MÔ HÌNH</span><span id="video-method">BYTETRACK</span></div><video id="processed" muted playsinline preload="metadata" aria-label="Video kết quả"></video></div>
+      </div>
+      <div class="playback"><button id="play" class="small-button" aria-label="Phát hoặc tạm dừng hai video">▶ Phát</button><button id="previous" class="step" aria-label="Frame trước">‹</button><button id="next" class="step" aria-label="Frame tiếp">›</button><input type="range" id="seek" value="0" min="0" max="220" step="1" aria-label="Chọn frame"><span id="frame-label">Frame 0 / 220</span><select id="speed" aria-label="Tốc độ phát"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div>
+      <div class="timeline-label"><span>SỐ PHƯƠNG TIỆN QUAN SÁT / FRAME</span><span id="time-note">Giây trình chiếu ≠ thời gian nguồn CADP</span></div>
+      <canvas id="chart" height="60" aria-label="Biểu đồ số bbox theo frame"></canvas>
+    </section>
+    <div class="details-grid">
+      <section class="panel observations"><div class="panel-heading"><h2>Quan sát tại frame <span id="current-frame">0</span></h2><span class="muted" id="objects-count">—</span></div><div class="table-scroll"><table><thead><tr><th>TRACK ID</th><th>LOẠI XE</th><th>ĐỘ TIN CẬY XE</th><th>SỐ LẦN THẤY ID</th></tr></thead><tbody id="objects"></tbody></table></div><p class="footnote">Độ tin cậy thuộc detector phương tiện. ID có thể đổi, mất hoặc nhầm class khi bị che khuất.</p></section>
+      <section class="panel review"><div class="panel-heading"><h2>Ghi mốc cần rà</h2><span class="manual-tag">THỦ CÔNG</span></div><p>Tạm dừng tại frame cần xem, viết nhận xét rồi lưu ảnh bằng chứng. Ghi nhận này không là cảnh báo của mô hình hoặc nhãn huấn luyện.</p><form id="review-form"><label for="review-note" class="sr-only">Nhận xét tại frame đang xem</label><textarea id="review-note" maxlength="1000" rows="3" placeholder="Ví dụ: cần rà ID của xe buýt khi bị che khuất…" required></textarea><button class="secondary" type="submit" id="save-review">＋ Lưu mốc & ảnh frame</button></form><div id="reviews" aria-live="polite"></div></section>
+    </div>
+    <section class="panel exports"><div><h2>Hồ sơ lượt chạy</h2><p id="provenance">Đang kiểm tra…</p></div><div class="export-links" id="downloads"></div></section>
+  </div>
+  <div class="page" id="system" hidden>
+    <div class="heading"><div><p class="eyebrow">REPRODUCIBILITY</p><h1>Dữ liệu & hệ thống</h1><p>Phân biệt sản phẩm đã chạy với mục tiêu nghiên cứu.</p></div></div>
+    <section class="panel prose"><h2>Phạm vi đã kiểm chứng</h2><p>YOLOv8n pretrained phát hiện phương tiện; ByteTrack nối quan sát thành ID tạm. Chế độ va chạm dùng thêm luật causal kết hợp tiếp cận, tương tác không gian và biến đổi chuyển động, xác nhận qua nhiều frame và chống lặp theo cặp xe. Mỗi video tạo model/tracker/lịch sử mới.</p><div class="pipeline"><span>Video</span><b>→</b><span>YOLO + ByteTrack</span><b>→</b><span>Luật chuyển động</span><b>→</b><span>Cảnh báo + ảnh/clip</span></div><p>Không dùng bbox chồng nhau đơn lẻ để kết luận. Điểm bằng chứng của luật không là xác suất va chạm đã hiệu chuẩn. Các bản tracking/detection cũ không có cảnh báo.</p></section>
+    <section class="panel prose"><h2>Dữ liệu pilot hiện tại</h2><table><thead><tr><th>NGUỒN</th><th>FILE THỰC TẾ ĐÃ PHỤC HỒI</th><th>GIỚI HẠN</th></tr></thead><tbody><tr><td>CADP 001407</td><td>221 ảnh sạch · 1 sự kiện đã rà</td><td>Colliding 96–130 theo frame; chưa biết FPS nguồn.</td></tr><tr><td>DETRAC</td><td>2.037 ảnh · 3 chuỗi âm đã rà</td><td>Video dẫn xuất có hash riêng; không thay review video cũ.</td></tr><tr><td>Nhãn vùng B0</td><td>35 bbox đề xuất</td><td>Chưa được duyệt làm GT; chưa chia train/val/test.</td></tr></tbody></table><p>Bản đóng gói demo chỉ mang hai clip ngắn cần trình diễn; bảng trên mô tả hồ sơ phát triển, không khẳng định mọi ảnh đã có trong gói.</p></section>
+    <section class="panel prose"><h2>Cần hoàn thành để nghiệm thu đề tài va chạm</h2><ol><li>Thêm sự kiện độc lập, chốt nhãn và split theo camera/sự kiện.</li><li>Cải thiện và đánh giá B0/B1; không dùng model ảnh đang bỏ sót nhiều để khẳng định chất lượng cảnh báo.</li><li>Kiểm nhánh luật hiện có trên camera mới, xe nhỏ/xa, near miss, che khuất và cắt cảnh; xác minh timestamp.</li><li>Đo event precision/recall, false alerts/hour, độ trễ trên test khóa và video dài.</li></ol><p>Đã có luật/FSM và bằng chứng tự động thử nghiệm. Chưa có event F1/IDF1 độc lập hoặc benchmark streaming. FPS hiển thị là tốc độ xử lý file offline của lượt chạy cụ thể.</p></section>
+    <section class="panel prose"><h2>Kiểm tra file của phiên này</h2><div id="asset-status">Đang đọc…</div></section>
+  </div>
+  <div class="page" id="guide" hidden>
+    <div class="heading"><div><p class="eyebrow">PRESENTATION GUIDE</p><h1>Kịch bản demo 5 phút</h1><p>Có kết quả sẵn để phát lại; có thể chạy suy luận mới trên CPU.</p></div></div>
+    <section class="panel prose"><ol class="guide-steps"><li><strong>Giới thiệu phạm vi — 30 giây.</strong><p>Đây là nguyên mẫu phân tích phương tiện CCTV, nền tảng cho phát hiện va chạm. Nêu rõ phần cảnh báo tự động còn thiếu.</p></li><li><strong>Mở mẫu CADP — 1 phút.</strong><p>Phát đồng thời đầu vào và kết quả, tạm dừng/đi từng frame, xem ID và class. Mốc 96–130 là nhãn tham chiếu do người rà.</p></li><li><strong>Chạy lại mô hình — 1 phút.</strong><p>Bấm “Chạy lại trên CPU”, chờ kiểm kết quả. Lượt mới giữ MP4/cache/report riêng, không ghi đè lượt trước.</p></li><li><strong>Đối chiếu cảnh âm — 1 phút.</strong><p>Chọn DETRAC. Giải thích vì sao thấy nhiều xe hoặc chồng bbox chưa đủ kết luận tai nạn.</p></li><li><strong>Lưu bằng chứng và kết luận — 90 giây.</strong><p>Tạo nhận xét thủ công, mở ảnh gốc, tải JSONL/report. Trình bày giới hạn dữ liệu và thí nghiệm còn phải làm.</p></li></ol></section>
+    <section class="panel prose"><h2>Khi chuyển sang máy khác</h2><p>Giải nén gói bàn giao, làm theo <code>docs/DEMO_GUIDE.md</code> và chạy <code>bash demo.sh</code>. Cần cài môi trường một lần; sau đó hai clip mẫu và trọng số đi kèm chạy không cần Internet. Muốn xem nhanh kết quả mà không cài Python: mở MP4 trong thư mục outputs của gói.</p><p>Dừng máy chủ bằng Ctrl+C trong terminal. Nhật ký mới và mốc review nằm trong <code>outputs/demo_app/</code>.</p></section>
+  </div>
+  <footer>TRAFFIC LAB <span>Đồ án chuyên ngành · Nguyên mẫu nghiên cứu · Không dùng để điều hành giao thông</span></footer>
+</main><script src="/app.js" defer></script>
+</body></html>

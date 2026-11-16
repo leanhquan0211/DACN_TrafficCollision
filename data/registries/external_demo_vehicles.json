@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "purpose": "external_demo_only",
+  "training_ground_truth": false,
+  "download": {
+    "url": "https://media.roboflow.com/supervision/video-examples/vehicles.mp4",
+    "path": "data_raw/external_demo/roboflow_vehicles.mp4",
+    "bytes": 35345757,
+    "sha256": "ac81100d9310bd4e9c02bc0b13b6492781d009742ced347766b2601be3c44ad4",
+    "downloaded_at": "2026-11-16T11:07:56.906566+07:00",
+    "purpose": "external_demo_only",
+    "training_ground_truth": false,
+    "timing_status": "unknown",
+    "source_page": "https://supervision.roboflow.com/0.27.0/notebooks/count-objects-crossing-the-line/"
+  },
+  "derivation": {
+    "source": "data_raw/external_demo/roboflow_vehicles.mp4",
+    "source_sha256": "ac81100d9310bd4e9c02bc0b13b6492781d009742ced347766b2601be3c44ad4",
+    "derived": "data_samples/roboflow_vehicles_10s.mp4",
+    "derived_sha256": "5ee70b88101502198e8b1e2ba1f1276cd309add4537425f0ddf1f3571048a270",
+    "reported_frames": 250,
+    "container_fps": 25.0,
+    "width": 1280,
+    "height": 720,
+    "derivation": "First 10 seconds, scale width to 1280 preserving aspect ratio, H.264 CRF22, no audio",
+    "ffmpeg_command": [
+      ".venv/bin/ffmpeg",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-n",
+      "-i",
+      "data_raw/external_demo/roboflow_vehicles.mp4",
+      "-t",
+      "10",
+      "-vf",
+      "scale=1280:-2",
+      "-an",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "fast",
+      "-crf",
+      "22",
+      "-movflags",
+      "+faststart",
+      "data_samples/roboflow_vehicles_10s.mp4"
+    ],
+    "timing_status": "unknown",
+    "training_ground_truth": false
+  }
+}

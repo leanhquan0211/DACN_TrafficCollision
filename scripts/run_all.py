@@ -11,16 +11,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.video_pipeline import arguments
 
 def main() -> int:
     sys.stdout.reconfigure(errors="backslashreplace")
     sys.stderr.reconfigure(errors="backslashreplace")
-    parser = argparse.ArgumentParser(description="Inspect, detect and track one video with YOLOv8n")
-    parser.add_argument("video", type=Path, help="Path to an input video")
-    parser.add_argument("--device", default="auto", help="auto, cpu, or CUDA index such as 0")
-    parser.add_argument("--imgsz", type=int, default=640, help="Inference image size")
-    parser.add_argument("--output-dir", type=Path, default=Path("outputs"), help="Root directory for per-video result folders")
-    parser.add_argument("--model", type=Path, default=Path("yolov8n.pt"), help="YOLOv8n weights")
+    parser = arguments("detection and tracking")
     args = parser.parse_args()
 
     # Chuyển đường dẫn đầu vào thành đường dẫn tuyệt đối để cả ba tiến trình con
@@ -35,6 +32,11 @@ def main() -> int:
         if name != "inspect_video.py":
             command.extend(("--device", args.device, "--imgsz", str(args.imgsz),
                             "--output-dir", str(args.output_dir), "--model", str(args.model)))
+            command.extend(("--timing-status", args.timing_status))
+            if args.timing_evidence:
+                command.extend(("--timing-evidence", str(args.timing_evidence)))
+            if args.cpu_threads is not None:
+                command.extend(("--cpu-threads", str(args.cpu_threads)))
         print(f"\n=== {name} ===", flush=True)
         # Dừng ngay nếu một bước lỗi để không coi hai MP4 chưa đủ là kết quả hoàn chỉnh.
         try:

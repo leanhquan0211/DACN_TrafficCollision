@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "samples": [
+    {
+      "id": "cadp-001407",
+      "title": "CADP · Giao lộ 001407",
+      "description": "CCTV 1280×720 · 221 frame. Nhãn người rà: va chạm ở frame 96–130; không phải dự đoán của hệ thống.",
+      "source": "data_samples/cadp/cadp_001407_clean_display20fps.mp4",
+      "timing_status": "presentation_only",
+      "reports": {
+        "tracking": "outputs/demo_2026-11-14/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_tracking.run.json",
+        "detection": "outputs/demo_2026-11-14/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_detection.run.json",
+        "collision": "outputs/collision_2026-11-16/final/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_collision.run.json"
+      }
+    },
+    {
+      "id": "detrac-mvi20011",
+      "title": "DETRAC · Lưu thông bình thường",
+      "description": "CCTV 960×540 · đoạn 250 frame từ MVI_20011. Chuỗi cha đã được người dùng rà âm tính.",
+      "source": "data_samples/ua_detrac/restored_2026-11-12/MVI_20011_first_10s.mp4",
+      "timing_status": "unknown",
+      "reports": {
+        "tracking": "outputs/inference_2026-11-14/MVI_20011_first_10s/MVI_20011_first_10s_tracking_2.run.json",
+        "detection": "outputs/inference_2026-11-14/MVI_20011_first_10s/MVI_20011_first_10s_detection_2.run.json",
+        "collision": "outputs/collision_2026-11-16/final/MVI_20011_first_10s/MVI_20011_first_10s_collision.run.json"
+      }
+    }
+  ]
+}

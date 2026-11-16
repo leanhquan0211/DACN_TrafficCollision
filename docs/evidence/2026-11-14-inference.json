@@ -1,0 +1,169 @@
+{
+  "date": "2026-11-14",
+  "timezone": "Asia/Bangkok",
+  "tests": {
+    "total": 34,
+    "passed": 34,
+    "skipped": 0,
+    "failed": 0
+  },
+  "run_count": 9,
+  "runs": [
+    {
+      "report": "outputs/inference_2026-11-14/MVI_20011/MVI_20011_tracking.run.json",
+      "video": "data_samples/ua_detrac/restored_2026-11-12/MVI_20011.mp4",
+      "mode": "tracking",
+      "frames": 664,
+      "observation_count": 13160,
+      "unique_track_ids": 151,
+      "timing_status": "verified_source",
+      "effective_cpu_threads": 8,
+      "requested_cpu_threads": null,
+      "offline_processing_fps": 21.01260030821127,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_initial"
+    },
+    {
+      "report": "outputs/inference_2026-11-14/MVI_20011_first_10s/MVI_20011_first_10s_detection.run.json",
+      "video": "data_samples/ua_detrac/restored_2026-11-12/MVI_20011_first_10s.mp4",
+      "mode": "detection",
+      "frames": 250,
+      "observation_count": 4563,
+      "unique_track_ids": 0,
+      "timing_status": "verified_source",
+      "effective_cpu_threads": 8,
+      "requested_cpu_threads": null,
+      "offline_processing_fps": 22.920959809426897,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_initial"
+    },
+    {
+      "report": "outputs/inference_2026-11-14/MVI_20011_first_10s/MVI_20011_first_10s_detection_2.run.json",
+      "video": "data_samples/ua_detrac/restored_2026-11-12/MVI_20011_first_10s.mp4",
+      "mode": "detection",
+      "frames": 250,
+      "observation_count": 4563,
+      "unique_track_ids": 0,
+      "timing_status": "verified_source",
+      "effective_cpu_threads": 4,
+      "requested_cpu_threads": 4,
+      "offline_processing_fps": 23.439011714442465,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_final"
+    },
+    {
+      "report": "outputs/inference_2026-11-14/MVI_20011_first_10s/MVI_20011_first_10s_tracking.run.json",
+      "video": "data_samples/ua_detrac/restored_2026-11-12/MVI_20011_first_10s.mp4",
+      "mode": "tracking",
+      "frames": 250,
+      "observation_count": 4935,
+      "unique_track_ids": 59,
+      "timing_status": "verified_source",
+      "effective_cpu_threads": 8,
+      "requested_cpu_threads": null,
+      "offline_processing_fps": 20.117928001039644,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_initial"
+    },
+    {
+      "report": "outputs/inference_2026-11-14/MVI_20011_first_10s/MVI_20011_first_10s_tracking_2.run.json",
+      "video": "data_samples/ua_detrac/restored_2026-11-12/MVI_20011_first_10s.mp4",
+      "mode": "tracking",
+      "frames": 250,
+      "observation_count": 4935,
+      "unique_track_ids": 59,
+      "timing_status": "verified_source",
+      "effective_cpu_threads": 4,
+      "requested_cpu_threads": 4,
+      "offline_processing_fps": 23.273878000961364,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_final"
+    },
+    {
+      "report": "outputs/inference_2026-11-14/MVI_20012/MVI_20012_tracking.run.json",
+      "video": "data_samples/ua_detrac/restored_2026-11-12/MVI_20012.mp4",
+      "mode": "tracking",
+      "frames": 936,
+      "observation_count": 18121,
+      "unique_track_ids": 191,
+      "timing_status": "verified_source",
+      "effective_cpu_threads": 8,
+      "requested_cpu_threads": null,
+      "offline_processing_fps": 20.85205498619594,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_initial"
+    },
+    {
+      "report": "outputs/inference_2026-11-14/MVI_20032/MVI_20032_tracking.run.json",
+      "video": "data_samples/ua_detrac/restored_2026-11-12/MVI_20032.mp4",
+      "mode": "tracking",
+      "frames": 437,
+      "observation_count": 7533,
+      "unique_track_ids": 91,
+      "timing_status": "verified_source",
+      "effective_cpu_threads": 8,
+      "requested_cpu_threads": null,
+      "offline_processing_fps": 20.960868565969122,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_initial"
+    },
+    {
+      "report": "outputs/inference_2026-11-14/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_detection.run.json",
+      "video": "data_samples/cadp/cadp_001407_clean_display20fps.mp4",
+      "mode": "detection",
+      "frames": 221,
+      "observation_count": 1755,
+      "unique_track_ids": 0,
+      "timing_status": "presentation_only",
+      "effective_cpu_threads": 8,
+      "requested_cpu_threads": null,
+      "offline_processing_fps": 21.200139032200237,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_initial"
+    },
+    {
+      "report": "outputs/inference_2026-11-14/cadp_001407_clean_display20fps/cadp_001407_clean_display20fps_tracking.run.json",
+      "video": "data_samples/cadp/cadp_001407_clean_display20fps.mp4",
+      "mode": "tracking",
+      "frames": 221,
+      "observation_count": 1831,
+      "unique_track_ids": 31,
+      "timing_status": "presentation_only",
+      "effective_cpu_threads": 8,
+      "requested_cpu_threads": null,
+      "offline_processing_fps": 20.325896406001416,
+      "producer_source_snapshot": "outputs/audits/inference_2026-11-14/producer_source_initial"
+    }
+  ],
+  "unique_source_sequences_with_historical_labels": 4,
+  "unique_source_images_restored": 2258,
+  "preserved_inputs": {
+    "data/manifest.csv": true,
+    "data/b0_readiness.json": true,
+    "configs/b0_region_proposal.json": true,
+    "data/reviews/2026-10-19-user-confirmations.json": true,
+    "data/reviews/2026-10-19-cadp-001407-frame-confirmation.json": true
+  },
+  "source_fps_cadp_verified": false,
+  "training_run": false,
+  "collision_metrics_measured": false,
+  "b0_training_ready": false,
+  "class_diagnostic_summary": {
+    "0": {
+      "frames": 35,
+      "class_agnostic_overlap_candidates": 34,
+      "candidate_track_ids": [
+        1
+      ],
+      "returned_class_counts": {
+        "bus": 21,
+        "car": 13
+      },
+      "class_disagreements": 13
+    },
+    "2": {
+      "frames": 35,
+      "class_agnostic_overlap_candidates": 35,
+      "candidate_track_ids": [
+        19
+      ],
+      "returned_class_counts": {
+        "car": 35
+      },
+      "class_disagreements": 0
+    }
+  },
+  "full_local_evidence": "outputs/audits/inference_2026-11-14/validation.json"
+}
