@@ -11,9 +11,15 @@
 
 Quy ước này thay quy ước cũ một file/buổi. Đã hợp nhất ba bản 19/10 vào [2026-10-19.md](2026-10-19.md), đồng bộ 16/10 và hai phần 17/10 thành file theo ngày. Bản gốc/hash và kiểm tra bảo toàn ở `outputs/audits/progress_consolidation/`; chỉ bỏ file phân mảnh sau kiểm tra nội dung/liên kết.
 
-## Trạng thái hiện tại — 16/11/2026
+## Trạng thái hiện tại — 17/11/2026
+
+**Ưu tiên nghiên cứu mới — đã có bảng thực nghiệm có nhãn:** [train/validation/P/R/mAP50, protocol và nguồn](../docs/EXPERIMENT_RESULTS.md), [snapshot](../docs/evidence/2026-11-17-evaluation.json), [nhật ký17/11](2026-11-17.md). Cùng checkpoint xe COCO pretrained,2037ảnh DETRAC có17.920bbox nguồn: car/busNMSgốcP87,46%/R81,39%/mAP50=90,60%, NMSdemoP87,44%/R80,81%/mAP50=87,32% tạiP/Rconf0,25/IoU0,5. NMS giảmFPđịnh vị nhưng giảmAPphân lớp, không coi ít khung là accuracy tăng. Kiểm lại B0train25/val18 STTAD: mAP50train83,24% nhưngval1,21%; tại0,25 bỏ sót12/12vùng. B0chưa dùng trong demo, B2chưa có eventP/Rtestđộc lập. Cài evaluatorCOCO2.0.11 riêng, đủ hash/predictions/CSV/đồ thị;87test phần mềm đạt nhưng không thay metric. Không train/tune thêm hoặc đổi nhãn/split trong lượt này. **Chưa đạt gate nghiên cứu**, bước tiếp theo là dataset đủ nhãn và split theo camera/sự kiện có test khóa. Các cập nhật16/11 bên dưới giữ lịch sử chức năng demo.
+
+### Trạng thái demo ngày16/11
 
 **Mới nhất — xử lý nhầm lớp xe người dùng chỉ:** xe trắng/SUV trong clip140frame bị rawtruck0,23; tăng resolution cùng model vẫn sai. Giữ YOLOv8n640, bật NMS giữa lớp và nhãn hiển thị theo lịch sử causal/“chưa rõ loại”. Xe được chỉ hiện `vehicle?`, **raw vẫn truck, chưa sửa detector thành car**. Cặp khác lớp IoU≥0,8 từ141→0, ID tạm65→50 trên clip này; không gọi là accuracy. CPU chạy lại7clip/3548frame: CADP đúng cặp108/candidate35trên35, clip900frame0alert, ba DETRAC2037frame0alert, cao tốc250frame0alert, clip140frame vẫn cảnh báo52 chưaGTđầyđủ. **80/80test,6nhóm Firefox đạt**, recovery chọn đúng3run mới nhất. [Hồ sơ](../docs/VEHICLE_LABEL_FIX.md), [snapshot](../docs/evidence/2026-11-16-vehicle-labels.json), [nhật ký](2026-11-16.md). Web local đã khởi động lại và có kết quả mới; Pages/ZIP/Word/PDF chưa tái xuất. NMS có thể làm mất xe thật chồng bbox mạnh, lịch sử vẫn có thể nhầm; giữ gate nghiên cứu chưa hoàn thành.
+
+Mã sửa nhận dạng đã đồng bộ lên nhánh GitHub hiện có: [65bd500](https://github.com/minhquan0500/DACN_TrafficCollision/commit/65bd500c0015f77e61d24c16c3d8215952736168),18file nguồn/config/test/tài liệu khớp byte lúc xuất bản, remote ref đã xác minh; không kèm ảnh/video cá nhân. [Audit](../outputs/audits/class_label_2026-11-16/publication.json).
 
 **Đã sửa case báo nhầm người dùng gửi:** `motion_contact_v5` bổ sung chốt tương thích mép dưới bbox. CPU chạy lại đủ900frame: **1cảnh báo sai ở165→0**; input/trọng số và mọi quan sát detector giống trước sửa. CPU CADP221frame vẫn bắt đúng cặp tại109; replay6cache không phát sinh cảnh báo khác. **74/74test đạt**, Firefox5nhóm đạt; khôi phục chọn run mới nhất theo timestamp, web ghi rõ kết quả dùng config cũ. [Chẩn đoán/giới hạn](../docs/FALSE_ALERT_FIX.md), [snapshot nhỏ](../docs/evidence/2026-11-16-false-alert-fix.json), [nhật ký](2026-11-16.md). Clip mới chỉ dùng phát triển, không tự duyệt âm toàn clip hoặc sửa nhãn/split/model. Chốt có thể miss xe che khuất/lật/khác độ cao; gate nghiên cứu chưa hoàn thành.
 
@@ -88,6 +94,7 @@ Quy ước này thay quy ước cũ một file/buổi. Đã hợp nhất ba bả
 | 12/11/2026 | Tìm link trực tiếp, phục hồi 2.258 ảnh có fingerprint, video dẫn xuất và 35 vùng B0 đề xuất; 23 test đạt | [2026-11-12.md](2026-11-12.md) |
 | 14/11/2026 | Môi trường CPU/cache, dashboard/Word/slide/ZIP; nghiên cứu nguồn, tải chọn lọc và kiểm nhãn STTAD, bảy test importer mới | [2026-11-14.md](2026-11-14.md) |
 | 16/11/2026 | B0 khả thi, upload/B2/FSM/GitHub/Pages; sửa báo nhầm v5, xử lý lớp xe/NMS,80test và7clip3548frame/Firefox/khôi phục | [2026-11-16.md](2026-11-16.md) |
+| 17/11/2026 | Kiểm provenance train/valB0, hai profile detector trên2037ảnh cóXML, P/R/mAP50/CSV/PR,87test evaluator; chưa test độc lập | [2026-11-17.md](2026-11-17.md) |
 
 ## Mẫu mục bổ sung trong file ngày
 

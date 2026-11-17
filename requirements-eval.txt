@@ -1,0 +1,2 @@
+# Optional reproducible bbox evaluation; install after the existing CPU environment.
+pycocotools==2.0.11

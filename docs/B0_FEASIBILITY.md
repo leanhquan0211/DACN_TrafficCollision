@@ -2,6 +2,8 @@
 
 Đã fine-tune YOLOv8n thành detector một lớp `accident`, lưu checkpoint và đo trên các cảnh validation khác train. Pipeline dữ liệu/huấn luyện chạy được, **model chưa đủ tin cậy để cảnh báo**: tại confidence 0,25 và IoU 0,5, validation có TP=0, FP=0, FN=12. Đây là thử nghiệm phát triển nhỏ, không phải nghiệm thu B0 nghiên cứu hoặc kết quả trên test khóa.
 
+**Kiểm lại17/11:** checkpoint/dataset hash khớp lượt train cũ; validation P/R/AP khớp số đã lưu. Đo thêm train để chẩn đoán: mAP50train83,24% so val1,21%, không lấy số train làm kết quả đánh giá. [Bảng dữ liệu, protocol và bằng chứng mới](EXPERIMENT_RESULTS.md). Ở ngưỡng0,25, precision validation không xác định vì0dựđoán; recall0%, không phải precision100% từFP=0. Lượt audit không train lại/chọn lại ngưỡng hoặc tạo test.
+
 ## Dữ liệu và phạm vi nhãn
 
 Nguồn là bốn chuỗi ảnh ví dụ từ [repository STTAD của tác giả](https://github.com/ZTR02/STTAD), ghim commit `21f3f5fea50b071f1db61186b481c2a7ccf525c9`. Đây không phải toàn bộ benchmark. [Registry](../data/registries/sttad_selected_sources.json) ghi 212 tệp; đã kiểm Git blob của từng tệp. Trong 176 ảnh giải mã được, 31 ảnh có nhãn vùng nguồn. Lớp nguồn 6/11 được ánh xạ về lớp 0 `accident`; tọa độ nguồn pixel xyxy được chuyển sang YOLO chuẩn hóa theo kích thước từng ảnh.
@@ -65,4 +67,4 @@ Công cụ từ chối ghi đè thư mục và kiểm lại source/export/config
 2. Ưu tiên bổ sung các cảnh có nhãn nguồn và camera/sự kiện độc lập, kèm hard negatives cùng miền; ghi registry/hash trước khi chọn thêm ảnh. Nhiều frame liền nhau không thay được nhiều sự kiện.
 3. Lập split theo nhóm có bằng chứng và test khóa; chạy lại B0 với ngân sách cố định, giữ lượt này làm mốc, phân tích FP/FN theo cảnh. Chỉ chuyển bước khi đạt điều kiện trong README gốc.
 
-Dashboard hiện vẫn trình diễn vehicle detection/tracking và review thủ công. Word/slide/ZIP ngày 14/11 là snapshot trước thử nghiệm này, chưa được cập nhật thành báo cáo nghiên cứu hoàn chỉnh.
+Dashboard hiện dùng detector xe pretrained và B2luật cảnh báo thử nghiệm; không dùng checkpoint accident yếu ở đây. Word/slide/ZIP trước các lượt mới giữ là snapshot, chưa thay báo cáo nghiên cứu hoàn chỉnh.

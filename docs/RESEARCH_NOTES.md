@@ -66,3 +66,12 @@ Module `src/sttad_pilot.py` kiểm cây nguồn, registry, Git blob, nội dung 
 Chốt quy tắc vùng, xác minh diễn biến đầy đủ/onset/end và nhóm camera/sự kiện, bổ sung đủ positives/negatives cùng miền, rồi chia nhóm trước train. Mẫu công khai STTAD quá ít/sparse để gọi là benchmark nghiên cứu. Có thể dùng để kiểm importer/region convention và thiết kế phiếu review; không train trên vài frame rồi báo đã nghiệm thu collision detection. Nếu nguồn công khai không đủ, lựa chọn mở rộng phải được ghi với căn cứ và phạm vi rõ, không đổi mô hình để che vấn đề dữ liệu.
 
 Chưa có experiment accident mới, checkpoint accident hoặc metric event. Bộ Word/slide/ZIP tạo trước lượt này vẫn là snapshot demo cũ; không tự biến dữ liệu mới thành kết quả trong báo cáo đã đóng gói.
+
+## Nguồn cần kiểm cho tập thực nghiệm — 17/11/2026
+
+Sau phản hồi về P/R/mAP và tập train/test, ưu tiên khắc phục thiếu dữ liệu có nhãn, không tiếp tục chọn luật từ từng video demo. [Kết quả đã đo](EXPERIMENT_RESULTS.md) chứng minh B0 hiện tại chưa chuyển tốt sang hai cảnh validation; chưa lấy một nguồn mới làm benchmark khi chỉ đọc mô tả.
+
+- [TADBench của nhóm tác giả](https://github.com/UnicomAI/UnicomBenchmark/blob/main/TADBench/README.md), được repo cá nhân tác giả dẫn tới, có đường tải `TAD-benchmark.zip` qua Google Drive. Chỉ mới xác minh đường nguồn/metadata; chưa tải hoặc kiểm archive/nhãn/split. Số tổng và tổng dương+âm trong README không khớp, nên phải đếm file/nhóm thực tế trước dùng số liệu. Không ghi số công bố thành inventory của project.
+- [ACCIDENT của tác giả](https://accidentbench.github.io/index.html), [repo](https://github.com/accidentbench/ACCIDENT): mô tả bài toán CCTV và protocol phân phối/IID/OOD; hướng dẫn repo tải qua Kaggle `picekl/accident`, CLI cần xác thực trước. Bố cục baseline có `labels.csv`/`test_metadata.csv`; chưa tải/kiểm các file thật, split hoặc điều kiện dùng trên máy này. Không coi mọi bbox xe là nhãn vùng accident, hoặc sample preview là toàn benchmark.
+
+Đây là **ứng viên kiểm dữ liệu tiếp theo**, chưa là quyết định đổi dataset/train. Cần kiểm schema bbox/onset, negative đầy đủ, bản cắt/trùng sự kiện, nhóm nguồn/camera, điều kiện sử dụng và kích thước trước lấy subset có manifest/hash. Không tải toàn dataset, không sửa split/readiness hiện có để coi đã đủ dữ liệu. Test phải khóa trước tuning và các clip đã dùng demo phải nằm ngoài test mới.

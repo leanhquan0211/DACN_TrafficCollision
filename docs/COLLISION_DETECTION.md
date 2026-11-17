@@ -2,6 +2,8 @@
 
 Đã có luồng chạy hoàn chỉnh trong demo: **video → YOLOv8n/ByteTrack → luật chuyển động causal → xác nhận/chống lặp theo cặp → cảnh báo + khung đỏ + ảnh/clip + Events JSON**. Áp dụng được cho MP4 tải lên, không đọc nhãn hoặc tên video để quyết định. Đầu ra ghi `suspected_collision` / **NGHI VA CHẠM**, cần kiểm bằng chứng; chưa phải detector đã được kiểm định trên nhiều camera.
 
+**Ưu tiên nghiên cứu17/11:** đã có [bảng P/R/mAP50 cho detector xe và B0accident](EXPERIMENT_RESULTS.md) trên dữ liệu có nhãn, ghi rõ train/validation và scope. Các metric bbox đó không là precision/recall của cảnh báo trong trang này. B2vẫn chưa có test sự kiện độc lập; không lấy CADP1/1 hoặc số test phần mềm làm độ chính xác hệ thống.
+
 **Cập nhật nhận dạng xe cuối16/11:** bật NMS giữa các lớp để giảm khung trùng, thêm lớp hiển thị theo lịch sử/“chưa rõ loại”, giữ dự đoán thô và luật v5. CADP chạy lại đúng cặp tại108, candidate35/35 (trước thay NMS:109/34trên35); clip900frame vẫn0alert, ba DETRAC vẫn0alert.80test và6nhóm Firefox đạt. [Chi tiết và giới hạn](VEHICLE_LABEL_FIX.md). Số frame109 và74test của lượt dưới đây giữ là lịch sử, không phải giá trị mới nhất.
 
 **Cập nhật v5 sau phản hồi báo nhầm:** clip người dùng900frame giảm từ1cảnh báo sai ở165 xuống0 sau chạy CPU đầy đủ; CADP chạy lại vẫn có cảnh báo109. Bộ test mới74/74đạt. [Chẩn đoán và bằng chứng trước/sau](FALSE_ALERT_FIX.md). Các ảnh/video kết quả v4 dưới đây giữ là lịch sử; web local đánh dấu kết quả cũ và dùng lượt mới nhất sau khôi phục.

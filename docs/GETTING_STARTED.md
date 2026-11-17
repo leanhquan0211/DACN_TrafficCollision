@@ -1,5 +1,7 @@
 # Bắt đầu từ một máy mới hoặc một AI mới
 
+> **Ưu tiên nghiên cứu17/11 — đọc kết quả trước khi sửa demo:** [train/validation, checkpoint, precision/recall/mAP50 và giới hạn](EXPERIMENT_RESULTS.md). Có evaluator chuẩnCOCO và auditB0 tái lập; cài thêm `requirements-eval.txt` khi cần chấm metric. Snapshot có số liệu không chứng minh dataset trên máy mới; khôi phục ảnh/trọng số/XML đúng catalog/hash trước chạy. Chưa có test sự kiện độc lập, không coi unit test hoặc khung hiển thị là accuracy.
+
 > **Cập nhật cuối16/11 — có cảnh báo tự động thử nghiệm:** dashboard mặc định chế độ collision, chạy được trên mẫu và MP4 upload; có event/khung/ảnh/clip/JSON. [Cách dùng, số đo thật và hạn chế](COLLISION_DETECTION.md). Rulev4 đã dùng CADP/DETRAC để phát triển, chưa test độc lập; không tự duyệt nhãn hoặc bỏ gate nghiên cứu. Bộ test mới70/70 đạt. Các mục trước đó cùng ngày dưới đây giữ lịch sử B0/upload.
 
 > **Tải video mới 16/11:** dashboard hỗ trợ MP4 H.264 từ máy và tự chạy pipeline. [Đã thử clip cao tốc khác và cách sử dụng](EXTERNAL_VIDEO_DEMO.md); bộ test sau upload57/57 đạt. Media upload và output vẫn cục bộ, không có sau clone.
