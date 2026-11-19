@@ -121,6 +121,38 @@ document.querySelectorAll("[data-page]").forEach(button => button.onclick = () =
   document.querySelectorAll(".page").forEach(page => page.hidden = page.id !== button.dataset.page); drawChart();
 });
 window.addEventListener("resize",drawChart);
+async function loadEvaluation() {
+  try {
+    const ledger = await readJSON("./data/evaluation.json");
+    if (ledger.independent_test_evaluated !== false) throw new Error("Phạm vi đánh giá không khớp bản phát triển.");
+    const percent = value => {
+      if (typeof value !== "number" || !Number.isFinite(value) || value < 0 || value > 1) throw new Error("Số liệu đánh giá không hợp lệ.");
+      return `${(value*100).toLocaleString("vi-VN",{minimumFractionDigits:2,maximumFractionDigits:2})}%`;
+    };
+    const row = values => {
+      const tr = document.createElement("tr");
+      values.forEach(value => { const td = document.createElement("td"); td.textContent = value; tr.append(td); });
+      return tr;
+    };
+    const profiles = {pretrained_class_aware_nms:"NMS gốc",demo_class_agnostic_nms:"NMS demo mới"};
+    const vehicleRows = Object.entries(profiles).map(([profile,title]) => {
+      const metric = ledger.vehicle.results.find(r => r.profile === profile && r.task === "car_bus_common_classes" && r.confidence === .25);
+      if (!metric || metric.split !== "development") throw new Error("Thiếu kết quả car/bus phát triển.");
+      return row([title,percent(metric.precision),percent(metric.recall),percent(metric.mAP50)]);
+    });
+    const accidentRows = ["train","val"].map(split => {
+      const metric = ledger.b0.metrics[split];
+      return row([`${split === "train" ? "Train" : "Validation"} · ${ledger.b0.dataset_counts[split].images} ảnh`,percent(metric["metrics/precision(B)"]),percent(metric["metrics/recall(B)"]),percent(metric["metrics/mAP50(B)"])]);
+    });
+    $("vehicle-evaluation").replaceChildren(...vehicleRows);
+    $("b0-evaluation").replaceChildren(...accidentRows);
+    const fixed = ledger.b0.validation_fixed_operating_point;
+    $("b0-fixed-result").textContent = `Tại confidence ${fixed.confidence.toLocaleString("vi-VN")}, IoU ${fixed.iou.toLocaleString("vi-VN")} trên validation: TP=${fixed.tp}, FP=${fixed.fp}, FN=${fixed.fn}; precision ${fixed.precision === null ? "không xác định vì không có dự đoán" : percent(fixed.precision)}, recall ${percent(fixed.recall)}.`;
+    $("evaluation-status").textContent = "Số liệu đọc từ hồ sơ thực nghiệm; không tính lại từ hai video minh họa.";
+    $("evaluation-results").hidden = false;
+  } catch (e) { $("evaluation-status").textContent = `Chưa tải được bảng đánh giá: ${e.message} Mở báo cáo đánh giá để xem kết quả.`; }
+}
+loadEvaluation();
 (async () => {
   try {
     catalog = await readJSON("./data/catalog.json");
