@@ -11,7 +11,9 @@
 
 Quy ước này thay quy ước cũ một file/buổi. Đã hợp nhất ba bản 19/10 vào [2026-10-19.md](2026-10-19.md), đồng bộ 16/10 và hai phần 17/10 thành file theo ngày. Bản gốc/hash và kiểm tra bảo toàn ở `outputs/audits/progress_consolidation/`; chỉ bỏ file phân mảnh sau kiểm tra nội dung/liên kết.
 
-## Trạng thái hiện tại — 17/11/2026
+## Trạng thái hiện tại — 19/11/2026
+
+**Đã xuất bản kết quả đánh giá ngày 17/11:** báo cáo, mã tái lập, cấu hình, kiểm thử và đồ thị đã lên [commit 58519a1](https://github.com/minhquan0500/DACN_TrafficCollision/commit/58519a15fe947a1a24e1e5ab8452fddf6ef3d0fb) trên nhánh `feat/collision-demo-2026-11-16`. Ngày 19/11 xác minh remote ref và toàn bộ 23 tệp khớp byte bản local; [audit xuất bản](../outputs/audits/evaluation_2026-11-16/publication.json), [nhật ký 19/11](2026-11-19.md). Đây là hoàn tất công bố lượt đo trước, không phải lượt train hoặc đánh giá mới. Chưa có test độc lập; ưu tiên dữ liệu và đánh giá sự kiện vẫn giữ nguyên.
 
 **Ưu tiên nghiên cứu mới — đã có bảng thực nghiệm có nhãn:** [train/validation/P/R/mAP50, protocol và nguồn](../docs/EXPERIMENT_RESULTS.md), [snapshot](../docs/evidence/2026-11-17-evaluation.json), [nhật ký17/11](2026-11-17.md). Cùng checkpoint xe COCO pretrained,2037ảnh DETRAC có17.920bbox nguồn: car/busNMSgốcP87,46%/R81,39%/mAP50=90,60%, NMSdemoP87,44%/R80,81%/mAP50=87,32% tạiP/Rconf0,25/IoU0,5. NMS giảmFPđịnh vị nhưng giảmAPphân lớp, không coi ít khung là accuracy tăng. Kiểm lại B0train25/val18 STTAD: mAP50train83,24% nhưngval1,21%; tại0,25 bỏ sót12/12vùng. B0chưa dùng trong demo, B2chưa có eventP/Rtestđộc lập. Cài evaluatorCOCO2.0.11 riêng, đủ hash/predictions/CSV/đồ thị;87test phần mềm đạt nhưng không thay metric. Không train/tune thêm hoặc đổi nhãn/split trong lượt này. **Chưa đạt gate nghiên cứu**, bước tiếp theo là dataset đủ nhãn và split theo camera/sự kiện có test khóa. Các cập nhật16/11 bên dưới giữ lịch sử chức năng demo.
 
