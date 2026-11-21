@@ -1,5 +1,7 @@
 # Bằng chứng nhỏ đọc được ngay sau clone
 
+- [21/11 — upload repo gốc và GitHub Pages](2026-11-21-pages.json): 40 tệp khớp HTTPS, tám nhóm Firefox đạt; Pages trên fork đã hoạt động, repo gốc chờ chủ repo bật hosting.
+
 Hai JSON ngày 19/10 là snapshot kiểm tra từ máy phát triển, sao từ `outputs/audits/` trước khi đưa code lên Git. Chúng ghi số frame/hash/kiểm tra đã chạy, không chứa video, ảnh hoặc annotation gốc. Không coi chúng là kết quả chạy trên máy mới.
 
 - `2026-10-19-clean-video-validation.json`: đọc lại video sạch, GT preview, detection và tracking, mỗi file 221 frame; timing nguồn vẫn chưa xác minh.

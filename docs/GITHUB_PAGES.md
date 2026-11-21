@@ -2,7 +2,21 @@
 
 URL được GitHub trả về: <https://minhquan0500.github.io/DACN_TrafficCollision/>.
 
-**Đã triển khai và kiểm live16/11:** build `built`, commit `87e8e18afa6b7743afa5affeac3cc2468565501c`, HTTPS trả200. Đã tải đối chiếu36payload +manifest, tất cảsize/SHA-256 đúng; Firefox7nhóm thao tác đạt trên chính URL công khai. Đây là bản xem kết quả đã lưu, không có backend suy luận trên Pages.
+## Cập nhật 19–21/11/2026
+
+Gói web mới ở commit `985e1fc3c055f3d86207a5d61622f21ca4f4e975`, gồm **40 tệp, khoảng 30 MB**, đã upload vào nhánh `gh-pages` của cả repo gốc `leanhquan0211/DACN_TrafficCollision` và fork `minhquan0500/DACN_TrafficCollision`.
+
+Mục **Đánh giá & dữ liệu** đọc trực tiếp snapshot số liệu ngày 17/11, hiển thị dữ liệu train/validation, precision/recall/mAP50 của detector xe và B0; giữ rõ chưa có test độc lập và chưa có event precision/recall. Có tải JSON nguồn và đồ thị PDF. Hai clip minh họa giữ kết quả `motion_contact_v4` ngày 16/11, được ghi rõ trên trang; không gọi đó là lượt chạy mới hoặc kết quả của cấu hình NMS mới. PDF demo 16/11 được ghi là tài liệu lịch sử.
+
+**Repo gốc đã có mã và gói Pages, nhưng chưa bật hosting.** Ngày 21/11 API xác nhận `push=true`, `admin=false`, `maintain=false`, `has_pages=false`; GET/POST Pages trả HTTP 404. Chủ repo cần mở [Settings → Pages](https://github.com/leanhquan0211/DACN_TrafficCollision/settings/pages), chọn **Deploy from a branch**, nhánh **gh-pages**, thư mục **/(root)**, rồi **Save**. Khi GitHub build thành công mới kiểm địa chỉ `https://leanhquan0211.github.io/DACN_TrafficCollision/`; chưa coi địa chỉ này là link đang hoạt động.
+
+Link fork phía trên tiếp tục phục vụ bản demo. Kết quả kiểm export và trình duyệt nằm trong `outputs/audits/pages_2026-11-19/`, dùng nguyên tên audit ngày bắt đầu. Kiểm local ngày 19/11 đạt tám nhóm: sáu video giải mã, phát/tạm dừng/tua, đổi mẫu/chế độ, bằng chứng, bảng metric, điều hướng, bố cục điện thoại và tải lại. Mọi asset trong manifest khớp hash; JSON đánh giá khớp nguyên byte hồ sơ đã đo.
+
+**Đã kiểm live ngày 21/11:** GitHub build `built` đúng commit `985e1fc`; 40/40 tệp trên HTTPS khớp nguyên byte bản export; Firefox tám nhóm đạt, gồm bảng metric và hai clip/ba chế độ. [Snapshot có thể đọc sau clone](evidence/2026-11-21-pages.json). Không chạy suy luận hoặc huấn luyện trong lượt triển khai này.
+
+## Kết quả lịch sử ngày 16/11
+
+Build `built`, commit `87e8e18afa6b7743afa5affeac3cc2468565501c`, HTTPS trả200. Đã tải đối chiếu36payload +manifest, tất cảsize/SHA-256 đúng; Firefox7nhóm thao tác đạt trên chính URL công khai. Đây là bản xem kết quả đã lưu, không có backend suy luận trên Pages.
 
 ## Phạm vi
 
@@ -15,7 +29,7 @@ Có hai clip mẫu được chọn trong `configs/demo_catalog.json`, mỗi clip
 - `demo/pages/index.html`, `demo/pages/app.js`: giao diện tĩnh, mọi đường dẫn tài nguyên tương đối để chạy dưới tên repo GitHub Pages.
 - `demo/style.css`: dùng lại giao diện Traffic Lab của bản cục bộ.
 - `scripts/build_pages_demo.py`: chỉ đọc hai mẫu trong catalog, kiểm report/hash/giải mã bằng checker hiện có trước khi xuất. Không đọc thư mục upload/job/review cá nhân. Chỉ ghi vào thư mục mới dưới `outputs/`; từ chối ghi đè.
-- Nhánh `gh-pages` trên fork `minhquan0500/DACN_TrafficCollision` chỉ chứa37tệp web/media đã chọn, khoảng30MB. Các clip mẫu minh họa được công khai theo yêu cầu; không gồm toàn dataset, trọng số, mã Python, môi trường hay credential. Không thay `main`.
+- Nhánh `gh-pages` chứa 40 tệp web/media/hồ sơ đã chọn, khoảng 30 MB; có trên repo gốc và fork. Các clip mẫu minh họa được công khai theo yêu cầu; không gồm toàn dataset, trọng số, mã Python, môi trường hay credential. Không thay `main`.
 
 Cần phục hồi đúng video/kết quả/checkpoint theo hướng dẫn project hoặc dùng máy phát triển có các file thực tế. Không coi metadata trên Git là đã có media trên máy mới.
 

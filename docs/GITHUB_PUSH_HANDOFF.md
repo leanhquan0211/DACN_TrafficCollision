@@ -1,6 +1,18 @@
 # Trạng thái xuất bản nhánh demo
 
-## Kết quả đã xác minh — 16/11/2026
+## Cập nhật 19–21/11/2026
+
+Đã upload trực tiếp vào **repo người dùng yêu cầu**:
+
+- [Nhánh mã nguồn `feat/collision-demo-2026-11-16`](https://github.com/leanhquan0211/DACN_TrafficCollision/tree/feat/collision-demo-2026-11-16), gồm các sửa demo và kết quả đánh giá có nhãn. Lần tạo nhánh dùng commit `e7b2c991364a5b759f31300bfd40415ed06555eb`; các cập nhật Pages tiếp tục trên cùng nhánh.
+- [Nhánh web `gh-pages`](https://github.com/leanhquan0211/DACN_TrafficCollision/tree/gh-pages) ở commit `985e1fc3c055f3d86207a5d61622f21ca4f4e975`: 40 tệp, khoảng 30 MB; hai clip/ba chế độ và bảng train/validation/P/R/mAP.
+- Quyền tài khoản hiện tại: `push=true`, `admin=false`, `maintain=false`. GitHub connector chặn tạo nhánh bằng lỗi `Resource not accessible by integration`; dùng GitHub CLI đã đăng nhập để push thành công. Đây không còn là trạng thái thiếu quyền ghi mã ngày 16/11.
+- Repo gốc chưa bật Pages (`has_pages=false`). GET/POST Pages trả HTTP 404 với tài khoản này. Chủ repo cần vào **Settings → Pages → Deploy from a branch → gh-pages → /(root) → Save**. Quyền ghi mã chưa đủ để quản lý cấu hình Pages. [Hướng dẫn hosting](GITHUB_PAGES.md).
+- Giữ `main` và PR cũ; không tự merge các dòng phát triển có xung đột. Không đưa dataset, trọng số, video tải lên cá nhân hoặc credential vào nhánh mã nguồn. Nhánh Pages chỉ chứa media mẫu đã chọn và hồ sơ công khai.
+
+Bằng chứng quyền/ref và kiểm tra web: `outputs/audits/pages_2026-11-19/`. Audit giữ tên ngày bắt đầu; nhật ký tiếp tục trong `progress/2026-11-21.md`.
+
+## Kết quả lịch sử — 16/11/2026
 
 Đã đăng nhập GitHub qua luồng browser/device của GitHub CLI chính thức, tài khoản `minhquan0500`. API repo gốc xác nhận `push=false`, nên dùng fork thuộc tài khoản này để công bố nhánh và tạo draft pull request về repo được người dùng chỉ định.
 

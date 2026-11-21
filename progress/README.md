@@ -11,7 +11,9 @@
 
 Quy ước này thay quy ước cũ một file/buổi. Đã hợp nhất ba bản 19/10 vào [2026-10-19.md](2026-10-19.md), đồng bộ 16/10 và hai phần 17/10 thành file theo ngày. Bản gốc/hash và kiểm tra bảo toàn ở `outputs/audits/progress_consolidation/`; chỉ bỏ file phân mảnh sau kiểm tra nội dung/liên kết.
 
-## Trạng thái hiện tại — 19/11/2026
+## Trạng thái hiện tại — 21/11/2026
+
+**Upload repo gốc và cập nhật web demo:** nhánh [mã nguồn](https://github.com/leanhquan0211/DACN_TrafficCollision/tree/feat/collision-demo-2026-11-16) và [gh-pages](https://github.com/leanhquan0211/DACN_TrafficCollision/tree/gh-pages) đã có trong repo người dùng yêu cầu. Gói Pages mới 40 tệp có bảng train/validation/P/R/mAP; giữ video minh họa v4 ngày 16/11 và ghi rõ lịch sử. Repo gốc chưa bật hosting vì tài khoản có quyền ghi mã nhưng thiếu quyền quản lý Pages; chủ repo cần chọn `gh-pages`/`/(root)` trong Settings → Pages. Bản trên [fork](https://minhquan0500.github.io/DACN_TrafficCollision/) đã build thành công commit `985e1fc`, kiểm live 40/40 tệp khớp và tám nhóm Firefox đạt. [Nhật ký 21/11](2026-11-21.md), [hướng dẫn Pages](../docs/GITHUB_PAGES.md). Đây là xuất bản demo, không hoàn thành gate nghiên cứu.
 
 **Đã xuất bản kết quả đánh giá ngày 17/11:** báo cáo, mã tái lập, cấu hình, kiểm thử và đồ thị đã lên [commit 58519a1](https://github.com/minhquan0500/DACN_TrafficCollision/commit/58519a15fe947a1a24e1e5ab8452fddf6ef3d0fb) trên nhánh `feat/collision-demo-2026-11-16`. Ngày 19/11 xác minh remote ref và toàn bộ 23 tệp khớp byte bản local; [audit xuất bản](../outputs/audits/evaluation_2026-11-16/publication.json), [nhật ký 19/11](2026-11-19.md). Đây là hoàn tất công bố lượt đo trước, không phải lượt train hoặc đánh giá mới. Chưa có test độc lập; ưu tiên dữ liệu và đánh giá sự kiện vẫn giữ nguyên.
 

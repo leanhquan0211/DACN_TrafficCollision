@@ -104,6 +104,11 @@ def build(destination: Path):
         public["runs"][mode] = f"./data/{sample_id}-{mode}.json"
         write_json(destination / "data" / f"{sample_id}-{mode}.json", dict(summary, assets=assets, frames=entry["frames"]))
     copy_asset(ROOT / "delivery/collision_2026-11-16/BAO_CAO_PHAT_HIEN_VA_CHAM.pdf", "media/bao-cao-va-cham.pdf")
+    # Keep the measured development results with the static replay. They are
+    # copied unchanged from the reviewed ledger, not inferred from demo clips.
+    copy_asset(ROOT / "docs/evidence/2026-11-17-evaluation.json", "data/evaluation.json")
+    copy_asset(ROOT / "docs/evidence/figures/2026-11-17-vehicle_pr.pdf", "media/vehicle-pr.pdf")
+    copy_asset(ROOT / "docs/evidence/figures/2026-11-17-b0_train_val.pdf", "media/b0-train-val.pdf")
     catalog = dict(schema_version=1, static_replay_only=True, generated_at=datetime.now(ZoneInfo("Asia/Bangkok")).isoformat(),
                    research_test_evaluated=False, samples=list(published.values()))
     write_json(destination / "data/catalog.json", catalog)

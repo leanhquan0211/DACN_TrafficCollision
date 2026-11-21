@@ -84,6 +84,22 @@ def main():
             driver.find_element(By.CSS_SELECTOR, f'[data-page="{page}"]').click()
             assert element(page).is_displayed()
         checks.append("system_guide_workspace_navigation")
+        driver.find_element(By.CSS_SELECTOR, '[data-page="system"]').click()
+        wait.until(lambda d: element("evaluation-results").is_displayed())
+        vehicle = element("vehicle-evaluation").text
+        accident = element("b0-evaluation").text
+        assert all(value in vehicle for value in ("90,60%", "87,32%", "81,39%", "80,81%")), vehicle
+        assert all(value in accident for value in ("83,24%", "1,21%", "25 ảnh", "18 ảnh")), accident
+        assert "precision không xác định" in element("b0-fixed-result").text
+        assert "chưa có precision/recall sự kiện trên test độc lập" in element("evaluation-panel").text
+        assert len(driver.find_elements(By.CSS_SELECTOR, "#evaluation-results a")) == 3
+        driver.get_full_page_screenshot_as_file(str(output / "evaluation.png"))
+        driver.set_window_size(390, 844)
+        assert driver.execute_script("return document.documentElement.scrollWidth<=window.innerWidth+1")
+        driver.get_full_page_screenshot_as_file(str(output / "evaluation_mobile.png"))
+        driver.set_window_size(1500, 1100)
+        driver.find_element(By.CSS_SELECTOR, '[data-page="workspace"]').click()
+        checks.append("evaluation_metrics_training_scope_undefined_precision_and_mobile_layout")
         element("jump-alert").click()
         wait.until(lambda d: driver.execute_script("return !document.getElementById('processed').seeking"))
         driver.get_full_page_screenshot_as_file(str(output / "dashboard.png"))
