@@ -1,4 +1,4 @@
-"""Export only allowlisted, verified demo artifacts to a static GitHub Pages site."""
+"""Export allowlisted replays and the browser upload app to GitHub Pages."""
 from __future__ import annotations
 
 import argparse
@@ -49,7 +49,7 @@ def build(destination: Path):
             selected.append((sample, mode, entry))
     # Validate every original report/hash/decode before writing any public files.
     destination.mkdir(parents=True)
-    for name in ("index.html", "app.js"):
+    for name in ("index.html", "app.js", "upload.html", "upload.js", "browser-core.js", "browser-worker.js"):
         shutil.copy2(ROOT / "demo/pages" / name, destination / name)
     shutil.copy2(ROOT / "demo/style.css", destination / "style.css")
     (destination / ".nojekyll").write_text("")
@@ -68,6 +68,30 @@ def build(destination: Path):
         if source.stat().st_size != target.stat().st_size or sha256_file(source) != sha256_file(target):
             raise ValueError("Copied artifact fingerprint mismatch")
         return "./" + relative
+
+    model_dir = ROOT / ".cache/browser-model"
+    runtime_dir = ROOT / ".cache/browser-runtime"
+    model = json.loads((model_dir / "model.json").read_text())
+    runtime = json.loads((runtime_dir / "provenance.json").read_text())
+    if (model["source_weights_sha256"] != sha256_file(ROOT / "yolov8n.pt")
+            or model["sha256"] != sha256_file(model_dir / "yolov8n.onnx")
+            or model["browser_runtime"] != "onnxruntime-web 1.23.2"):
+        raise ValueError("Browser model fingerprint/version mismatch")
+    if runtime["version"] != "1.23.2" or not runtime.get("files"):
+        raise ValueError("Missing browser runtime fingerprint inventory")
+    for name, fingerprint in runtime["files"].items():
+        if Path(name).name != name or sha256_file(runtime_dir / name) != fingerprint:
+            raise ValueError("Browser runtime fingerprint mismatch: " + name)
+    for name in ("yolov8n.onnx", "model.json"):
+        copy_asset(model_dir / name, "models/" + name)
+    for name in ("ort.wasm.min.js", "ort-wasm-simd-threaded.mjs", "ort-wasm-simd-threaded.wasm",
+                 "ONNX-RUNTIME-LICENSE.txt", "ThirdPartyNotices.txt", "ULTRALYTICS-LICENSE.txt", "provenance.json"):
+        copy_asset(runtime_dir / name, "vendor/" + name)
+    rules = json.loads((ROOT / "configs/collision_rules.json").read_text())
+    write_json(destination / "data/browser-config.json", dict(
+        schema_version=1, tracker="browser_iou_velocity_v1", sampling_hz=20,
+        rules=rules, rules_source_sha256=sha256_file(ROOT / "configs/collision_rules.json"),
+        scope="browser deployment experiment; not Python/ByteTrack benchmark; no independent accuracy evaluation"))
 
     for sample, mode, entry in selected:
         sample_id = sample["id"]
@@ -114,12 +138,14 @@ def build(destination: Path):
     write_json(destination / "data/catalog.json", catalog)
     files = [dict(path=p.relative_to(destination).as_posix(), bytes=p.stat().st_size, sha256=sha256_file(p))
              for p in sorted(destination.rglob("*")) if p.is_file()]
-    manifest = dict(schema_version=1, static_replay_only=True, private_uploads_included=False,
-                    contains_model=False, files=files, original_reports=[dict(sample_id=s["id"], mode=m,
+    manifest = dict(schema_version=2, static_replay_only=False, browser_inference_implemented=True,
+                    private_uploads_included=False, contains_model=True,
+                    model=model, files=files, original_reports=[dict(sample_id=s["id"], mode=m,
                     report_sha256=sha256_file(e["report_path"])) for s, m, e in selected])
     write_json(destination / "PUBLIC_MANIFEST.json", manifest)
     return dict(export=str(destination), samples=len(published), runs=len(selected), files=len(files) + 1,
-                bytes=sum(p["bytes"] for p in files), private_uploads_included=False, static_replay_only=True)
+                bytes=sum(p["bytes"] for p in files), private_uploads_included=False,
+                static_replay_only=False, browser_inference_implemented=True)
 
 
 if __name__ == "__main__":

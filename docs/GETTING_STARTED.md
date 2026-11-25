@@ -1,5 +1,7 @@
 # Bắt đầu từ một máy mới hoặc một AI mới
 
+> **Pages chọn video mới25/11:** [chạy trực tiếp trên thiết bị](https://minhquan0500.github.io/DACN_TrafficCollision/upload.html), không cần cài Python để thử MP4; [phương pháp và giới hạn browser](BROWSER_VIDEO_UPLOAD.md). Dùng YOLO ONNX/WASM + trackerIoU khác ByteTrack, chưa có metricaccuracy riêng. Muốn tái tạo gói Pages cần `requirements-browser-export.txt`, `prepare_browser_assets.py` và đúng asset theo catalog; không coi modelcache/media có sau clone.
+
 > **Ưu tiên nghiên cứu17/11 — đọc kết quả trước khi sửa demo:** [train/validation, checkpoint, precision/recall/mAP50 và giới hạn](EXPERIMENT_RESULTS.md). Có evaluator chuẩnCOCO và auditB0 tái lập; cài thêm `requirements-eval.txt` khi cần chấm metric. Snapshot có số liệu không chứng minh dataset trên máy mới; khôi phục ảnh/trọng số/XML đúng catalog/hash trước chạy. Chưa có test sự kiện độc lập, không coi unit test hoặc khung hiển thị là accuracy.
 
 > **Cập nhật cuối16/11 — có cảnh báo tự động thử nghiệm:** dashboard mặc định chế độ collision, chạy được trên mẫu và MP4 upload; có event/khung/ảnh/clip/JSON. [Cách dùng, số đo thật và hạn chế](COLLISION_DETECTION.md). Rulev4 đã dùng CADP/DETRAC để phát triển, chưa test độc lập; không tự duyệt nhãn hoặc bỏ gate nghiên cứu. Bộ test mới70/70 đạt. Các mục trước đó cùng ngày dưới đây giữ lịch sử B0/upload.

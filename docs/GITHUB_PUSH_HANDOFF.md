@@ -1,5 +1,9 @@
 # Trạng thái xuất bản nhánh demo
 
+## Cập nhật25/11 — Pages phân tích video mới
+
+Nhánh `gh-pages` của repo gốc và fork đã cập nhật tới `cff376d6c8149a5d7ff005051c95d278a3a432b6`; bản fork build và kiểm trực tiếp HTTPS đạt54tệp. [Chọn video để chạy YOLO ngay trên thiết bị](https://minhquan0500.github.io/DACN_TrafficCollision/upload.html), có JSON/PNG và cảnh báo thử nghiệm. [Cách triển khai/giới hạn](BROWSER_VIDEO_UPLOAD.md), [snapshot](evidence/2026-11-25-browser-upload.json). Source browser/export/check/documentation được đồng bộ vào nhánh mã nguồn hiện có; không đổi main hoặc merge PR. Model chỉ phân phối trên `gh-pages`, source giữ script dựng và fingerprint; video người dùng không được gửi hoặc công khai.
+
 ## Cập nhật 19–21/11/2026
 
 Đã upload trực tiếp vào **repo người dùng yêu cầu**:

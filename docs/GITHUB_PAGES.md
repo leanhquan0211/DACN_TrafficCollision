@@ -2,6 +2,12 @@
 
 URL được GitHub trả về: <https://minhquan0500.github.io/DACN_TrafficCollision/>.
 
+## Phân tích video mới trên thiết bị — 25/11/2026
+
+Thêm [upload.html](https://minhquan0500.github.io/DACN_TrafficCollision/upload.html): chọn MP4 từ máy, chạy YOLOv8n ONNX với ONNX Runtime Web WASM trong worker, theo dõi IoU browser và luật v5 thử nghiệm; có tiến trình/hủy, xem lại, JSON/PNG. File video không được gửi lên server. Đây là cách chạy mới trong browser, không dùng ByteTrack Python hoặc kế thừa metric của các phép đo trước. [Mã, protocol triển khai, kiểm và giới hạn](BROWSER_VIDEO_UPLOAD.md).
+
+Bản25/11 đã build và kiểm live:54/54tệp khớp, Firefox bảy nhóm đạt với phân tích file thật; commit `cff376d`. [Snapshot](evidence/2026-11-25-browser-upload.json). Gói Pages hiện bao gồm model công khai, runtime/license và hồ sơ fingerprint; các đoạn dưới mô tả lịch sử bản chỉ phát lại trước25/11. Tạo gói mới cần chạy `scripts/prepare_browser_assets.py` trước `build_pages_demo.py`. Giữ dữ liệu nghiên cứu, clip mẫu, report và số liệu đo cũ; chỉ các video người dùng chọn được phân tích mới trong bộ nhớ trình duyệt.
+
 ## Cập nhật 19–21/11/2026
 
 Gói web mới ở commit `985e1fc3c055f3d86207a5d61622f21ca4f4e975`, gồm **40 tệp, khoảng 30 MB**, đã upload vào nhánh `gh-pages` của cả repo gốc `leanhquan0211/DACN_TrafficCollision` và fork `minhquan0500/DACN_TrafficCollision`.

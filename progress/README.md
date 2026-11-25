@@ -11,7 +11,11 @@
 
 Quy ước này thay quy ước cũ một file/buổi. Đã hợp nhất ba bản 19/10 vào [2026-10-19.md](2026-10-19.md), đồng bộ 16/10 và hai phần 17/10 thành file theo ngày. Bản gốc/hash và kiểm tra bảo toàn ở `outputs/audits/progress_consolidation/`; chỉ bỏ file phân mảnh sau kiểm tra nội dung/liên kết.
 
-## Trạng thái hiện tại — 21/11/2026
+## Trạng thái hiện tại — 25/11/2026
+
+**GitHub Pages đã bổ sung phân tích video mới:** [chọn MP4 trên thiết bị](https://minhquan0500.github.io/DACN_TrafficCollision/upload.html), chạy YOLOv8n ONNX/WASM trong worker, theo dõi IoU browser và luật v5 thử nghiệm; có tiến trình/hủy, xem lại, JSON/PNG. Không gửi file lên GitHub. Local đã chạy đủ CADP221mẫu/1696bbox/1mốc và clip ngoài200mẫu/629bbox/0mốc; parity chín chuỗi JS/Python khớp. Trực tiếp HTTPS:54/54tệp khớp, Firefox bảy nhóm đạt và phân tích CADP thật đủ221mẫu. Bản browser khác ByteTrack/Python và chưa có metric độc lập; số đo17/11 giữ nguyên phạm vi. [Hướng dẫn](../docs/BROWSER_VIDEO_UPLOAD.md), [nhật ký25/11](2026-11-25.md). Gate nghiên cứu chưa hoàn thành.
+
+**Đã tạo PDF tổng kết theo yêu cầu người dùng:** [10 trang công việc từ đầu đến nay](../delivery/TONG_KET_CONG_VIEC_2026-11-23.pdf), gồm yêu cầu–kết quả, dòng thời gian 16/10–23/11, dữ liệu/model, P/R/mAP, demo/GitHub và việc còn thiếu. Số liệu lấy từ hồ sơ đã đo; kiểm dấu tiếng Việt, bố cục, 10 trang và tám liên kết. Ngày 23/11 kiểm lại link fork HTTP 200; Pages repo gốc vẫn HTTP 404/has_pages=false. [Nhật ký 23/11](2026-11-23.md). Không chạy thêm model, thay nhãn/split hoặc đánh hoàn thành gate nghiên cứu.
 
 **Upload repo gốc và cập nhật web demo:** nhánh [mã nguồn](https://github.com/leanhquan0211/DACN_TrafficCollision/tree/feat/collision-demo-2026-11-16) và [gh-pages](https://github.com/leanhquan0211/DACN_TrafficCollision/tree/gh-pages) đã có trong repo người dùng yêu cầu. Gói Pages mới 40 tệp có bảng train/validation/P/R/mAP; giữ video minh họa v4 ngày 16/11 và ghi rõ lịch sử. Repo gốc chưa bật hosting vì tài khoản có quyền ghi mã nhưng thiếu quyền quản lý Pages; chủ repo cần chọn `gh-pages`/`/(root)` trong Settings → Pages. Bản trên [fork](https://minhquan0500.github.io/DACN_TrafficCollision/) đã build thành công commit `985e1fc`, kiểm live 40/40 tệp khớp và tám nhóm Firefox đạt. [Nhật ký 21/11](2026-11-21.md), [hướng dẫn Pages](../docs/GITHUB_PAGES.md). Đây là xuất bản demo, không hoàn thành gate nghiên cứu.
 

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-25",
+  "purpose": "browser deployment functional verification, not independent accuracy evaluation",
+  "historical_snapshot_not_current_machine_inventory": true,
+  "public_url": "https://minhquan0500.github.io/DACN_TrafficCollision/upload.html",
+  "pages_commit": "cff376d6c8149a5d7ff005051c95d278a3a432b6",
+  "source_weights_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+  "onnx_sha256": "bd3344e28b6587f0891f65ad6f7288c0388efdd5ee14a31ea7fbe9cb2ac06e4f",
+  "runtime": "onnxruntime-web 1.23.2 WASM single thread",
+  "preprocessing": "canvas RGB letterbox640, confidence0.25, class-agnostic NMS0.7",
+  "tracker": "browser_iou_velocity_v1; distinct from Python ByteTrack",
+  "rules": "JavaScript port of motion_contact_v5 on 20Hz sampled images; not original source frames",
+  "sampling_hz": 20,
+  "export_check": {
+    "onnx_checked": true,
+    "image": "CADP001407 frame110 development diagnostic",
+    "output_shape": [
+      1,
+      84,
+      8400
+    ],
+    "maximum_absolute_difference": 0.001373291015625,
+    "mean_absolute_difference": 1.8029664943242096e-06,
+    "same_weights": true,
+    "training_performed": false,
+    "accuracy_benchmark": false
+  },
+  "python_javascript_rule_parity_sequences": 9,
+  "local_cadp": {
+    "passed": true,
+    "url": "http://127.0.0.1:8885/DACN_TrafficCollision/upload.html",
+    "checks": [
+      "javascript_v5_decisions_features_and_events_match_python_on_nine_behavior_sequences",
+      "nms_letterbox_coordinates_and_tracker_gap_identity",
+      "invalid_video_is_rejected_and_analysis_stays_disabled",
+      "real_uploaded_video_full_duration_onnx_wasm_inference_fingerprint_and_json_export",
+      "replay_seeks_to_analyzed_sample_and_snapshot_export_available",
+      "cancel_releases_worker_and_invalidates_stale_downloads",
+      "no_video_upload_network_request_and_mobile_no_horizontal_overflow"
+    ],
+    "inference_executed": true,
+    "processed_samples": 221,
+    "observations": 1696,
+    "suspected_events": 1,
+    "elapsed_s": 88.677,
+    "accuracy_benchmark": false
+  },
+  "local_external_video": {
+    "passed": true,
+    "url": "http://127.0.0.1:8885/DACN_TrafficCollision/upload.html",
+    "checks": [
+      "javascript_v5_decisions_features_and_events_match_python_on_nine_behavior_sequences",
+      "nms_letterbox_coordinates_and_tracker_gap_identity",
+      "invalid_video_is_rejected_and_analysis_stays_disabled",
+      "real_uploaded_video_full_duration_onnx_wasm_inference_fingerprint_and_json_export",
+      "replay_seeks_to_analyzed_sample_and_snapshot_export_available",
+      "cancel_releases_worker_and_invalidates_stale_downloads",
+      "no_video_upload_network_request_and_mobile_no_horizontal_overflow"
+    ],
+    "inference_executed": true,
+    "processed_samples": 200,
+    "observations": 629,
+    "suspected_events": 0,
+    "elapsed_s": 85.401,
+    "accuracy_benchmark": false
+  },
+  "live_browser": {
+    "passed": true,
+    "url": "https://minhquan0500.github.io/DACN_TrafficCollision/upload.html",
+    "checks": [
+      "javascript_v5_decisions_features_and_events_match_python_on_nine_behavior_sequences",
+      "nms_letterbox_coordinates_and_tracker_gap_identity",
+      "invalid_video_is_rejected_and_analysis_stays_disabled",
+      "real_uploaded_video_full_duration_onnx_wasm_inference_fingerprint_and_json_export",
+      "replay_seeks_to_analyzed_sample_and_snapshot_export_available",
+      "cancel_releases_worker_and_invalidates_stale_downloads",
+      "no_video_upload_network_request_and_mobile_no_horizontal_overflow"
+    ],
+    "inference_executed": true,
+    "processed_samples": 221,
+    "observations": 1696,
+    "suspected_events": 1,
+    "elapsed_s": 83.109,
+    "accuracy_benchmark": false
+  },
+  "public_files_verified": 54,
+  "all_live_files_match_export": true,
+  "video_upload_request_sent": false,
+  "private_uploads_published": false,
+  "published_pretrained_model": true,
+  "training_performed": false,
+  "independent_accuracy_evaluated": false,
+  "python_metrics_reused_as_browser_accuracy": false,
+  "formal_inputs_preserved": {
+    "data/manifest.csv": "71e119e9b13b7a387fca973c1e7eff4f0ece47d13d984b2c1240894a44380087",
+    "data/b0_readiness.json": "3d3b81729609623c779489378dce1162d63d43d4d85e29abd7d68ebaa0cdae01",
+    "configs/b0_region_proposal.json": "15e98b5798ebad531112f5fd7c2f0f1867a82cca2a83acde64a6ca5838e4daab",
+    "configs/collision_rules.json": "5cd9138b988268efa58c2d284080e7847f0138073754158c70922b3b5f010170",
+    "configs/vehicle_inference.json": "24d46398c0fd7aaaeab4d3101233b229e515ec0495ecb3b89ec0074f8e194860"
+  },
+  "research_gate_satisfied": false,
+  "limitations": [
+    "Experimental collision alerts may be false or missed.",
+    "Browser IoU tracker, square preprocessing and 20Hz sampling differ from Python pipeline.",
+    "Device speed varies; sampling can miss rapid events and repeat low-FPS source frames.",
+    "Results remain in memory until JSON/PNG download; no annotated MP4 export."
+  ],
+  "audit": "outputs/audits/browser_upload_2026-11-25"
+}

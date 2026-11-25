@@ -1,5 +1,7 @@
 # Bằng chứng nhỏ đọc được ngay sau clone
 
+- [25/11 — Pages phân tích MP4 trên thiết bị](2026-11-25-browser-upload.json): YOLO ONNX/WASM, kiểm file thật trên HTTPS, 54 tệp khớp; tracker browser khác ByteTrack và chưa có metric độc lập.
+
 - [21/11 — upload repo gốc và GitHub Pages](2026-11-21-pages.json): 40 tệp khớp HTTPS, tám nhóm Firefox đạt; Pages trên fork đã hoạt động, repo gốc chờ chủ repo bật hosting.
 
 Hai JSON ngày 19/10 là snapshot kiểm tra từ máy phát triển, sao từ `outputs/audits/` trước khi đưa code lên Git. Chúng ghi số frame/hash/kiểm tra đã chạy, không chứa video, ảnh hoặc annotation gốc. Không coi chúng là kết quả chạy trên máy mới.
