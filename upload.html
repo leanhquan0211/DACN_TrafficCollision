@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <title>Traffic Lab · Phân tích video của bạn</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./browser-core.js" defer></script><script src="./upload.js" defer></script>
+  <style>
+    body{font-size:16px}.page{max-width:1500px}.upload-panel{padding:24px;margin-bottom:18px}.upload-panel p{margin:8px 0 16px;color:var(--muted)}.upload-fields{display:flex;gap:18px;align-items:end;flex-wrap:wrap}.upload-fields label{display:flex;flex-direction:column;gap:8px;flex:1;min-width:190px;font-size:14px}.upload-fields input{max-width:100%;font-size:14px}#status{white-space:pre-wrap;margin:14px 0;font-size:15px}progress{width:100%;height:18px;accent-color:var(--accent)}#cancel{background:transparent;color:var(--text)}.video-cell video,.video-cell canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#080f19;object-fit:contain}.results{padding:22px;margin-top:18px}.result-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.result-actions button{font-size:14px}#summary{font-size:15px;line-height:1.8}.file-note{overflow-wrap:anywhere;font-size:14px}#events{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}#events button{font-size:14px}.disclosure{font-size:14px;color:var(--muted)}#frame-info{font-variant-numeric:tabular-nums;font-size:14px;margin:12px 0}.nav{font-size:14px}.scope-note{font-size:14px}.primary,.secondary,.small-button,select{font-size:14px}.outline-tag{font-size:14px}.brand small{font-size:10px}@media(max-width:760px){.upload-panel,.results{padding:16px}.upload-fields{display:block}.upload-fields label{margin-bottom:15px}.upload-fields button{margin:6px 5px 6px 0}.video-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="./"><span class="brand-icon">T</span><span>TRAFFIC LAB<small>ĐỒ ÁN CHUYÊN NGÀNH</small></span></a>
+  <p class="nav-label">PHÂN TÍCH VIDEO</p>
+  <a class="nav active" href="./upload.html">Video của bạn</a>
+  <a class="nav" href="./">Xem clip mẫu & đánh giá</a>
+  <div class="side-bottom">XỬ LÝ TRÊN THIẾT BỊ<small>Video ở trong trình duyệt<br>YOLOv8n · ONNX Runtime Web</small></div>
+</aside>
+<main>
+  <header class="topbar"><span>TRAFFIC LAB / VIDEO CỦA BẠN</span><span class="pill">PHÂN TÍCH TRONG TRÌNH DUYỆT</span></header>
+  <div class="page">
+    <div class="heading"><div><p class="eyebrow">BROWSER INFERENCE</p><h1>Chọn video. Xem phân tích.</h1><p>Mở MP4 từ máy, theo dõi phương tiện và xem các mốc cần kiểm tra.</p></div></div>
+    <div class="scope-note"><p><strong>Video được xử lý ngay trên thiết bị bạn đang dùng.</strong> Lần đầu cần tải bộ mô hình khoảng 25 MB. Nên dùng máy tính và clip ngắn; tốc độ phụ thuộc thiết bị. Bạn có thể hủy bất cứ lúc nào.</p></div>
+    <section class="panel upload-panel">
+      <form id="upload-form">
+        <div class="upload-fields">
+          <label for="file">Video từ máy<input id="file" type="file" accept="video/mp4,.mp4" required></label>
+          <label for="analysis-mode">Phân tích<select id="analysis-mode"><option value="collision">Xe & cảnh báo va chạm thử nghiệm</option><option value="tracking">Nhận dạng & theo dõi xe</option><option value="detection">Nhận dạng xe</option></select></label>
+          <button id="analyze" class="primary" type="submit" disabled>Phân tích video</button>
+          <button id="cancel" class="small-button" type="button" hidden>Hủy xử lý</button>
+        </div>
+      </form>
+      <p class="file-note">MP4 mà trình duyệt giải mã được, tối đa 100 MiB, 2 phút và Full HD. Phân tích 20 mẫu hình mỗi giây video; đây không phải số frame nguồn.</p>
+      <p id="status" role="status" aria-live="polite">Chọn video để bắt đầu.</p>
+      <progress id="progress" max="1" value="0" aria-label="Tiến trình phân tích"></progress>
+      <div id="upload-error" role="alert" hidden></div>
+    </section>
+    <section class="panel viewer">
+      <div class="panel-heading"><h2>Video và kết quả mới</h2><span id="frame-info">Chưa có kết quả</span></div>
+      <div class="video-grid">
+        <div class="video-cell"><div class="video-label">VIDEO BẠN CHỌN</div><video id="input-video" controls muted playsinline preload="auto"></video></div>
+        <div class="video-cell"><div class="video-label">KẾT QUẢ TRÊN MẪU HÌNH GẦN NHẤT</div><canvas id="result-canvas" width="960" height="540" aria-label="Video với khung phương tiện và cảnh báo"></canvas></div>
+      </div>
+    </section>
+    <section class="panel results" aria-label="Kết quả phân tích">
+      <h2>Hồ sơ video</h2><p id="summary">Kết quả sẽ xuất hiện sau khi xử lý xong. Đóng hoặc tải lại trang sẽ xóa kết quả chưa tải xuống.</p>
+      <div class="result-actions"><button id="download-json" class="small-button" disabled>Tải kết quả JSON</button><button id="download-image" class="small-button" disabled>Tải ảnh đang xem</button></div>
+      <div id="events" aria-label="Các mốc nghi va chạm"></div>
+      <p class="disclosure">Bản trình duyệt dùng cùng trọng số YOLOv8n COCO, ảnh đầu vào vuông 640, NMS giữa lớp và bộ theo dõi IoU với dự đoán chuyển động đơn giản. Bộ theo dõi này khác ByteTrack của bản Python. ID tạm có thể đổi; loại xe và cảnh báo có thể sai. Các mốc nghi va chạm dùng luật v5 chuyển sang JavaScript trên mẫu hình 20 Hz, chưa có đánh giá độ chính xác riêng. Không có cảnh báo không chứng minh video an toàn.</p>
+      <p class="disclosure">Số đo P/R/mAP trong mục đánh giá là kết quả Python ngày 17/11, chưa áp dụng cho bản trình duyệt. Video và kết quả bạn chọn không được gửi lên GitHub hoặc thêm vào dữ liệu huấn luyện.</p>
+      <p><a href="./">Xem clip mẫu, dữ liệu và báo cáo đánh giá</a></p>
+      <p class="disclosure"><a href="./vendor/ULTRALYTICS-LICENSE.txt">YOLO · AGPL-3.0</a> · <a href="./vendor/ONNX-RUNTIME-LICENSE.txt">ONNX Runtime · MIT</a> · <a href="./vendor/ThirdPartyNotices.txt">Thành phần phụ thuộc</a> · <a href="https://github.com/leanhquan0211/DACN_TrafficCollision/tree/feat/collision-demo-2026-11-16">Mã nguồn bản triển khai</a></p>
+    </section>
+  </div>
+  <footer>TRAFFIC LAB <span>Phân tích mới trên thiết bị · Cảnh báo cần kiểm tra</span></footer>
+</main>
+</body></html>
